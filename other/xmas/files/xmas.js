@@ -4,7 +4,7 @@ const counterMax = 3;
 const contentCounterMax = 600;
 var currentCounter = contentCounterMax;
 
-let cribUrlDisplay = false;
+let currentUrlDisplay = 0;
 
 function play() {
   var audio = new Audio('files/carols.mp3');
@@ -38,12 +38,11 @@ function conditionalSanta1Reset() {
 }
 
 function flipIframeSource() {
-    cribUrlDisplay = !cribUrlDisplay;
     var iframe = document.querySelector('iframe');
-    const treeUrl = 'files/choinka.html';
-    const cribUrl = 'files/szopka.html';
+    const urls = ['files/choinka.html', 'files/snowman1.html', 'files/presents.html', 'files/sleigh.html'];
+    currentUrlDisplay = (currentUrlDisplay + 1) % urls.length;
 
-    iframe.src = cribUrlDisplay ? cribUrl : treeUrl;
+    iframe.src = urls[currentUrlDisplay];
 }
 
 function conditionalIframeChange(){
