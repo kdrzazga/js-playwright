@@ -48,4 +48,5 @@ function timeLoop() {
     }
     requestAnimationFrame(function () { return _this.timeLoop(); });
 }
+
 timeLoop();

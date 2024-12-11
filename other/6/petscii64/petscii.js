@@ -77,7 +77,7 @@ class Pacman64 extends Commodore64 {
 		this.lastRenderTime = currentTime;
 	}
 	
-	console.log("blink = " + this.blink); 
+	//console.log("blink = " + this.blink);
   }
  
   movePacman(){
@@ -93,7 +93,7 @@ class Pacman64 extends Commodore64 {
 			const url = "resources/" + this.pacmanPic;
 			pacman.setAttribute("src", url);
 	}
-	console.log("pacman pos = ", this.pacmanPos);
+	//console.log("pacman pos = ", this.pacmanPos);
   }
   
   moveGhost(){
@@ -106,7 +106,7 @@ class Pacman64 extends Commodore64 {
 	if (this.ghostPos > 222 || this.ghostPos < 30){
 			this.ghostSpeed = -this.ghostSpeed;
 	}
-	console.log("ghost pos = ", this.ghostPos);
+	//console.log("ghost pos = ", this.ghostPos);
 	
   }
  

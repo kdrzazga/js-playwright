@@ -20,7 +20,7 @@
   </script>
 </head>
 
-<body onload='setZoom(0.65)' onclick="hide(); startPlayback();">
+<body onload='setZoom(0.65)' onclick="hide(); player.startPlayback();">
     <div id="top-border"></div>
 	<table bgcolor="#6c5eb5" width="100%">
         <tr>
@@ -41,11 +41,12 @@
 	<div>&nbsp</div>
 	<div>&nbsp</div>
 	<div>
-		<button id='start-tune' onclick="hide(); startPlayback();">Play Audio</button>
+		<button id='start-tune' onclick="hide(); if (player) player.startPlayback();">Play Audio</button>
 	</div>
 </body>
 </html>
 
 <script src="../typedore64/typedore.js"></script>
 <script src="c64.js"></script>
-<script src="audio.js"></script>
+<script src="../6_res/audio.js"></script>
+<script src="skullAudio.js"></script>

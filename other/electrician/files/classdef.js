@@ -20,7 +20,7 @@ class Floor {
         this.id = Floor.COUNT;
         Floor.COUNT++;
         this.floorLevel = 0;
-        this.ceilingConnectors = [];
+        this.ceilingConnectors = [];//conntector unit is Slor number, not position on screen
         this.bottomConnectors = [];
     }
 
@@ -209,24 +209,24 @@ class FloorBuilder {
         return this.floor;
     }
 
-    withCeilingConnector(connectorX){
-        this.floor.ceilingConnectors.push(connectorX);
+    withCeilingConnector(connectorSlot){
+        this.floor.ceilingConnectors.push(connectorSlot);
         return this;
     }
 
-    withBottomConnector(connectorX){
-        this.floor.bottomConnectors.push(connectorX);
+    withBottomConnector(connectorSlot){
+        this.floor.bottomConnectors.push(connectorSlot);
         return this;
     }
 
     withLampInCenter(){
-        const lampConnectorX = Math.floor(Floor.WIDTH /2);
+        const lampConnectorX = Math.floor(Floor.WIDTH/Wire.SIZE /2);
         this.withCeilingConnector(lampConnectorX);
         return this;
     }
 
     withTVInCenter(){
-        const tvConnectorX = Math.floor(Floor.WIDTH /2);
+        const tvConnectorX = Math.floor(Floor.WIDTH/Wire.SIZE /2); //should be 15
         this.withBottomConnector(tvConnectorX);
         return this;
     }

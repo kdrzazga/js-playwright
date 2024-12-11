@@ -90,7 +90,7 @@ class UpUpAway64 extends Commodore64 {
 		}
 	}
 	
-	console.log("blink = " + this.blink);
+	//console.log("blink = " + this.blink);
 	this.animate(this.delay);
     requestAnimationFrame(() => this.timeLoop());	
   }
@@ -115,11 +115,11 @@ class UpUpAway64 extends Commodore64 {
         this.ctx.fillRect(0, 0, this.cursorCanvas.width, this.cursorCanvas.height);
 		this.blink = !this.blink;
 		this.lastRenderTime = currentTime;
-		console.log("new DELAY = ", this.delay);  
+		//console.log("new DELAY = ", this.delay);
   }
 
   animate(delay){
-	    console.log("Delay = ", delay);
+	    //console.log("Delay = ", delay);
 	    let baloon = document.getElementById('baloon');
 	    const delayStr = new String(delay).toUpperCase();
 	    baloon.style.left = delayStr + 'px';
