@@ -95,6 +95,7 @@ class MainScene extends Phaser.Scene {
             if (f.onFloor(this.player.x, this.player.y) && !this.building.ladder.onLadder(this.player.x)){
                 console.log('Floor met on y= ' + this.player.y);
                 velocity = 0; //Floor under feet prevents from falling
+                this.player.spriteCanJump = true;
                 return;
             }
         });
