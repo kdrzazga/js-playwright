@@ -228,9 +228,10 @@ class LevelScene extends Phaser.Scene {
         }
     }
 
-    conditionallyShowExtraInfoFrame(){
+    showExtraInfoFrame(content){
         const frame = document.getElementById('extraInfoFrame');
-        frame.style = this.extraInfoFrameVisible;
+        frame.innerHTML = content;
+        frame.style = "left: 85%; visibility: show";
     }
 }
 
@@ -304,5 +305,7 @@ class Level4Scene extends LevelScene{
 
      create() {
         super.create(Creator.createElectronicsStore);
+        const content = FrameCreator.createLevel4ExtraInfoFrameContent();
+        this.showExtraInfoFrame(content);
      }
 }

@@ -232,3 +232,17 @@ class Creator {
         return building;
     }
 }
+
+class FrameCreator{
+    static createLevel4ExtraInfoFrameContent(){
+        const content = "<p><div>Mainframe computers</div>"
+                        + "    <div>IBM 360</div>"
+                        + "    <div>IBM 709</div>"
+                        + "<p>"
+                        + "<div>Analog computers</div>"
+                        + "<div>Telefunken RA 770</div>"
+                        + "div>Telefunken RA 436/2</div>";
+
+        return content;
+    }
+}
