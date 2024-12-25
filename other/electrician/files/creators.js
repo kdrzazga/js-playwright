@@ -180,4 +180,55 @@ class Creator {
 
         return building;
     }
+
+    //Level 4
+    static createElectronicsStore(physics){
+        let building = new Building('Electronics Store');
+        building.init(physics); // Initializes ladder and power lines
+
+       const musicFloorBuilder = new FloorBuilder();
+       building.floors.push(musicFloorBuilder.withName('music-floor').withCeilingConnector(6).withCeilingConnector(19)
+            .withBottomConnector(3).withBottomConnector(9).withBottomConnector(14).withBottomConnector(17)
+            .withBottomConnector(21).withBottomConnector(25).withBottomConnector(28).build());
+
+       const computerRoomBuilder = new FloorBuilder();
+       building.floors.push(computerRoomBuilder.withName('computer-room').withCeilingConnector(2).withCeilingConnector(7)
+            .withCeilingConnector(12).withCeilingConnector(20)
+            .withBottomConnector(26).build());
+
+       const groundFloorBuilder = new FloorBuilder();
+        building.floors.push(groundFloorBuilder.withName('nothing').build());
+
+       building.floors.forEach(floor => floor.init(physics));
+       building.floors.forEach(floor => floor.calculateFloorLevel());
+
+       const connectionPointsCounts = [2, 11, 1];
+       building.wires = building.floors.map((floor, index) => {
+           const aboveFloor = building.floors[index] || null;
+           const belowFloor = building.floors[index - 1] || null;
+           return new Wire(index, physics, belowFloor, aboveFloor, connectionPointsCounts[index]);
+       });
+
+        building.includeWiresInInfoFrame();
+
+        //const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
+        const ratsData = [
+            { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.7 } },
+            { id: 2, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.8 } },
+            { id: 3, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.9 } },
+            { id: 4, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
+            { id: 5, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0},
+            { id: 6, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0, velocity: { x: 0.97 } }
+        ];
+
+        const batsData = [
+            { id: 0, active: true, speed: -0.007 },
+            { id: 1, active: true, speed: -0.006 },
+            { id: 2, active: true, speed: 0.003 }
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+
+        return building;
+    }
 }

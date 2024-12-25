@@ -284,7 +284,7 @@ class Level3Scene extends LevelScene{
 
     constructor() {
         super('Level3');
-        this.nextLevel = 'lvl1';
+        this.nextLevel = 'lvl4';
     }
 
     loadFloorImages(){
@@ -292,4 +292,29 @@ class Level3Scene extends LevelScene{
          this.load.image('floor1', 'files/livingRoom.png');
          this.load.image('floor2', 'files/kitchen.png');
     }
+}
+
+class Level4Scene extends LevelScene{
+
+    constructor() {
+        super('Level4');
+        this.nextLevel = 'lvl1';
+    }
+
+    loadFloorImages(){
+         this.load.image('floor0', 'files/music-floor.png');
+         this.load.image('floor1', 'files/computer-room.png');
+         this.load.image('floor2', 'files/computer-room.png');
+    }
+
+     create() {
+        this.physics.world.setBounds(0, 0, 800, 600);
+
+        this.building = Creator.createElectronicsStore(this.physics);
+
+        this.player = this.physics.add.sprite(100, 400, 'sprite');
+        this.player.setCollideWorldBounds(true);
+
+        this.cursors = this.input.keyboard.createCursorKeys();
+     }
 }
