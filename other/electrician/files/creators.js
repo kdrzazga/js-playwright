@@ -237,13 +237,13 @@ class Creator {
 class FrameCreator{
     static createLevel2ExtraInfoFrameContent(){
         const content = "<p><div>Retro computers:</div>"
-                        + "<div>Commodore 64</div>"
-                        + "<div>IBM PC 286</div>"
-                        + "<div>Atari 800XL</div>"
-                        + "<div>Amiga 500</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/c64.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Commodore 64</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/ibmpc286.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>IBM PC 286</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/szmatari.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Atari 800XL</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/a500.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Amiga 500</div>"
                         + "<p><div>Retro cars:</div>"
-                        + "<div>Fiat 126p</div>"
-                        + "<div>Polonez</div>";
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/maluch.jpeg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Fiat 126p</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/polonez.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Polonez</div>";
 
         return content;
     }
