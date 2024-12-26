@@ -197,12 +197,13 @@ class Creator {
             .withBottomConnector(26).build());
 
        const groundFloorBuilder = new FloorBuilder();
-        building.floors.push(groundFloorBuilder.withName('nothing').build());
+        building.floors.push(groundFloorBuilder.withName('computer-room2').withCeilingConnector(5).withCeilingConnector(12)
+            .withCeilingConnector(12).withCeilingConnector(15).withCeilingConnector(19).withCeilingConnector(25).build());
 
        building.floors.forEach(floor => floor.init(physics));
        building.floors.forEach(floor => floor.calculateFloorLevel());
 
-       const connectionPointsCounts = [2, 11, 1];
+       const connectionPointsCounts = [2, 11, 6];
        building.wires = building.floors.map((floor, index) => {
            const aboveFloor = building.floors[index] || null;
            const belowFloor = building.floors[index - 1] || null;

@@ -302,7 +302,7 @@ class Level4Scene extends LevelScene{
     loadFloorImages(){
          this.load.image('floor0', 'files/music-floor.png');
          this.load.image('floor1', 'files/computer-room.png');
-         this.load.image('floor2', 'files/computer-room.png');
+         this.load.image('floor2', 'files/computer-room2.png');
     }
 
      create() {
