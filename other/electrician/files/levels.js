@@ -4,6 +4,7 @@ class LevelScene extends Phaser.Scene {
         this.playerCanJump = true;
         this.playerFalling = false;
         this.nextLevel = '';
+        this.extraInfoFrameVisible = "left: 85%; visibility: hidden";
     }
 
     preload() {
@@ -35,15 +36,13 @@ class LevelScene extends Phaser.Scene {
          //abstract
     }
 
-    create() {
-        this.physics.world.setBounds(0, 0, 800, 600);
+    create(creatorMethodRef) {
+         this.physics.world.setBounds(0, 0, 800, 600);
+         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.building = Creator.create3storeBuilding(this.physics);
-
-        this.player = this.physics.add.sprite(100, 400, 'sprite');
-        this.player.setCollideWorldBounds(true);
-
-        this.cursors = this.input.keyboard.createCursorKeys();
+         this.building = creatorMethodRef(this.physics);
+         this.player = this.physics.add.sprite(100, 400, 'sprite');
+         this.player.setCollideWorldBounds(true);
     }
 
     update() {
@@ -228,6 +227,12 @@ class LevelScene extends Phaser.Scene {
             location.reload();
         }
     }
+
+    showExtraInfoFrame(content){
+        const frame = document.getElementById('extraInfoFrame');
+        frame.innerHTML = content;
+        frame.style = "left: 85%; visibility: show";
+    }
 }
 
 class Level1Scene extends LevelScene {
@@ -244,14 +249,7 @@ class Level1Scene extends LevelScene {
     }
 
     create() {
-        this.physics.world.setBounds(0, 0, 800, 600);
-
-        this.building = Creator.createBuilding(this.physics);
-
-        this.player = this.physics.add.sprite(100, 400, 'sprite');
-        this.player.setCollideWorldBounds(true);
-
-        this.cursors = this.input.keyboard.createCursorKeys();
+        super.create(Creator.createBuilding);
     }
 }
 
@@ -269,14 +267,9 @@ class Level2Scene extends LevelScene{
     }
 
     create() {
-        this.physics.world.setBounds(0, 0, 800, 600);
-
-        this.building = Creator.createOfficeGymGarage(this.physics);
-
-        this.player = this.physics.add.sprite(100, 400, 'sprite');
-        this.player.setCollideWorldBounds(true);
-
-        this.cursors = this.input.keyboard.createCursorKeys();
+        super.create(Creator.createOfficeGymGarage);
+        const content = FrameCreator.createLevel2ExtraInfoFrameContent();
+        this.showExtraInfoFrame(content);
     }
 }
 
@@ -284,7 +277,7 @@ class Level3Scene extends LevelScene{
 
     constructor() {
         super('Level3');
-        this.nextLevel = 'lvl1';
+        this.nextLevel = 'lvl4';
     }
 
     loadFloorImages(){
@@ -292,4 +285,29 @@ class Level3Scene extends LevelScene{
          this.load.image('floor1', 'files/livingRoom.png');
          this.load.image('floor2', 'files/kitchen.png');
     }
+
+    create(){
+        super.create(Creator.create3storeBuilding);
+    }
+}
+
+class Level4Scene extends LevelScene{
+
+    constructor() {
+        super('Level4');
+        this.nextLevel = 'lvl1';
+        this.extraInfoFrameVisible = "left: 85%; visibility: show"
+    }
+
+    loadFloorImages(){
+         this.load.image('floor0', 'files/music-floor.png');
+         this.load.image('floor1', 'files/computer-room.png');
+         this.load.image('floor2', 'files/computer-room2.png');
+    }
+
+     create() {
+        super.create(Creator.createElectronicsStore);
+        const content = FrameCreator.createLevel4ExtraInfoFrameContent();
+        this.showExtraInfoFrame(content);
+     }
 }

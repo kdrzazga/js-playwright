@@ -1,37 +1,37 @@
-    class Flake {
-        constructor(id, canvasWidth, canvasHeight) {
-            this.id = id;
-            this.enabled = true;
-            this.x = Math.random() * canvasWidth;
+class Flake {
+    constructor(id, canvasWidth, canvasHeight) {
+        this.id = id;
+        this.enabled = true;
+        this.x = Math.random() * canvasWidth;
+        this.y = 0;
+        this.speed = Math.random() * 2 + 1;
+        this.amplitude = Math.random() * 6 + 6;
+        this.frequency = Math.random() * 0.005 + 0.005;
+        this.phase = Math.random() * Math.PI;
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+        document.body.appendChild(canvas);
+        this.ctx = canvas.getContext("2d");
+    }
+
+    update() {
+        this.y += this.speed;
+        this.x += Math.sin(this.y * this.frequency + this.phase) * this.amplitude;
+
+        if (this.y > this.canvasHeight && this.enabled) {
             this.y = 0;
-            this.speed = Math.random() * 2 + 1;
-            this.amplitude = Math.random() * 6 + 6;
-            this.frequency = Math.random() * 0.005 + 0.005;
-            this.phase = Math.random() * Math.PI;
-            this.canvasWidth = canvasWidth;
-            this.canvasHeight = canvasHeight;
-
-            const canvas = document.createElement("canvas");
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
-            document.body.appendChild(canvas);
-            this.ctx = canvas.getContext("2d");
-        }
-
-        update() {
-            this.y += this.speed;
-            this.x += Math.sin(this.y * this.frequency + this.phase) * this.amplitude;
-
-            if (this.y > this.canvasHeight && this.enabled) {
-                this.y = 0;
-                this.x = Math.random() * this.canvasWidth;
-            }
-        }
-
-        draw(image) {
-            this.ctx.drawImage(image, this.x, this.y);
+            this.x = Math.random() * this.canvasWidth;
         }
     }
+
+    draw(image) {
+        this.ctx.drawImage(image, this.x, this.y);
+    }
+}
 
 class FlakeAnimation {
     constructor(numFlakes) {
@@ -103,4 +103,11 @@ class FlakeAnimation {
     }
 }
 
+const currentURL = window.location.href;
+const url = new URL(currentURL);
+const params = new URLSearchParams(url.search);
+const snowParam = params.get('snow');
+
+if (snowParam === 'on'){
     const snowAnimation = new FlakeAnimation(20);
+}

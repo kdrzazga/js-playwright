@@ -9,6 +9,8 @@ Browse to http://localhost:3000
 
 Webapps: https://kdrzazga.github.io/js-playwright
 
+Electrician: https://kdrzazga.github.io/js-playwright/other/electrician/ 
+
 C64 Blackbox:
 ---
 https://kdrzazga.github.io/js-playwright/other/c64blackbox/
@@ -29,7 +31,7 @@ K&A+: https://kdrzazga.github.io/js-playwright/other/c64blackbox/directF6Classic
 
 6:
 ---
-https://kdrzazga.github.io/js-playwright/other/6/6.html
+https://kdrzazga.github.io/js-playwright/other/6/
 
 Pacman w lesie:
 ---
