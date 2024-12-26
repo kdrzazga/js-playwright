@@ -234,15 +234,44 @@ class Creator {
 }
 
 class FrameCreator{
-    static createLevel4ExtraInfoFrameContent(){
-        const content = "<p><div>Mainframe computers</div>"
-                        + "    <div>IBM 360</div>"
-                        + "    <div>IBM 709</div>"
-                        + "<p>"
-                        + "<div>Analog computers</div>"
-                        + "<div>Telefunken RA 770</div>"
-                        + "div>Telefunken RA 436/2</div>";
+    static createLevel2ExtraInfoFrameContent(){
+        const content = "<p><div>Retro computers:</div>"
+                        + "<div>Commodore 64</div>"
+                        + "<div>IBM PC 286</div>"
+                        + "<div>Atari 800XL</div>"
+                        + "<div>Amiga 500</div>"
+                        + "<p><div>Retro cars:</div>"
+                        + "<div>Fiat 126p</div>"
+                        + "<div>Polonez</div>";
 
         return content;
+    }
+
+    static createLevel4ExtraInfoFrameContent(){
+        const content = "<p>"
+                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/fenderAmp.PNG\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Fender Amplifier</div>"
+                        + "<p><div>Mainframe<br>retro computers:</div>"
+                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/ibm360.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>IBM S-360</div>"
+                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/ibm709.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>IBM 709</div>"
+                        + "<p>"
+                        + "<div>Analog retro computers:</div>"
+                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/TelefunkenRA770.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Telefunken RA 770</div>"
+                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/TelefunkenRA436_2.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Telefunken RA 436/2</div>"
+                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/Telefunken.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Telefunken RAT 700/2</div>";
+
+        return content;
+    }
+
+    static showPhoto(picLink){
+        let photosFrame = document.getElementById('photos');
+        photosFrame.style.display = 'block';
+        let photoImg = document.getElementById('photo');
+        photoImg.setAttribute('src', picLink);
+    }
+
+    static hidePhotoDiv(){
+        console.log('hide');
+        let photosFrame = document.getElementById('photos');
+        photosFrame.style.display = 'none';
     }
 }

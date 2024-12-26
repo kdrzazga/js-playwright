@@ -268,6 +268,8 @@ class Level2Scene extends LevelScene{
 
     create() {
         super.create(Creator.createOfficeGymGarage);
+        const content = FrameCreator.createLevel2ExtraInfoFrameContent();
+        this.showExtraInfoFrame(content);
     }
 }
 
