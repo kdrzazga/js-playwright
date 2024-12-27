@@ -18,6 +18,8 @@ class LevelScene extends Phaser.Scene {
         }
         this.load.image('bat', 'files/bat.png');
 
+        this.load.image('spider', 'files/spider.png')
+
         this.load.image('ladder', 'files/ladder.png');
 
         this.loadFloorImages();

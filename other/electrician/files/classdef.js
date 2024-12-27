@@ -323,6 +323,35 @@ class Rat extends Enemy{
     }
 }
 
+class Spider extends Enemy{
+
+    init(physics, y){
+        this.sprite = physics.add.sprite(180 + (this.id + 1)*44, y, 'spider');
+        this.speed = 0.5;
+        this.sprite.velocity = { y: this.speed };
+        this.sprite.setDepth(10); //on top of all other sprites
+    }
+
+    move(){
+        this.sprite.y += this.speed;
+
+        if( this.sprite.y< 20 || this.sprite.y > Floor.BUILDING_HEIGHT+62) this.speed *= -1;
+    }
+
+    collide(player){
+        const distanceX = player.x - this.sprite.x;
+        const distanceY = player.y - this.sprite.y;
+
+        const collisionVertical = -20 < distanceY && distanceY < 20;
+        const threshold = 20;
+        const collisionHorizontal = (Math.abs(distanceX) < threshold);
+
+        if (collisionVertical && collisionHorizontal) location.reload();
+        return 0;
+    }
+
+}
+
 class FloorBuilder {
 
     constructor(){

@@ -3,12 +3,13 @@ class Creator {
     static HIGH_FLOOR_LEVEL = 104;
     static LOW_FLOOR_LEVEL = 438;
 
-    static createEnemies(ratsData, batsData, physics){
+    static createEnemies(ratsData, batsData, spidersData, physics){
             let enemies = [];
             const rats = ratsData.map(data => Creator.createEnemy(Rat, data, physics));
             const bats = batsData.map(data => Creator.createEnemy(Bat, data, physics));
+            const spiders = spidersData.map(data => Creator.createEnemy(Spider, data, physics));
 
-            enemies.push(...rats, ...bats);
+            enemies.push(...rats, ...bats, ...spiders);
             return enemies;
         }
 
@@ -79,7 +80,10 @@ class Creator {
             { id: 1, active: true, currentAngle: Math.PI / 2, /*speed: 0.001*/ }
         ];
 
-        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+        const spidersData = [
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
         return building;
     }
@@ -129,7 +133,11 @@ class Creator {
             { id: 8, active: true, speed: 0.0042 },
         ];
 
-        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+
+        const spidersData = [
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
         return building;
     }
@@ -176,7 +184,10 @@ class Creator {
             { id: 0, active: true, speed: -0.007 }
         ];
 
-        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+        const spidersData = [
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
         return building;
     }
@@ -228,7 +239,11 @@ class Creator {
             { id: 2, active: true, speed: 0.003 }
         ];
 
-        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+        const spidersData = [
+             { id: 1, active: true, y: 510, velocity: { x: 0 } }
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
         return building;
     }
