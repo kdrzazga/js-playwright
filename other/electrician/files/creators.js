@@ -16,7 +16,7 @@ class Creator {
     static createEnemy(EnemyClass, data, physics, positionAdjustment = 0) {
         const enemy = new EnemyClass(data.id);
         enemy.active = data.active;
-        const y = EnemyClass === Rat ? data.y : 555 + 7 * data.id + positionAdjustment;
+        const y = EnemyClass === Bat ? 555 + 7 * data.id + positionAdjustment : data.y ;
         enemy.init(physics, y);
 
         Object.assign(enemy, {
@@ -240,7 +240,7 @@ class Creator {
         ];
 
         const spidersData = [
-             { id: 1, active: true, y: 21, velocity: { y: 0.5 } }
+             { id: 1, active: true, y: 25, velocity: { y: 0.5 } }
         ];
 
         building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
@@ -272,7 +272,7 @@ class FrameCreator{
                         + "    <div onmouseenter='FrameCreator.showPhoto(\"files/Ferranti-Mark-1.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Ferranti Mark 1</div>"
                         + "    <div onmouseenter='FrameCreator.showPhoto(\"files/odra1305.png\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Elwro ODRA 1305</div>"
                         + "    <div onmouseenter='FrameCreator.showPhoto(\"files/BendixG15.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Bendix G-15</div>"
-                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/ray704_f_s-1910516244.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Raytheon 705</div>"
+                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/ray704_f_s-1910516244.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Raytheon 704</div>"
                         + "<p>"
                         + "<div>Analog retro computers:</div>"
                         + "    <div onmouseenter='FrameCreator.showPhoto(\"files/TelefunkenRA770.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Telefunken RA 770</div>"
