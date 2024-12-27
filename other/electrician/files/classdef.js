@@ -323,6 +323,58 @@ class Rat extends Enemy{
     }
 }
 
+class Spider extends Enemy{
+    static WEB_HEIGHT = 15;
+
+    init(physics, y){
+        this.physics = physics;
+        this.sprite = physics.add.sprite(180 + (this.id + 1)*44, y, 'spider');
+        this.webSections = this.physics.add.group();
+        this.lastWebPosition = 0;
+
+        this.speed = 0.5;
+        this.sprite.velocity = { y: this.speed };
+        this.sprite.setDepth(10); //on top of all other sprites
+    }
+
+    move(){
+        this.sprite.y += this.speed;
+        this.addOrRemoveWebSection();
+        if( this.sprite.y< 20 || this.sprite.y > Floor.BUILDING_HEIGHT + 62) this.speed *= -1;
+
+    }
+
+    addOrRemoveWebSection() {
+        const currentWebPosition = Math.floor(this.sprite.y / Spider.WEB_HEIGHT) * Spider.WEB_HEIGHT;
+
+        if (currentWebPosition > this.lastWebPosition) {
+            const webSection = this.webSections.create(this.sprite.x, currentWebPosition, 'web');
+            webSection.setOrigin(0.5, 0); // Set the origin to the top center
+            this.lastWebPosition = currentWebPosition; // Update the last position
+        }
+        else if (currentWebPosition < this.lastWebPosition) {
+            const lastWebSection = this.webSections.getChildren().find(web => web.y === this.lastWebPosition);
+            if (lastWebSection) {
+                lastWebSection.destroy();
+                this.lastWebPosition = currentWebPosition;
+            }
+        }
+    }
+
+    collide(player){
+        const distanceX = player.x - this.sprite.x;
+        const distanceY = player.y - this.sprite.y;
+
+        const collisionVertical = -20 < distanceY && distanceY < 20;
+        const threshold = 20;
+        const collisionHorizontal = (Math.abs(distanceX) < threshold);
+
+        if (collisionVertical && collisionHorizontal) location.reload();
+        else return 0;
+    }
+
+}
+
 class FloorBuilder {
 
     constructor(){

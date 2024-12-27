@@ -3,19 +3,20 @@ class Creator {
     static HIGH_FLOOR_LEVEL = 104;
     static LOW_FLOOR_LEVEL = 438;
 
-    static createEnemies(ratsData, batsData, physics){
+    static createEnemies(ratsData, batsData, spidersData, physics){
             let enemies = [];
             const rats = ratsData.map(data => Creator.createEnemy(Rat, data, physics));
             const bats = batsData.map(data => Creator.createEnemy(Bat, data, physics));
+            const spiders = spidersData.map(data => Creator.createEnemy(Spider, data, physics));
 
-            enemies.push(...rats, ...bats);
+            enemies.push(...rats, ...bats, ...spiders);
             return enemies;
         }
 
     static createEnemy(EnemyClass, data, physics, positionAdjustment = 0) {
         const enemy = new EnemyClass(data.id);
         enemy.active = data.active;
-        const y = EnemyClass === Rat ? data.y : 555 + 7 * data.id + positionAdjustment;
+        const y = EnemyClass === Bat ? 555 + 7 * data.id + positionAdjustment : data.y ;
         enemy.init(physics, y);
 
         Object.assign(enemy, {
@@ -79,7 +80,10 @@ class Creator {
             { id: 1, active: true, currentAngle: Math.PI / 2, /*speed: 0.001*/ }
         ];
 
-        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+        const spidersData = [
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
         return building;
     }
@@ -129,7 +133,11 @@ class Creator {
             { id: 8, active: true, speed: 0.0042 },
         ];
 
-        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+
+        const spidersData = [
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
         return building;
     }
@@ -176,7 +184,10 @@ class Creator {
             { id: 0, active: true, speed: -0.007 }
         ];
 
-        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+        const spidersData = [
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
         return building;
     }
@@ -228,7 +239,11 @@ class Creator {
             { id: 2, active: true, speed: 0.003 }
         ];
 
-        building.enemies = Creator.createEnemies(ratsData, batsData, physics);
+        const spidersData = [
+             { id: 1, active: true, y: 25, velocity: { y: 0.5 } }
+        ];
+
+        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
         return building;
     }
@@ -237,13 +252,13 @@ class Creator {
 class FrameCreator{
     static createLevel2ExtraInfoFrameContent(){
         const content = "<p><div>Retro computers:</div>"
-                        + "<div>Commodore 64</div>"
-                        + "<div>IBM PC 286</div>"
-                        + "<div>Atari 800XL</div>"
-                        + "<div>Amiga 500</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/c64.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Commodore 64</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/ibmpc286.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>IBM PC 286</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/szmatari.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Atari 800XL</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/a500.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Amiga 500</div>"
                         + "<p><div>Retro cars:</div>"
-                        + "<div>Fiat 126p</div>"
-                        + "<div>Polonez</div>";
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/maluch.jpeg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Fiat 126p</div>"
+                        + "<div onmouseenter='FrameCreator.showPhoto(\"files/polonez.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Polonez</div>";
 
         return content;
     }
@@ -257,7 +272,7 @@ class FrameCreator{
                         + "    <div onmouseenter='FrameCreator.showPhoto(\"files/Ferranti-Mark-1.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Ferranti Mark 1</div>"
                         + "    <div onmouseenter='FrameCreator.showPhoto(\"files/odra1305.png\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Elwro ODRA 1305</div>"
                         + "    <div onmouseenter='FrameCreator.showPhoto(\"files/BendixG15.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Bendix G-15</div>"
-                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/ray704_f_s-1910516244.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Raytheon 705</div>"
+                        + "    <div onmouseenter='FrameCreator.showPhoto(\"files/ray704_f_s-1910516244.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Raytheon 704</div>"
                         + "<p>"
                         + "<div>Analog retro computers:</div>"
                         + "    <div onmouseenter='FrameCreator.showPhoto(\"files/TelefunkenRA770.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Telefunken RA 770</div>"
