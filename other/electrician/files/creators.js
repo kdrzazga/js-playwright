@@ -35,7 +35,6 @@ class Creator {
         return enemy;
     }
 
-    //Level 1
     static createLevel1(physics){
         let building = new Building('Home 2');
         building.init(physics); // Initializes ladder and power lines
@@ -82,7 +81,6 @@ class Creator {
         return building;
     }
 
-    //Level 2
     static createLevel2(physics){
        let building = new Building('Office Gym Garage');
        building.init(physics); // Initializes ladder and power lines
@@ -133,7 +131,6 @@ class Creator {
         return building;
     }
 
-    //Level 3
     static createLevel3(physics) {
        let building = new Building('House');
        building.init(physics); // Initializes ladder and power lines
@@ -185,7 +182,6 @@ class Creator {
         return building;
     }
 
-    //Level 4
     static createLevel4(physics){
         let building = new Building('Electronics Store');
         building.init(physics); // Initializes ladder and power lines
