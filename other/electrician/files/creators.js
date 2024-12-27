@@ -3,15 +3,14 @@ class Creator {
     static HIGH_FLOOR_LEVEL = 104;
     static LOW_FLOOR_LEVEL = 438;
 
-    static createEnemies(ratsData, batsData, spidersData, physics){
-            let enemies = [];
-            const rats = ratsData.map(data => Creator.createEnemy(Rat, data, physics));
-            const bats = batsData.map(data => Creator.createEnemy(Bat, data, physics));
-            const spiders = spidersData.map(data => Creator.createEnemy(Spider, data, physics));
-
-            enemies.push(...rats, ...bats, ...spiders);
-            return enemies;
-        }
+    static createEnemies(ratsData, batsData, spidersData, physics) {
+        const createEnemy = (classType, data) => Creator.createEnemy(classType, data, physics);
+        return [].concat(
+            ratsData.map(data => createEnemy(Rat, data)),
+            batsData.map(data => createEnemy(Bat, data)),
+            spidersData.map(data => createEnemy(Spider, data))
+        );
+    }
 
     static createEnemy(EnemyClass, data, physics, positionAdjustment = 0) {
         const enemy = new EnemyClass(data.id);
@@ -37,25 +36,27 @@ class Creator {
     }
 
     //Level 1
-    static create3storeBuilding(physics) {
-       let building = new Building('House');
-       building.init(physics); // Initializes ladder and power lines
+    static createLevel1(physics){
+        let building = new Building('Home 2');
+        building.init(physics); // Initializes ladder and power lines
 
-       const floorBuilder1 = new FloorBuilder();
-       building.floors.push(floorBuilder1.withName('attic').withBottomConnector(3).withBottomConnector(11)
-           .withCeilingConnector(5).withCeilingConnector(25).withBottomConnector(28).build());
+        const atticBuilder = new FloorBuilder();
+        building.floors.push(atticBuilder.withName('floor2').withCeilingConnector(7).withCeilingConnector(12)
+            .withCeilingConnector(23).withBottomConnector(23).withBottomConnector(24).withBottomConnector(25).build());
 
-       const floorBuilder2 = new FloorBuilder();
-       building.floors.push(floorBuilder2.withName('living room').withCeilingConnector(2).withCeilingConnector(29)
-           .withLampInCenter().withTVInCenterLeft().build());
+       const gymBuilder = new FloorBuilder();
+       building.floors.push(gymBuilder.withName('power-room').withCeilingConnector(7).withCeilingConnector(12)
+            .withCeilingConnector(19).withCeilingConnector(20).withCeilingConnector(21).withCeilingConnector(26)
+            .withCeilingConnector(27).withCeilingConnector(28).build());
 
-       const kitchenBuilder = new FloorBuilder();
-       building.floors.push(kitchenBuilder.withName('kitchen').withFridgeOnLeft().withLampInCenter().withKitchenSegmentOnRight().build());
+       const garageBuilder = new FloorBuilder();
+       building.floors.push(garageBuilder.withName('basement').withCeilingConnector(7).withCeilingConnector(12)
+            .withCeilingConnector(23).build());
 
        building.floors.forEach(floor => floor.init(physics));
        building.floors.forEach(floor => floor.calculateFloorLevel());
 
-       const connectionPointsCounts = [2, 6, 5];
+       const connectionPointsCounts = [3, 11, 3];
        building.wires = building.floors.map((floor, index) => {
            const aboveFloor = building.floors[index] || null;
            const belowFloor = building.floors[index - 1] || null;
@@ -63,21 +64,17 @@ class Creator {
        });
 
         building.includeWiresInInfoFrame();
-        const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
 
+        //const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
         const ratsData = [
             { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL },
-            { id: 2, active: true, y: Building.GROUND_FLOOR_LEVEL, minX:  Floor.WIDTH / 2, maxX: 2 * Floor.WIDTH / 3, velocity: { x : 3} },
-            { id: 3, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 1.4 } },
-            { id: 4, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
-            { id: 5, active: true, y: MID_FLOOR_LEVEL, minX: 2 * Floor.WIDTH / 4, maxX: 1.15*Floor.WIDTH, velocity: { x: 1.4 }, wireId: 1 },
-            { id: 6, active: true, y: MID_FLOOR_LEVEL, minX: 2 * Ladder.WIDTH, velocity: { x: 0.85}, wireId: 1 },
-            { id: 7, active: true, y: Creator.HIGH_FLOOR_LEVEL, minX: Floor.WIDTH / 3 + 30, maxX: 1.15*Floor.WIDTH, wireId: 0 }
+            { id: 2, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
+            //{ id: 4, active: true, y: MID_FLOOR_LEVEL, velocity: { x: 0.85}, wireId: 1},
+            { id: 3, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0}
         ];
 
         const batsData = [
-            { id: 0, active: true, speed: -0.017 },
-            { id: 1, active: true, currentAngle: Math.PI / 2, /*speed: 0.001*/ }
+            { id: 0, active: true, speed: -0.007 }
         ];
 
         const spidersData = [
@@ -89,7 +86,7 @@ class Creator {
     }
 
     //Level 2
-    static createOfficeGymGarage(physics){
+    static createLevel2(physics){
        let building = new Building('Office Gym Garage');
        building.init(physics); // Initializes ladder and power lines
 
@@ -143,27 +140,25 @@ class Creator {
     }
 
     //Level 3
-    static createBuilding(physics){
-        let building = new Building('Home 2');
-        building.init(physics); // Initializes ladder and power lines
+    static createLevel3(physics) {
+       let building = new Building('House');
+       building.init(physics); // Initializes ladder and power lines
 
-        const atticBuilder = new FloorBuilder();
-        building.floors.push(atticBuilder.withName('floor2').withCeilingConnector(7).withCeilingConnector(12)
-            .withCeilingConnector(23).withBottomConnector(23).withBottomConnector(24).withBottomConnector(25).build());
+       const floorBuilder1 = new FloorBuilder();
+       building.floors.push(floorBuilder1.withName('attic').withBottomConnector(3).withBottomConnector(11)
+           .withCeilingConnector(5).withCeilingConnector(25).withBottomConnector(28).build());
 
-       const gymBuilder = new FloorBuilder();
-       building.floors.push(gymBuilder.withName('power-room').withCeilingConnector(7).withCeilingConnector(12)
-            .withCeilingConnector(19).withCeilingConnector(20).withCeilingConnector(21).withCeilingConnector(26)
-            .withCeilingConnector(27).withCeilingConnector(28).build());
+       const floorBuilder2 = new FloorBuilder();
+       building.floors.push(floorBuilder2.withName('living room').withCeilingConnector(2).withCeilingConnector(29)
+           .withLampInCenter().withTVInCenterLeft().build());
 
-       const garageBuilder = new FloorBuilder();
-       building.floors.push(garageBuilder.withName('basement').withCeilingConnector(7).withCeilingConnector(12)
-            .withCeilingConnector(23).build());
+       const kitchenBuilder = new FloorBuilder();
+       building.floors.push(kitchenBuilder.withName('kitchen').withFridgeOnLeft().withLampInCenter().withKitchenSegmentOnRight().build());
 
        building.floors.forEach(floor => floor.init(physics));
        building.floors.forEach(floor => floor.calculateFloorLevel());
 
-       const connectionPointsCounts = [3, 11, 3];
+       const connectionPointsCounts = [2, 6, 5];
        building.wires = building.floors.map((floor, index) => {
            const aboveFloor = building.floors[index] || null;
            const belowFloor = building.floors[index - 1] || null;
@@ -171,17 +166,21 @@ class Creator {
        });
 
         building.includeWiresInInfoFrame();
+        const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
 
-        //const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
         const ratsData = [
             { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL },
-            { id: 2, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
-            //{ id: 4, active: true, y: MID_FLOOR_LEVEL, velocity: { x: 0.85}, wireId: 1},
-            { id: 3, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0}
+            { id: 2, active: true, y: Building.GROUND_FLOOR_LEVEL, minX:  Floor.WIDTH / 2, maxX: 2 * Floor.WIDTH / 3, velocity: { x : 3} },
+            { id: 3, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 1.4 } },
+            { id: 4, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
+            { id: 5, active: true, y: MID_FLOOR_LEVEL, minX: 2 * Floor.WIDTH / 4, maxX: 1.15*Floor.WIDTH, velocity: { x: 1.4 }, wireId: 1 },
+            { id: 6, active: true, y: MID_FLOOR_LEVEL, minX: 2 * Ladder.WIDTH, velocity: { x: 0.85}, wireId: 1 },
+            { id: 7, active: true, y: Creator.HIGH_FLOOR_LEVEL, minX: Floor.WIDTH / 3 + 30, maxX: 1.15*Floor.WIDTH, wireId: 0 }
         ];
 
         const batsData = [
-            { id: 0, active: true, speed: -0.007 }
+            { id: 0, active: true, speed: -0.017 },
+            { id: 1, active: true, currentAngle: Math.PI / 2, /*speed: 0.001*/ }
         ];
 
         const spidersData = [
@@ -193,7 +192,7 @@ class Creator {
     }
 
     //Level 4
-    static createElectronicsStore(physics){
+    static createLevel4(physics){
         let building = new Building('Electronics Store');
         building.init(physics); // Initializes ladder and power lines
 
@@ -250,6 +249,7 @@ class Creator {
 }
 
 class FrameCreator{
+
     static createLevel2ExtraInfoFrameContent(){
         const content = "<p><div>Retro computers:</div>"
                         + "<div onmouseenter='FrameCreator.showPhoto(\"files/c64.jpg\");' onmouseleave='FrameCreator.hidePhotoDiv();'>Commodore 64</div>"

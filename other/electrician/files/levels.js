@@ -252,7 +252,7 @@ class Level1Scene extends LevelScene {
     }
 
     create() {
-        super.create(Creator.createBuilding);
+        super.create(Creator.createLevel1);
     }
 }
 
@@ -270,7 +270,7 @@ class Level2Scene extends LevelScene{
     }
 
     create() {
-        super.create(Creator.createOfficeGymGarage);
+        super.create(Creator.createLevel2);
         const content = FrameCreator.createLevel2ExtraInfoFrameContent();
         this.showExtraInfoFrame(content);
     }
@@ -290,7 +290,7 @@ class Level3Scene extends LevelScene{
     }
 
     create(){
-        super.create(Creator.create3storeBuilding);
+        super.create(Creator.createLevel3);
     }
 }
 
@@ -309,7 +309,7 @@ class Level4Scene extends LevelScene{
     }
 
      create() {
-        super.create(Creator.createElectronicsStore);
+        super.create(Creator.createLevel4);
         const content = FrameCreator.createLevel4ExtraInfoFrameContent();
         this.showExtraInfoFrame(content);
      }
