@@ -41,17 +41,14 @@ class Creator {
         building.init(physics); // Initializes ladder and power lines
 
         const atticBuilder = new FloorBuilder();
-        building.floors.push(atticBuilder.withName('floor2').withCeilingConnector(7).withCeilingConnector(12)
-            .withCeilingConnector(23).withBottomConnector(23).withBottomConnector(24).withBottomConnector(25).build());
+        building.floors.push(atticBuilder.withName('floor2').withCeilingConnectors([7, 12, 23])
+            .withBottomConnectors([23,24,25]).build());
 
        const gymBuilder = new FloorBuilder();
-       building.floors.push(gymBuilder.withName('power-room').withCeilingConnector(7).withCeilingConnector(12)
-            .withCeilingConnector(19).withCeilingConnector(20).withCeilingConnector(21).withCeilingConnector(26)
-            .withCeilingConnector(27).withCeilingConnector(28).build());
+       building.floors.push(gymBuilder.withName('power-room').withCeilingConnectors([7, 12, 19, 20, 21, 26, 27, 28]).build());
 
        const garageBuilder = new FloorBuilder();
-       building.floors.push(garageBuilder.withName('basement').withCeilingConnector(7).withCeilingConnector(12)
-            .withCeilingConnector(23).build());
+       building.floors.push(garageBuilder.withName('basement').withCeilingConnectors([7, 12, 23]).build());
 
        building.floors.forEach(floor => floor.init(physics));
        building.floors.forEach(floor => floor.calculateFloorLevel());
@@ -91,17 +88,14 @@ class Creator {
        building.init(physics); // Initializes ladder and power lines
 
        const officeBuilder = new FloorBuilder();
-       building.floors.push(officeBuilder.withName('office').withBottomConnector(5).withBottomConnector(9)
-            .withBottomConnector(13).withBottomConnector(16).withBottomConnector(19).withBottomConnector(26)
-            .withCeilingConnector(5).withCeilingConnector(12).withCeilingConnector(20).withCeilingConnector(26).build());
+       building.floors.push(officeBuilder.withName('office').withBottomConnectors([5, 9, 13, 16, 19, 26])
+            .withCeilingConnectors([5, 12, 20, 26]).build());
 
        const gymBuilder = new FloorBuilder();
-       building.floors.push(gymBuilder.withName('gym').withCeilingConnector(7).withCeilingConnector(23)
-        .build());
+       building.floors.push(gymBuilder.withName('gym').withCeilingConnectors([7, 23]).build());
 
        const garageBuilder = new FloorBuilder();
-       building.floors.push(garageBuilder.withName('garage').withCeilingConnector(5).withCeilingConnector(20)
-        .withCeilingConnector(22).withCeilingConnector(29).build());
+       building.floors.push(garageBuilder.withName('garage').withCeilingConnectors([5, 20,22, 29]).build());
 
        building.floors.forEach(floor => floor.init(physics));
        building.floors.forEach(floor => floor.calculateFloorLevel());
@@ -145,11 +139,11 @@ class Creator {
        building.init(physics); // Initializes ladder and power lines
 
        const floorBuilder1 = new FloorBuilder();
-       building.floors.push(floorBuilder1.withName('attic').withBottomConnector(3).withBottomConnector(11)
-           .withCeilingConnector(5).withCeilingConnector(25).withBottomConnector(28).build());
+       building.floors.push(floorBuilder1.withName('attic').withBottomConnectors([3, 11, 28])
+           .withCeilingConnectors([5, 25]).build());
 
        const floorBuilder2 = new FloorBuilder();
-       building.floors.push(floorBuilder2.withName('living room').withCeilingConnector(2).withCeilingConnector(29)
+       building.floors.push(floorBuilder2.withName('living room').withCeilingConnectors([2, 29])
            .withLampInCenter().withTVInCenterLeft().build());
 
        const kitchenBuilder = new FloorBuilder();
@@ -197,18 +191,16 @@ class Creator {
         building.init(physics); // Initializes ladder and power lines
 
        const musicFloorBuilder = new FloorBuilder();
-       building.floors.push(musicFloorBuilder.withName('music-floor').withCeilingConnector(6).withCeilingConnector(19)
-            .withBottomConnector(3).withBottomConnector(9).withBottomConnector(14).withBottomConnector(17)
-            .withBottomConnector(21).withBottomConnector(25).withBottomConnector(28).build());
+       building.floors.push(musicFloorBuilder.withName('music-floor').withCeilingConnectors([6, 19])
+            .withBottomConnectors([3, 9, 14, 17, 21, 25, 28]).build());
 
        const computerRoomBuilder = new FloorBuilder();
-       building.floors.push(computerRoomBuilder.withName('computer-room').withCeilingConnector(2).withCeilingConnector(7)
-            .withCeilingConnector(12).withCeilingConnector(20)
-            .withBottomConnector(26).build());
+       building.floors.push(computerRoomBuilder.withName('computer-room').withCeilingConnectors([2, 7, 12, 20])
+            .withBottomConnectors([26]).build());
 
        const groundFloorBuilder = new FloorBuilder();
-        building.floors.push(groundFloorBuilder.withName('computer-room2').withCeilingConnector(5).withCeilingConnector(12)
-            .withCeilingConnector(12).withCeilingConnector(15).withCeilingConnector(19).withCeilingConnector(25).build());
+        building.floors.push(groundFloorBuilder.withName('computer-room2').withCeilingConnectors([5, 12, 15, 19, 25])
+            .build());
 
        building.floors.forEach(floor => floor.init(physics));
        building.floors.forEach(floor => floor.calculateFloorLevel());

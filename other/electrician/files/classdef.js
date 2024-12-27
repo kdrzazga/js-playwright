@@ -390,39 +390,39 @@ class FloorBuilder {
         return this;
     }
 
-    withCeilingConnector(connectorSlot){
-        this.floor.ceilingConnectors.push(connectorSlot);
+    withCeilingConnectors(connectorSlotsArray){
+        this.floor.ceilingConnectors.push(...connectorSlotsArray);
         return this;
     }
 
-    withBottomConnector(connectorSlot) {
-        this.floor.bottomConnectors.push(connectorSlot);
+    withBottomConnectors(connectorSlotsArray) {
+        this.floor.bottomConnectors.push(...connectorSlotsArray);
         return this;
     }
 
     withLampInCenter() {
         const lampConnectorX = Math.floor(Floor.WIDTH/Wire.SLOT_SIZE /2);
-        this.withCeilingConnector(lampConnectorX);
+        this.withCeilingConnectors([lampConnectorX]);
         return this;
     }
 
     withTVInCenterLeft(){
         const tvConnectorX = 12;
-        this.withBottomConnector(tvConnectorX);
+        this.withBottomConnectors([tvConnectorX]);
         return this;
     }
 
     withFridgeOnLeft(){
         const fridgeConnectorSlot = 2;
-        this.withCeilingConnector(fridgeConnectorSlot);
+        this.withCeilingConnectors([fridgeConnectorSlot]);
         return this;
     }
 
     withKitchenSegmentOnRight(){
         const fridge2ConnectorSlot = 29;
         const fanConnectorSlot = 26;
-        this.withCeilingConnector(fridge2ConnectorSlot);
-        this.withCeilingConnector(fanConnectorSlot);
+        this.withCeilingConnectors([fridge2ConnectorSlot]);
+        this.withCeilingConnectors([fanConnectorSlot]);
         return this;
     }
 }
