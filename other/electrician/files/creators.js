@@ -240,7 +240,7 @@ class Creator {
         ];
 
         const spidersData = [
-             { id: 1, active: true, y: 510, velocity: { x: 0 } }
+             { id: 1, active: true, y: 21, velocity: { y: 0.5 } }
         ];
 
         building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);

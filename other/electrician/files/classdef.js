@@ -347,7 +347,7 @@ class Spider extends Enemy{
         const collisionHorizontal = (Math.abs(distanceX) < threshold);
 
         if (collisionVertical && collisionHorizontal) location.reload();
-        return 0;
+        else return 0;
     }
 
 }
