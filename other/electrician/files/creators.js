@@ -181,6 +181,7 @@ class Creator {
     }
 
     static createLevel3(physics) {
+
        let building = new Building('House');
        building.init(physics); // Initializes ladder and power lines
 
@@ -232,22 +233,46 @@ class Creator {
     }
 
     static createLevel4(physics){
+        const floorsData = {
+            "floors": [
+              {
+                "name": "music-floor",
+                "bottomConnectors": [3, 9, 14, 17, 21, 25, 28],
+                "ceilingConnectors": [6, 19]
+              },
+              {
+                "name": "computer-room",
+                "bottomConnectors" : [26],
+                "ceilingConnectors": [2, 7, 12, 20]
+              },
+              {
+                "name": "computer-room2",
+                "ceilingConnectors": [5, 12, 15, 19, 25]
+              }
+            ]
+        };
+
         let building = new Building('Electronics Store');
         building.init(physics); // Initializes ladder and power lines
 
-       const musicFloorBuilder = new FloorBuilder();
-       building.floors.push(musicFloorBuilder.withName('music-floor').withCeilingConnectors([6, 19])
-            .withBottomConnectors([3, 9, 14, 17, 21, 25, 28]).build());
+       floorsData.floors.forEach(floorData => {
+           let floorBuilder = new FloorBuilder();
 
-       const computerRoomBuilder = new FloorBuilder();
-       building.floors.push(computerRoomBuilder.withName('computer-room').withCeilingConnectors([2, 7, 12, 20])
-            .withBottomConnectors([26]).build());
+           floorBuilder = floorBuilder.withName(floorData.name);
 
-       const groundFloorBuilder = new FloorBuilder();
-        building.floors.push(groundFloorBuilder.withName('computer-room2').withCeilingConnectors([5, 12, 15, 19, 25])
-            .build());
+           if (floorData.bottomConnectors) {
+               floorBuilder = floorBuilder.withBottomConnectors(floorData.bottomConnectors);
+           }
 
-       building.floors.forEach(floor => floor.init(physics));
+           if (floorData.ceilingConnectors) {
+               floorBuilder = floorBuilder.withCeilingConnectors(floorData.ceilingConnectors);
+           }
+
+            const newFloor = floorBuilder.build();
+            newFloor.init(physics);
+           building.floors.push(newFloor);
+       });
+
        building.floors.forEach(floor => floor.calculateFloorLevel());
 
        const connectionPointsCounts = [2, 11, 6];
