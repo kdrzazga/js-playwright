@@ -59,6 +59,11 @@ class Creator {
 
        building.floors.forEach(floor => floor.calculateFloorLevel());
 
+       const ratsData = levelJson.building.enemies.rats;
+       const batsData = levelJson.building.enemies.bats;
+       const spidersData = levelJson.building.enemies.spiders;
+       building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
+
        return building;
     }
 
@@ -80,7 +85,21 @@ class Creator {
                     "name": "basement",
                     "ceilingConnectors": [7, 12, 23]
                   }
-                ]
+                ],
+                "enemies":{
+                    "rats": [
+                        { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL },
+                        { id: 2, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
+                        //{ id: 4, active: true, y: MID_FLOOR_LEVEL, velocity: { x: 0.85}, wireId: 1},
+                        { id: 3, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0}
+                    ],
+
+                    "bats": [
+                        { id: 0, active: true, speed: -0.007 }
+                    ],
+
+                    "spiders": []
+                }
             }
         };
 
@@ -94,24 +113,6 @@ class Creator {
        });
 
         building.includeWiresInInfoFrame();
-
-        //const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
-        const ratsData = [
-            { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL },
-            { id: 2, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
-            //{ id: 4, active: true, y: MID_FLOOR_LEVEL, velocity: { x: 0.85}, wireId: 1},
-            { id: 3, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0}
-        ];
-
-        const batsData = [
-            { id: 0, active: true, speed: -0.007 }
-        ];
-
-        const spidersData = [
-        ];
-
-        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
-
         return building;
     }
 
