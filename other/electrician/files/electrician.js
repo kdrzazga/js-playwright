@@ -1,4 +1,4 @@
-const levelsJson = {'lvl1' : Level1Scene, 'lvl2': Level2Scene, 'lvl3': Level3Scene, 'lvl4': Level4Scene}
+const levelsJson = {'lvl1' : Level1Scene, 'lvl2': Level2Scene, 'lvl3': Level3Scene, 'lvl4': Level4Scene, 'lvl5': Level5Scene }
 
 let level = sessionStorage.getItem("level");
 let levelObject = Level1Scene;
