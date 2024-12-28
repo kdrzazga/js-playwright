@@ -64,6 +64,14 @@ class Creator {
        const spidersData = levelJson.building.enemies.spiders;
        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
 
+       building.wires = building.floors.map((floor, index) => {
+           const aboveFloor = building.floors[index] || null;
+           const belowFloor = building.floors[index - 1] || null;
+           return new Wire(index, physics, belowFloor, aboveFloor, levelJson.building.connectionPointsCounts[index]);
+       });
+
+        building.includeWiresInInfoFrame();
+
        return building;
     }
 
@@ -105,16 +113,7 @@ class Creator {
        };
 
        let building = Creator.createLevel(buildingData, physics);
-
-       const connectionPointsCounts = [3, 11, 3];
-       building.wires = building.floors.map((floor, index) => {
-           const aboveFloor = building.floors[index] || null;
-           const belowFloor = building.floors[index - 1] || null;
-           return new Wire(index, physics, belowFloor, aboveFloor, connectionPointsCounts[index]);
-       });
-
-        building.includeWiresInInfoFrame();
-        return building;
+       return building;
     }
 
     static createLevel2(physics){
@@ -160,16 +159,7 @@ class Creator {
         };
 
        let building = Creator.createLevel(buildingData, physics);
-
-       const connectionPointsCounts = [4, 8, 4];
-       building.wires = building.floors.map((floor, index) => {
-           const aboveFloor = building.floors[index] || null;
-           const belowFloor = building.floors[index - 1] || null;
-           return new Wire(index, physics, belowFloor, aboveFloor, connectionPointsCounts[index]);
-       });
-
-        building.includeWiresInInfoFrame();
-        return building;
+       return building;
     }
 
     static createLevel3(physics) {
@@ -267,15 +257,7 @@ class Creator {
         };
 
        let building = Creator.createLevel(buildingData, physics);
-       const connectionPointsCounts = [2, 11, 6];
-       building.wires = building.floors.map((floor, index) => {
-           const aboveFloor = building.floors[index] || null;
-           const belowFloor = building.floors[index - 1] || null;
-           return new Wire(index, physics, belowFloor, aboveFloor, connectionPointsCounts[index]);
-       });
-
-        building.includeWiresInInfoFrame();
-        return building;
+       return building;
     }
 }
 
