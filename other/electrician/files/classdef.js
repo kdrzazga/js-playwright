@@ -266,7 +266,7 @@ class Enemy {
     }
 }
 
-class Bat extends Enemy{
+class Bat extends Enemy {
     static MOVE_RADIUS = 280;
 
     constructor(id){

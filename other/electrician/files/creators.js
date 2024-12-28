@@ -259,6 +259,49 @@ class Creator {
        let building = Creator.createLevel(buildingData, physics);
        return building;
     }
+
+    static createLevel5(physics){
+       const buildingData = {
+            "building": {
+                "name": 'Dwelling 2',
+                "floors": [
+                  {
+                    "name": "music-floor",
+                    "bottomConnectors": [3, 9, 14, 17, 21, 25, 28],
+                    "ceilingConnectors": [6, 19]
+                  },
+                  {
+                    "name": "computer-room",
+                    "bottomConnectors" : [26],
+                    "ceilingConnectors": [2, 7, 12, 20]
+                  },
+                  {
+                    "name": "computer-room2",
+                    "ceilingConnectors": [5, 12, 15, 19, 25]
+                  }
+                ],
+                "enemies":{
+                    "rats": [
+                    ],
+
+                    "bats": [
+                        { id: 0, active: true, speed: -0.007 },
+                        { id: 1, active: true, speed: -0.006 }
+                    ],
+
+                    "spiders": [
+                        { id: 1, active: true, y: 25, velocity: { y: 0.5 } },
+                        { id: 2, active: true, y: 25, velocity: { y: 0.7 } },
+                        { id: 3, active: true, y: 25, velocity: { y: 0.9 } }
+                    ]
+                },
+                "connectionPointsCounts" : [2, 11, 6]
+            }
+        };
+
+       let building = Creator.createLevel(buildingData, physics);
+       return building;
+    }
 }
 
 class FrameCreator{
