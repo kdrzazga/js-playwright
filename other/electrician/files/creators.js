@@ -36,20 +36,44 @@ class Creator {
     }
 
     static createLevel1(physics){
-        let building = new Building('Home 2');
-        building.init(physics); // Initializes ladder and power lines
+        const floorsData = {
+            "floors": [
+              {
+                "name": "floor2",
+                "bottomConnectors": [23, 24, 25],
+                "ceilingConnectors": [7, 12, 23]
+              },
+              {
+                "name": "power-room",
+                "ceilingConnectors": [7, 12, 19, 20, 21, 26, 27, 28]
+              },
+              {
+                "name": "basement",
+                "ceilingConnectors": [7, 12, 23]
+              }
+            ]
+        };
+       let building = new Building('Office Gym Garage');
+       building.init(physics);
 
-        const atticBuilder = new FloorBuilder();
-        building.floors.push(atticBuilder.withName('floor2').withCeilingConnectors([7, 12, 23])
-            .withBottomConnectors([23,24,25]).build());
+       floorsData.floors.forEach(floorData => {
+           let floorBuilder = new FloorBuilder();
 
-       const gymBuilder = new FloorBuilder();
-       building.floors.push(gymBuilder.withName('power-room').withCeilingConnectors([7, 12, 19, 20, 21, 26, 27, 28]).build());
+           floorBuilder = floorBuilder.withName(floorData.name);
 
-       const garageBuilder = new FloorBuilder();
-       building.floors.push(garageBuilder.withName('basement').withCeilingConnectors([7, 12, 23]).build());
+           if (floorData.bottomConnectors) {
+               floorBuilder = floorBuilder.withBottomConnectors(floorData.bottomConnectors);
+           }
 
-       building.floors.forEach(floor => floor.init(physics));
+           if (floorData.ceilingConnectors) {
+               floorBuilder = floorBuilder.withCeilingConnectors(floorData.ceilingConnectors);
+           }
+
+            const newFloor = floorBuilder.build();
+            newFloor.init(physics);
+           building.floors.push(newFloor);
+       });
+
        building.floors.forEach(floor => floor.calculateFloorLevel());
 
        const connectionPointsCounts = [3, 11, 3];
@@ -103,7 +127,6 @@ class Creator {
        let building = new Building('Office Gym Garage');
        building.init(physics); // Initializes ladder and power lines
 
-       // Iterate over the floors data and create floors
        floorsData.floors.forEach(floorData => {
            let floorBuilder = new FloorBuilder();
 
