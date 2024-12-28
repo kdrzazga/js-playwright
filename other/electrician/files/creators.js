@@ -35,28 +35,11 @@ class Creator {
         return enemy;
     }
 
-    static createLevel1(physics){
-        const floorsData = {
-            "floors": [
-              {
-                "name": "floor2",
-                "bottomConnectors": [23, 24, 25],
-                "ceilingConnectors": [7, 12, 23]
-              },
-              {
-                "name": "power-room",
-                "ceilingConnectors": [7, 12, 19, 20, 21, 26, 27, 28]
-              },
-              {
-                "name": "basement",
-                "ceilingConnectors": [7, 12, 23]
-              }
-            ]
-        };
-       let building = new Building('Office Gym Garage');
+    static createLevel(levelJson, physics){
+       let building = new Building(levelJson.building.name);
        building.init(physics);
 
-       floorsData.floors.forEach(floorData => {
+       levelJson.building.floors.forEach(floorData => {
            let floorBuilder = new FloorBuilder();
 
            floorBuilder = floorBuilder.withName(floorData.name);
@@ -75,6 +58,33 @@ class Creator {
        });
 
        building.floors.forEach(floor => floor.calculateFloorLevel());
+
+       return building;
+    }
+
+    static createLevel1(physics){
+        const floorsData = {
+            "building": {
+                "name": 'Dwelling 1',
+                "floors": [
+                  {
+                    "name": "floor2",
+                    "bottomConnectors": [23, 24, 25],
+                    "ceilingConnectors": [7, 12, 23]
+                  },
+                  {
+                    "name": "power-room",
+                    "ceilingConnectors": [7, 12, 19, 20, 21, 26, 27, 28]
+                  },
+                  {
+                    "name": "basement",
+                    "ceilingConnectors": [7, 12, 23]
+                  }
+                ]
+            }
+        };
+
+       let building = Creator.createLevel(floorsData, physics);
 
        const connectionPointsCounts = [3, 11, 3];
        building.wires = building.floors.map((floor, index) => {
