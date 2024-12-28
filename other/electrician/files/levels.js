@@ -324,14 +324,12 @@ class Level5Scene extends LevelScene{
     }
 
     loadFloorImages(){
-         this.load.image('floor0', 'files/darkFloor.png');
-         this.load.image('floor1', 'files/computer-room.png');
-         this.load.image('floor2', 'files/computer-room2.png');
+         this.load.image('floor0', 'files/room-wide-web.png');
+         this.load.image('floor1', 'files/room-wide-web2.png');
+         this.load.image('floor2', 'files/room-wide-web.png');
     }
 
      create() {
         super.create(Creator.createLevel5);
-        const content = FrameCreator.createLevel4ExtraInfoFrameContent();
-        this.showExtraInfoFrame(content);
      }
 }

@@ -31,6 +31,7 @@ class Creator {
         }
 
         if (data.velocity) enemy.sprite.velocity = data.velocity;
+        if (data.speed) enemy.speed = data.speed;
 
         return enemy;
     }
@@ -263,21 +264,21 @@ class Creator {
     static createLevel5(physics){
        const buildingData = {
             "building": {
-                "name": 'Dwelling 2',
+                "name": 'Spider Dwelling',
                 "floors": [
                   {
                     "name": "music-floor",
-                    "bottomConnectors": [3, 9, 14, 17, 21, 25, 28],
-                    "ceilingConnectors": [6, 19]
+                    "bottomConnectors": [],
+                    "ceilingConnectors": []
                   },
                   {
                     "name": "computer-room",
-                    "bottomConnectors" : [26],
-                    "ceilingConnectors": [2, 7, 12, 20]
+                    "bottomConnectors" : [],
+                    "ceilingConnectors": []
                   },
                   {
                     "name": "computer-room2",
-                    "ceilingConnectors": [5, 12, 15, 19, 25]
+                    "ceilingConnectors": []
                   }
                 ],
                 "enemies":{
@@ -285,17 +286,21 @@ class Creator {
                     ],
 
                     "bats": [
-                        { id: 0, active: true, speed: -0.007 },
-                        { id: 1, active: true, speed: -0.006 }
+                        { id: 0, active: true, speed: -0.009 },
+                        { id: 1, active: true, speed: -0.010 }
                     ],
 
                     "spiders": [
-                        { id: 1, active: true, y: 25, velocity: { y: 0.5 } },
-                        { id: 2, active: true, y: 25, velocity: { y: 0.7 } },
-                        { id: 3, active: true, y: 25, velocity: { y: 0.9 } }
+                        { id: 1, active: true, y: 25, speed : 0.7},
+                        { id: 2, active: true, y: 25, speed : 3},
+                        { id: 3, active: true, y: 25, speed : 1.1},
+                        { id: 6, active: true, y: 25, speed : 0.6},
+                        { id: 8, active: true, y: 25, speed : 0.9},
+                        { id: 10, active: true, y: 25, speed : 1},
+                        { id: 12, active: true, y: 25, speed : 1.8},
                     ]
                 },
-                "connectionPointsCounts" : [2, 11, 6]
+                "connectionPointsCounts" : [0, 0, 0]
             }
         };
 
