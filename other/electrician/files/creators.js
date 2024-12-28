@@ -68,7 +68,7 @@ class Creator {
     }
 
     static createLevel1(physics){
-        const floorsData = {
+       const buildingData = {
             "building": {
                 "name": 'Dwelling 1',
                 "floors": [
@@ -99,11 +99,12 @@ class Creator {
                     ],
 
                     "spiders": []
-                }
+                },
+                "connectionPointsCounts": [3, 11, 3]
             }
-        };
+       };
 
-       let building = Creator.createLevel(floorsData, physics);
+       let building = Creator.createLevel(buildingData, physics);
 
        const connectionPointsCounts = [3, 11, 3];
        building.wires = building.floors.map((floor, index) => {
@@ -117,46 +118,48 @@ class Creator {
     }
 
     static createLevel2(physics){
-        const floorsData = {
-            "floors": [
-              {
-                "name": "office",
-                "bottomConnectors": [5, 9, 13, 16, 19, 26],
-                "ceilingConnectors": [5, 12, 20, 26]
-              },
-              {
-                "name": "gym",
-                "ceilingConnectors": [7, 23]
-              },
-              {
-                "name": "garage",
-                "ceilingConnectors": [5, 20, 22, 29]
-              }
-            ]
+
+       const buildingData = {
+            "building": {
+                "name": 'Office Gym Garage 1',
+                "floors": [
+                  {
+                    "name": "office",
+                    "bottomConnectors": [5, 9, 13, 16, 19, 26],
+                    "ceilingConnectors": [5, 12, 20, 26]
+                  },
+                  {
+                    "name": "gym",
+                    "ceilingConnectors": [7, 23]
+                  },
+                  {
+                    "name": "garage",
+                    "ceilingConnectors": [5, 20, 22, 29]
+                  }
+                ],
+                "enemies":{
+                    "rats": [
+                        { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL }
+                    ],
+
+                    "bats": [
+                        { id: 0, active: true, speed: 0.007 },
+                        { id: 1, active: true, speed: 0.006 },
+                        { id: 2, active: true, speed: 0.005 },
+                        { id: 3, active: true, speed: 0.004 },
+                        { id: 4, active: true, speed: 0.008 },
+                        { id: 5, active: true, speed: 0.0053 },
+                        { id: 6, active: true, speed: 0.009 },
+                        { id: 7, active: true, speed: 0.0042 }
+                    ],
+
+                    "spiders": []
+                },
+                "connectionPointsCounts" : [4, 8, 4]
+            }
         };
 
-       let building = new Building('Office Gym Garage');
-       building.init(physics); // Initializes ladder and power lines
-
-       floorsData.floors.forEach(floorData => {
-           let floorBuilder = new FloorBuilder();
-
-           floorBuilder = floorBuilder.withName(floorData.name);
-
-           if (floorData.bottomConnectors) {
-               floorBuilder = floorBuilder.withBottomConnectors(floorData.bottomConnectors);
-           }
-
-           if (floorData.ceilingConnectors) {
-               floorBuilder = floorBuilder.withCeilingConnectors(floorData.ceilingConnectors);
-           }
-
-            const newFloor = floorBuilder.build();
-            newFloor.init(physics);
-           building.floors.push(newFloor);
-       });
-
-       building.floors.forEach(floor => floor.calculateFloorLevel());
+       let building = Creator.createLevel(buildingData, physics);
 
        const connectionPointsCounts = [4, 8, 4];
        building.wires = building.floors.map((floor, index) => {
@@ -166,28 +169,6 @@ class Creator {
        });
 
         building.includeWiresInInfoFrame();
-
-        //const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
-        const ratsData = [
-            { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL }
-        ];
-
-        const batsData = [
-            { id: 0, active: true, speed: 0.007 },
-            { id: 1, active: true, speed: 0.006 },
-            { id: 3, active: true, speed: 0.005 },
-            { id: 4, active: true, speed: 0.004 },
-            { id: 5, active: true, speed: 0.008 },
-            { id: 6, active: true, speed: 0.0053 },
-            { id: 7, active: true, speed: 0.009 },
-            { id: 8, active: true, speed: 0.0042 },
-        ];
-
-        const spidersData = [
-        ];
-
-        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
-
         return building;
     }
 
@@ -244,48 +225,48 @@ class Creator {
     }
 
     static createLevel4(physics){
-        const floorsData = {
-            "floors": [
-              {
-                "name": "music-floor",
-                "bottomConnectors": [3, 9, 14, 17, 21, 25, 28],
-                "ceilingConnectors": [6, 19]
-              },
-              {
-                "name": "computer-room",
-                "bottomConnectors" : [26],
-                "ceilingConnectors": [2, 7, 12, 20]
-              },
-              {
-                "name": "computer-room2",
-                "ceilingConnectors": [5, 12, 15, 19, 25]
-              }
-            ]
+       const buildingData = {
+            "building": {
+                "name": 'Dwelling 1',
+                "floors": [
+                  {
+                    "name": "music-floor",
+                    "bottomConnectors": [3, 9, 14, 17, 21, 25, 28],
+                    "ceilingConnectors": [6, 19]
+                  },
+                  {
+                    "name": "computer-room",
+                    "bottomConnectors" : [26],
+                    "ceilingConnectors": [2, 7, 12, 20]
+                  },
+                  {
+                    "name": "computer-room2",
+                    "ceilingConnectors": [5, 12, 15, 19, 25]
+                  }
+                ],
+                "enemies":{
+                    "rats": [
+                       { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.7 } },
+                       { id: 2, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.8 } },
+                       { id: 3, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.9 } },
+                       { id: 4, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
+                       { id: 5, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0},
+                       { id: 6, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0, velocity: { x: 0.97 } }
+                    ],
+
+                    "bats": [
+                        { id: 0, active: true, speed: -0.007 },
+                        { id: 1, active: true, speed: -0.006 },
+                        { id: 2, active: true, speed: 0.003 }
+                    ],
+
+                    "spiders": [{ id: 1, active: true, y: 25, velocity: { y: 0.5 } }]
+                },
+                "connectionPointsCounts" : [2, 11, 6]
+            }
         };
 
-        let building = new Building('Electronics Store');
-        building.init(physics); // Initializes ladder and power lines
-
-       floorsData.floors.forEach(floorData => {
-           let floorBuilder = new FloorBuilder();
-
-           floorBuilder = floorBuilder.withName(floorData.name);
-
-           if (floorData.bottomConnectors) {
-               floorBuilder = floorBuilder.withBottomConnectors(floorData.bottomConnectors);
-           }
-
-           if (floorData.ceilingConnectors) {
-               floorBuilder = floorBuilder.withCeilingConnectors(floorData.ceilingConnectors);
-           }
-
-            const newFloor = floorBuilder.build();
-            newFloor.init(physics);
-           building.floors.push(newFloor);
-       });
-
-       building.floors.forEach(floor => floor.calculateFloorLevel());
-
+       let building = Creator.createLevel(buildingData, physics);
        const connectionPointsCounts = [2, 11, 6];
        building.wires = building.floors.map((floor, index) => {
            const aboveFloor = building.floors[index] || null;
@@ -294,29 +275,6 @@ class Creator {
        });
 
         building.includeWiresInInfoFrame();
-
-        //const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
-        const ratsData = [
-            { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.7 } },
-            { id: 2, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.8 } },
-            { id: 3, active: true, y: Building.GROUND_FLOOR_LEVEL, velocity: { x: 0.9 } },
-            { id: 4, active: true, y: Creator.LOW_FLOOR_LEVEL, velocity: { x: 0.7 }, wireId: 2},
-            { id: 5, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0},
-            { id: 6, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0, velocity: { x: 0.97 } }
-        ];
-
-        const batsData = [
-            { id: 0, active: true, speed: -0.007 },
-            { id: 1, active: true, speed: -0.006 },
-            { id: 2, active: true, speed: 0.003 }
-        ];
-
-        const spidersData = [
-             { id: 1, active: true, y: 25, velocity: { y: 0.5 } }
-        ];
-
-        building.enemies = Creator.createEnemies(ratsData, batsData, spidersData, physics);
-
         return building;
     }
 }
