@@ -82,20 +82,46 @@ class Creator {
     }
 
     static createLevel2(physics){
+        const floorsData = {
+            "floors": [
+              {
+                "name": "office",
+                "bottomConnectors": [5, 9, 13, 16, 19, 26],
+                "ceilingConnectors": [5, 12, 20, 26]
+              },
+              {
+                "name": "gym",
+                "ceilingConnectors": [7, 23]
+              },
+              {
+                "name": "garage",
+                "ceilingConnectors": [5, 20, 22, 29]
+              }
+            ]
+        };
+
        let building = new Building('Office Gym Garage');
        building.init(physics); // Initializes ladder and power lines
 
-       const officeBuilder = new FloorBuilder();
-       building.floors.push(officeBuilder.withName('office').withBottomConnectors([5, 9, 13, 16, 19, 26])
-            .withCeilingConnectors([5, 12, 20, 26]).build());
+       // Iterate over the floors data and create floors
+       floorsData.floors.forEach(floorData => {
+           let floorBuilder = new FloorBuilder();
 
-       const gymBuilder = new FloorBuilder();
-       building.floors.push(gymBuilder.withName('gym').withCeilingConnectors([7, 23]).build());
+           floorBuilder = floorBuilder.withName(floorData.name);
 
-       const garageBuilder = new FloorBuilder();
-       building.floors.push(garageBuilder.withName('garage').withCeilingConnectors([5, 20,22, 29]).build());
+           if (floorData.bottomConnectors) {
+               floorBuilder = floorBuilder.withBottomConnectors(floorData.bottomConnectors);
+           }
 
-       building.floors.forEach(floor => floor.init(physics));
+           if (floorData.ceilingConnectors) {
+               floorBuilder = floorBuilder.withCeilingConnectors(floorData.ceilingConnectors);
+           }
+
+            const newFloor = floorBuilder.build();
+            newFloor.init(physics);
+           building.floors.push(newFloor);
+       });
+
        building.floors.forEach(floor => floor.calculateFloorLevel());
 
        const connectionPointsCounts = [4, 8, 4];
@@ -106,6 +132,7 @@ class Creator {
        });
 
         building.includeWiresInInfoFrame();
+
         //const MID_FLOOR_LEVEL = 328 - Floor.HEIGHT / 2;
         const ratsData = [
             { id: 1, active: true, y: Building.GROUND_FLOOR_LEVEL }
@@ -121,7 +148,6 @@ class Creator {
             { id: 7, active: true, speed: 0.009 },
             { id: 8, active: true, speed: 0.0042 },
         ];
-
 
         const spidersData = [
         ];

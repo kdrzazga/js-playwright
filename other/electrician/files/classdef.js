@@ -183,7 +183,7 @@ class Wire {
 
     calculateY(floor1, floor2) {
         const y1 = floor1?.sprite.y || 0;
-        const y2 = floor2 ? floor2.sprite.y : 0;
+        const y2 = floor2?.sprite.y || 0;
         return (y1 + y2) / 2;
     }
 
