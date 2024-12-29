@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Card Deck Building Game</title>
+    <style>
+        #gameState {
+            margin: 10px;
+            font-family: Arial, sans-serif;
+        }
+        #hand {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Card Deck Building Game</h1>
+<div id="gameState">
+    <p></p><div id="set"></div>
+    <p></p><div id="table"></div>
+    <p></p><div id="hand"></div>
+    <p></p><div id="deck"></div>
+    <p></p><div id="discard"></div>
+    <p></p><div id="purchasingPower">Purchasing power: 0</div>
+    <p></p><div id="score">Score: 0</div>
+    <p></p><div id="message"></div>
+</div>
+<button id="playActionCard">Play Action Card</button>
+<button id="playCurrencyCards">Play Currency Cards</button>
+<button id="buyCard">Buy Card</button>
+<button id="nextRound">Next round</button>
+
+<script src="cards.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

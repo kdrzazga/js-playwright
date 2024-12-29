@@ -292,6 +292,8 @@ class Creator {
 
                     "spiders": [
                         { id: 1, active: true, y: 25, speed : 0.7},
+                        { id: 1, active: true, y: 25, speed : 1.4},
+                        { id: 1, active: true, y: 25, speed : 0.35},
                         { id: 2, active: true, y: 25, speed : 3},
                         { id: 3, active: true, y: 25, speed : 1.1},
                         { id: 6, active: true, y: 25, speed : 0.6},

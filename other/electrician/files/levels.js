@@ -5,6 +5,7 @@ class LevelScene extends Phaser.Scene {
         this.playerFalling = false;
         this.nextLevel = '';
         this.extraInfoFrameVisible = "left: 85%; visibility: hidden";
+        this.currentPlayerPic = 'sprite';
     }
 
     preload() {
@@ -13,6 +14,9 @@ class LevelScene extends Phaser.Scene {
         console.log('Floor height = ' + Floor.HEIGHT);
 
         this.load.image('sprite', 'files/electrician.png');
+        this.load.image('spriteRight', 'files/electricianRight.png');
+        this.load.image('spriteClimb', 'files/electricianClimp.png');
+
         for (let i = 1; i <= 8; i++) {
             this.load.image(`rat${i}`, 'files/rat.png');
         }
@@ -140,24 +144,30 @@ class LevelScene extends Phaser.Scene {
 
         if (this.cursors.left.isDown) {
             velocityX = -160;
+            this.currentPlayerPic = 'sprite';
             if (this.cursors.up.isDown) {
                 this.jump('left');
             }
         } else if (this.cursors.right.isDown) {
             velocityX = 160;
+            this.currentPlayerPic = 'spriteRight';
             if (this.cursors.up.isDown) {
                 this.jump('right');
             }
         }
 
-        if (velocityX === 0 && this.building.ladder.onLadder(this.player.x)) {
-            if (this.cursors.up.isDown) {
-                velocityY = -160;
-            } else if (this.cursors.down.isDown) {
-                velocityY = 160;
+        if(this.building.ladder.onLadder(this.player.x)){
+            this.currentPlayerPic = 'spriteClimb';
+            if (velocityX === 0) {
+                if (this.cursors.up.isDown) {
+                    velocityY = -160;
+                } else if (this.cursors.down.isDown) {
+                    velocityY = 160;
+                }
             }
         }
 
+        this.player.setTexture(this.currentPlayerPic);
         this.player.setVelocityX(velocityX);
         this.player.setVelocityY(velocityY);
 
