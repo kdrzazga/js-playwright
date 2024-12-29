@@ -65,6 +65,8 @@ class Game {
     }
 
     updateDisplay() {
+        if (typeof document === 'undefined' || document === null) return;
+
         document.getElementById("set").innerText = "Set: " + this.cardSet.map(card => card.type).join(", ") + `  [${this.cardSet.length}]`;
         document.getElementById("table").innerText = "Table: " + this.table.map(card => card.type).join(", ") + `  [${this.table.length}]`;
         document.getElementById("hand").innerText = "Hand: " + this.player.hand.map(card => card.type).join(", ") + `  [${this.player.hand.length}]`;
@@ -72,7 +74,6 @@ class Game {
         document.getElementById("discard").innerText = "Discard: " + this.player.discard.map(card => card.type).join(", ") + `  [${this.player.discard.length}]`;
         document.getElementById("score").innerText = "Score: " + this.player.countScore();
         document.getElementById("purchasingPower").innerText = "Purchasing power: " + this.player.purchasingPower;
-
     }
 
     playAllCurrencyCards(player) {
@@ -163,3 +164,5 @@ class Player {
         return score;
     }
 }
+
+module.exports = {Card, Game};
