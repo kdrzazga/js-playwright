@@ -7,11 +7,12 @@ document.getElementById("playActionCard").onclick = function() {
 
 document.getElementById("playCurrencyCards").onclick = function() {
     const purchasingPower = game.playAllCurrencyCards(game.player);
-    game.player.buyCardFromSet(purchasingPower);
+    game.player.purchasingPower = purchasingPower;
+    game.updateDisplay();
 };
 
 document.getElementById("buyCard").onclick = function() {
-    game.buyCardFromSet(0);
+    game.buyCardFromSet(game.player.purchasingPower);
 };
 
 document.getElementById("nextRound").onclick = function() {

@@ -18,6 +18,7 @@ class Card {
     }
 }
 
+
 class Game {
     static POINTS_TO_WIN = 9;
 
@@ -26,8 +27,6 @@ class Game {
         this.table = [];
         this.player = new Player();
         this.initDeck();
-        this.messageElement = document.getElementById("message");
-
         this.start();
     }
 
@@ -45,6 +44,7 @@ class Game {
     }
 
     nextRound(){
+        this.player.purchasingPower = 0;
         this.player.discard.push(...this.table);
         this.player.discard.push(...this.player.hand);
 
@@ -70,7 +70,8 @@ class Game {
         document.getElementById("hand").innerText = "Hand: " + this.player.hand.map(card => card.type).join(", ") + `  [${this.player.hand.length}]`;
         document.getElementById("deck").innerText = "Deck: " + this.player.deck.map(card => card.type).join(", ") + `  [${this.player.deck.length}]`;
         document.getElementById("discard").innerText = "Discard: " + this.player.discard.map(card => card.type).join(", ") + `  [${this.player.discard.length}]`;
-        document.getElementById("score").innerText = "Score: " + this.player.score;
+        document.getElementById("score").innerText = "Score: " + this.player.countScore();
+        document.getElementById("purchasingPower").innerText = "Purchasing power: " + this.player.purchasingPower;
 
     }
 
@@ -89,16 +90,23 @@ class Game {
 
     checkVictory() {
         if (this.player.score >= Game.POINTS_TO_WIN) {
-            this.messageElement.innerText = `${this.player.name} won the game!`;
+            const messageElement = document.getElementById("message");
+            messageElement.innerText = `${this.player.name} won the game!`;
             return true;
         }
         return false;
     }
 
     buyCardFromSet() {
+        const cost = 1;
+        if (this.player.purchasingPower < cost){
+            console.log('Cannot afford');
+            return;
+        }
+
         const card = this.cardSet.pop();
-        this.player.deck.push(card);
-        this.player.purchasingPower -= 1;
+        this.player.discard.push(card);
+        this.player.purchasingPower -= cost;
         this.updateDisplay();
     }
 
@@ -114,7 +122,6 @@ class Player {
         this.deck = [];
         this.hand = [];
         this.discard = [];
-        this.score = 0;
         this.purchasingPower = 0;
     }
 
@@ -125,7 +132,7 @@ class Player {
     }
 
     drawCardFromDeck() {
-        if (this.deck.length == 0) this.moveDiscardToDeck();
+        if (this.deck.length <1) this.moveDiscardToDeck();
 
         const card = this.deck.pop();
         this.hand.push(card);
@@ -149,4 +156,10 @@ class Player {
         console.log(`Player purchased card. Remaining purchasing power = ${this.purchasingPower}`);
     }
 
+    countScore(){
+        let score = this.hand.map(c => c.score).reduce((acc, score) => acc + score, 0);
+        score += this.deck.map(c => c.score).reduce((acc, score) => acc + score, 0);
+        score += this.discard.map(c => c.score).reduce((acc, score) => acc + score, 0);
+        return score;
+    }
 }
