@@ -2,7 +2,7 @@
 let game = new Game();
 
 document.getElementById("playActionCard").onclick = function() {
-    game.player.playActionCard();
+    game.playActionCard(game.player);
 };
 
 document.getElementById("playCurrencyCards").onclick = function() {
@@ -11,7 +11,11 @@ document.getElementById("playCurrencyCards").onclick = function() {
 };
 
 document.getElementById("buyCard").onclick = function() {
-    game.player.buyCardFromSet(0);
+    game.buyCardFromSet(0);
+};
+
+document.getElementById("nextRound").onclick = function() {
+    game.nextRound();
 };
 
 game.checkVictory();

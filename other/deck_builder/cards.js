@@ -44,6 +44,17 @@ class Game {
         this.updateDisplay();
     }
 
+    nextRound(){
+        this.player.discard.push(...this.table);
+        this.player.discard.push(...this.player.hand);
+
+        this.table = [];
+        this.player.hand = [];
+        this.player.drawCards();
+
+        this.updateDisplay();
+    }
+
     drawInitialCards() {
         for (let i = 0; i < 10; i++) {
             const card = this.cardSet.pop();
@@ -54,12 +65,13 @@ class Game {
     }
 
     updateDisplay() {
-        document.getElementById("hand").innerText = "Hand: " + this.player.hand.map(card => card.type).join(", ");
-        document.getElementById("deck").innerText = "Deck: " + this.player.deck.map(card => card.type).join(", ");
+        document.getElementById("set").innerText = "Set: " + this.cardSet.map(card => card.type).join(", ") + `  [${this.cardSet.length}]`;
+        document.getElementById("table").innerText = "Table: " + this.table.map(card => card.type).join(", ") + `  [${this.table.length}]`;
+        document.getElementById("hand").innerText = "Hand: " + this.player.hand.map(card => card.type).join(", ") + `  [${this.player.hand.length}]`;
+        document.getElementById("deck").innerText = "Deck: " + this.player.deck.map(card => card.type).join(", ") + `  [${this.player.deck.length}]`;
+        document.getElementById("discard").innerText = "Discard: " + this.player.discard.map(card => card.type).join(", ") + `  [${this.player.discard.length}]`;
         document.getElementById("score").innerText = "Score: " + this.player.score;
 
-        const tableDisplay = this.table.map(card => card.type).join(", ");
-        document.getElementById("table").innerText = "Table: " + tableDisplay;
     }
 
     playAllCurrencyCards(player) {
@@ -82,6 +94,18 @@ class Game {
         }
         return false;
     }
+
+    buyCardFromSet() {
+        const card = this.cardSet.pop();
+        this.player.deck.push(card);
+        this.player.purchasingPower -= 1;
+        this.updateDisplay();
+    }
+
+    playActionCard(player){
+        player.playActionCard();
+        this.updateDisplay();
+    }
 }
 
 class Player {
@@ -91,6 +115,7 @@ class Player {
         this.hand = [];
         this.discard = [];
         this.score = 0;
+        this.purchasingPower = 0;
     }
 
     drawCards() {
@@ -100,10 +125,15 @@ class Player {
     }
 
     drawCardFromDeck() {
-        if (this.deck.length > 0) {
-            const card = this.deck.pop();
-            this.hand.push(card);
-        }
+        if (this.deck.length == 0) this.moveDiscardToDeck();
+
+        const card = this.deck.pop();
+        this.hand.push(card);
+    }
+
+    moveDiscardToDeck(){
+        this.deck.push(...this.discard);
+        this.discard = [];
     }
 
     playActionCard() {
@@ -112,15 +142,11 @@ class Player {
             const card = this.hand.splice(actionCardIndex, 1)[0];
             game.table.push(card);
             console.log('Player played ACTION card');
-            this.updateDisplay();
         }
     }
 
-    buyCardFromSet(purchasingPower) {
-        console.log(`Player purchased card. Remaining purchasing power = ${purchasingPower}`);
-        this.updateDisplay();
+    buyCardFromSet() {
+        console.log(`Player purchased card. Remaining purchasing power = ${this.purchasingPower}`);
     }
 
-    updateDisplay() {
-    }
 }
