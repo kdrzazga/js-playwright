@@ -349,7 +349,8 @@ class LevelOutroScene extends LevelScene{
     constructor() {
         super('Outro');
         this.nextLevel = 'lvl1';
-        this.extraInfoFrameVisible = "left: 85%; visibility: show"
+        this.extraInfoFrameVisible = "left: 85%; visibility: show";
+        this.audioBing = null;
     }
 
     loadFloorImages(){
@@ -363,5 +364,17 @@ class LevelOutroScene extends LevelScene{
         this.physics.world.setBounds(Ladder.WIDTH + 20, 0, 800 - 150, 600);
         this.player.x = 400;
         this.player.y = 30;
+        this.audioBing = new Audio('files/celeb.midi.mp3');
+        this.input.keyboard.on('keydown', (event) => {
+                    this.playAudio();
+                });
+     }
+
+     playAudio() {
+         if (this.audioBing.paused) {
+             this.audioBing.play().catch(error => {
+                 console.error("Error playing audio:", error);
+             });
+         }
      }
 }
