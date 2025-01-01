@@ -60,10 +60,12 @@ class Ladder {
     static WIDTH = 60;
 
     constructor() {
+        this.enabled = true;
     }
 
     init(physics){
-        this.sprite = physics.add.sprite(Ladder.WIDTH/2, Constants.SCREEN_HEIGHT/2, 'ladder');
+        if (this.enabled)
+            this.sprite = physics.add.sprite(Ladder.WIDTH/2, Constants.SCREEN_HEIGHT/2, 'ladder');
     }
 
     onLadder(x1){
@@ -271,7 +273,7 @@ class Bat extends Enemy {
 
     constructor(id){
         super(id);
-        this.centerX = 0.6 * Floor.WIDTH;
+        this.upperVerticalLimit = Floor.HEIGHT -16;
     }
 
     init(physics, y){
@@ -283,7 +285,6 @@ class Bat extends Enemy {
 
     move(){
         const centerY = Floor.BUILDING_HEIGHT / 2;
-        const upperVerticalLimit = Floor.HEIGHT -16;
         const lowerVerticalLimit = 2 * Floor.BUILDING_HEIGHT/ 3 + Floor.HEIGHT - 10 - 9 * this.id;
 
         this.currentAngle = this.currentAngle + this.angularSpeed;
@@ -294,7 +295,7 @@ class Bat extends Enemy {
         this.sprite.x = this.centerX + Bat.MOVE_RADIUS * Math.cos(this.currentAngle);
         this.sprite.y = centerY + Bat.MOVE_RADIUS * Math.sin(this.currentAngle);
 
-        if (this.sprite.y < upperVerticalLimit) this.sprite.y = upperVerticalLimit;
+        if (this.sprite.y < this.upperVerticalLimit) this.sprite.y = this.upperVerticalLimit;
         if (this.sprite.y > lowerVerticalLimit) this.sprite.y = lowerVerticalLimit;
     }
 }

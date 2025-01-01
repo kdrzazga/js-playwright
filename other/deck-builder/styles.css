@@ -1,0 +1,13 @@
+body{
+    background-color: black;
+    color: white
+}
+
+#gameState {
+    margin: 10px;
+    font-family: Arial, sans-serif;
+}
+
+#hand {
+    margin-bottom: 10px;
+}

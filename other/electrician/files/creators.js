@@ -267,17 +267,17 @@ class Creator {
                 "name": 'Spider Dwelling',
                 "floors": [
                   {
-                    "name": "music-floor",
+                    "name": "spider-webs1",
                     "bottomConnectors": [],
                     "ceilingConnectors": []
                   },
                   {
-                    "name": "computer-room",
+                    "name": "spider-webs2",
                     "bottomConnectors" : [],
                     "ceilingConnectors": []
                   },
                   {
-                    "name": "computer-room2",
+                    "name": "spider-webs3",
                     "ceilingConnectors": []
                   }
                 ],
@@ -307,6 +307,64 @@ class Creator {
         };
 
        let building = Creator.createLevel(buildingData, physics);
+       return building;
+    }
+
+    static createOutro(physics){
+       const buildingData = {
+            "building": {
+                "name": 'Outro',
+                "floors": [
+                  {
+                    "name": "none1",
+                    "bottomConnectors": [],
+                    "ceilingConnectors": []
+                  },
+                  {
+                    "name": "none2",
+                    "bottomConnectors" : [],
+                    "ceilingConnectors": []
+                  },
+                  {
+                    "name": "none3",
+                    "ceilingConnectors": []
+                  }
+                ],
+                "enemies":{
+                    "rats": [
+                        { id: 1, active: true, y: 572, wireId: 0},
+                        { id: 2, active: true, y: 572, wireId: 0},
+                        { id: 3, active: true, y: 572, wireId: 0},
+                        { id: 4, active: true, y: 572, wireId: 0},
+                        { id: 5, active: true, y: 572, wireId: 0},
+                        { id: 6, active: true, y: 572, wireId: 0},
+                        ],
+                    "spiders": [{ id: -4, active: true, y: 25, velocity: { y: 80 } },
+                                { id: 12, active: true, y: 25, velocity: { y: 11 } }
+                                ],
+                    "bats": [
+                        { id: 0, active: true, speed: -0.03 },
+                        { id: 1, active: true, speed: 0.03 },
+                        { id: 2, active: true, speed: -0.04 },
+                        { id: 3, active: true, speed: 0.04 },
+                    ]
+                },
+                "connectionPointsCounts" : [0, 0, 0]
+            }
+        };
+
+       let building = Creator.createLevel(buildingData, physics);
+
+       building.enemies.filter(e => e instanceof Bat).forEach(bat => bat.upperVerticalLimit += 3*16);
+       building.enemies.filter(e => e instanceof Spider).forEach(spider =>spider.speed = 6);
+
+       for(var i = 0; i < building.wires[1].slots.length; i++){
+            building.wires[1].slots[i] = WireSlot.WIRE_STRAIGHT;
+            building.wires[2].slots[i] = WireSlot.WIRE_STRAIGHT;
+       }
+
+       building.wires[1].updateWiringInfo();
+       building.wires[2].updateWiringInfo();
        return building;
     }
 }
