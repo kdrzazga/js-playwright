@@ -17,11 +17,11 @@ body {
 
 div{
     color: white;
-    font-family: 'SFatarian';
+    font-family: 'Twinkle';
 }
 
 .header{
-    color: rgba(156, 98, 253, 1);
+    color: rgba(200, 200, 0, 1);
 }
 
 .big {
@@ -32,6 +32,6 @@ div{
 }
 
 @font-face {
-    font-family: 'SFatarian';
-    src: url('atari.ttf');
+    font-family: 'Twinkle';
+    src: url('KR Twinkle.ttf');
 }

@@ -9,7 +9,8 @@ const config = {
             debug: false
         }
     },
-    scene: [levelObject]
+    scene: [Level1Scene]
 };
 
 let patrol = new Phaser.Game(config);
+
