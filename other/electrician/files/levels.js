@@ -354,14 +354,14 @@ class LevelOutroScene extends LevelScene{
 
     loadFloorImages(){
          this.load.image('floor0', 'files/darkFloor.png');
-         this.load.image('floor1', 'files/darkFloor.png');
+         this.load.image('floor1', 'files/congratulations.png');
          this.load.image('floor2', 'files/darkFloor.png');
     }
 
      create() {
         super.create(Creator.createOutro);
-        this.physics.world.setBounds(0, 0, 800, 600);
+        this.physics.world.setBounds(Ladder.WIDTH + 20, 0, 800 - 150, 600);
         this.player.x = 400;
-        this.player.y = 300;
+        this.player.y = 30;
      }
 }
