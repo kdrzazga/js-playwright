@@ -332,7 +332,7 @@ class Creator {
                 ],
                 "enemies":{
                     "rats": [
-                        { id: 0, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0},
+                        { id: 1, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0},
                         ],
                     "bats": [
                         { id: 0, active: true, speed: -0.03 },
@@ -347,10 +347,12 @@ class Creator {
 
        let building = Creator.createLevel(buildingData, physics);
        /*building.enemies.filter(e => e instanceof Spider).forEach(spider => {
-                spider.speed = 15;
-                spider.sprite.y = 100;
+                //spider.speed = 15;
+                //spider.sprite.y = 100;
             });
        }*/
+       building.enemies[4].speed = 13;
+       building.enemies[3].speed = -15;
        return building;
     }
 }

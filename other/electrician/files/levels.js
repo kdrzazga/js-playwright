@@ -362,5 +362,6 @@ class LevelOutroScene extends LevelScene{
         super.create(Creator.createOutro);
         this.physics.world.setBounds(0, 0, 800, 600);
         this.player.x = 400;
+        this.player.y = 300;
      }
 }
