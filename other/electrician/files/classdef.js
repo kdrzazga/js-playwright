@@ -60,10 +60,12 @@ class Ladder {
     static WIDTH = 60;
 
     constructor() {
+        this.enabled = true;
     }
 
     init(physics){
-        this.sprite = physics.add.sprite(Ladder.WIDTH/2, Constants.SCREEN_HEIGHT/2, 'ladder');
+        if (this.enabled)
+            this.sprite = physics.add.sprite(Ladder.WIDTH/2, Constants.SCREEN_HEIGHT/2, 'ladder');
     }
 
     onLadder(x1){

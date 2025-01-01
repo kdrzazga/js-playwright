@@ -267,17 +267,17 @@ class Creator {
                 "name": 'Spider Dwelling',
                 "floors": [
                   {
-                    "name": "music-floor",
+                    "name": "spider-webs1",
                     "bottomConnectors": [],
                     "ceilingConnectors": []
                   },
                   {
-                    "name": "computer-room",
+                    "name": "spider-webs2",
                     "bottomConnectors" : [],
                     "ceilingConnectors": []
                   },
                   {
-                    "name": "computer-room2",
+                    "name": "spider-webs3",
                     "ceilingConnectors": []
                   }
                 ],
@@ -307,6 +307,50 @@ class Creator {
         };
 
        let building = Creator.createLevel(buildingData, physics);
+       return building;
+    }
+
+    static createOutro(physics){
+       const buildingData = {
+            "building": {
+                "name": 'Outro',
+                "floors": [
+                  {
+                    "name": "none1",
+                    "bottomConnectors": [],
+                    "ceilingConnectors": []
+                  },
+                  {
+                    "name": "none2",
+                    "bottomConnectors" : [],
+                    "ceilingConnectors": []
+                  },
+                  {
+                    "name": "none3",
+                    "ceilingConnectors": []
+                  }
+                ],
+                "enemies":{
+                    "rats": [
+                        { id: 0, active: true, y: Creator.HIGH_FLOOR_LEVEL, wireId: 0},
+                        ],
+                    "bats": [
+                        { id: 0, active: true, speed: -0.03 },
+                        { id: 1, active: true, speed: 0.03 }
+                    ],
+                    "spiders": [{ id: -4, active: true, y: 25, velocity: { y: 80 } },
+                                { id: 12, active: true, y: 25, velocity: { y: 11 } }]
+                },
+                "connectionPointsCounts" : [0, 0, 0]
+            }
+        };
+
+       let building = Creator.createLevel(buildingData, physics);
+       /*building.enemies.filter(e => e instanceof Spider).forEach(spider => {
+                spider.speed = 15;
+                spider.sprite.y = 100;
+            });
+       }*/
        return building;
     }
 }

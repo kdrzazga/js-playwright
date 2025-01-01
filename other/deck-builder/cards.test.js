@@ -28,9 +28,10 @@ describe("End 2 End test", () => {
 
   it('3. Play Currency Cards', () =>{
     testGame = new Game();
-    expect(testGame.player.hand.filter(c => c.type === CardType.CURRENCY).length).toBe(2);
+    const expectedCurrencyCards = 2;
+    expect(testGame.player.hand.filter(c => c.type === CardType.CURRENCY).length).toBe(expectedCurrencyCards);
     const purchasingPower = testGame.playAllCurrencyCards(testGame.player);
-    expect(purchasingPower).toBe(2);
+    expect(purchasingPower).toBe(expectedCurrencyCards);
   });
 });
 

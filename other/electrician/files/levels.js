@@ -329,7 +329,7 @@ class Level5Scene extends LevelScene{
 
     constructor() {
         super('Level5');
-        this.nextLevel = 'lvl1';
+        this.nextLevel = 'outro';
         this.extraInfoFrameVisible = "left: 85%; visibility: show"
     }
 
@@ -341,5 +341,26 @@ class Level5Scene extends LevelScene{
 
      create() {
         super.create(Creator.createLevel5);
+     }
+}
+
+class LevelOutroScene extends LevelScene{
+
+    constructor() {
+        super('Outro');
+        this.nextLevel = 'lvl1';
+        this.extraInfoFrameVisible = "left: 85%; visibility: show"
+    }
+
+    loadFloorImages(){
+         this.load.image('floor0', 'files/darkFloor.png');
+         this.load.image('floor1', 'files/darkFloor.png');
+         this.load.image('floor2', 'files/darkFloor.png');
+    }
+
+     create() {
+        super.create(Creator.createOutro);
+        this.physics.world.setBounds(0, 0, 800, 600);
+        this.player.x = 400;
      }
 }
