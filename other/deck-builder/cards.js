@@ -165,4 +165,4 @@ class Player {
     }
 }
 
-module.exports = {Card, Game};
+module.exports = {Card, CardType, Game};
