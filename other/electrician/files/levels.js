@@ -355,7 +355,7 @@ class LevelOutroScene extends LevelScene{
     loadFloorImages(){
          this.load.image('floor0', 'files/darkFloor.png');
          this.load.image('floor1', 'files/congratulations.png');
-         this.load.image('floor2', 'files/darkFloor.png');
+         this.load.image('floor2', 'files/congratulations2.png');
     }
 
      create() {
