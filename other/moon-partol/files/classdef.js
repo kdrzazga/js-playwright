@@ -14,4 +14,3 @@ class Ground {
         this.sprite.tilePositionX += this.speed;
     }
 }
-
