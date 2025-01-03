@@ -351,6 +351,7 @@ class LevelOutroScene extends LevelScene{
         this.nextLevel = 'lvl1';
         this.extraInfoFrameVisible = "left: 85%; visibility: show";
         this.audioBing = null;
+        this.musicFile = 'files/celeb.midi.mp3';
     }
 
     loadFloorImages(){
@@ -364,7 +365,7 @@ class LevelOutroScene extends LevelScene{
         this.physics.world.setBounds(Ladder.WIDTH + 20, 0, 800 - 150, 600);
         this.player.x = 400;
         this.player.y = 30;
-        this.audioBing = new Audio('files/celeb.midi.mp3');
+        this.audioBing = new Audio(this.musicFile);
         this.input.keyboard.on('keydown', (event) => {
                     this.playAudio();
                 });
@@ -377,4 +378,22 @@ class LevelOutroScene extends LevelScene{
              });
          }
      }
+}
+
+class LevelIntroScene extends LevelOutroScene{
+
+    constructor() {
+        super('Intro');
+        this.nextLevel = 'lvl1';
+        this.extraInfoFrameVisible = "left: 85%; visibility: show";
+        this.audioBing = null;
+        this.musicFile = 'files/celeb.midi.mp3';
+    }
+
+    loadFloorImages(){
+         this.load.image('floor0', 'files/darkFloor.png');
+         this.load.image('floor1', 'files/intro.png');
+         this.load.image('floor2', 'files/intro2.png');
+    }
+
 }
