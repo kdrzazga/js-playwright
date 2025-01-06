@@ -22,6 +22,7 @@ class Level1Scene extends Phaser.Scene {
 
         this.ground = new Ground(this);
         this.distance = 0;
+        this.totalDistance = 0;
         this.time.addEvent({
             delay: 1000,
             callback: this.increaseDistance,
@@ -49,11 +50,18 @@ class Level1Scene extends Phaser.Scene {
             this.player.setVelocityX(0);
             if (this.player.y > this.maxJump) this.player.setVelocityY(0);
         }
+
+        this.checkCollision();
     }
 
     increaseDistance() {
         this.distance += 1;
+        this.totalDistance = Math.floor(this.distance + this.player.x * 8/580 - 1);
         document.getElementById('distance').innerText = this.distance;
+        document.getElementById('rel-distance').innerText = this.totalDistance;
+    }
+
+    checkCollision(){
     }
 
     rotateWheel(){
