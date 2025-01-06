@@ -2,6 +2,17 @@ class Level1Scene extends Phaser.Scene {
     constructor() {
         super({ key: 'Level 1' });
         this.currentPlayerPicIndex = 0;
+        this.distance = 0;
+        this.totalDistance = 0;
+        this.collisions = 0;
+
+        const maxY = 520;
+        this.maxJump = 520;
+
+        this.craterPoints = [3, 7,  10, 16, 22, 24, 29, 32, 37, 41,
+                            45, 49, 55, 56, 62, 65, 70, 73, 77, 83,
+                            88, 91, 95, 99, 104,107,110,116,122,129,
+                           132,136,141,143,149];
     }
 
     preload() {
@@ -9,20 +20,16 @@ class Level1Scene extends Phaser.Scene {
     }
 
     create() {
-        const maxY = 520;
-        this.maxJump = 520;
-        this.physics.world.setBounds(0, 0, 800, maxY);
+        this.physics.world.setBounds(0, 0, 800, this.maxJump);
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.player = this.physics.add.sprite(100, maxY, 'vehicle0');
+        this.player = this.physics.add.sprite(100, this.maxJump, 'vehicle0');
         this.player.setCollideWorldBounds(true);
         this.player.body.setGravity(0, 2450);
         this.player.body.allowGravity = true;
-         this.player.setDepth(8);
+        this.player.setDepth(8);
 
         this.ground = new Ground(this);
-        this.distance = 0;
-        this.totalDistance = 0;
         this.time.addEvent({
             delay: 1000,
             callback: this.increaseDistance,
@@ -57,11 +64,19 @@ class Level1Scene extends Phaser.Scene {
     increaseDistance() {
         this.distance += 1;
         this.totalDistance = Math.floor(this.distance + this.player.x * 8/580 - 1);
-        document.getElementById('distance').innerText = this.distance;
-        document.getElementById('rel-distance').innerText = this.totalDistance;
+        this.updateDisplay();
     }
 
     checkCollision(){
+        document.getElementById('debug').innerText = `${this.player.y}, ${this.maxJump}`;
+        if (this.player.y< 450)
+            return;
+
+        if (this.craterPoints.includes(this.totalDistance)){
+            this.collisions++;
+            this.craterPoints = this.craterPoints.filter(point => point !== this.totalDistance);
+        }
+        this.updateDisplay();
     }
 
     rotateWheel(){
@@ -75,5 +90,11 @@ class Level1Scene extends Phaser.Scene {
         this.load.image('vehicle0', 'files/vehicle0.png');
         this.load.image('vehicle1', 'files/vehicle1.png');
         this.load.image('vehicle2', 'files/vehicle2.png');
+    }
+
+    updateDisplay(){
+        document.getElementById('distance').innerText = this.distance;
+        document.getElementById('rel-distance').innerText = this.totalDistance;
+        document.getElementById('fails').innerText = this.collisions;
     }
 }
