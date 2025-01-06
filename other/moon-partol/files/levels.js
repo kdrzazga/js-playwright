@@ -68,7 +68,7 @@ class Level1Scene extends Phaser.Scene {
     }
 
     checkCollision(){
-        document.getElementById('debug').innerText = `${this.player.y}, ${this.maxJump}`;
+        //document.getElementById('debug').innerText = `${this.player.y}, ${this.maxJump}`;
         if (this.player.y< 450)
             return;
 
