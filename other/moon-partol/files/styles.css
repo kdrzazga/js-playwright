@@ -5,14 +5,18 @@ body {
 
 .panel {
     position: absolute;
-    left: 10px;
-    background-color: rgba(156, 98, 253, 1);
     padding: 10px;
     border-radius: 5px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    color: white;
     z-index: 1000;
+    align: center;
+}
+
+.panel-colors{
+    background-color: rgba(255, 255, 0, 1);
+    font-family: 'MoonPatrol';
+    font-size: 14px;
+    color: black;
+    display: inline;
 }
 
 div{
@@ -25,7 +29,7 @@ div{
 }
 
 .big {
-    font-size: 2.5em;
+    font-size: 3.5em;
 }
 .small {
     font-size: 0.75em;
@@ -34,4 +38,9 @@ div{
 @font-face {
     font-family: 'Twinkle';
     src: url('KR Twinkle.ttf');
+}
+
+@font-face {
+    font-family: 'MoonPatrol';
+    src: url('irem-font.ttf');
 }
