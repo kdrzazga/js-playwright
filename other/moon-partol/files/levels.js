@@ -9,8 +9,8 @@ class Level1Scene extends Phaser.Scene {
     }
 
     create() {
-        const maxY = 500;
-        this.maxJump = 400;
+        const maxY = 520;
+        this.maxJump = 520;
         this.physics.world.setBounds(0, 0, 800, maxY);
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -18,6 +18,7 @@ class Level1Scene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
         this.player.body.setGravity(0, 2450);
         this.player.body.allowGravity = true;
+         this.player.setDepth(8);
 
         this.ground = new Ground(this);
         this.distance = 0;
@@ -63,8 +64,8 @@ class Level1Scene extends Phaser.Scene {
 
     loadImages() {
         this.load.image('ground', 'files/ground.bmp');
-        this.load.image('vehicle0', 'files/vehicle0.bmp');
-        this.load.image('vehicle1', 'files/vehicle1.bmp');
-        this.load.image('vehicle2', 'files/vehicle2.bmp');
+        this.load.image('vehicle0', 'files/vehicle0.png');
+        this.load.image('vehicle1', 'files/vehicle1.png');
+        this.load.image('vehicle2', 'files/vehicle2.png');
     }
 }
