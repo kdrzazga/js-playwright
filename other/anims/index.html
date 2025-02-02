@@ -28,6 +28,7 @@
 
 <body>
 <table>
+	<tr><td colspan="3"></td></tr>
 	<tr>
 		<td width = "20%"></td>
 		<td width = "60%"><div id="content"></div></td>
@@ -36,7 +37,7 @@
 </table>
 
 <script>
-	class AnimatedContentLoader {
+class AnimatedContentLoader {
     constructor(animationParams) {
         this.filesToLoad = animationParams.filesToLoad;
         this.animationSequence = animationParams.animationSequence;
@@ -96,10 +97,20 @@ const anim2Params = {
     duration: 7200
 };
 
-const a1 = new AnimatedContentLoader(anim1Params);
+const anim3Params = {
+    filesToLoad: ['d1.html', 'd2.html'],
+    animationSequence: [0, 1],
+    delay: 110,
+    duration: 6600
+};
+
+let a1 = new AnimatedContentLoader(anim1Params);
 
 setTimeout(() => {
     const a2 = new AnimatedContentLoader(anim2Params);
+    setTimeout(() => {
+        const a3 = new AnimatedContentLoader(anim3Params);
+    }, a2.duration);
 }, a1.duration);
 </script>
 
