@@ -72,13 +72,28 @@ const anim1Params = {
 	'duration': 5000
 };
 
+const anim2Params = {
+	'filesToLoad': ['b1.html', 'b2.html'],
+	'animationSequence' : [0, 1],
+	'delay' : 110,
+	'duration': 5000
+};
+
 const a1 = new AnimatedContentLoader(anim1Params);
 
 new Promise((resolve) => {
     setTimeout(resolve, a1.duration);
 }).then(() => {
     a1.stopAnimation();
-    console.log('Animation stopped after 2 seconds');
+    console.log('Animation 1 stopped after 5 seconds');
+
+    new Promise((resolve) => {
+		const a2 = new AnimatedContentLoader(anim2Params);
+	    setTimeout(resolve, a2.duration);
+	}).then(() => {
+  	  a2.stopAnimation();
+  	  console.log('Animation 2 stopped after 5 seconds');
+	});
 });
 
 </script>
