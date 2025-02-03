@@ -430,8 +430,8 @@ class RoomRegistry{
 
         const labels = [
             "1. SCULPTURE", "2. TOTEM", "3. BAT CAVE ENTRANCE", "4. ANCIENT DRAWINGS",
-            "5. MAIN BAT LAIR", "6. BAT CAVE EXIT", "7. TWO TOTEMS", "8. ",
-            "9. ", "10. DESERT", "11. DESERT"
+            "5. MAIN BAT LAIR", "6. BAT CAVE EXIT", "7. TWO TOTEMS", "8. STAIRS",
+            "9. TROLL DEMANDS TOLL", "10. DESERT", "11. DESERT"
         ];
 
         const allRooms = [room1, room2, room3, room4, room5, room6, room7, room8, room9, room10, room11];
