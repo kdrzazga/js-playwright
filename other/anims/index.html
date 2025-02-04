@@ -104,14 +104,21 @@ const anim3Params = {
     duration: 6600
 };
 
-let a1 = new AnimatedContentLoader(anim1Params);
+function animationCycle(){
+	let a1 = new AnimatedContentLoader(anim1Params);
 
-setTimeout(() => {
-    const a2 = new AnimatedContentLoader(anim2Params);
-    setTimeout(() => {
-        const a3 = new AnimatedContentLoader(anim3Params);
-    }, a2.duration);
-}, a1.duration);
+	setTimeout(() => {
+	    const a2 = new AnimatedContentLoader(anim2Params);
+	    setTimeout(() => {
+	        const a3 = new AnimatedContentLoader(anim3Params);
+	    }, a2.duration);
+	}, a1.duration);
+}
+
+const totalDuration = anim1Params.duration + anim2Params.duration + anim3Params.duration + 500;
+
+animationCycle();
+setInterval(animationCycle, totalDuration);
 </script>
 
 </body>
