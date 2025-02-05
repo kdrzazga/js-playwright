@@ -24,9 +24,20 @@
 			font-color: #aaaaaa;
 		}
     </style>
+	<script src = 'https://kdrzazga.github.io/js-playwright/other/6/6_res/audio.js'></script>>
+	<script>const songsArray = [
+          ['EverlastingLove.mp3', (3 * 60 + 17) * 1000, 'Sandra SID - Everlasting Love'],
+          ['smooth.mp3', (6 * 60 + 10) * 1000, 'Smooth criminal'],
+          ['MartinGalway.mp3', (6 * 60) * 1000, 'Comic Bakery'],
+          ['Airwolf.m4a', 23 * 1000, 'Airwolf']
+        ];
+
+        const player = new AudioPlayer(songsArray);
+
+	</script>
 </head>
 
-<body>
+<body onclick="if (player) player.startPlayback();">
 <table>
 	<tr><td colspan="3"></td></tr>
 	<tr>
