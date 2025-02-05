@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animations</title>
+    <style>
+		body {
+			background-color: white;
+		}
+        #content {
+            border: 0px solid #ccc;
+            padding: 20px;
+            margin-top: 10px;
+        }
+		    @font-face {
+    	  	font-family: 'c64mono';
+    	  	src: url('C64_Pro_Mono-STYLE.ttf') format('truetype');
+    	}
+    	tt {
+			font-family: c64mono, fixed;
+			font-weight: bold;
+			font-size: 4px;
+			font-color: #aaaaaa;
+		}
+    </style>
+	<script src = 'https://kdrzazga.github.io/js-playwright/other/6/6_res/audio.js'></script>
+	<script>const songsArray = [
+          ['EverlastingLove.mp3', (3 * 60 + 17) * 1000, 'Sandra SID - Everlasting Love'],
+          ['smooth.mp3', (6 * 60 + 10) * 1000, 'Smooth criminal'],
+          ['MartinGalway.mp3', (6 * 60) * 1000, 'Comic Bakery'],
+          ['Airwolf.m4a', 23 * 1000, 'Airwolf']
+        ];
+
+        const player = new AudioPlayer(songsArray);
+
+	</script>
+</head>
+
+<body onclick="if (player) player.startPlayback();">
+	<table>
+		<tr><td colspan="3"></td></tr>
+		<tr>
+			<td width = "20%"></td>
+			<td width = "60%"><div id="content"></div></td>
+			<td width = "20%"></td>
+		</tr>
+	</table>
+	<script src="animations.js"></script>
+	<script>
+		const totalDuration = anim1Params.duration + anim2Params.duration + anim3Params.duration + 500;
+	    animationCycle();
+	    setInterval(animationCycle, totalDuration);
+	</script>
+</body>
+</html>
