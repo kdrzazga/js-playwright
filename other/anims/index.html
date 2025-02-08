@@ -7,15 +7,25 @@
     <style>
 		body {
 			background-color: white;
+			overflow-x: hidden;
+		}
+		#scroll {
+			position: absolute;
+          	top: 1%;
 		}
         #content {
             border: 0px solid #ccc;
             padding: 20px;
             margin-top: 10px;
         }
-		    @font-face {
-    	  	font-family: 'c64mono';
+		@font-face {
+    	  	font-family: "c64mono";
     	  	src: url('C64_Pro_Mono-STYLE.ttf') format('truetype');
+    	  	font-weight: normal;
+    	  	font-style: normal;
+    	}
+    	table {
+			margin: auto;
     	}
     	tt {
 			font-family: c64mono, fixed;
@@ -38,9 +48,11 @@
 </head>
 
 <body onclick="if (player) player.startPlayback();">
+	<img id='scroll' src="scroll.png" style="left: 267px;" alt="scroll">
 	<table>
-		<tr><td colspan="3"></td></tr>
-		<tr>
+		<tr width = "100%"><td colspan="3">
+		</td></tr>
+		<tr width = "100%">
 			<td width = "20%"></td>
 			<td width = "60%"><div id="content"></div></td>
 			<td width = "20%"></td>
@@ -48,9 +60,24 @@
 	</table>
 	<script src="animations.js"></script>
 	<script>
+		const scrollLeftMin = -300;
+		const scrollLeftMax = 1500;
+
+		mainScroll(){
+    		let scrollImg = document.getElementById('scroll');
+    		if (scrollImg.left > scrollLeftMin){
+		        scrollImg.left = scrollImg.left - 1;
+		    }
+		    else{
+		        scrollImg.left = scrollLeftMax;
+		    }
+		}
+
 		const totalDuration = anim1Params.duration + anim2Params.duration + anim3Params.duration + 500;
 	    animationCycle();
 	    setInterval(animationCycle, totalDuration);
+
+		setInterval(mainScroll, 20);
 	</script>
 </body>
 </html>
