@@ -10,8 +10,13 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'hello angular 2';
+  selectedRadio: string = 'radio 1';
 
   onOkClick(){
     window.alert('OKAY');
+  }
+
+  onCheckboxChange(optionValue: string, isChecked: boolean) {
+    console.log(optionValue);
   }
 }
