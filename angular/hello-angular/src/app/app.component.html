@@ -316,10 +316,12 @@
       </div>
     </div>
   </div>
+  <form>
   <div id="info">INFO<br/>
     Textbox:<input type="text">
-    <button onclick="alert('ok');">OK</button>
+    <button (click)="onOkClick();">OK</button> <!--onOkClick is method in component AppComponent in file app.component.ts-->
   </div>
+  </form>
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->

@@ -10,4 +10,8 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'hello-angular';
+
+  onOkClick(){
+    window.alert('OKAY');
+  }
 }
