@@ -19,4 +19,8 @@ export class AppComponent {
   onCheckboxChange(optionValue: string, isChecked: boolean) {
     console.log(optionValue);
   }
+
+  onRadioClick(value: string){
+    console.log(`Radio ${value}.`);
+  }
 }

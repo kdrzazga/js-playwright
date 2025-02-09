@@ -183,8 +183,8 @@
     Textbox:<input type="text">
     <button (click)="onOkClick();">OK</button> <!--onOkClick is method in component AppComponent in file app.component.ts-->
     <input type="checkbox" value="checkbox 1" (change)="onCheckboxChange('checkbox1', true)">Checkbox1
-    <input type="radio" value="radio 1" name="radios">Radio 1
-    <input type="radio" value="radio 2" name="radios">Radio 2
+    <input type="radio" value="radio 1" name="radios" (click)="onRadioClick('radio1');">Radio 1
+    <input type="radio" value="radio 2" name="radios" (click)="onRadioClick('radio2');">Radio 2
   </div>
   </form>
 </main>
