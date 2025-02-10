@@ -12,15 +12,20 @@ export class AppComponent {
   title = 'hello angular 2';
   selectedRadio: string = 'radio 1';
 
-  onOkClick(){
-    window.alert('OKAY');
+  onOkClick(text: string){
+    window.alert(`Textbox ${text}`);
   }
 
-  onCheckboxChange(optionValue: string, isChecked: boolean) {
-    console.log(optionValue);
+  onCheckboxChange(optionValue: string, event: Event) {
+    const target = event.currentTarget as HTMLInputElement;
+    const checked = target.checked;
+    console.log(optionValue + ', checked = ' + checked);
   }
 
-  onRadioClick(value: string){
-    console.log(`Radio ${value}.`);
+  onRadioClick(event: Event){
+    const target = event.currentTarget as HTMLInputElement;
+    const name = target.value;
+    const checked = target.checked;
+    console.log(`Radio ${name} - ${checked}.`);
   }
 }
