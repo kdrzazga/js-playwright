@@ -16,11 +16,16 @@ export class AppComponent {
     window.alert('OKAY');
   }
 
-  onCheckboxChange(optionValue: string, isChecked: boolean) {
-    console.log(optionValue);
+  onCheckboxChange(optionValue: string, event: Event) {
+    const target = event.currentTarget as HTMLInputElement;
+    const checked = target.checked;
+    console.log(optionValue + ', checked = ' + checked);
   }
 
-  onRadioClick(value: string){
-    console.log(`Radio ${value}.`);
+  onRadioClick(event: Event){
+    const target = event.currentTarget as HTMLInputElement;
+    const name = target.value;
+    const checked = target.checked;
+    console.log(`Radio ${name} - ${checked}.`);
   }
 }

@@ -96,11 +96,11 @@
   </div>
   <form>
   <div id="info">INFO<br/>
-    Textbox:<input type="text">
+    Textbox:<input type="text" #textbox1 id="textbox1">
     <button (click)="onOkClick();">OK</button> <!--onOkClick is method in component AppComponent in file app.component.ts-->
-    <input type="checkbox" value="checkbox 1" (change)="onCheckboxChange('checkbox1', true)">Checkbox1
-    <input type="radio" value="radio 1" name="radios" (click)="onRadioClick('radio1');">Radio 1
-    <input type="radio" value="radio 2" name="radios" (click)="onRadioClick('radio2');">Radio 2
+    <input type="checkbox" value="checkbox 1" (change)="onCheckboxChange('checkbox1', $event)">Checkbox1
+    <input type="radio" value="radio 1" name="radios" (click)="onRadioClick($event);">Radio 1
+    <input type="radio" value="radio 2" name="radios" (click)="onRadioClick($event);">Radio 2
   </div>
   </form>
 </main>
