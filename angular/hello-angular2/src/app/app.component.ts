@@ -12,8 +12,8 @@ export class AppComponent {
   title = 'hello angular 2';
   selectedRadio: string = 'radio 1';
 
-  onOkClick(){
-    window.alert('OKAY');
+  onOkClick(text: string){
+    window.alert(`Textbox ${text}`);
   }
 
   onCheckboxChange(optionValue: string, event: Event) {

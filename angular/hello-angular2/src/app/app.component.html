@@ -96,8 +96,8 @@
   </div>
   <form>
   <div id="info">INFO<br/>
-    Textbox:<input type="text" #textbox1 id="textbox1">
-    <button (click)="onOkClick();">OK</button> <!--onOkClick is method in component AppComponent in file app.component.ts-->
+    Textbox:<input type="text" #textbox1 id="textbox1" value="abc">
+    <button (click)="onOkClick(textbox1.value);">OK</button> <!--onOkClick is method in component AppComponent in file app.component.ts-->
     <input type="checkbox" value="checkbox 1" (change)="onCheckboxChange('checkbox1', $event)">Checkbox1
     <input type="radio" value="radio 1" name="radios" (click)="onRadioClick($event);">Radio 1
     <input type="radio" value="radio 2" name="radios" (click)="onRadioClick($event);">Radio 2
