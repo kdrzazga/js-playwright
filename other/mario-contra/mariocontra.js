@@ -1,14 +1,16 @@
 class MainScene extends Phaser.Scene {
     static TILE_WIDTH = 60;
-    static COMMANDO_SPEED = 5;
+    static COMMANDO_SPEED = 25;
     constructor() {
         super('MainScene');
+        this.time = 0;
     }
 
     preload() {
         this.load.image('ground', 'files/sprite.png');
         this.load.image('commando', 'files/commando.png');
         this.load.image('gumba', 'files/gumba.png');
+        this.load.image('turtle', 'files/turtle.png');
         this.load.image('cloud', 'files/cloud.png');
         this.load.image('high-hill', 'files/highhill.png');
         this.load.image('low-hill', 'files/lowhill.png');
@@ -46,16 +48,19 @@ class MainScene extends Phaser.Scene {
         const castle = this.add.sprite(235 * MainScene.TILE_WIDTH, 338, 'castle');
         this.spriteGroup.add(castle);
 
-        const gumba1 = this.add.sprite(900, this.sys.canvas.height - 105, 'gumba');
-        const gumba2 = this.add.sprite(1050, this.sys.canvas.height - 105, 'gumba');
-        this.spriteGroup.add(gumba1);
-        this.spriteGroup.add(gumba2);
+        const yPos = this.sys.canvas.height - 105;
+        const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135].map(x => this.add.sprite(x * MainScene.TILE_WIDTH, yPos, 'gumba'));
+        gumbas.forEach(gumba => this.spriteGroup.add(gumba));
+
+        const turtles = [90, 102, 140].map(x => this.add.sprite(x * MainScene.TILE_WIDTH, this.sys.canvas.height - 123, 'turtle'));
+        turtles.forEach(turtle => this.spriteGroup.add(turtle));
     }
 
     update(time, delta) {
         this.moveBackground();
         this.moveEnemies();
         this.checkVictory();
+        this.updateHeader(time);
     }
 
     moveBackground(){
@@ -69,7 +74,7 @@ class MainScene extends Phaser.Scene {
 
     moveEnemies(){
         this.spriteGroup.children.iterate(function (child) {
-            if (child.texture.key === 'gumba') {
+            if (child.texture.key === 'gumba' || child.texture.key === 'turtle') {
                 child.x -= 1;
             }
         });
@@ -86,11 +91,17 @@ class MainScene extends Phaser.Scene {
             }
         });
     }
+
+    updateHeader(time){
+        var timeCell = document.getElementById('time');
+        const seconds = Math.floor(time/1000) % 1000;
+        timeCell.innerText = String(seconds).padStart(3, '0');
+    }
 }
 
 const config = {
     type: Phaser.AUTO,
-    parent: 'game',
+    parent: 'game-container',
     width: 800,
     height: 600,
     scene: [MainScene]
