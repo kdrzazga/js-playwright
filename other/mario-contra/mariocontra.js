@@ -44,7 +44,7 @@ class MainScene extends Phaser.Scene {
     }
 
     handleShooting(time) {
-        if (time - this.lastBulletTime > 500) {
+        if (time - this.lastBulletTime > 400) {
             this.createBullet();
             this.lastBulletTime = time;
         }
@@ -60,8 +60,8 @@ class MainScene extends Phaser.Scene {
         for (let i = this.bullets.length - 1; i >= 0; i--) {
             const bullet = this.bullets[i];
             bullet.x += 10*Math.cos(this.bulletAngle);
-            bullet.y += 20*Math.sin(this.bulletAngle);
-            if (bullet.x > 800) {
+            bullet.y += 50*Math.sin(this.bulletAngle);
+            if (bullet.x > 400) {
                 bullet.destroy();
                 this.bullets.splice(i, 1);
             }
