@@ -76,6 +76,7 @@ class MainScene extends Phaser.Scene {
         else if (this.cursors.up.isDown) {
             this.bulletAngle = -0.05;
         }
+        else this.bulletAngle = 0;
         if (this.cursors.right.isDown) {
             this.spriteGroup.children.iterate(function (child) {
                 child.x -= MainScene.COMMANDO_SPEED;
