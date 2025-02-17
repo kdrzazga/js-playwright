@@ -3,7 +3,6 @@ class MainScene extends Phaser.Scene {
     static COMMANDO_SPEED = 5;
     constructor() {
         super('MainScene');
-        this.time = 0;
         this.lastTextureChange = 0;
         this.lastBulletTime = 0;
         this.bullets = [];
@@ -28,7 +27,6 @@ class MainScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.createSpriteGroup();
         this.commando = this.add.sprite(70, this.sys.canvas.height - 150, 'commando');
-
     }
 
     createSpriteGroup() {
@@ -61,11 +59,36 @@ class MainScene extends Phaser.Scene {
             const bullet = this.bullets[i];
             bullet.x += 10*Math.cos(this.bulletAngle);
             bullet.y += 50*Math.sin(this.bulletAngle);
+            this.checkEnemyHit(bullet);
+
             if (bullet.x > 400) {
                 bullet.destroy();
                 this.bullets.splice(i, 1);
             }
         }
+    }
+
+    checkEnemyHit(bullet){
+        this.spriteGroup.children.iterate( (child) => {
+            if (child.texture.key !== 'gumba' && child.texture.key !== 'turtle')
+                return;
+
+            const x = child.x - bullet.x;
+            const y = child.y - bullet.y;
+            const distance = Math.sqrt(x*x + y*y);
+
+            if (distance < 20){
+                child.speedY = 4;
+                this.increaseScore();
+            }
+        });
+    }
+
+    increaseScore(){
+        const score = document.getElementById('score');
+        var scoreAmount = parseInt(score.innerText);
+        scoreAmount++;
+        score.innerText = scoreAmount;
     }
 
     moveBackground(time){
@@ -95,7 +118,8 @@ class MainScene extends Phaser.Scene {
     moveEnemies(){
         this.spriteGroup.children.iterate(function (child) {
             if (child.texture.key === 'gumba' || child.texture.key === 'turtle') {
-                child.x -= 1;
+                child.x -= child.speedX;
+                child.y += child.speedY;
             }
         });
     }
