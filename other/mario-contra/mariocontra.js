@@ -3,73 +3,98 @@ class MainScene extends Phaser.Scene {
     static COMMANDO_SPEED = 5;
     constructor() {
         super('MainScene');
+        this.time = 0;
+        this.lastTextureChange = 0;
+        this.lastBulletTime = 0;
+        this.bullets = [];
+        this.bulletAngle = 0;
     }
 
     preload() {
         this.load.image('ground', 'files/sprite.png');
         this.load.image('commando', 'files/commando.png');
+        this.load.image('commando2', 'files/commando2.png');
         this.load.image('gumba', 'files/gumba.png');
+        this.load.image('turtle', 'files/turtle.png');
         this.load.image('cloud', 'files/cloud.png');
         this.load.image('high-hill', 'files/highhill.png');
         this.load.image('low-hill', 'files/lowhill.png');
         this.load.image('castle', 'files/castle.png');
+        this.load.image('bullet', 'files/bullet.png');
+        this.currentCommandoTexture = 'commando';
     }
 
     create() {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.createSpriteGroup();
         this.commando = this.add.sprite(70, this.sys.canvas.height - 150, 'commando');
+
     }
 
     createSpriteGroup() {
-        this.spriteGroup = this.add.group();
-        for (let i = 0; i < 240; i++) {
-            const x = i * MainScene.TILE_WIDTH;
-            const sprite = this.add.sprite(x, this.sys.canvas.height - 50, 'ground');
-            this.spriteGroup.add(sprite);
-        }
-
-        for (let i=0.2; i < 5.2; i++){
-            const cloud1 = this.add.sprite(MainScene.TILE_WIDTH *50*i, 70, 'cloud');
-            const cloud2 = this.add.sprite(MainScene.TILE_WIDTH *50*i + 10*MainScene.TILE_WIDTH, 55, 'cloud');
-            this.spriteGroup.add(cloud1);
-            this.spriteGroup.add(cloud2);
-        }
-
-        for (let x=4; x<210; x += 40){
-            const highHill = this.add.sprite(x * MainScene.TILE_WIDTH, this.sys.canvas.height - 120, 'high-hill');
-            this.spriteGroup.add(highHill);
-            const lowHill = this.add.sprite((x + 11) * MainScene.TILE_WIDTH, this.sys.canvas.height - 100, 'low-hill');
-            this.spriteGroup.add(lowHill);
-        }
-
-        const castle = this.add.sprite(235 * MainScene.TILE_WIDTH, 338, 'castle');
-        this.spriteGroup.add(castle);
-
-        const gumba1 = this.add.sprite(900, this.sys.canvas.height - 105, 'gumba');
-        const gumba2 = this.add.sprite(1050, this.sys.canvas.height - 105, 'gumba');
-        this.spriteGroup.add(gumba1);
-        this.spriteGroup.add(gumba2);
+        this.spriteGroup = new SpriteGroupHelper(this).createSprites();
     }
 
     update(time, delta) {
-        this.moveBackground();
+        this.moveBackground(time);
         this.moveEnemies();
         this.checkVictory();
+        this.updateHeader(time);
+        this.handleShooting(time);
     }
 
-    moveBackground(){
+    handleShooting(time) {
+        if (time - this.lastBulletTime > 400) {
+            this.createBullet();
+            this.lastBulletTime = time;
+        }
+        this.moveBullets();
+    }
+
+    createBullet() {
+        const bullet = this.add.sprite(this.commando.x + 20, this.commando.y - 19, 'bullet');
+        this.bullets.push(bullet);
+    }
+
+    moveBullets() {
+        for (let i = this.bullets.length - 1; i >= 0; i--) {
+            const bullet = this.bullets[i];
+            bullet.x += 10*Math.cos(this.bulletAngle);
+            bullet.y += 50*Math.sin(this.bulletAngle);
+            if (bullet.x > 400) {
+                bullet.destroy();
+                this.bullets.splice(i, 1);
+            }
+        }
+    }
+
+    moveBackground(time){
         this.cameras.main.setBackgroundColor(0x507fff);
+        if (this.cursors.down.isDown) {
+            this.bulletAngle = 0.05;
+        }
+        else if (this.cursors.up.isDown) {
+            this.bulletAngle = -0.05;
+        }
+        else this.bulletAngle = 0;
         if (this.cursors.right.isDown) {
             this.spriteGroup.children.iterate(function (child) {
                 child.x -= MainScene.COMMANDO_SPEED;
             });
+            if (time - this.lastTextureChange > 300) {
+                this.commando.setTexture(this.currentCommandoTexture);
+                this.currentCommandoTexture = (this.currentCommandoTexture === 'commando') ? 'commando2' : 'commando';
+                this.lastTextureChange = time;
+            }
+        }
+        else {
+            this.commando.setTexture('commando');
         }
     }
 
     moveEnemies(){
         this.spriteGroup.children.iterate(function (child) {
-            if (child.texture.key === 'gumba') {
+            if (child.texture.key === 'gumba' || child.texture.key === 'turtle') {
                 child.x -= 1;
             }
         });
@@ -80,20 +105,16 @@ class MainScene extends Phaser.Scene {
         this.spriteGroup.children.iterate(function (child) {
             if (child.texture.key === 'castle') {
                 if (child.x <= 1*  MainScene.TILE_WIDTH){
-                    window.alert('You win ! The princess is in this very castle.');
+                    window.alert('You win ! The princess is in this particular castle.');
                     location.reload();
                 }
             }
         });
     }
+
+    updateHeader(time){
+        var timeCell = document.getElementById('time');
+        const seconds = Math.floor(time/1000) % 1000;
+        timeCell.innerText = String(seconds).padStart(3, '0');
+    }
 }
-
-const config = {
-    type: Phaser.AUTO,
-    parent: 'game',
-    width: 800,
-    height: 600,
-    scene: [MainScene]
-};
-
-const game = new Phaser.Game(config);

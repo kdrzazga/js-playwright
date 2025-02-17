@@ -1,3 +1,21 @@
 body {
   overflow-x: hidden;
+  background-color: 0x507fff;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+td{
+    position: center;
+    font-family: 'ArcadeClassic';
+    font-size: 24px;
+    text-align: center;
+    color: white;
+}
+
+@font-face {
+    font-family: 'ArcadeClassic';
+    src: url('files/ARCADECLASSIC.TTF');
 }
