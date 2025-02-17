@@ -27,36 +27,7 @@ class MainScene extends Phaser.Scene {
     }
 
     createSpriteGroup() {
-        this.spriteGroup = this.add.group();
-        for (let i = 0; i < 240; i++) {
-            const x = i * MainScene.TILE_WIDTH;
-            const sprite = this.add.sprite(x, this.sys.canvas.height - 50, 'ground');
-            this.spriteGroup.add(sprite);
-        }
-
-        for (let i=0.2; i < 5.2; i++){
-            const cloud1 = this.add.sprite(MainScene.TILE_WIDTH *50*i, 70, 'cloud');
-            const cloud2 = this.add.sprite(MainScene.TILE_WIDTH *50*i + 10*MainScene.TILE_WIDTH, 55, 'cloud');
-            this.spriteGroup.add(cloud1);
-            this.spriteGroup.add(cloud2);
-        }
-
-        for (let x=4; x<210; x += 40){
-            const highHill = this.add.sprite(x * MainScene.TILE_WIDTH, this.sys.canvas.height - 120, 'high-hill');
-            this.spriteGroup.add(highHill);
-            const lowHill = this.add.sprite((x + 11) * MainScene.TILE_WIDTH, this.sys.canvas.height - 100, 'low-hill');
-            this.spriteGroup.add(lowHill);
-        }
-
-        const castle = this.add.sprite(235 * MainScene.TILE_WIDTH, 338, 'castle');
-        this.spriteGroup.add(castle);
-
-        const yPos = this.sys.canvas.height - 105;
-        const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135].map(x => this.add.sprite(x * MainScene.TILE_WIDTH, yPos, 'gumba'));
-        gumbas.forEach(gumba => this.spriteGroup.add(gumba));
-
-        const turtles = [90, 102, 140].map(x => this.add.sprite(x * MainScene.TILE_WIDTH, this.sys.canvas.height - 123, 'turtle'));
-        turtles.forEach(turtle => this.spriteGroup.add(turtle));
+        this.spriteGroup = new SpriteGroupHelper(this).createSprites();
     }
 
     update(time, delta) {
@@ -109,23 +80,3 @@ class MainScene extends Phaser.Scene {
         timeCell.innerText = String(seconds).padStart(3, '0');
     }
 }
-
-const config = {
-    type: Phaser.AUTO,
-    parent: 'game-container',
-    width: 800,
-    height: 600,
-    scene: [MainScene],
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: {
-                y: 500,
-                x: 0,
-            },
-            debug: false,
-        }
-    }
-};
-
-const game = new Phaser.Game(config);
