@@ -59,7 +59,8 @@ class MainScene extends Phaser.Scene {
     moveBullets() {
         for (let i = this.bullets.length - 1; i >= 0; i--) {
             const bullet = this.bullets[i];
-            bullet.x += 10;
+            bullet.x += 10*Math.cos(this.bulletAngle);
+            bullet.y += 20*Math.sin(this.bulletAngle);
             if (bullet.x > 800) {
                 bullet.destroy();
                 this.bullets.splice(i, 1);
@@ -69,6 +70,12 @@ class MainScene extends Phaser.Scene {
 
     moveBackground(time){
         this.cameras.main.setBackgroundColor(0x507fff);
+        if (this.cursors.down.isDown) {
+            this.bulletAngle = 0.05;
+        }
+        else if (this.cursors.up.isDown) {
+            this.bulletAngle = -0.05;
+        }
         if (this.cursors.right.isDown) {
             this.spriteGroup.children.iterate(function (child) {
                 child.x -= MainScene.COMMANDO_SPEED;
