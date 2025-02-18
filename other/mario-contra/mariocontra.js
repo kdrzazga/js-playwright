@@ -69,35 +69,39 @@ class MainScene extends Phaser.Scene {
         }
     }
 
-    checkEnemyHit(bullet){
-        this.spriteGroup.children.iterate( (child) => {
-            if (child.texture.key !== 'gumba' && child.texture.key !== 'turtle')
-                return;
+    _isEnemy(child) {
+        return child.texture.key === 'gumba' || child.texture.key === 'turtle';
+    }
 
-            const x = child.x - bullet.x;
-            const y = child.y - bullet.y;
-            const distance = Math.sqrt(x*x + y*y);
+    _checkEnemyDistance(child, targetX, targetY, radius, onHit) {
+        if (!this._isEnemy(child)) {
+            return;
+        }
 
-            if (distance < 20){
-                child.speedY = 4;
+        const dx = child.x - targetX;
+        const dy = child.y - targetY;
+        const distanceSq = dx * dx + dy * dy;
+
+        if (distanceSq < radius * radius) {
+            onHit(child);
+        }
+    }
+
+    checkEnemyHit(bullet) {
+        this.spriteGroup.children.iterate((child) => {
+            this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
+                enemy.speedY = 4;
                 this.increaseScore();
-            }
+            });
         });
     }
 
-    checkEnemyCollision(){
-        this.spriteGroup.children.iterate( (child) => {
-            if (child.texture.key !== 'gumba' && child.texture.key !== 'turtle')
-                return;
-
-            const x = child.x - this.commando.x;
-            const y = child.y - this.commando.y;
-            const distance = Math.sqrt(x*x + y*y);
-
-            if (distance < 50){
+    checkEnemyCollision() {
+        this.spriteGroup.children.iterate((child) => {
+            this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
                 window.alert('You lose !');
                 location.reload();
-            }
+            });
         });
     }
 
@@ -133,8 +137,8 @@ class MainScene extends Phaser.Scene {
     }
 
     moveEnemies(){
-        this.spriteGroup.children.iterate(function (child) {
-            if (child.texture.key === 'gumba' || child.texture.key === 'turtle') {
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)) {
                 child.x -= child.speedX;
                 child.y += child.speedY;
             }
