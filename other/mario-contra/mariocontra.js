@@ -39,6 +39,7 @@ class MainScene extends Phaser.Scene {
         this.checkVictory();
         this.updateHeader(time);
         this.handleShooting(time);
+        this.checkEnemyCollision();
     }
 
     handleShooting(time) {
@@ -80,6 +81,22 @@ class MainScene extends Phaser.Scene {
             if (distance < 20){
                 child.speedY = 4;
                 this.increaseScore();
+            }
+        });
+    }
+
+    checkEnemyCollision(){
+        this.spriteGroup.children.iterate( (child) => {
+            if (child.texture.key !== 'gumba' && child.texture.key !== 'turtle')
+                return;
+
+            const x = child.x - this.commando.x;
+            const y = child.y - this.commando.y;
+            const distance = Math.sqrt(x*x + y*y);
+
+            if (distance < 50){
+                window.alert('You lose !');
+                location.reload();
             }
         });
     }
