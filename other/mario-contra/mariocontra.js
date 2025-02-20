@@ -3,7 +3,6 @@ class MainScene extends Phaser.Scene {
     static COMMANDO_SPEED = 5;
     constructor() {
         super('MainScene');
-        this.time = 0;
         this.lastTextureChange = 0;
         this.lastBulletTime = 0;
         this.bullets = [];
@@ -28,7 +27,6 @@ class MainScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.createSpriteGroup();
         this.commando = this.add.sprite(70, this.sys.canvas.height - 150, 'commando');
-
     }
 
     createSpriteGroup() {
@@ -41,6 +39,7 @@ class MainScene extends Phaser.Scene {
         this.checkVictory();
         this.updateHeader(time);
         this.handleShooting(time);
+        this.checkEnemyCollision();
     }
 
     handleShooting(time) {
@@ -61,11 +60,56 @@ class MainScene extends Phaser.Scene {
             const bullet = this.bullets[i];
             bullet.x += 10*Math.cos(this.bulletAngle);
             bullet.y += 50*Math.sin(this.bulletAngle);
+            this.checkEnemyHit(bullet);
+
             if (bullet.x > 400) {
                 bullet.destroy();
                 this.bullets.splice(i, 1);
             }
         }
+    }
+
+    _isEnemy(child) {
+        return child.texture.key === 'gumba' || child.texture.key === 'turtle';
+    }
+
+    _checkEnemyDistance(child, targetX, targetY, radius, onHit) {
+        if (!this._isEnemy(child)) {
+            return;
+        }
+
+        const dx = child.x - targetX;
+        const dy = child.y - targetY;
+        const distanceSq = dx * dx + dy * dy;
+
+        if (distanceSq < radius * radius) {
+            onHit(child);
+        }
+    }
+
+    checkEnemyHit(bullet) {
+        this.spriteGroup.children.iterate((child) => {
+            this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
+                enemy.speedY = 4;
+                this.increaseScore();
+            });
+        });
+    }
+
+    checkEnemyCollision() {
+        this.spriteGroup.children.iterate((child) => {
+            this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
+                window.alert('You lose !');
+                location.reload();
+            });
+        });
+    }
+
+    increaseScore(){
+        const score = document.getElementById('score');
+        var scoreAmount = parseInt(score.innerText);
+        scoreAmount++;
+        score.innerText = scoreAmount;
     }
 
     moveBackground(time){
@@ -93,9 +137,10 @@ class MainScene extends Phaser.Scene {
     }
 
     moveEnemies(){
-        this.spriteGroup.children.iterate(function (child) {
-            if (child.texture.key === 'gumba' || child.texture.key === 'turtle') {
-                child.x -= 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)) {
+                child.x -= child.speedX;
+                child.y += child.speedY;
             }
         });
     }

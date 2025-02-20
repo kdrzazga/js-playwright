@@ -34,10 +34,18 @@ class SpriteGroupHelper {
 
         const yPos = canvasHeight - 105;
         const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135].map(x => this.scene.add.sprite(x * tileWidth, yPos, 'gumba'));
-        gumbas.forEach(gumba => spriteGroup.add(gumba));
+        gumbas.forEach(gumba => {
+            gumba.speedX = 1;
+            gumba.speedY = 0;
+            spriteGroup.add(gumba);
+        });
 
         const turtles = [90, 102, 140].map(x => this.scene.add.sprite(x * tileWidth, this.scene.sys.canvas.height - 123, 'turtle'));
-        turtles.forEach(turtle => spriteGroup.add(turtle));
+        turtles.forEach(turtle => {
+            turtle.speedX = 1;
+            turtle.speedY = 0;
+            spriteGroup.add(turtle);
+        });
 
         return spriteGroup;
     }
