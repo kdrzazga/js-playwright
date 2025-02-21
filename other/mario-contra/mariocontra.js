@@ -102,6 +102,7 @@ class MainScene extends Phaser.Scene {
         this.spriteGroup.children.iterate((child) => {
             if (child.texture.key === 'question'){
                 this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
+                    child.setTexture('blank');
                     this.increase('coins');
                 });
             }
@@ -119,8 +120,8 @@ class MainScene extends Phaser.Scene {
         });
     }
 
-    increase(id){
-        const score = document.getElementById(id);
+    increase(htmlId){
+        const score = document.getElementById(htmlId);
         var scoreAmount = parseInt(score.innerText);
         scoreAmount++;
         score.innerText = scoreAmount;

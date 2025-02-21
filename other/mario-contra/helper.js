@@ -17,7 +17,8 @@ class SpriteGroupHelper {
             spriteGroup.add(sprite);
         }
 
-        const floor1BricksX = [9, 19, 21, 23, 25, 78, 79, 80, 95, 101, 102, 119, 128, 129, 169, 170];
+        const floor1BricksX = [9, 19, 21, 23, 25, 78, 79, 80, 95, 96, 97, 98, 99, 100, 101, 102, 110, 111, 119, 128, 129
+            , 140, 141, 143,144, 169, 170, 201, 202, 203, 204, 205, 207, 209, 211, 213, 215];
         floor1BricksX.forEach(x => {
             const brick = this.scene.add.sprite(tileWidth * x, floor1Height * tileWidth, 'brick');
             spriteGroup.add(brick);
@@ -29,7 +30,7 @@ class SpriteGroupHelper {
             spriteGroup.add(brick);
         });
 
-        const questionsX = [22, 24];
+        const questionsX = [22, 24, 82, 90, 91, 92, 93, 94, 142, 206, 208, 210, 212, 214];
         questionsX.forEach(x => {
             const q = this.scene.add.sprite(tileWidth * x, floor1Height * tileWidth, 'question');
             spriteGroup.add(q);
