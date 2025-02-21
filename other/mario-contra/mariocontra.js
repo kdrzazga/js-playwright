@@ -7,6 +7,7 @@ class MainScene extends Phaser.Scene {
         this.lastBulletTime = 0;
         this.bullets = [];
         this.bulletAngle = 0;
+        this.bulletRange = 300;
     }
 
     preload() {
@@ -23,6 +24,7 @@ class MainScene extends Phaser.Scene {
         this.load.image('brick', 'files/brick.png');
         this.load.image('question', 'files/question.png');
         this.load.image('blank', 'files/blank.png');
+        this.load.image('blank-fire', 'files/blankFire.png');
         this.currentCommandoTexture = 'commando';
     }
 
@@ -140,7 +142,7 @@ class MainScene extends Phaser.Scene {
             this.spriteGroup.children.iterate(function (child) {
                 child.x -= MainScene.COMMANDO_SPEED;
             });
-            if (time - this.lastTextureChange > 300) {
+            if (time - this.lastTextureChange > this.bulletRange) {
                 this.commando.setTexture(this.currentCommandoTexture);
                 this.currentCommandoTexture = (this.currentCommandoTexture === 'commando') ? 'commando2' : 'commando';
                 this.lastTextureChange = time;
