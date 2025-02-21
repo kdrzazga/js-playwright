@@ -20,6 +20,9 @@ class MainScene extends Phaser.Scene {
         this.load.image('low-hill', 'files/lowhill.png');
         this.load.image('castle', 'files/castle.png');
         this.load.image('bullet', 'files/bullet.png');
+        this.load.image('brick', 'files/brick.png');
+        this.load.image('question', 'files/question.png');
+        this.load.image('blank', 'files/blank.png');
         this.currentCommandoTexture = 'commando';
     }
 
@@ -74,10 +77,6 @@ class MainScene extends Phaser.Scene {
     }
 
     _checkEnemyDistance(child, targetX, targetY, radius, onHit) {
-        if (!this._isEnemy(child)) {
-            return;
-        }
-
         const dx = child.x - targetX;
         const dy = child.y - targetY;
         const distanceSq = dx * dx + dy * dy;
@@ -89,19 +88,23 @@ class MainScene extends Phaser.Scene {
 
     checkEnemyHit(bullet) {
         this.spriteGroup.children.iterate((child) => {
-            this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
-                enemy.speedY = 4;
-                this.increaseScore();
-            });
+            if (this._isEnemy(child)){
+                this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
+                    enemy.speedY = 4;
+                    this.increaseScore();
+                });
+            }
         });
     }
 
     checkEnemyCollision() {
         this.spriteGroup.children.iterate((child) => {
-            this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
-                window.alert('You lose !');
-                location.reload();
-            });
+            if (this._isEnemy(child)){
+                this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
+                    window.alert('You lose !');
+                    location.reload();
+                });
+            }
         });
     }
 

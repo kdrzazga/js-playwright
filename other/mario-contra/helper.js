@@ -7,6 +7,8 @@ class SpriteGroupHelper {
     createSprites() {
         const spriteGroup = this.scene.add.group();
         const tileWidth = MainScene.TILE_WIDTH;
+        const floor2Height = 2.75;
+        const floor1Height = 5.5;
         const canvasHeight = this.scene.sys.canvas.height;
 
         for (let i = 0; i < 240; i++) {
@@ -14,6 +16,24 @@ class SpriteGroupHelper {
             const sprite = this.scene.add.sprite(x, canvasHeight - 50, 'ground');
             spriteGroup.add(sprite);
         }
+
+        const floor1BricksX = [9, 19, 21, 23, 25, 78, 79, 80, 95, 101, 102, 119, 128, 129, 169, 170];
+        floor1BricksX.forEach(x => {
+            const brick = this.scene.add.sprite(tileWidth * x, floor1Height * tileWidth, 'brick');
+            spriteGroup.add(brick);
+        });
+
+        const floor2BricksX = [9, 19, 21];
+        floor2BricksX.forEach(x => {
+            const brick = this.scene.add.sprite(tileWidth * x, floor2Height * tileWidth, 'brick');
+            spriteGroup.add(brick);
+        });
+
+        const questionsX = [22, 24];
+        questionsX.forEach(x => {
+            const q = this.scene.add.sprite(tileWidth * x, floor1Height * tileWidth, 'question');
+            spriteGroup.add(q);
+        });
 
         for (let i = 0.2; i < 5.2; i++) {
             const cloud1 = this.scene.add.sprite(tileWidth * 50 * i, 70, 'cloud');
