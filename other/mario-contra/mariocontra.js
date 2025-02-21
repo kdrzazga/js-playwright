@@ -64,8 +64,9 @@ class MainScene extends Phaser.Scene {
             bullet.x += 10*Math.cos(this.bulletAngle);
             bullet.y += 50*Math.sin(this.bulletAngle);
             this.checkEnemyHit(bullet);
+            this.checkQuestionBrickHit(bullet);
 
-            if (bullet.x > 400) {
+            if (bullet.x > 460) {
                 bullet.destroy();
                 this.bullets.splice(i, 1);
             }
@@ -91,7 +92,17 @@ class MainScene extends Phaser.Scene {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
                     enemy.speedY = 4;
-                    this.increaseScore();
+                    this.increase('score');
+                });
+            }
+        });
+    }
+
+    checkQuestionBrickHit(bullet) {
+        this.spriteGroup.children.iterate((child) => {
+            if (child.texture.key === 'question'){
+                this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
+                    this.increase('coins');
                 });
             }
         });
@@ -108,8 +119,8 @@ class MainScene extends Phaser.Scene {
         });
     }
 
-    increaseScore(){
-        const score = document.getElementById('score');
+    increase(id){
+        const score = document.getElementById(id);
         var scoreAmount = parseInt(score.innerText);
         scoreAmount++;
         score.innerText = scoreAmount;
