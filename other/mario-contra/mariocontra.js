@@ -122,7 +122,7 @@ class MainScene extends Phaser.Scene {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
                     window.alert('You lose !');
-                    location.reload();
+                    this.reset();
                 });
             }
         });
@@ -170,11 +170,11 @@ class MainScene extends Phaser.Scene {
 
     checkVictory(){
 
-        this.spriteGroup.children.iterate(function (child) {
+        this.spriteGroup.children.iterate(child => {
             if (child.texture.key === 'castle') {
                 if (child.x <= 1*  MainScene.TILE_WIDTH){
                     window.alert('You win ! The princess is in this particular castle.');
-                    location.reload();
+                    this.reset();
                 }
             }
         });
@@ -184,5 +184,10 @@ class MainScene extends Phaser.Scene {
         var timeCell = document.getElementById('time');
         const seconds = Math.floor(time/1000) % 1000;
         timeCell.innerText = String(seconds).padStart(3, '0');
+    }
+
+    reset(){
+        console.log('END GAME !');
+        location.reload();
     }
 }
