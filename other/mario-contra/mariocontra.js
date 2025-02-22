@@ -7,7 +7,8 @@ class MainScene extends Phaser.Scene {
         this.lastBulletTime = 0;
         this.bullets = [];
         this.bulletAngle = 0;
-        this.bulletRange = 300;
+        this.bulletRange = 460;
+        this.bulletFiringRate = 400;
     }
 
     preload() {
@@ -23,8 +24,8 @@ class MainScene extends Phaser.Scene {
         this.load.image('bullet', 'files/bullet.png');
         this.load.image('brick', 'files/brick.png');
         this.load.image('question', 'files/question.png');
-        this.load.image('blank', 'files/blank.png');
-        this.load.image('blank-fire', 'files/blankFire.png');
+        this.load.image('coin', 'files/blank.png');
+        this.load.image('fire-upgrade', 'files/blankFire.png');
         this.currentCommandoTexture = 'commando';
     }
 
@@ -48,7 +49,7 @@ class MainScene extends Phaser.Scene {
     }
 
     handleShooting(time) {
-        if (time - this.lastBulletTime > 400) {
+        if (time - this.lastBulletTime > this.bulletFiringRate) {
             this.createBullet();
             this.lastBulletTime = time;
         }
@@ -65,10 +66,9 @@ class MainScene extends Phaser.Scene {
             const bullet = this.bullets[i];
             bullet.x += 10*Math.cos(this.bulletAngle);
             bullet.y += 50*Math.sin(this.bulletAngle);
-            this.checkEnemyHit(bullet);
-            this.checkQuestionBrickHit(bullet);
+            this.checkHit(bullet);
 
-            if (bullet.x > 460) {
+            if (bullet.x > this.bulletRange) {
                 bullet.destroy();
                 this.bullets.splice(i, 1);
             }
@@ -89,7 +89,7 @@ class MainScene extends Phaser.Scene {
         }
     }
 
-    checkEnemyHit(bullet) {
+    checkHit(bullet) {
         this.spriteGroup.children.iterate((child) => {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
@@ -97,15 +97,21 @@ class MainScene extends Phaser.Scene {
                     this.increase('score');
                 });
             }
-        });
-    }
-
-    checkQuestionBrickHit(bullet) {
-        this.spriteGroup.children.iterate((child) => {
-            if (child.texture.key === 'question'){
+            else if (child.texture.key === 'question'){
                 this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
-                    child.setTexture('blank');
-                    this.increase('coins');
+                    const randomPrize = Math.random();
+                    if (randomPrize < 0.8 || this.bulletFiringRate < 200 || this.bulletRange > 800){
+                        child.setTexture('coin');
+                        this.increase('coins');
+                    }
+                    else if (randomPrize <= 0.9){
+                        child.setTexture('fire-upgrade');
+                        this.bulletFiringRate *= 0.4;
+                    }
+                    else{
+                        child.setTexture('fire-upgrade');
+                        this.bulletRange *= 1.2;
+                    }
                 });
             }
         });
@@ -142,7 +148,7 @@ class MainScene extends Phaser.Scene {
             this.spriteGroup.children.iterate(function (child) {
                 child.x -= MainScene.COMMANDO_SPEED;
             });
-            if (time - this.lastTextureChange > this.bulletRange) {
+            if (time - this.lastTextureChange > 300) {
                 this.commando.setTexture(this.currentCommandoTexture);
                 this.currentCommandoTexture = (this.currentCommandoTexture === 'commando') ? 'commando2' : 'commando';
                 this.lastTextureChange = time;
