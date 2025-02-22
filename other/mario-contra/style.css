@@ -8,6 +8,7 @@ table {
     border-collapse: collapse;
 }
 td{
+    background-color: black;
     position: center;
     font-family: 'ArcadeClassic';
     font-size: 24px;
