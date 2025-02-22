@@ -30,7 +30,7 @@ class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.moveBackground(time);
+        this.move(time);
         this.moveEnemies();
         this.checkVictory();
         this.updateHeader(time);
@@ -38,7 +38,7 @@ class MainScene extends Phaser.Scene {
         this.checkEnemyCollision();
     }
 
-    moveBackground(time){
+    move(time){
     }
 
     moveEnemies(){
@@ -174,7 +174,7 @@ class Scene1 extends MainScene {
         this.spriteGroup = new SpriteGroupHelper(this).createSprites();
     }
 
-    moveBackground(time){
+    move(time){
         this.cameras.main.setBackgroundColor(0x507fff);
         if (this.cursors.down.isDown) {
             this.bulletAngle = 0.05;
@@ -208,6 +208,11 @@ class Scene1 extends MainScene {
     }
 
     checkVictory(){
+        const forcedLevel = sessionStorage.getItem('force-level');
+        if (forcedLevel){
+            if (forcedLevel == '2')
+                this.scene.start('Scene2');
+        }
 
         this.spriteGroup.children.iterate(child => {
             if (child.texture.key === 'castle') {
