@@ -7,6 +7,8 @@ class MainScene extends Phaser.Scene {
         this.lastBulletTime = 0;
         this.bullets = [];
         this.bulletAngle = 0;
+        this.bulletRange = 460;
+        this.bulletFiringRate = 400;
     }
 
     preload() {
@@ -20,6 +22,10 @@ class MainScene extends Phaser.Scene {
         this.load.image('low-hill', 'files/lowhill.png');
         this.load.image('castle', 'files/castle.png');
         this.load.image('bullet', 'files/bullet.png');
+        this.load.image('brick', 'files/brick.png');
+        this.load.image('question', 'files/question.png');
+        this.load.image('coin', 'files/blank.png');
+        this.load.image('fire-upgrade', 'files/blankFire.png');
         this.currentCommandoTexture = 'commando';
     }
 
@@ -43,7 +49,7 @@ class MainScene extends Phaser.Scene {
     }
 
     handleShooting(time) {
-        if (time - this.lastBulletTime > 400) {
+        if (time - this.lastBulletTime > this.bulletFiringRate) {
             this.createBullet();
             this.lastBulletTime = time;
         }
@@ -60,9 +66,9 @@ class MainScene extends Phaser.Scene {
             const bullet = this.bullets[i];
             bullet.x += 10*Math.cos(this.bulletAngle);
             bullet.y += 50*Math.sin(this.bulletAngle);
-            this.checkEnemyHit(bullet);
+            this.checkHit(bullet);
 
-            if (bullet.x > 400) {
+            if (bullet.x > this.bulletRange) {
                 bullet.destroy();
                 this.bullets.splice(i, 1);
             }
@@ -74,10 +80,6 @@ class MainScene extends Phaser.Scene {
     }
 
     _checkEnemyDistance(child, targetX, targetY, radius, onHit) {
-        if (!this._isEnemy(child)) {
-            return;
-        }
-
         const dx = child.x - targetX;
         const dy = child.y - targetY;
         const distanceSq = dx * dx + dy * dy;
@@ -87,26 +89,47 @@ class MainScene extends Phaser.Scene {
         }
     }
 
-    checkEnemyHit(bullet) {
+    checkHit(bullet) {
         this.spriteGroup.children.iterate((child) => {
-            this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
-                enemy.speedY = 4;
-                this.increaseScore();
-            });
+            if (this._isEnemy(child)){
+                this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
+                    enemy.speedY = 4;
+                    this.increase('score');
+                });
+            }
+            else if (child.texture.key === 'question'){
+                this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
+                    const randomPrize = Math.random();
+                    if (randomPrize < 0.8 || this.bulletFiringRate < 200 || this.bulletRange > 800){
+                        child.setTexture('coin');
+                        this.increase('coins');
+                    }
+                    else if (randomPrize <= 0.9){
+                        child.setTexture('fire-upgrade');
+                        this.bulletFiringRate *= 0.4;
+                    }
+                    else{
+                        child.setTexture('fire-upgrade');
+                        this.bulletRange *= 1.2;
+                    }
+                });
+            }
         });
     }
 
     checkEnemyCollision() {
         this.spriteGroup.children.iterate((child) => {
-            this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
-                window.alert('You lose !');
-                location.reload();
-            });
+            if (this._isEnemy(child)){
+                this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
+                    window.alert('You lose !');
+                    location.reload();
+                });
+            }
         });
     }
 
-    increaseScore(){
-        const score = document.getElementById('score');
+    increase(htmlId){
+        const score = document.getElementById(htmlId);
         var scoreAmount = parseInt(score.innerText);
         scoreAmount++;
         score.innerText = scoreAmount;
