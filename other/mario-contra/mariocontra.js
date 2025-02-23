@@ -31,7 +31,7 @@ class MainScene extends Phaser.Scene {
 
     update(time, delta) {
         this.move(time);
-        this.moveEnemies();
+        this.moveEnemies(time);
         this.checkVictory();
         this.updateHeader(time);
         this.handleShooting(time);
@@ -41,7 +41,7 @@ class MainScene extends Phaser.Scene {
     move(time){
     }
 
-    moveEnemies(){
+    moveEnemies(time){
     }
 
     checkVictory(){
@@ -198,7 +198,7 @@ class Scene1 extends MainScene {
         }
     }
 
-    moveEnemies(){
+    moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)) {
                 child.x -= child.speedX;
