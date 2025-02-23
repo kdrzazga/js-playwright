@@ -1,7 +1,6 @@
 class Scene2 extends MainScene {
     constructor() {
         super('Scene2');
-
     }
 
     preload(){
@@ -12,6 +11,7 @@ class Scene2 extends MainScene {
         this.load.image('help', 'files/help.png');
         this.load.image('save-me', 'files/saveMe.png');
         this.load.image('nothing', 'files/nothing.png');
+        this.load.image('energy', 'files/energy.png');
     }
 
     create(){
@@ -20,13 +20,30 @@ class Scene2 extends MainScene {
         level.innerText = "1-2";
         this.createSprites();
         this.physics.world.setBounds(0, 733, 200, 600);
+
+        for (let i = 0; i < 14; i++) {
+            const x = i * MainScene.TILE_WIDTH;
+            this.add.sprite(x, config.height - 50, 'ground');
+        }
+
+        this.add.text(5, 10, 'WICKED PRINCESS', {
+                font: 'ArcadeClassic',
+                fontSize: '24px',
+                fill: '#ffffff',
+                align: 'center'
+            });
     }
 
     createSprites() {
-        this.kupa = this.add.sprite(733, this.commando.y + 10, 'kupa');
-        this.cage = this.add.sprite(733, this.commando.y + 10, 'cage');
+        this.kupa = this.add.sprite(733, this.commando.y + 20, 'kupa');
+        this.cage = this.add.sprite(733, this.commando.y + 20, 'cage');
         this.speechBubble = this.add.sprite(733, this.commando.y -80, 'help');
         this.princess = this.add.sprite(333, this.commando.y - 50, 'princess');
+        this.energyGroup = this.add.group();
+        for (let x = 120; x < 770; x+= 31) {
+            const sprite = this.add.sprite(x, 15, 'energy');
+            this.energyGroup.add(sprite);
+        }
     }
 
     move(time){
