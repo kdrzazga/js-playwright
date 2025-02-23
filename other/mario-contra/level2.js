@@ -24,7 +24,7 @@ class Scene2 extends MainScene {
 
         for (let i = 0; i < 14; i++) {
             const x = i * MainScene.TILE_WIDTH;
-            this.lastGroundTile = this.add.sprite(x, config.height - 50, 'ground');
+            this.lastGroundTile = this.add.sprite(x, config.height - 50, 'brick');
         }
 
         this.add.text(5, 10, 'WICKED PRINCESS', {
