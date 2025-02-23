@@ -1,8 +1,8 @@
 class MainScene extends Phaser.Scene {
     static TILE_WIDTH = 60;
     static COMMANDO_SPEED = 5;
-    constructor() {
-        super('MainScene');
+    constructor(name) {
+        super(name);
         this.lastTextureChange = 0;
         this.lastBulletTime = 0;
         this.bullets = [];
@@ -15,17 +15,8 @@ class MainScene extends Phaser.Scene {
         this.load.image('ground', 'files/sprite.png');
         this.load.image('commando', 'files/commando.png');
         this.load.image('commando2', 'files/commando2.png');
-        this.load.image('gumba', 'files/gumba.png');
-        this.load.image('turtle', 'files/turtle.png');
-        this.load.image('cloud', 'files/cloud.png');
-        this.load.image('high-hill', 'files/highhill.png');
-        this.load.image('low-hill', 'files/lowhill.png');
-        this.load.image('castle', 'files/castle.png');
         this.load.image('bullet', 'files/bullet.png');
         this.load.image('brick', 'files/brick.png');
-        this.load.image('question', 'files/question.png');
-        this.load.image('coin', 'files/blank.png');
-        this.load.image('fire-upgrade', 'files/blankFire.png');
         this.currentCommandoTexture = 'commando';
     }
 
@@ -36,24 +27,30 @@ class MainScene extends Phaser.Scene {
     }
 
     createSpriteGroup() {
-        this.spriteGroup = new SpriteGroupHelper(this).createSprites();
     }
 
     update(time, delta) {
-        this.moveBackground(time);
-        this.moveEnemies();
+        this.move(time);
+        this.moveEnemies(time);
         this.checkVictory();
         this.updateHeader(time);
         this.handleShooting(time);
         this.checkEnemyCollision();
     }
 
-    handleShooting(time) {
-        if (time - this.lastBulletTime > this.bulletFiringRate) {
-            this.createBullet();
-            this.lastBulletTime = time;
-        }
-        this.moveBullets();
+    move(time){
+    }
+
+    moveEnemies(time){
+    }
+
+    checkVictory(){
+    }
+
+    updateHeader(time){
+        var timeCell = document.getElementById('time');
+        const seconds = Math.floor(time/1000) % 1000;
+        timeCell.innerText = String(seconds).padStart(3, '0');
     }
 
     createBullet() {
@@ -75,6 +72,14 @@ class MainScene extends Phaser.Scene {
         }
     }
 
+    handleShooting(time) {
+        if (time - this.lastBulletTime > this.bulletFiringRate) {
+            this.createBullet();
+            this.lastBulletTime = time;
+        }
+        this.moveBullets();
+    }
+
     _isEnemy(child) {
         return child.texture.key === 'gumba' || child.texture.key === 'turtle';
     }
@@ -90,6 +95,9 @@ class MainScene extends Phaser.Scene {
     }
 
     checkHit(bullet) {
+        if (this.spriteGroup == undefined)
+            return;
+
         this.spriteGroup.children.iterate((child) => {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
@@ -118,11 +126,14 @@ class MainScene extends Phaser.Scene {
     }
 
     checkEnemyCollision() {
+        if (this.spriteGroup == undefined)
+            return;
+
         this.spriteGroup.children.iterate((child) => {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
                     window.alert('You lose !');
-                    location.reload();
+                    this.reset();
                 });
             }
         });
@@ -135,7 +146,35 @@ class MainScene extends Phaser.Scene {
         score.innerText = scoreAmount;
     }
 
-    moveBackground(time){
+    reset(){
+        console.log('END GAME !');
+        location.reload();
+    }
+}
+
+class Scene1 extends MainScene {
+    constructor() {
+        super('Scene1');
+    }
+
+    preload() {
+        super.preload();
+        this.load.image('gumba', 'files/gumba.png');
+        this.load.image('turtle', 'files/turtle.png');
+        this.load.image('cloud', 'files/cloud.png');
+        this.load.image('high-hill', 'files/highhill.png');
+        this.load.image('low-hill', 'files/lowhill.png');
+        this.load.image('castle', 'files/castle.png');
+        this.load.image('question', 'files/question.png');
+        this.load.image('coin', 'files/blank.png');
+        this.load.image('fire-upgrade', 'files/blankFire.png');
+    }
+
+    createSpriteGroup() {
+        this.spriteGroup = new SpriteGroupHelper(this).createSprites();
+    }
+
+    move(time){
         this.cameras.main.setBackgroundColor(0x507fff);
         if (this.cursors.down.isDown) {
             this.bulletAngle = 0.05;
@@ -159,7 +198,7 @@ class MainScene extends Phaser.Scene {
         }
     }
 
-    moveEnemies(){
+    moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)) {
                 child.x -= child.speedX;
@@ -169,20 +208,19 @@ class MainScene extends Phaser.Scene {
     }
 
     checkVictory(){
+        const forcedLevel = sessionStorage.getItem('force-level');
+        if (forcedLevel){
+            if (forcedLevel == '2')
+                this.scene.start('Scene2');
+        }
 
-        this.spriteGroup.children.iterate(function (child) {
+        this.spriteGroup.children.iterate(child => {
             if (child.texture.key === 'castle') {
                 if (child.x <= 1*  MainScene.TILE_WIDTH){
-                    window.alert('You win ! The princess is in this particular castle.');
-                    location.reload();
+                    window.alert('Great ! The princess is in this particular castle.');
+                    this.scene.start('Scene2');
                 }
             }
         });
-    }
-
-    updateHeader(time){
-        var timeCell = document.getElementById('time');
-        const seconds = Math.floor(time/1000) % 1000;
-        timeCell.innerText = String(seconds).padStart(3, '0');
     }
 }
