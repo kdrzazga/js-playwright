@@ -10,6 +10,7 @@ class Scene2 extends MainScene {
         this.load.image('cage', 'files/cage.png');
         this.load.image('help', 'files/help.png');
         this.load.image('save-me', 'files/saveMe.png');
+        this.load.image('thank-you', 'files/thankYou.png');
         this.load.image('nothing', 'files/nothing.png');
         this.load.image('energy', 'files/energy.png');
     }
@@ -23,7 +24,7 @@ class Scene2 extends MainScene {
 
         for (let i = 0; i < 14; i++) {
             const x = i * MainScene.TILE_WIDTH;
-            this.add.sprite(x, config.height - 50, 'ground');
+            this.lastGroundTile = this.add.sprite(x, config.height - 50, 'ground');
         }
 
         this.add.text(5, 10, 'WICKED PRINCESS', {
@@ -37,8 +38,8 @@ class Scene2 extends MainScene {
     createSprites() {
         this.kupa = this.add.sprite(733, this.commando.y + 20, 'kupa');
         this.cage = this.add.sprite(733, this.commando.y + 20, 'cage');
-        this.speechBubble = this.add.sprite(733, this.commando.y -80, 'help');
-        this.princess = this.add.sprite(333, this.commando.y - 50, 'princess');
+        this.speechBubble = this.add.sprite(733, this.commando.y -55, 'help');
+        this.princess = this.add.sprite(333, this.commando.y - 80, 'princess');
         this.energyGroup = this.add.group();
         for (let x = 120; x < 770; x+= 31) {
             const sprite = this.add.sprite(x, 15, 'energy');
@@ -72,7 +73,10 @@ class Scene2 extends MainScene {
         let texture;
         let multiplier = -1;
 
-        if (t > 5000 && t < 10000) {
+        if(this.energyGroup.getLength() == 0){
+            texture = 'thank-you';
+        }
+        else if (t > 5000 && t < 10000) {
             texture = 'save-me';
             multiplier = -1;
         } else if (t > 15000 && t < 20000) {
@@ -85,8 +89,30 @@ class Scene2 extends MainScene {
         this.speechBubble.setTexture(texture);
 
         const deltaX = 5 * Math.sin(multiplier*time/200);
-        const deltaY = 14 * Math.cos(time/200);
+        const deltaY = 11 * Math.cos(time/200);
         this.princess.x += deltaX;
         this.princess.y += deltaY;
+        if (this.princess.y > this.lastGroundTile.y)
+            this.princess.y = this.lastGroundTile.y;
+        else if (this.princess.y < 30)
+            this.princess.y = 30;
+    }
+
+    checkHit(bullet) {
+        this._checkEnemyDistance(this.princess, bullet.x, bullet.y, 20, princess => {
+            const lastSprite = this.energyGroup.getChildren()[this.energyGroup.getLength() - 1];
+
+            if (lastSprite) {
+                lastSprite.destroy();
+                this.increase('score');
+            }
+        });
+
+        if(this.energyGroup.getLength() == 0){
+            this.princess.destroy();
+            this.cage.destroy();
+            this.speechBubble.x -=1;
+            this.kupa.x -= 1;
+        }
     }
 }
