@@ -11,6 +11,7 @@ class Scene2 extends MainScene {
         this.load.image('help', 'files/help.png');
         this.load.image('save-me', 'files/saveMe.png');
         this.load.image('thank-you', 'files/thankYou.png');
+        this.load.image('shit', 'files/sht.png');
         this.load.image('nothing', 'files/nothing.png');
         this.load.image('energy', 'files/energy.png');
     }
@@ -36,15 +37,25 @@ class Scene2 extends MainScene {
     }
 
     createSprites() {
-        this.kupa = this.add.sprite(733, this.commando.y + 20, 'kupa');
-        this.cage = this.add.sprite(733, this.commando.y + 20, 'cage');
-        this.speechBubble = this.add.sprite(733, this.commando.y -55, 'help');
         this.princess = this.add.sprite(333, this.commando.y - 80, 'princess');
         this.energyGroup = this.add.group();
-        for (let x = 120; x < 770; x+= 31) {
+
+        let maxEnergyX = 770;
+        const forcedLevel = sessionStorage.getItem('force-level');
+                if (forcedLevel){
+                    if (forcedLevel == '2')
+                        maxEnergyX = 120 + 2*31;
+                }
+
+        for (let x = 120; x < maxEnergyX; x+= 31) {
             const sprite = this.add.sprite(x, 15, 'energy');
             this.energyGroup.add(sprite);
         }
+        this.kupa = this.add.sprite(733, this.commando.y + 20, 'kupa');
+        this.kupa.speedY = 0;
+        this.cage = this.add.sprite(733, this.commando.y + 20, 'cage');
+        this.speechBubble = this.add.sprite(733, this.commando.y -55, 'help');
+        this.speechBubble.speedY = 0;
     }
 
     move(time){
@@ -74,7 +85,10 @@ class Scene2 extends MainScene {
         let multiplier = -1;
 
         if(this.energyGroup.getLength() == 0){
-            texture = 'thank-you';
+            if  (this.kupa.speedY < 1)
+                texture = 'thank-you';
+            else
+                texture = 'shit';
         }
         else if (t > 5000 && t < 10000) {
             texture = 'save-me';
@@ -113,6 +127,13 @@ class Scene2 extends MainScene {
             this.cage.destroy();
             this.speechBubble.x -=1;
             this.kupa.x -= 1;
+            this.kupa.y += this.kupa.speedY;
+            this.speechBubble.y += this.speechBubble.speedY;
         }
+
+        this._checkEnemyDistance(this.kupa, bullet.x, bullet.y, 40, kupa => {
+            kupa.speedY = 2;
+            this.speechBubble.speedY = 2;
+        });
     }
 }
