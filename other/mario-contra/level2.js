@@ -131,6 +131,17 @@ class Scene2 extends MainScene {
             this.kupa.x -= 1;
             this.kupa.y += this.kupa.speedY;
             this.speechBubble.y += this.speechBubble.speedY;
+
+            if (this.kupa.x < -5)
+                if (this.kupa.y>600){
+                    this.reset("You've just killed poor Koopa, you moron !!!")
+                }
+                else{
+                    for (var i = 0; i < 50; i++)
+                        this.increase('score');
+
+                    this.reset('You win! Bonus +50');
+                }
         }
 
         this._checkEnemyDistance(this.kupa, bullet.x, bullet.y, 40, kupa => {

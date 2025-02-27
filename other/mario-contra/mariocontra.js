@@ -132,8 +132,7 @@ class MainScene extends Phaser.Scene {
         this.spriteGroup.children.iterate((child) => {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
-                    window.alert('You lose !');
-                    this.reset();
+                    this.reset('You lose');
                 });
             }
         });
@@ -146,9 +145,24 @@ class MainScene extends Phaser.Scene {
         score.innerText = scoreAmount;
     }
 
-    reset(){
+    reset(message){
+        this.scene.stop(this.name);
+        let container = document.getElementById('game-container');
+        container.innerHTML = message;
         console.log('END GAME !');
-        location.reload();
+
+        this.reloadPageAfterDelay(7000)
+              .then(() => {
+                window.location.reload();
+              });
+    }
+
+    reloadPageAfterDelay(delay) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, delay);
+      });
     }
 }
 
