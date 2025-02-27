@@ -38,6 +38,7 @@ class Scene2 extends MainScene {
 
     createSprites() {
         this.princess = this.add.sprite(333, this.commando.y - 80, 'princess');
+        this.princess.setDepth(2);
         this.energyGroup = this.add.group();
 
         let maxEnergyX = 770;
@@ -56,6 +57,7 @@ class Scene2 extends MainScene {
         this.cage = this.add.sprite(733, this.commando.y + 20, 'cage');
         this.speechBubble = this.add.sprite(733, this.commando.y -55, 'help');
         this.speechBubble.speedY = 0;
+        this.speechBubble.setDepth(2);
     }
 
     move(time){
@@ -134,6 +136,7 @@ class Scene2 extends MainScene {
         this._checkEnemyDistance(this.kupa, bullet.x, bullet.y, 40, kupa => {
             kupa.speedY = 2;
             this.speechBubble.speedY = 2;
+            kupa.setDepth(2);
         });
     }
 }
