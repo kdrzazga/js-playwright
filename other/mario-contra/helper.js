@@ -1,4 +1,3 @@
-
 class SpriteGroupHelper {
     constructor(scene) {
         this.scene = scene;

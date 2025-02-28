@@ -17,4 +17,15 @@ const config = {
     }
 };
 
-const game = new Phaser.Game(config);
+function start(){
+    let container = document.getElementById('game-container');
+    let header = document.getElementById('header');
+    let header2 = document.getElementById('header2');
+    let footer = document.getElementById('footer');
+
+    container.innerHTML = '';
+    header.innerHTML = '<td></td><td>SCORE</td><td></td><td>COINS</td><td></td><td>WORLD</td><td></td><td>TIME</td>';
+    header2.innerHTML = "<td></td><td id='score'>0</td><td></td><td id='coins'>0</td><td></td><td id='world'>1-1</td><td></td><td id='time'>0</td>";
+    footer.innerHTML = '<td></td><td>MARIO</td><td></td><td>CONTRA</td><td></td><td></td><td></td><td></td>';
+    const game = new Phaser.Game(config)
+}
