@@ -133,13 +133,17 @@ class Scene2 extends MainScene {
             this.speechBubble.y += this.speechBubble.speedY;
 
             if (this.kupa.x < -5)
-                if (this.kupa.y>600){
+                if (this.kupa.y > 600){
+                    const container = document.getElementById('footer');
+                    container.innerHTML = "<td></td><td><img src='files/cry.png'></td><td></td>";
                     this.reset("You've just killed poor Koopa, you moron !!!")
                 }
                 else{
                     for (var i = 0; i < 50; i++)
                         this.increase('score');
 
+                    const container = document.getElementById('footer');
+                    container.innerHTML = "<td colspan='7'><div style='text-align: center;'><img src='files/castleKupa2.png'></div></td>";
                     this.reset('You win! Bonus +50');
                 }
         }
