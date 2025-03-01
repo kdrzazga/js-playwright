@@ -9,6 +9,7 @@ class MainScene extends Phaser.Scene {
         this.bulletAngle = 0;
         this.bulletRange = 460;
         this.bulletFiringRate = 400;
+        this.extraDelay = 0;
     }
 
     preload() {
@@ -151,7 +152,7 @@ class MainScene extends Phaser.Scene {
         container.innerHTML = message;
         console.log('END GAME !');
 
-        this.reloadPageAfterDelay(997000)
+        this.reloadPageAfterDelay(7000 + this.extraDelay)
               .then(() => {
                 window.location.reload();
               });
@@ -224,6 +225,7 @@ class Scene1 extends MainScene {
     checkVictory(){
         const forcedLevel = sessionStorage.getItem('force-level');
         if (forcedLevel){
+            this.extraDelay = 70000;
             if (forcedLevel == '2')
                 this.scene.start('Scene2');
         }
