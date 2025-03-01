@@ -137,7 +137,10 @@ class MainScene extends Phaser.Scene {
         this.spriteGroup.children.iterate((child) => {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
-                    this.reset('You lose');
+                    const footer = document.getElementById('footer');
+                    footer.innerHTML = "<td colspan='7'><table><tr><div style='text-align: center;'><img src='files/lose.png'></div></td></tr>"
+                        + "<tr><td>&nbsp;</td></tr><tr><td colspan='7'><div style='text-align: center;'><img src='files/logo.png'></div></td></tr></table>";
+                    this.reset('Game&nbsp;&nbsp;&nbsp;Over');
                 });
             }
         });
@@ -237,7 +240,7 @@ class Scene1 extends MainScene {
 
         this.spriteGroup.children.iterate(child => {
             if (child.texture.key === 'castle') {
-                if (child.x <= 1*  MainScene.TILE_WIDTH){
+                if (child.x <= MainScene.TILE_WIDTH){
                     window.alert('Great ! The princess is in this particular castle.');
                     this.scene.start('Scene2');
                 }
