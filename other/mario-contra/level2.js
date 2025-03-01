@@ -142,6 +142,8 @@ class Scene2 extends MainScene {
                     for (var i = 0; i < 50; i++)
                         this.increase('score');
 
+                    const container = document.getElementById('footer');
+                    container.innerHTML = "<td colspan='7'><div style='text-align: center;'><img src='files/castleKupa2.png'></div></td>";
                     this.reset('You win! Bonus +50');
                 }
         }

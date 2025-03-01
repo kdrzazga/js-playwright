@@ -46,6 +46,10 @@ class MainScene extends Phaser.Scene {
     }
 
     checkVictory(){
+        const forcedLevel = sessionStorage.getItem('force-level');
+        if (forcedLevel) {
+            this.extraDelay = 70000;
+        }
     }
 
     updateHeader(time){
@@ -150,12 +154,13 @@ class MainScene extends Phaser.Scene {
         this.scene.stop(this.name);
         let container = document.getElementById('game-container');
         container.innerHTML = message;
-        console.log('END GAME !');
+        const delay = 7000 + this.extraDelay
+        console.log('END GAME ! [' + delay + ']');
 
-        this.reloadPageAfterDelay(7000 + this.extraDelay)
-              .then(() => {
+        this.reloadPageAfterDelay(delay)
+            .then(() => {
                 window.location.reload();
-              });
+            });
     }
 
     reloadPageAfterDelay(delay) {
@@ -223,9 +228,9 @@ class Scene1 extends MainScene {
     }
 
     checkVictory(){
+        super.checkVictory();
         const forcedLevel = sessionStorage.getItem('force-level');
         if (forcedLevel){
-            this.extraDelay = 70000;
             if (forcedLevel == '2')
                 this.scene.start('Scene2');
         }
