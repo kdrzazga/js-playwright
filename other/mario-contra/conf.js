@@ -17,6 +17,15 @@ const config = {
     }
 };
 
+function play() {
+  var audio = new Audio('files/contrametal.mp3');
+  audio.play();
+  setInterval(function() {
+    audio.play();
+  }, (6*60+50)*1000);
+  console.log('Music started.');
+}
+
 function start(){
     let container = document.getElementById('game-container');
     let header = document.getElementById('header');
@@ -27,5 +36,6 @@ function start(){
     header.innerHTML = '<td></td><td>SCORE</td><td></td><td>COINS</td><td></td><td>WORLD</td><td></td><td>TIME</td>';
     header2.innerHTML = "<td></td><td id='score'>0</td><td></td><td id='coins'>0</td><td></td><td id='world'>1-1</td><td></td><td id='time'>0</td>";
     footer.innerHTML = '<td></td><td>MARIO</td><td></td><td>CONTRA</td><td></td><td></td><td></td><td></td>';
+    play();
     const game = new Phaser.Game(config)
 }
