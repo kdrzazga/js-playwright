@@ -151,7 +151,7 @@ class MainScene extends Phaser.Scene {
         container.innerHTML = message;
         console.log('END GAME !');
 
-        this.reloadPageAfterDelay(7000)
+        this.reloadPageAfterDelay(997000)
               .then(() => {
                 window.location.reload();
               });
