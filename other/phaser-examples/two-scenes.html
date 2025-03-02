@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phaser Scenes</title>
+    <style>
+        #scene1 {
+            width: 400px;
+            height: 400px;
+            border: 1px solid black;
+            display: inline-block;
+        }
+
+        #scene2 {
+            width: 400px;
+            height: 400px;
+            border: 1px solid black;
+            display: inline-block;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+</head>
+<body>
+<div id="scene1"></div>
+<div id="scene2"></div>
+
+<script>
+    const config1 = {
+        type: Phaser.AUTO,
+        width: 400,
+        height: 400,
+        parent: 'scene1',
+        scene: {
+            preload: preloadScene1,
+            create: createScene1
+        }
+    };
+
+    const config2 = {
+        type: Phaser.AUTO,
+        width: 400,
+        height: 400,
+        parent: 'scene2',
+        scene: {
+            preload: preloadScene2,
+            create: createScene2
+        }
+    };
+
+    function preloadScene1() {}
+
+    function createScene1() {
+        this.add.circle(200, 200, 100, 0xff0000);
+    }
+
+    function preloadScene2() {}
+
+    function createScene2() {
+        this.add.line(0, 200, 0, 0, 400, 0, 0x0000ff);
+    }
+
+    const game1 = new Phaser.Game(config1);
+    const game2 = new Phaser.Game(config2);
+</script>
+</body>
+</html>
