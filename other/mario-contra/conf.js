@@ -18,12 +18,14 @@ const config = {
 };
 
 function play() {
-  var audio = new Audio('files/contrametal.mp3');
-  audio.play();
-  setInterval(function() {
+    const interval =  (6*60+50)*1000 / 3;
+    var audio = new Audio('files/contrametal.mp3');
     audio.play();
-  }, (6*60+50)*1000);
-  console.log('Music started.');
+    setInterval(function() {
+      audio.play();
+    }, interval);
+
+    console.log('Music started.');
 }
 
 function start(){
