@@ -22,7 +22,7 @@ function play() {
     audio.play();
     setInterval(function() {
       audio.play();
-    }, (6*60+50)*333*3/4);
+    }, (6*60+50)*165);
     console.log('Music started.');
 }
 
