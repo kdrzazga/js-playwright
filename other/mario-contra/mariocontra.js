@@ -107,7 +107,7 @@ class MainScene extends Phaser.Scene {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
                     enemy.speedY = 4;
-                    this.increase('score');
+                    this.increase('score', 5);
                 });
             }
             else if (child.texture.key === 'question'){
@@ -115,7 +115,8 @@ class MainScene extends Phaser.Scene {
                     const randomPrize = Math.random();
                     if (randomPrize < 0.8 || this.bulletFiringRate < 200 || this.bulletRange > 800){
                         child.setTexture('coin');
-                        this.increase('coins');
+                        this.increase('coins', 1);
+                        this.increase('score', 1);
                     }
                     else if (randomPrize <= 0.9){
                         child.setTexture('fire-upgrade');
@@ -146,10 +147,10 @@ class MainScene extends Phaser.Scene {
         });
     }
 
-    increase(htmlId){
+    increase(htmlId, amount){
         const score = document.getElementById(htmlId);
         var scoreAmount = parseInt(score.innerText);
-        scoreAmount++;
+        scoreAmount += amount;
         score.innerText = scoreAmount;
     }
 
@@ -175,9 +176,9 @@ class MainScene extends Phaser.Scene {
     }
 }
 
-class Scene1 extends MainScene {
+class Scene1_1 extends MainScene {
     constructor() {
-        super('Scene1');
+        super('Scene1.1');
     }
 
     preload() {
@@ -234,15 +235,15 @@ class Scene1 extends MainScene {
         super.checkVictory();
         const forcedLevel = sessionStorage.getItem('force-level');
         if (forcedLevel){
-            if (forcedLevel == '2')
-                this.scene.start('Scene2');
+            if (forcedLevel == '1.2')
+                this.scene.start('Scene1.2');
         }
 
         this.spriteGroup.children.iterate(child => {
             if (child.texture.key === 'castle') {
                 if (child.x <= MainScene.TILE_WIDTH){
                     window.alert('Great ! The princess is in this particular castle.');
-                    this.scene.start('Scene2');
+                    this.scene.start('Scene1.2');
                 }
             }
         });
