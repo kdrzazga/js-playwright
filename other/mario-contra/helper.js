@@ -3,7 +3,7 @@ class SpriteGroupHelper {
         this.scene = scene;
     }
 
-    createSprites() {
+    createSpritesLevel1_1() {
         const spriteGroup = this.scene.add.group();
         const tileWidth = MainScene.TILE_WIDTH;
         const floor2Height = 2.75;
@@ -70,6 +70,16 @@ class SpriteGroupHelper {
             spriteGroup.add(turtle);
         });
 
+        return spriteGroup;
+    }
+
+    createSpritesLevel2_1() {
+        const spriteGroup = this.scene.add.group();
+        for (let i = 0; i < 99; i++) {
+                    const x = i * 206;
+                    const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
+                    spriteGroup.add(sprite);
+                }
         return spriteGroup;
     }
 }

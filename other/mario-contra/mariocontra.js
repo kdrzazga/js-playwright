@@ -10,6 +10,9 @@ class MainScene extends Phaser.Scene {
         this.bulletRange = 460;
         this.bulletFiringRate = 400;
         this.extraDelay = 0;
+
+        this.mainCharacterPic = 'commando';
+        this.mainCharacterRunningPic = 'commando2';
     }
 
     preload() {
@@ -18,7 +21,8 @@ class MainScene extends Phaser.Scene {
         this.load.image('commando2', 'files/commando2.png');
         this.load.image('bullet', 'files/bullet.png');
         this.load.image('brick', 'files/brick.png');
-        this.currentCommandoTexture = 'commando';
+        this.load.image('kupa', 'files/koopa.png');
+        this.currentCommandoTexture = 'kupa';
     }
 
     create() {
@@ -131,6 +135,30 @@ class MainScene extends Phaser.Scene {
         });
     }
 
+    move(time){
+        this.cameras.main.setBackgroundColor(0x507fff);
+        if (this.cursors.down.isDown) {
+            this.bulletAngle = 0.05;
+        }
+        else if (this.cursors.up.isDown) {
+            this.bulletAngle = -0.05;
+        }
+        else this.bulletAngle = 0;
+        if (this.cursors.right.isDown) {
+            this.spriteGroup.children.iterate(function (child) {
+                child.x -= MainScene.COMMANDO_SPEED;
+            });
+            if (time - this.lastTextureChange > 300) {
+                this.commando.setTexture(this.currentCommandoTexture);
+                this.currentCommandoTexture = (this.currentCommandoTexture === this.mainCharacterPic) ? this.mainCharacterRunningPic : this.mainCharacterRunningPic;
+                this.lastTextureChange = time;
+            }
+        }
+        else {
+            this.commando.setTexture(this.currentCommandoTexture);
+        }
+    }
+
     checkEnemyCollision() {
         if (this.spriteGroup == undefined)
             return;
@@ -195,32 +223,10 @@ class Scene1_1 extends MainScene {
     }
 
     createSpriteGroup() {
-        this.spriteGroup = new SpriteGroupHelper(this).createSprites();
+        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel1_1();
     }
 
-    move(time){
-        this.cameras.main.setBackgroundColor(0x507fff);
-        if (this.cursors.down.isDown) {
-            this.bulletAngle = 0.05;
-        }
-        else if (this.cursors.up.isDown) {
-            this.bulletAngle = -0.05;
-        }
-        else this.bulletAngle = 0;
-        if (this.cursors.right.isDown) {
-            this.spriteGroup.children.iterate(function (child) {
-                child.x -= MainScene.COMMANDO_SPEED;
-            });
-            if (time - this.lastTextureChange > 300) {
-                this.commando.setTexture(this.currentCommandoTexture);
-                this.currentCommandoTexture = (this.currentCommandoTexture === 'commando') ? 'commando2' : 'commando';
-                this.lastTextureChange = time;
-            }
-        }
-        else {
-            this.commando.setTexture('commando');
-        }
-    }
+
 
     moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
@@ -237,6 +243,9 @@ class Scene1_1 extends MainScene {
         if (forcedLevel){
             if (forcedLevel == '1.2')
                 this.scene.start('Scene1.2');
+            else if (forcedLevel == '2.1') {
+                this.scene.start('Scene2.1');
+            }
         }
 
         this.spriteGroup.children.iterate(child => {
