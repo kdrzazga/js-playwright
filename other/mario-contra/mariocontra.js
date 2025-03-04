@@ -13,6 +13,7 @@ class MainScene extends Phaser.Scene {
 
         this.mainCharacterPic = 'commando';
         this.mainCharacterRunningPic = 'commando2';
+        this.backgroundColor = 0x507fff;
     }
 
     preload() {
@@ -136,7 +137,7 @@ class MainScene extends Phaser.Scene {
     }
 
     move(time){
-        this.cameras.main.setBackgroundColor(0x507fff);
+        this.cameras.main.setBackgroundColor(this.backgroundColor);
         if (this.cursors.down.isDown) {
             this.bulletAngle = 0.05;
         }

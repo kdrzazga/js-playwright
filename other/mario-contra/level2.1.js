@@ -3,6 +3,7 @@ class Scene2_1 extends MainScene {
         super('Scene2.1');
         this.mainCharacterPic = 'kupa';
         this.mainCharacterRunningPic = 'kupa';
+        this.backgroundColor = 0;
     }
 
     preload(){
@@ -13,6 +14,7 @@ class Scene2_1 extends MainScene {
 
     create(){
         super.create();
+        this.commando.y = this.sys.canvas.height - 120;
         this.commando.setDepth(2);
         const level = document.getElementById('world');
         level.innerText = "2-1";
@@ -21,30 +23,6 @@ class Scene2_1 extends MainScene {
 
     createSpriteGroup() {
         this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1();
-    }
-
-    move(time){
-        this.cameras.main.setBackgroundColor(0x507fff);
-        if (this.cursors.down.isDown) {
-            this.bulletAngle = 0.05;
-        }
-        else if (this.cursors.up.isDown) {
-            this.bulletAngle = -0.05;
-        }
-        else this.bulletAngle = 0;
-        if (this.cursors.right.isDown) {
-            this.spriteGroup.children.iterate(function (child) {
-                child.x -= MainScene.COMMANDO_SPEED;
-            });
-            if (time - this.lastTextureChange > 300) {
-                this.commando.setTexture(this.currentCommandoTexture);
-                this.currentCommandoTexture = (this.currentCommandoTexture === 'commando') ? 'commando2' : 'commando';
-                this.lastTextureChange = time;
-            }
-        }
-        else {
-            this.commando.setTexture('commando');
-        }
     }
 
     moveEnemies(time){
