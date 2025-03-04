@@ -14,13 +14,14 @@ class MainScene extends Phaser.Scene {
         this.mainCharacterPic = 'commando';
         this.mainCharacterRunningPic = 'commando2';
         this.backgroundColor = 0x507fff;
+        this.bulletPic = 'files/bullet.png';
     }
 
     preload() {
         this.load.image('ground', 'files/sprite.png');
         this.load.image('commando', 'files/commando.png');
         this.load.image('commando2', 'files/commando2.png');
-        this.load.image('bullet', 'files/bullet.png');
+        this.load.image('bullet', this.bulletPic);
         this.load.image('brick', 'files/brick.png');
         this.load.image('kupa', 'files/koopa.png');
         this.currentCommandoTexture = 'kupa';

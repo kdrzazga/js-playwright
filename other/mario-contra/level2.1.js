@@ -1,15 +1,18 @@
 class Scene2_1 extends MainScene {
     constructor() {
         super('Scene2.1');
-        this.mainCharacterPic = 'kupa';
-        this.mainCharacterRunningPic = 'kupa';
+        this.mainCharacterPic = 'kupaR1';
+        this.mainCharacterRunningPic = 'kupaR2';
+        this.bulletPic = 'files/fire.png';
         this.backgroundColor = 0;
     }
 
     preload(){
         super.preload();
         this.load.image('road', 'files/croad.png');
-        this.currentCommandoTexture = 'kupa';
+        this.load.image('kupaR1', 'files/koopaR1.png');
+        this.load.image('kupaR2', 'files/koopaR2.png');
+        this.currentCommandoTexture = 'kupaR2';
     }
 
     create(){
