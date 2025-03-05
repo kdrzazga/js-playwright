@@ -80,8 +80,10 @@ class SpriteGroupHelper {
                     const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
                     spriteGroup.add(sprite);
                 }
-        return spriteGroup;
 
-        const helicopter = this.scene.add.sprite(65*206, config.height - 259/2, 'helicopter');
+        const helicopter = this.scene.add.sprite(65*206, config.height - 212, 'helicopter');
+        spriteGroup.add(helicopter);
+
+        return spriteGroup;
     }
 }

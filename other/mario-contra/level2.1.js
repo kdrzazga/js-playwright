@@ -11,6 +11,7 @@ class Scene2_1 extends MainScene {
         super.preload();
         this.load.image('road', 'files/croad.png');
         this.load.image('helicopter', 'files/heli.png');
+        this.load.image('background1', 'files/chopper.png');
         this.load.image('kupaR1', 'files/koopaR1.png');
         this.load.image('kupaR2', 'files/koopaR2.png');
         this.currentCommandoTexture = 'kupaR2';
@@ -19,6 +20,9 @@ class Scene2_1 extends MainScene {
     create(){
         super.create();
         this.commando.y = this.sys.canvas.height - 120;
+        const forcedLevel = sessionStorage.getItem('force-level');
+        if (forcedLevel)
+            MainScene.COMMANDO_SPEED *=5;
         this.commando.setDepth(2);
         const level = document.getElementById('world');
         level.innerText = "2-1";
@@ -56,4 +60,29 @@ class Scene2_1 extends MainScene {
             }
         });
     }
+
+    move(time){
+        this.cameras.main.setBackgroundColor(this.backgroundColor);
+        if (this.cursors.down.isDown) {
+            this.bulletAngle = 0.05;
+        }
+        else if (this.cursors.up.isDown) {
+            this.bulletAngle = -0.05;
+        }
+        else this.bulletAngle = 0;
+        if (this.cursors.right.isDown) {
+            this.spriteGroup.children.iterate(function (child) {
+                child.x -= MainScene.COMMANDO_SPEED;
+            });
+            if (time - this.lastTextureChange > 300) {
+                this.commando.setTexture(this.currentCommandoTexture);
+                this.currentCommandoTexture = (this.currentCommandoTexture === this.mainCharacterPic) ? this.mainCharacterRunningPic : this.mainCharacterPic;
+                this.lastTextureChange = time;
+            }
+        }
+        else {
+            this.commando.setTexture(this.currentCommandoTexture);
+        }
+    }
+
 }

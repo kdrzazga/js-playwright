@@ -152,7 +152,7 @@ class MainScene extends Phaser.Scene {
             });
             if (time - this.lastTextureChange > 300) {
                 this.commando.setTexture(this.currentCommandoTexture);
-                this.currentCommandoTexture = (this.currentCommandoTexture === this.mainCharacterPic) ? this.mainCharacterRunningPic : this.mainCharacterRunningPic;
+                this.currentCommandoTexture = (this.currentCommandoTexture === this.mainCharacterPic) ? this.mainCharacterRunningPic : this.mainCharacterPic;
                 this.lastTextureChange = time;
             }
         }
