@@ -10,15 +10,21 @@ class MainScene extends Phaser.Scene {
         this.bulletRange = 460;
         this.bulletFiringRate = 400;
         this.extraDelay = 0;
+
+        this.mainCharacterPic = 'commando';
+        this.mainCharacterRunningPic = 'commando2';
+        this.backgroundColor = 0x507fff;
+        this.bulletPic = 'files/bullet.png';
     }
 
     preload() {
         this.load.image('ground', 'files/sprite.png');
         this.load.image('commando', 'files/commando.png');
         this.load.image('commando2', 'files/commando2.png');
-        this.load.image('bullet', 'files/bullet.png');
+        this.load.image('bullet', this.bulletPic);
         this.load.image('brick', 'files/brick.png');
-        this.currentCommandoTexture = 'commando';
+        this.load.image('kupa', 'files/koopa.png');
+        this.currentCommandoTexture = 'kupa';
     }
 
     create() {
@@ -107,7 +113,7 @@ class MainScene extends Phaser.Scene {
             if (this._isEnemy(child)){
                 this._checkEnemyDistance(child, bullet.x, bullet.y, 20, (enemy) => {
                     enemy.speedY = 4;
-                    this.increase('score');
+                    this.increase('score', 5);
                 });
             }
             else if (child.texture.key === 'question'){
@@ -115,7 +121,8 @@ class MainScene extends Phaser.Scene {
                     const randomPrize = Math.random();
                     if (randomPrize < 0.8 || this.bulletFiringRate < 200 || this.bulletRange > 800){
                         child.setTexture('coin');
-                        this.increase('coins');
+                        this.increase('coins', 1);
+                        this.increase('score', 1);
                     }
                     else if (randomPrize <= 0.9){
                         child.setTexture('fire-upgrade');
@@ -128,6 +135,30 @@ class MainScene extends Phaser.Scene {
                 });
             }
         });
+    }
+
+    move(time){
+        this.cameras.main.setBackgroundColor(this.backgroundColor);
+        if (this.cursors.down.isDown) {
+            this.bulletAngle = 0.05;
+        }
+        else if (this.cursors.up.isDown) {
+            this.bulletAngle = -0.05;
+        }
+        else this.bulletAngle = 0;
+        if (this.cursors.right.isDown) {
+            this.spriteGroup.children.iterate(function (child) {
+                child.x -= MainScene.COMMANDO_SPEED;
+            });
+            if (time - this.lastTextureChange > 300) {
+                this.commando.setTexture(this.currentCommandoTexture);
+                this.currentCommandoTexture = (this.currentCommandoTexture === this.mainCharacterPic) ? this.mainCharacterRunningPic : this.mainCharacterPic;
+                this.lastTextureChange = time;
+            }
+        }
+        else {
+            this.commando.setTexture(this.currentCommandoTexture);
+        }
     }
 
     checkEnemyCollision() {
@@ -146,10 +177,10 @@ class MainScene extends Phaser.Scene {
         });
     }
 
-    increase(htmlId){
+    increase(htmlId, amount){
         const score = document.getElementById(htmlId);
         var scoreAmount = parseInt(score.innerText);
-        scoreAmount++;
+        scoreAmount += amount;
         score.innerText = scoreAmount;
     }
 
@@ -175,9 +206,9 @@ class MainScene extends Phaser.Scene {
     }
 }
 
-class Scene1 extends MainScene {
+class Scene1_1 extends MainScene {
     constructor() {
-        super('Scene1');
+        super('Scene1.1');
     }
 
     preload() {
@@ -194,32 +225,10 @@ class Scene1 extends MainScene {
     }
 
     createSpriteGroup() {
-        this.spriteGroup = new SpriteGroupHelper(this).createSprites();
+        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel1_1();
     }
 
-    move(time){
-        this.cameras.main.setBackgroundColor(0x507fff);
-        if (this.cursors.down.isDown) {
-            this.bulletAngle = 0.05;
-        }
-        else if (this.cursors.up.isDown) {
-            this.bulletAngle = -0.05;
-        }
-        else this.bulletAngle = 0;
-        if (this.cursors.right.isDown) {
-            this.spriteGroup.children.iterate(function (child) {
-                child.x -= MainScene.COMMANDO_SPEED;
-            });
-            if (time - this.lastTextureChange > 300) {
-                this.commando.setTexture(this.currentCommandoTexture);
-                this.currentCommandoTexture = (this.currentCommandoTexture === 'commando') ? 'commando2' : 'commando';
-                this.lastTextureChange = time;
-            }
-        }
-        else {
-            this.commando.setTexture('commando');
-        }
-    }
+
 
     moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
@@ -234,15 +243,18 @@ class Scene1 extends MainScene {
         super.checkVictory();
         const forcedLevel = sessionStorage.getItem('force-level');
         if (forcedLevel){
-            if (forcedLevel == '2')
-                this.scene.start('Scene2');
+            if (forcedLevel == '1.2')
+                this.scene.start('Scene1.2');
+            else if (forcedLevel == '2.1') {
+                this.scene.start('Scene2.1');
+            }
         }
 
         this.spriteGroup.children.iterate(child => {
             if (child.texture.key === 'castle') {
                 if (child.x <= MainScene.TILE_WIDTH){
                     window.alert('Great ! The princess is in this particular castle.');
-                    this.scene.start('Scene2');
+                    this.scene.start('Scene1.2');
                 }
             }
         });
