@@ -139,11 +139,9 @@ class Scene1_2 extends MainScene {
                     this.reset("You've just killed poor Koopa, you moron !!!")
                 }
                 else{
-                     this.increase('score', 100);
-
-                    const container = document.getElementById('footer');
-                    container.innerHTML = "<td colspan='7'><div style='text-align: center;'><img src='files/castleKupa2.png'></div></td>";
-                    this.reset('You win! Bonus +100');
+                    window.alert('Koopa is now your soldier! Bonus +100.')
+                    this.scene.start('Scene2.1');
+                    this.increase('score', 100);
                 }
         }
 

@@ -10,6 +10,7 @@ class Scene2_1 extends MainScene {
     preload(){
         super.preload();
         this.load.image('road', 'files/croad.png');
+        this.load.image('helicopter', 'files/heli.png');
         this.load.image('kupaR1', 'files/koopaR1.png');
         this.load.image('kupaR2', 'files/koopaR2.png');
         this.currentCommandoTexture = 'kupaR2';
@@ -46,10 +47,11 @@ class Scene2_1 extends MainScene {
         }
 
         this.spriteGroup.children.iterate(child => {
-            if (child.texture.key === 'castle') {
+            if (child.texture.key === 'helicopter') {
                 if (child.x <= MainScene.TILE_WIDTH){
-                    window.alert('Great ! The princess is in this particular castle.');
-                    this.scene.start('Scene1.2');
+                    const container = document.getElementById('footer');
+                    container.innerHTML = "<td colspan='7'><div style='text-align: center;'><img src='files/castleKupa2.png'></div></td>";
+                    this.reset('You win! Bonus +100');
                 }
             }
         });

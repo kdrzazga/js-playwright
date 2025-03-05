@@ -75,11 +75,13 @@ class SpriteGroupHelper {
 
     createSpritesLevel2_1() {
         const spriteGroup = this.scene.add.group();
-        for (let i = 0; i < 99; i++) {
+        for (let i = 0; i < 69; i++) {
                     const x = i * 206;
                     const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
                     spriteGroup.add(sprite);
                 }
         return spriteGroup;
+
+        const helicopter = this.scene.add.sprite(65*206, config.height - 259/2, 'helicopter');
     }
 }
