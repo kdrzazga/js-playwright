@@ -15,6 +15,8 @@ class Scene2_1 extends MainScene {
         this.load.image('background1', 'files/chopper.png');
         this.load.image('kupaR1', 'files/koopaR1.png');
         this.load.image('kupaR2', 'files/koopaR2.png');
+        this.load.image('4-black-clouds', 'files/4blackClouds.png');
+        this.load.image('outpost', 'files/outpost.png');
         this.currentCommandoTexture = 'kupaR2';
     }
 

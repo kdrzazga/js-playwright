@@ -81,8 +81,24 @@ class SpriteGroupHelper {
                     spriteGroup.add(sprite);
                 }
 
+        for (let i = 1; i< 30; i++){
+            const x1 = i * 1300;
+            let sprite = this.scene.add.sprite(x1, 11+i, '4-black-clouds');
+            spriteGroup.add(sprite);
+        }
+
+        for(let i = 1; i<4; i++){
+            const x2 = i*3250 + 800;
+            const sprite = this.scene.add.sprite(x2, 300 , 'outpost');
+            spriteGroup.add(sprite);
+
+        }
+
         const helicopter = this.scene.add.sprite(65*206, config.height - 212, 'helicopter');
         spriteGroup.add(helicopter);
+
+        const building1 = this.scene.add.sprite(1500, 96*6/5, 'background1');
+        spriteGroup.add(building1);
 
         return spriteGroup;
     }
