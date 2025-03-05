@@ -1,6 +1,7 @@
 class Scene1_2 extends MainScene {
     constructor() {
         super('Scene1.2');
+        this.level12Done = false;
     }
 
     preload(){
@@ -124,7 +125,7 @@ class Scene1_2 extends MainScene {
             }
         });
 
-        if(this.energyGroup.getLength() == 0){
+        if(this.energyGroup.getLength() == 0 && !this.level21Done){
             this.princess.destroy();
             this.cage.destroy();
             this.speechBubble.x -=1;
@@ -139,9 +140,12 @@ class Scene1_2 extends MainScene {
                     this.reset("You've just killed poor Koopa, you moron !!!")
                 }
                 else{
-                    window.alert('Koopa is now your soldier! Bonus +100.')
-                    this.scene.start('Scene2.1');
+                    this.level12Done = true;
+                    window.alert('Koopa is now your soldier! Bonus +100.');
+                    this.kupa.destroy();
                     this.increase('score', 100);
+                    this.scene.stop('Scene1.2');
+                    this.scene.start('Scene2.1');
                 }
         }
 
