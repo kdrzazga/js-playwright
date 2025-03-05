@@ -23,7 +23,6 @@ class MainScene extends Phaser.Scene {
         this.load.image('commando2', 'files/commando2.png');
         this.load.image('bullet', this.bulletPic);
         this.load.image('brick', 'files/brick.png');
-        this.load.image('kupa', 'files/koopa.png');
         this.currentCommandoTexture = 'kupa';
     }
 

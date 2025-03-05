@@ -9,6 +9,7 @@ class Scene2_1 extends MainScene {
 
     preload(){
         //super.preload();
+        this.textures.remove('commando');
         this.load.image('road', 'files/croad.png');
         this.load.image('helicopter', 'files/heli.png');
         this.load.image('background1', 'files/chopper.png');
