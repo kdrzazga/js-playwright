@@ -89,9 +89,11 @@ class SpriteGroupHelper {
 
         for(let i = 1; i<4; i++){
             const x2 = i*3250 + 800;
-            const sprite = this.scene.add.sprite(x2, 300 , 'outpost');
+            let sprite = this.scene.add.sprite(x2, 300 , 'outpost');
             spriteGroup.add(sprite);
-
+            const x3 = x2 + 600;
+            sprite = this.scene.add.sprite(x3, 300 , 'ruin');
+            spriteGroup.add(sprite);
         }
 
         const helicopter = this.scene.add.sprite(65*206, config.height - 212, 'helicopter');
