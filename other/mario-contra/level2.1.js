@@ -18,6 +18,10 @@ class Scene2_1 extends MainScene {
         this.load.image('4-black-clouds', 'files/4blackClouds.png');
         this.load.image('outpost', 'files/outpost.png');
         this.load.image('ruin', 'files/ruin1.png');
+        this.load.image('runner1', 'files/runner1.png');
+        this.load.image('runner2', 'files/runner2.png');
+        this.load.image('runner3', 'files/runner3.png');
+        this.load.image('runner4', 'files/runner4.png');
         this.currentCommandoTexture = 'kupaR2';
     }
 
@@ -35,6 +39,23 @@ class Scene2_1 extends MainScene {
 
     createSpriteGroup() {
         this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1();
+
+        this.anims.create({
+                    key: 'run',
+                    frames: [
+                        { key: 'runner1' },
+                        { key: 'runner2' },
+                        { key: 'runner3' },
+                        { key: 'runner4' }
+                    ],
+                    frameRate: 10,
+                    repeat: -1
+                });
+
+        for (let i = 0; i < 10; i++) {
+                    const runnerSprite = this.spriteGroup.create(100 + i * 100, 300, 'runner1');
+                    runnerSprite.play('run');
+                }
     }
 
     moveEnemies(time){
