@@ -53,7 +53,7 @@ class Scene2_1 extends MainScene {
                 });
 
         for (let i = 0; i < 10; i++) {
-                    const runnerSprite = this.spriteGroup.create(100 + i * 100, 300, 'runner1');
+                    const runnerSprite = this.spriteGroup.create(100 + i * 300, 300, 'runner1');
                     runnerSprite.play('run');
                 }
     }
