@@ -11,6 +11,8 @@ Webapps: https://kdrzazga.github.io/js-playwright
 
 Electrician: https://kdrzazga.github.io/js-playwright/other/electrician/ 
 
+Mario-Contra: https://kdrzazga.github.io/js-playwright/other/mario-contra
+
 C64 Blackbox:
 ---
 https://kdrzazga.github.io/js-playwright/other/c64blackbox/
