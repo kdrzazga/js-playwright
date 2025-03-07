@@ -91,7 +91,8 @@ class MainScene extends Phaser.Scene {
     }
 
     _isEnemy(child) {
-        return child.texture.key === 'gumba' || child.texture.key === 'turtle';
+        const pic = child.texture.key;
+        return pic === 'gumba' || pic === 'turtle' || pic.startsWith('runner') || pic.startsWith('scorp');
     }
 
     _checkEnemyDistance(child, targetX, targetY, radius, onHit) {
@@ -226,8 +227,6 @@ class Scene1_1 extends MainScene {
     createSpriteGroup() {
         this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel1_1();
     }
-
-
 
     moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
