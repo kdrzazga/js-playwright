@@ -91,7 +91,8 @@ class MainScene extends Phaser.Scene {
     }
 
     _isEnemy(child) {
-        return child.texture.key === 'gumba' || child.texture.key === 'turtle' || child.texture.key.startsWith('runner');
+        const pic = child.texture.key;
+        return pic === 'gumba' || pic === 'turtle' || pic.startsWith('runner') || pic.startsWith('scorp');
     }
 
     _checkEnemyDistance(child, targetX, targetY, radius, onHit) {

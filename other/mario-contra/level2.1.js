@@ -18,6 +18,9 @@ class Scene2_1 extends MainScene {
         this.load.image('4-black-clouds', 'files/4blackClouds.png');
         this.load.image('outpost', 'files/outpost.png');
         this.load.image('ruin', 'files/ruin1.png');
+        this.load.image('scorp1', 'files/scorp1.png');
+        this.load.image('scorp2', 'files/scorp2.png');
+        this.load.image('scorp3', 'files/scorp3.png');
         this.load.image('runner1', 'files/runner1.png');
         this.load.image('runner2', 'files/runner2.png');
         this.load.image('runner3', 'files/runner3.png');
@@ -41,7 +44,7 @@ class Scene2_1 extends MainScene {
         this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1();
 
         this.anims.create({
-            key: 'run',
+            key: 'runner-run',
             frames: [
                 { key: 'runner1' },
                 { key: 'runner2' },
@@ -52,6 +55,17 @@ class Scene2_1 extends MainScene {
             repeat: -1
         });
 
+        this.anims.create({
+            key: 'scorp-run',
+            frames: [
+                { key: 'scorp1' },
+                { key: 'scorp2' },
+                { key: 'scorp3' }
+            ],
+            frameRate: 5,
+            repeat: -1
+        });
+
         for (let i = 0; i < 30; i++) {
              const y =  this.sys.canvas.height - 125;
              const runnerSprite = this.spriteGroup.create(200 + (i + 1) * 1400, y, 'runner1');
@@ -59,7 +73,14 @@ class Scene2_1 extends MainScene {
              runnerSprite.speedX = 2;
              runnerSprite.speedY = 0;
              runnerSprite.setDepth(3);
-             runnerSprite.play('run');
+             runnerSprite.play('runner-run');
+
+             const scorpSprite = this.spriteGroup.create(700 + (i + 1) * 1400, y, 'scorp1');
+             scorpSprite.id = i + 10;
+             scorpSprite.speedX = 2;
+             scorpSprite.speedY = 0;
+             scorpSprite.setDepth(3);
+             scorpSprite.play('scorp-run');
         }
     }
 
