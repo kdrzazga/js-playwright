@@ -41,22 +41,23 @@ class Scene2_1 extends MainScene {
         this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1();
 
         this.anims.create({
-                    key: 'run',
-                    frames: [
-                        { key: 'runner1' },
-                        { key: 'runner2' },
-                        { key: 'runner3' },
-                        { key: 'runner4' }
-                    ],
-                    frameRate: 7,
-                    repeat: -1
-                });
+            key: 'run',
+            frames: [
+                { key: 'runner1' },
+                { key: 'runner2' },
+                { key: 'runner3' },
+                { key: 'runner4' }
+            ],
+            frameRate: 7,
+            repeat: -1
+        });
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 30; i++) {
              const y =  this.sys.canvas.height - 125;
-             const runnerSprite = this.spriteGroup.create(100 + i * 300, y, 'runner1');
+             const runnerSprite = this.spriteGroup.create(200 + (i + 1) * 1400, y, 'runner1');
              runnerSprite.id = i;
-             runnerSprite.speedX = 30;
+             runnerSprite.speedX = 2;
+             runnerSprite.speedY = 0;
              runnerSprite.setDepth(3);
              runnerSprite.play('run');
         }
@@ -64,7 +65,7 @@ class Scene2_1 extends MainScene {
 
     moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
-            if (this._isEnemy(child) || child.texture.key.startsWith('runner')) {
+            if (this._isEnemy(child)) {
                 child.x -= child.speedX;
                 child.y += child.speedY;
             }
