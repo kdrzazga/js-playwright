@@ -48,19 +48,23 @@ class Scene2_1 extends MainScene {
                         { key: 'runner3' },
                         { key: 'runner4' }
                     ],
-                    frameRate: 10,
+                    frameRate: 7,
                     repeat: -1
                 });
 
         for (let i = 0; i < 10; i++) {
-                    const runnerSprite = this.spriteGroup.create(100 + i * 300, 300, 'runner1');
-                    runnerSprite.play('run');
-                }
+             const y =  this.sys.canvas.height - 125;
+             const runnerSprite = this.spriteGroup.create(100 + i * 300, y, 'runner1');
+             runnerSprite.id = i;
+             runnerSprite.speedX = 30;
+             runnerSprite.setDepth(3);
+             runnerSprite.play('run');
+        }
     }
 
     moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
-            if (this._isEnemy(child)) {
+            if (this._isEnemy(child) || child.texture.key.startsWith('runner')) {
                 child.x -= child.speedX;
                 child.y += child.speedY;
             }
