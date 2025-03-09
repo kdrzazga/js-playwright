@@ -1,13 +1,11 @@
-class Scene2_1 extends MainScene {
+class Scene1_1 extends MainScene {
     constructor() {
-        super('Scene2.1');
-        this.backgroundColor = 0x507fff;
+        super('Scene1.1');
     }
 
     preload() {
         super.preload();
-        this.textures.remove('gumba');
-        this.load.image('gumba', 'files/gumba.png');
+        this.load.image('gumba', 'files/zombie.bmp');
         this.load.image('turtle', 'files/turtle.png');
         this.load.image('cloud', 'files/cloud.png');
         this.load.image('high-hill', 'files/highhill.png');
@@ -16,12 +14,6 @@ class Scene2_1 extends MainScene {
         this.load.image('question', 'files/question.png');
         this.load.image('coin', 'files/blank.png');
         this.load.image('fire-upgrade', 'files/blankFire.png');
-    }
-
-    create(){
-        super.create();
-        const level = document.getElementById('world');
-        level.innerText = "2-1";
     }
 
     createSpriteGroup() {
@@ -51,8 +43,8 @@ class Scene2_1 extends MainScene {
         this.spriteGroup.children.iterate(child => {
             if (child.texture.key === 'castle') {
                 if (child.x <= MainScene.TILE_WIDTH){
-                    window.alert('Great ! The princess is in this particular castle.');
-                    this.scene.start('Scene2.2');
+                    window.alert("Let's travel to MarioLand !!!");
+                    this.scene.start('Scene2.1');
                 }
             }
         });

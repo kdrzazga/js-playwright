@@ -13,7 +13,7 @@ class MainScene extends Phaser.Scene {
 
         this.mainCharacterPic = 'commando';
         this.mainCharacterRunningPic = 'commando2';
-        this.backgroundColor = 0x507fff;
+        this.backgroundColor = 'black';
         this.bulletPic = 'files/bullet.png';
     }
 
