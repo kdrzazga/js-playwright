@@ -1,6 +1,6 @@
-class Scene1_2 extends MainScene {
+class Scene2_2 extends MainScene {
     constructor() {
-        super('Scene1.2');
+        super('Scene2.2');
         this.level12Done = false;
     }
 
@@ -21,7 +21,7 @@ class Scene1_2 extends MainScene {
         super.create();
         this.bulletFiringRate *= 0.55;
         const level = document.getElementById('world');
-        level.innerText = "1-2";
+        level.innerText = "2-2";
         this.createSprites();
         this.physics.world.setBounds(0, 733, 200, 600);
 
@@ -145,8 +145,8 @@ class Scene1_2 extends MainScene {
                     window.alert('Koopa is now your soldier! Bonus +100.');
                     this.kupa.destroy();
                     this.increase('score', 100);
-                    this.scene.stop('Scene1.2');
-                    this.scene.start('Scene2.1');
+                    this.scene.stop('Scene2.2');
+                    this.scene.start('Scene3.1');
                 }
         }
 
