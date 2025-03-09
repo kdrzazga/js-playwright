@@ -6,7 +6,10 @@ class Scene2_1 extends MainScene {
 
     preload() {
         super.preload();
-        this.textures.remove('gumba');
+        const toBeRemoved = ['turtle', 'castle', 'cloud', 'ground'];
+        toBeRemoved.forEach(texture => this.textures.remove(texture));
+
+        this.load.image('ground', 'files/sprite.png');
         this.load.image('gumba', 'files/gumba.png');
         this.load.image('turtle', 'files/turtle.png');
         this.load.image('cloud', 'files/cloud.png');
@@ -25,7 +28,7 @@ class Scene2_1 extends MainScene {
     }
 
     createSpriteGroup() {
-        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel1_1();
+        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1();
     }
 
     moveEnemies(time){

@@ -5,12 +5,11 @@ class Scene1_1 extends MainScene {
 
     preload() {
         super.preload();
-        this.load.image('gumba', 'files/zombie.bmp');
-        this.load.image('turtle', 'files/turtle.png');
-        this.load.image('cloud', 'files/cloud.png');
-        this.load.image('high-hill', 'files/highhill.png');
-        this.load.image('low-hill', 'files/lowhill.png');
-        this.load.image('castle', 'files/castle.png');
+        this.load.image('grass', 'files/grass.png');
+        this.load.image('gumba', 'files/gumba.png');
+        this.load.image('turtle', 'files/zombie.png');
+        this.load.image('cloud', 'files/distant-mountain.png');
+        this.load.image('castle', 'files/heavy-door.png');
         this.load.image('question', 'files/question.png');
         this.load.image('coin', 'files/blank.png');
         this.load.image('fire-upgrade', 'files/blankFire.png');
