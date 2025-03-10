@@ -36,9 +36,12 @@ class SpriteGroupHelper {
             spriteGroup.add(cloud2);
         }
 
-
+        const building = this.scene.add.sprite(235 * tileWidth, 315, 'building');
+        spriteGroup.add(building);
         const castle = this.scene.add.sprite(235 * tileWidth, 338, 'castle');
         spriteGroup.add(castle);
+        const graveyard = this.scene.add.sprite(150 * tileWidth, 381, 'graveyard');
+        spriteGroup.add(graveyard);
 
         const yPos = canvasHeight - 105;
         const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135, 155, 245,266].map(x =>

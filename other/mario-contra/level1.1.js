@@ -9,6 +9,8 @@ class Scene1_1 extends MainScene {
         this.load.image('gumba', 'files/gumba.png');
         this.load.image('turtle', 'files/zombie.png');
         this.load.image('cloud', 'files/distant-mountain.png');
+        this.load.image('graveyard', 'files/graveyard.png');
+        this.load.image('building', 'files/building.png');
         this.load.image('castle', 'files/heavy-door.png');
         this.load.image('question', 'files/question.png');
         this.load.image('coin', 'files/blank.png');
