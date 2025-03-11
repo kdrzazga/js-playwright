@@ -1,34 +1,24 @@
-class Scene2_1 extends MainScene {
+class Scene1_1 extends MainScene {
     constructor() {
-        super('Scene2.1');
-        this.backgroundColor = 0x507fff;
+        super('Scene1.1');
     }
 
     preload() {
         super.preload();
-        const toBeRemoved = ['turtle', 'castle', 'cloud', 'ground', 'question'];
-        toBeRemoved.forEach(texture => this.textures.remove(texture));
-
-        this.load.image('ground', 'files/sprite.png');
+        this.load.image('grass', 'files/grass.png');
         this.load.image('gumba', 'files/gumba.png');
-        this.load.image('turtle', 'files/turtle.png');
-        this.load.image('cloud', 'files/cloud.png');
-        this.load.image('high-hill', 'files/highhill.png');
-        this.load.image('low-hill', 'files/lowhill.png');
-        this.load.image('castle', 'files/castle.png');
-        this.load.image('question', 'files/question.png');
+        this.load.image('turtle', 'files/zombie.png');
+        this.load.image('cloud', 'files/distant-mountain.png');
+        this.load.image('graveyard', 'files/graveyard.png');
+        this.load.image('question', 'files/grave.png');
+        this.load.image('building', 'files/building.png');
+        this.load.image('castle', 'files/heavy-door.png');
         this.load.image('coin', 'files/blank.png');
         this.load.image('fire-upgrade', 'files/blankFire.png');
     }
 
-    create(){
-        super.create();
-        const level = document.getElementById('world');
-        level.innerText = "2-1";
-    }
-
     createSpriteGroup() {
-        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1();
+        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel1_1();
     }
 
     moveEnemies(time){
@@ -54,8 +44,8 @@ class Scene2_1 extends MainScene {
         this.spriteGroup.children.iterate(child => {
             if (child.texture.key === 'castle') {
                 if (child.x <= MainScene.TILE_WIDTH){
-                    window.alert('Great ! The princess is in this particular castle.');
-                    this.scene.start('Scene2.2');
+                    window.alert("Let's travel to MarioLand !!!");
+                    this.scene.start('Scene2.1');
                 }
             }
         });
