@@ -13,8 +13,8 @@ class Scene1_1 extends MainScene {
         this.load.image('question', 'files/grave.png');
         this.load.image('building', 'files/building.png');
         this.load.image('castle', 'files/heavy-door.png');
-        this.load.image('coin', 'files/blank.png');
-        this.load.image('fire-upgrade', 'files/blankFire.png');
+        this.load.image('coin', 'files/grave-coin.png');
+        this.load.image('fire-upgrade', 'files/grave-fire.png');
     }
 
     createSpriteGroup() {
