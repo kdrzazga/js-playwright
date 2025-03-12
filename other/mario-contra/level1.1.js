@@ -5,6 +5,7 @@ class Scene1_1 extends MainScene {
 
     preload() {
         super.preload();
+        this.load.image('brick', 'files/cross.png');
         this.load.image('grass', 'files/grass.png');
         this.load.image('gumba', 'files/gumba.png');
         this.load.image('turtle', 'files/zombie.png');

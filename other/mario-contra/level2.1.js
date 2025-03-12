@@ -6,9 +6,10 @@ class Scene2_1 extends MainScene {
 
     preload() {
         super.preload();
-        const toBeRemoved = ['turtle', 'castle', 'cloud', 'ground', 'question', 'fire-upgrade', 'coin'];
+        const toBeRemoved = ['turtle', 'castle', 'cloud', 'ground', 'question', 'fire-upgrade', 'coin', 'brick'];
         toBeRemoved.forEach(texture => this.textures.remove(texture));
 
+        this.load.image('brick', 'files/brick.png');
         this.load.image('ground', 'files/sprite.png');
         this.load.image('gumba', 'files/gumba.png');
         this.load.image('turtle', 'files/turtle.png');
