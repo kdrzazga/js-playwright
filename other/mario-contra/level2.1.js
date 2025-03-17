@@ -12,6 +12,7 @@ class Scene2_1 extends MainScene {
         this.load.image('brick', 'files/brick.png');
         this.load.image('ground', 'files/sprite.png');
         this.load.image('gumba', 'files/gumba.png');
+        this.load.image('gumbaL', 'files/gumbaL.png');
         this.load.image('turtle', 'files/turtle.png');
         this.load.image('cloud', 'files/cloud.png');
         this.load.image('high-hill', 'files/highhill.png');
@@ -30,6 +31,27 @@ class Scene2_1 extends MainScene {
 
     createSpriteGroup() {
         this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1();
+
+        this.anims.create({
+            key: 'gumba-walk',
+            frames: [
+                { key: 'gumba' },
+                { key: 'gumbaL' }
+            ],
+            frameRate: 3,
+            repeat: -1
+        });
+
+        const canvasHeight = config.height;
+        const yPos = canvasHeight - 105;
+        const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135, 155, 245,266].map(x =>
+                this.add.sprite(x * MainScene.TILE_WIDTH, yPos, 'gumba'));
+        gumbas.forEach(gumba => {
+            gumba.speedX = 1;
+            gumba.speedY = 0;
+            gumba.play('gumba-walk');
+            this.spriteGroup.add(gumba);
+        });
     }
 
     moveEnemies(time){
