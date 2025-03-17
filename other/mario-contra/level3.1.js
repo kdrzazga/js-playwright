@@ -41,6 +41,7 @@ class Scene3_1 extends MainScene {
     }
 
     createSpriteGroup() {
+        super.createSpriteGroup();
         this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel3_1();
 
         this.anims.create({

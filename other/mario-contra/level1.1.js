@@ -19,6 +19,7 @@ class Scene1_1 extends MainScene {
     }
 
     createSpriteGroup() {
+        super.createSpriteGroup();
         this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel1_1();
     }
 
