@@ -15,6 +15,7 @@ class MainScene extends Phaser.Scene {
         this.mainCharacterRunningPic = 'commando2';
         this.backgroundColor = 'black';
         this.bulletPic = 'files/bullet.png';
+        this.spriteGroup = null;
     }
 
     preload() {
@@ -32,6 +33,7 @@ class MainScene extends Phaser.Scene {
     }
 
     createSpriteGroup() {
+        this.spriteGroup = this.add.group();
     }
 
     update(time, delta) {

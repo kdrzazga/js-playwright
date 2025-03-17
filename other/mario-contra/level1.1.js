@@ -20,7 +20,8 @@ class Scene1_1 extends MainScene {
 
     createSpriteGroup() {
         super.createSpriteGroup();
-        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel1_1();
+        const extendedSpriteGroup = new SpriteGroupHelper(this).createSpritesLevel1_1(this.spriteGroup);
+        this.spriteGroup = extendedSpriteGroup;
     }
 
     moveEnemies(time){

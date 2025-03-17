@@ -3,8 +3,7 @@ class SpriteGroupHelper {
         this.scene = scene;
     }
 
-    createSpritesLevel1_1() {
-        const spriteGroup = this.scene.add.group();
+    createSpritesLevel1_1(spriteGroup) {
         const tileWidth = MainScene.TILE_WIDTH;
         const floor2Height = 2.75;
         const floor1Height = 5.5;
@@ -63,8 +62,7 @@ class SpriteGroupHelper {
         return spriteGroup;
     }
 
-    createSpritesLevel2_1() {
-        const spriteGroup = this.scene.add.group();
+    createSpritesLevel2_1(spriteGroup) {
         const tileWidth = MainScene.TILE_WIDTH;
         const floor2Height = 2.75;
         const floor1Height = 5.5;
@@ -124,13 +122,12 @@ class SpriteGroupHelper {
         return spriteGroup;
     }
 
-    createSpritesLevel3_1() {
-        const spriteGroup = this.scene.add.group();
+    createSpritesLevel3_1(spriteGroup) {
         for (let i = 0; i < 69; i++) {
-                    const x = i * 206;
-                    const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
-                    spriteGroup.add(sprite);
-                }
+             const x = i * 206;
+             const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
+             spriteGroup.add(sprite);
+        }
 
         for (let i = 1; i< 30; i++){
             const x1 = i * 1300;
