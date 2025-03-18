@@ -41,7 +41,8 @@ class Scene3_1 extends MainScene {
     }
 
     createSpriteGroup() {
-        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel3_1();
+        super.createSpriteGroup();
+        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel3_1(this.spriteGroup);
 
         this.anims.create({
             key: 'runner-run',

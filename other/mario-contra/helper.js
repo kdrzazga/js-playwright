@@ -3,8 +3,7 @@ class SpriteGroupHelper {
         this.scene = scene;
     }
 
-    createSpritesLevel1_1() {
-        const spriteGroup = this.scene.add.group();
+    createSpritesLevel1_1(spriteGroup) {
         const tileWidth = MainScene.TILE_WIDTH;
         const floor2Height = 2.75;
         const floor1Height = 5.5;
@@ -16,14 +15,15 @@ class SpriteGroupHelper {
             spriteGroup.add(sprite);
         }
 
-        const floor1BricksX = [9, 19, 21, 23, 25, 49,51,53,55, 78, 79, 80, 95, 96, 97, 98, 99, 100, 101, 102, 110, 111
-            , 119, 128, 129, 140, 141, 143,144, 169, 170, 201, 202, 203, 204, 205, 207, 209, 211, 213, 215];
+        const floor1BricksX = [13,14,15, 17, 18, 19, 21, 22,23,24, 27, 52, 53, 55, 57, 58, 59, 60, 61, 62, 64, 65, 97
+            , 98, 99, 100, 101, 102, 104, 105, 128, 129, 201, 202, 203, 204, 205, 207
+            , 209-10, 211-10, 213-10, 215-10];
         floor1BricksX.forEach(x => {
             const brick = this.scene.add.sprite(tileWidth * x, floor1Height * tileWidth, 'brick');
             spriteGroup.add(brick);
         });
 
-        const questionsX = [22, 24, 50,52,54, 82, 90, 91, 92, 93, 94, 142, 206, 208, 210, 212, 214];
+        const questionsX = [16, 20, 25,26,54, 56,63, 66,90, 91, 92, 93, 94, 103, 206, 208-10, 210-10, 212-10, 214-10];
         questionsX.forEach(x => {
             const q = this.scene.add.sprite(tileWidth * x, floor1Height * tileWidth, 'question');
             spriteGroup.add(q);
@@ -63,8 +63,7 @@ class SpriteGroupHelper {
         return spriteGroup;
     }
 
-    createSpritesLevel2_1() {
-        const spriteGroup = this.scene.add.group();
+    createSpritesLevel2_1(spriteGroup) {
         const tileWidth = MainScene.TILE_WIDTH;
         const floor2Height = 2.75;
         const floor1Height = 5.5;
@@ -113,15 +112,6 @@ class SpriteGroupHelper {
         const castle = this.scene.add.sprite(235 * tileWidth, 338, 'castle');
         spriteGroup.add(castle);
 
-        const yPos = canvasHeight - 105;
-        const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135, 155, 245,266].map(x =>
-                this.scene.add.sprite(x * tileWidth, yPos, 'gumba'));
-        gumbas.forEach(gumba => {
-            gumba.speedX = 1;
-            gumba.speedY = 0;
-            spriteGroup.add(gumba);
-        });
-
         const turtles = [90, 102, 115,116, 137,138,139, 145, 240, 250,260].map(x =>
                  this.scene.add.sprite(x * tileWidth, this.scene.sys.canvas.height - 123, 'turtle'));
         turtles.forEach(turtle => {
@@ -133,13 +123,12 @@ class SpriteGroupHelper {
         return spriteGroup;
     }
 
-    createSpritesLevel3_1() {
-        const spriteGroup = this.scene.add.group();
+    createSpritesLevel3_1(spriteGroup) {
         for (let i = 0; i < 69; i++) {
-                    const x = i * 206;
-                    const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
-                    spriteGroup.add(sprite);
-                }
+             const x = i * 206;
+             const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
+             spriteGroup.add(sprite);
+        }
 
         for (let i = 1; i< 30; i++){
             const x1 = i * 1300;

@@ -15,6 +15,7 @@ class MainScene extends Phaser.Scene {
         this.mainCharacterRunningPic = 'commando2';
         this.backgroundColor = 'black';
         this.bulletPic = 'files/bullet.png';
+        this.spriteGroup = null;
     }
 
     preload() {
@@ -22,7 +23,6 @@ class MainScene extends Phaser.Scene {
         this.load.image('commando', 'files/commando.png');
         this.load.image('commando2', 'files/commando2.png');
         this.load.image('bullet', this.bulletPic);
-        this.load.image('brick', 'files/brick.png');
         this.currentCommandoTexture = 'kupa';
     }
 
@@ -33,6 +33,7 @@ class MainScene extends Phaser.Scene {
     }
 
     createSpriteGroup() {
+        this.spriteGroup = this.add.group();
     }
 
     update(time, delta) {
@@ -92,7 +93,8 @@ class MainScene extends Phaser.Scene {
 
     _isEnemy(child) {
         const pic = child.texture.key;
-        return pic === 'gumba' || pic === 'turtle' || pic.startsWith('runner') || pic.startsWith('scorp');
+        return pic === 'gumba' || pic === 'gumbaL' || pic === 'turtle'
+            || pic.startsWith('runner') || pic.startsWith('scorp');
     }
 
     _checkEnemyDistance(child, targetX, targetY, radius, onHit) {

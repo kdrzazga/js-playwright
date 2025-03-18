@@ -6,11 +6,13 @@ class Scene2_1 extends MainScene {
 
     preload() {
         super.preload();
-        const toBeRemoved = ['turtle', 'castle', 'cloud', 'ground', 'question'];
+        const toBeRemoved = ['turtle', 'castle', 'cloud', 'ground', 'question', 'fire-upgrade', 'coin', 'brick'];
         toBeRemoved.forEach(texture => this.textures.remove(texture));
 
+        this.load.image('brick', 'files/brick.png');
         this.load.image('ground', 'files/sprite.png');
         this.load.image('gumba', 'files/gumba.png');
+        this.load.image('gumbaL', 'files/gumbaL.png');
         this.load.image('turtle', 'files/turtle.png');
         this.load.image('cloud', 'files/cloud.png');
         this.load.image('high-hill', 'files/highhill.png');
@@ -28,7 +30,29 @@ class Scene2_1 extends MainScene {
     }
 
     createSpriteGroup() {
-        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1();
+        super.createSpriteGroup();
+        this.spriteGroup = new SpriteGroupHelper(this).createSpritesLevel2_1(this.spriteGroup);
+
+        this.anims.create({
+            key: 'gumba-walk',
+            frames: [
+                { key: 'gumba' },
+                { key: 'gumbaL' }
+            ],
+            frameRate: 3,
+            repeat: -1
+        });
+
+        const canvasHeight = config.height;
+        const yPos = canvasHeight - 105;
+        const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135, 155, 245,266].map(x =>
+                this.add.sprite(x * MainScene.TILE_WIDTH, yPos, 'gumba'));
+        gumbas.forEach(gumba => {
+            gumba.speedX = 1;
+            gumba.speedY = 0;
+            gumba.play('gumba-walk');
+            this.spriteGroup.add(gumba);
+        });
     }
 
     moveEnemies(time){
