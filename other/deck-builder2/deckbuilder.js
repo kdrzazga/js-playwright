@@ -20,7 +20,7 @@ class Player {
     conditionallyMoveDiscardToPlayingDeck(){
         if (this.playingDeck.length <= 5){
             this.discard = Helper.shuffle(this.discard);
-            this.playingDeck.push(...this.discard);
+            this.playingDeck.unshift(...this.discard);//push to the beginning of the list
             this.discard = [];
         }
     }
@@ -44,17 +44,42 @@ class Game {
     constructor(){
         this.player1 = new Player('1');
         this.player2 = new Player('2');
+        this.setA = [new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa')
+                                    , new Card('sa') , new Card('sa'), new Card('sa'), new Card('sa')];
+        this.setB = [new Card('sb'), new Card('sb'), new Card('sb'), new Card('sb'), new Card('sb'), new Card('sb')
+                                    , new Card('sb') , new Card('sb'), new Card('sb'), new Card('sb')];
+        this.setC = [new Card('sc'), new Card('sc'), new Card('sc'), new Card('sc'), new Card('sc'), new Card('sc')
+                                    , new Card('sc') , new Card('sc'), new Card('sc'), new Card('sc')];
     }
 }
 
 class UI{
     update(game){
+        const setA = document.getElementById('setA');
+        const setB = document.getElementById('setB');
+        const setC = document.getElementById('setC');
         const deck1 = document.getElementById('deck1');
         const deck2 = document.getElementById('deck2');
         const hand1 = document.getElementById('hand1');
         const hand2 = document.getElementById('hand2');
         const discard1 = document.getElementById('discard1');
         const discard2 = document.getElementById('discard2');
+
+        setA.value = '';
+        game.setA.forEach(card => {
+                const newText = setA.innerText + ' ' + card.id + ' ' + card.name + ', ';
+                setA.value += newText;
+        });
+        setB.value = '';
+        game.setB.forEach(card => {
+                const newText = setB.innerText + ' ' + card.id + ' ' + card.name + ', ';
+                setB.value += newText;
+        });
+        setC.value = '';
+        game.setC.forEach(card => {
+                const newText = setC.innerText + ' ' + card.id + ' ' + card.name + ', ';
+                setC.value += newText;
+        });
 
         deck1.value = '';
         game.player1.playingDeck.forEach(deck1Card => {
