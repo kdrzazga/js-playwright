@@ -11,14 +11,25 @@
         <tr><td colspan="3" id="stack"></td></tr>
         <tr><td>Set A</td><td>Set B</td><td>Set C</td></tr>
         <tr><td><textarea id="setA"></textarea></td><td><textarea id="setB"></textarea></td><td><textarea id="setC"></textarea></td></tr>
-
         <tr><td>DECK</td><td>HAND</td><td>DISCARD</td></tr>
         <tr><td class="left">PLAYER 1</td></tr>
         <tr><td><textarea id="deck1"></textarea></td><td><textarea id="hand1"></textarea></td><td><textarea id="discard1"></textarea></td></tr>
         <tr>
             <td><button id="drawHand5-1" onclick="game.player1.drawHand(5);ui.update(game);">Draw 5 cards</button></td>
-            <td><button id="discardHand-1" onclick="game.player1.discardHand();ui.update(game);">Discard hand</button></td>
+            <td><button id="discardHand-1" onclick="game.player1.discardHand();ui.update(game);">Discard hand</button><br/>
+                <button id="playHand-1" onclick="game.playHand(game.player1);ui.update(game);">Play hand</button>
+            </td>
+            <td><button id="pickCardA" onclick="game.pickCardFromSetA(game.player1);ui.update(game);">Pick from Set A</button><br/>
+                <button id="pickCardB" onclick="game.pickCardFromSetB(game.player1);ui.update(game);">Pick from Set B</button><br/>
+                <button id="pickCardC" onclick="game.pickCardFromSetC(game.player1);ui.update(game);">Pick from Set C</button>
+            </td>
         </tr>
+        <!-- -->
+        <tr><td><p>TABLE</p></td></tr>
+        <tr>
+            <td colspan="3"><textarea id="table" style="width: 95%;"></textarea></td>
+        </tr>
+        <!-- -->
         <tr><td class="left">PLAYER 2</td></tr>
         <tr><td><textarea id="deck2"></textarea></td><td><textarea id="hand2"></textarea></td><td><textarea id="discard2"></textarea></td></tr>
         <tr><td><button id="drawHand5-2" onclick="game.player2.drawHand(5);ui.update(game);">Draw 5 cards</button></td></tr>

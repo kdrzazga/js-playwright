@@ -45,11 +45,45 @@ class Game {
         this.player1 = new Player('1');
         this.player2 = new Player('2');
         this.setA = [new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa')
-                                    , new Card('sa') , new Card('sa'), new Card('sa'), new Card('sa')];
+                                    , new Card('sa') , new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa')];//11 cards
         this.setB = [new Card('sb'), new Card('sb'), new Card('sb'), new Card('sb'), new Card('sb'), new Card('sb')
-                                    , new Card('sb') , new Card('sb'), new Card('sb'), new Card('sb')];
+                                    , new Card('sb') , new Card('sb'), new Card('sb'), new Card('sb'), new Card('sb')];
         this.setC = [new Card('sc'), new Card('sc'), new Card('sc'), new Card('sc'), new Card('sc'), new Card('sc')
-                                    , new Card('sc') , new Card('sc'), new Card('sc'), new Card('sc')];
+                                    , new Card('sc') , new Card('sc'), new Card('sc'), new Card('sc'), new Card('sc')];
+        this.table = [];
+    }
+
+    pickCardFromSetA(player){
+        if (this.setA.length < 1){
+            console.log('Set A empty');
+            return
+        }
+        let card = this.setA.splice(this.setA.length - 1, 1)[0];
+        player.discard.push(card);
+    }
+
+    pickCardFromSetB(player){
+        if (this.setB.length < 1){
+            console.log('Set B empty');
+            return
+        }
+        let card = this.setB.splice(this.setB.length - 1, 1)[0];
+        player.discard.push(card);
+    }
+
+    pickCardFromSetC(player){
+        if (this.setC.length < 1){
+            console.log('Set C empty');
+            return
+        }
+
+        let card = this.setC.splice(this.setC.length - 1, 1)[0];
+        player.discard.push(card);
+    }
+
+    playHand(player) {
+        game.table = player.discard.concat(player.hand);
+        player.hand.length = 0;
     }
 }
 
@@ -64,6 +98,7 @@ class UI{
         const hand2 = document.getElementById('hand2');
         const discard1 = document.getElementById('discard1');
         const discard2 = document.getElementById('discard2');
+        const table = document.getElementById('table');
 
         setA.value = '';
         game.setA.forEach(card => {
@@ -94,11 +129,16 @@ class UI{
         });
 
         discard1.value = '';
-            game.player1.discard.forEach(discardCard => {
+        game.player1.discard.forEach(discardCard => {
             const newText = discard1.innerText + ' ' + discardCard.id + ' ' + discardCard.name + ', ';
             discard1.value += newText;
         });
 
+        table.value = '';
+        game.table.forEach(card => {
+            const newText = table.innerText + ' ' + card.id + ' ' + card.name + ', ';
+            table.value += newText;
+        });
 
     }
 }

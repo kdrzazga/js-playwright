@@ -1,7 +1,12 @@
 td {
     text-align: center;
+    width: 30%
 }
 
 td.left{
     text-align: left;
+}
+
+textarea {
+    height: 150px;
 }
