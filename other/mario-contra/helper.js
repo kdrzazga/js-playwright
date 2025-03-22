@@ -43,12 +43,23 @@ class SpriteGroupHelper {
         const graveyard = this.scene.add.sprite(150 * tileWidth, 381, 'graveyard');
         spriteGroup.add(graveyard);
 
+        this.scene.anims.create({
+            key: 'scythe-walk',
+            frames: [
+                { key: 'gumba' },
+                { key: 'gumbaL' }
+            ],
+            frameRate: 2,
+            repeat: -1
+        });
+
         const yPos = canvasHeight - 105;
         const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135, 155, 245,266].map(x =>
                 this.scene.add.sprite(x * tileWidth, yPos, 'gumba'));
         gumbas.forEach(gumba => {
             gumba.speedX = 1;
             gumba.speedY = 0;
+            gumba.play('scythe-walk');
             spriteGroup.add(gumba);
         });
 
