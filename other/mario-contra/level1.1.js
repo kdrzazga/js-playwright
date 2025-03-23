@@ -11,6 +11,7 @@ class Scene1_1 extends MainScene {
         this.load.image('turtle', 'files/zombie.png');
         this.load.image('cloud', 'files/distant-mountain.png');
         this.load.image('stocks', 'files/stocks.png');
+        this.load.image('hill', 'files/hill.png');
         this.load.image('graveyard', 'files/graveyard.png');
         this.load.image('question', 'files/grave.png');
         this.load.image('building', 'files/building.png');
