@@ -18,11 +18,12 @@ class SpriteGroupHelper {
         const stocksX = [8, 120, 180];
 
         stocksX.forEach(x => {
-            const stocksDevice = this.scene.add.sprite(tileWidth * x, 405, 'stocks');
+            const stocksDevice = this.scene.add.sprite(tileWidth * x, 385, 'stocks');
+            stocksDevice.setDepth(4);
             spriteGroup.add(stocksDevice);
         });
 
-        const hillsX = [17, 100];
+        const hillsX = [22, 60, 97, 204];
         hillsX.forEach(x => {
             const hill = this.scene.add.sprite(tileWidth * x, 435, 'hill');
             spriteGroup.add(hill);
@@ -30,7 +31,7 @@ class SpriteGroupHelper {
 
 
         const floor1BricksX = [13,14,15, 17, 18, 19, 21, 22,23,24, 27, 52, 53, 55, 57, 58, 59, 60, 61, 62, 64, 65, 97
-            , 98, 99, 100, 101, 102, 104, 105, 128, 129, 201, 202, 203, 204, 205, 207
+            , 98, 99, 100, 101, 102, 104, 105, 201, 202, 203, 204, 205, 207
             , 209-10, 211-10, 213-10, 215-10];
         floor1BricksX.forEach(x => {
             const brick = this.scene.add.sprite(tileWidth * x, floor1Height * tileWidth, 'brick');
