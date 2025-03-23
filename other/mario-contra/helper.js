@@ -177,6 +177,15 @@ class SpriteGroupHelper {
         const building1 = this.scene.add.sprite(1500, 96*7.5/5, 'background1');
         spriteGroup.add(building1);
 
+        const head = this.scene.add.sprite(3000, 290, 'head');
+        head.setDepth(4);
+        spriteGroup.add(head);
+
+        const headEntrance = this.scene.add.sprite(2750, 481, 'head-entrance');
+        spriteGroup.add(headEntrance);
+        const headExit = this.scene.add.sprite(3220, 470, 'head-exit');
+        spriteGroup.add(headExit);
+
         return spriteGroup;
     }
 }
