@@ -15,8 +15,23 @@ class SpriteGroupHelper {
             spriteGroup.add(sprite);
         }
 
+        const stocksX = [8, 120, 180];
+
+        stocksX.forEach(x => {
+            const stocksDevice = this.scene.add.sprite(tileWidth * x, 385, 'stocks');
+            stocksDevice.setDepth(4);
+            spriteGroup.add(stocksDevice);
+        });
+
+        const hillsX = [22, 60, 97, 204];
+        hillsX.forEach(x => {
+            const hill = this.scene.add.sprite(tileWidth * x, 435, 'hill');
+            spriteGroup.add(hill);
+        });
+
+
         const floor1BricksX = [13,14,15, 17, 18, 19, 21, 22,23,24, 27, 52, 53, 55, 57, 58, 59, 60, 61, 62, 64, 65, 97
-            , 98, 99, 100, 101, 102, 104, 105, 128, 129, 201, 202, 203, 204, 205, 207
+            , 98, 99, 100, 101, 102, 104, 105, 201, 202, 203, 204, 205, 207
             , 209-10, 211-10, 213-10, 215-10];
         floor1BricksX.forEach(x => {
             const brick = this.scene.add.sprite(tileWidth * x, floor1Height * tileWidth, 'brick');
@@ -43,12 +58,23 @@ class SpriteGroupHelper {
         const graveyard = this.scene.add.sprite(150 * tileWidth, 381, 'graveyard');
         spriteGroup.add(graveyard);
 
+        this.scene.anims.create({
+            key: 'scythe-walk',
+            frames: [
+                { key: 'gumba' },
+                { key: 'gumbaL' }
+            ],
+            frameRate: 2,
+            repeat: -1
+        });
+
         const yPos = canvasHeight - 105;
         const gumbas = [15, 17, 41, 51, 53, 109, 120, 131, 133, 135, 155, 245,266].map(x =>
                 this.scene.add.sprite(x * tileWidth, yPos, 'gumba'));
         gumbas.forEach(gumba => {
             gumba.speedX = 1;
             gumba.speedY = 0;
+            gumba.play('scythe-walk');
             spriteGroup.add(gumba);
         });
 
@@ -148,7 +174,7 @@ class SpriteGroupHelper {
         const helicopter = this.scene.add.sprite(65*206, config.height - 212, 'helicopter');
         spriteGroup.add(helicopter);
 
-        const building1 = this.scene.add.sprite(1500, 96*6/5, 'background1');
+        const building1 = this.scene.add.sprite(1500, 96*7.5/5, 'background1');
         spriteGroup.add(building1);
 
         return spriteGroup;
