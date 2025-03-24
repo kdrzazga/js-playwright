@@ -28,6 +28,7 @@ class Scene3_1 extends MainScene {
         this.load.image('head', 'files/head.png');
         this.load.image('head-entrance', 'files/skull-entrance.png');
         this.load.image('head-exit', 'files/skull-exit.png');
+        this.load.image('angry-computer', 'files/computer.png');
         this.currentCommandoTexture = 'kupaR2';
     }
 

@@ -173,6 +173,9 @@ class SpriteGroupHelper {
 
         const helicopter = this.scene.add.sprite(65*206, config.height - 212, 'helicopter');
         spriteGroup.add(helicopter);
+        const angryComputer = this.scene.add.sprite(65*215, 310+50, 'angry-computer');
+        angryComputer.setDepth(4);
+        spriteGroup.add(angryComputer);
 
         const building1 = this.scene.add.sprite(1500, 96*7.5/5, 'background1');
         spriteGroup.add(building1);
