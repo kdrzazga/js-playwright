@@ -171,9 +171,9 @@ class SpriteGroupHelper {
             spriteGroup.add(sprite);
         }
 
-        const helicopter = this.scene.add.sprite(65*206, config.height - 212, 'helicopter');
+        const helicopter = this.scene.add.sprite(65*(206+40), config.height - 212, 'helicopter');
         spriteGroup.add(helicopter);
-        const angryComputer = this.scene.add.sprite(65*215, 310+50, 'angry-computer');
+        const angryComputer = this.scene.add.sprite(65*(215+40), 310+50, 'angry-computer');
         angryComputer.setDepth(4);
         spriteGroup.add(angryComputer);
 
@@ -183,11 +183,22 @@ class SpriteGroupHelper {
         const head = this.scene.add.sprite(3000, 290, 'head');
         head.setDepth(4);
         spriteGroup.add(head);
-
         const headEntrance = this.scene.add.sprite(2750, 481, 'head-entrance');
         spriteGroup.add(headEntrance);
         const headExit = this.scene.add.sprite(3220, 470, 'head-exit');
         spriteGroup.add(headExit);
+
+        const head2 = this.scene.add.sprite(10000 + 2500, 290, 'head');
+        head2.setDepth(4);
+        spriteGroup.add(head2);
+        const headEntrance2 = this.scene.add.sprite(9750 + 2500, 481, 'head-entrance');
+        spriteGroup.add(headEntrance2);
+        const headExit2 = this.scene.add.sprite(10220 + 2500, 470, 'head-exit');
+        spriteGroup.add(headExit2);
+
+        const eggBoss = this.scene.add.sprite(65*(228), 244, 'egg-boss');
+        eggBoss.setDepth(-1);
+        spriteGroup.add(eggBoss);
 
         return spriteGroup;
     }

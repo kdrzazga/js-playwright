@@ -29,6 +29,7 @@ class Scene3_1 extends MainScene {
         this.load.image('head-entrance', 'files/skull-entrance.png');
         this.load.image('head-exit', 'files/skull-exit.png');
         this.load.image('angry-computer', 'files/computer.png');
+        this.load.image('egg-boss', 'files/boss.png');
         this.currentCommandoTexture = 'kupaR2';
     }
 
@@ -71,11 +72,11 @@ class Scene3_1 extends MainScene {
             repeat: -1
         });
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 160; i++) {
              const y =  this.sys.canvas.height - 125;
-             const runnerSprite = this.spriteGroup.create(200 + (i + 1) * 1400, y, 'runner1');
+             const runnerSprite = this.spriteGroup.create(200 + (i + 1) * (1400 - 3*i), y, 'runner1');
              runnerSprite.id = i;
-             runnerSprite.speedX = 2;
+             runnerSprite.speedX = 2 + Math.floor(i/15);
              runnerSprite.speedY = 0;
              runnerSprite.setDepth(3);
              runnerSprite.play('runner-run');
