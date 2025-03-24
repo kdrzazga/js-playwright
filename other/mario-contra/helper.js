@@ -150,7 +150,7 @@ class SpriteGroupHelper {
     }
 
     createSpritesLevel3_1(spriteGroup) {
-        for (let i = 0; i < 69; i++) {
+        for (let i = 0; i < 120; i++) {
              const x = i * 206;
              const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
              spriteGroup.add(sprite);
