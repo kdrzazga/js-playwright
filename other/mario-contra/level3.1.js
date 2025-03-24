@@ -9,7 +9,10 @@ class Scene3_1 extends MainScene {
 
     preload(){
         //super.preload();
-        this.textures.remove('commando');
+        const toBeRemoved = ['commando', 'question', 'coin', 'fire-upgrade'];
+        toBeRemoved.forEach(texture => this.textures.remove(texture));
+
+        this.load.image('fire-upgrade', 'files/egg-fire.png');
         this.load.image('road', 'files/croad.png');
         this.load.image('helicopter', 'files/heli.png');
         this.load.image('background1', 'files/chopper.png');
@@ -30,6 +33,8 @@ class Scene3_1 extends MainScene {
         this.load.image('head-exit', 'files/skull-exit.png');
         this.load.image('angry-computer', 'files/computer.png');
         this.load.image('egg-boss', 'files/boss.png');
+        this.load.image('question', 'files/egg.png');
+        this.load.image('coin', 'files/egg-coin.png');
         this.currentCommandoTexture = 'kupaR2';
     }
 
