@@ -9,7 +9,10 @@ class Scene3_1 extends MainScene {
 
     preload(){
         //super.preload();
-        this.textures.remove('commando');
+        const toBeRemoved = ['commando', 'question', 'coin', 'fire-upgrade'];
+        toBeRemoved.forEach(texture => this.textures.remove(texture));
+
+        this.load.image('fire-upgrade', 'files/egg-fire.png');
         this.load.image('road', 'files/croad.png');
         this.load.image('helicopter', 'files/heli.png');
         this.load.image('background1', 'files/chopper.png');
@@ -25,6 +28,13 @@ class Scene3_1 extends MainScene {
         this.load.image('runner2', 'files/runner2.png');
         this.load.image('runner3', 'files/runner3.png');
         this.load.image('runner4', 'files/runner4.png');
+        this.load.image('head', 'files/head.png');
+        this.load.image('head-entrance', 'files/skull-entrance.png');
+        this.load.image('head-exit', 'files/skull-exit.png');
+        this.load.image('angry-computer', 'files/computer.png');
+        this.load.image('egg-boss', 'files/boss.png');
+        this.load.image('question', 'files/egg.png');
+        this.load.image('coin', 'files/egg-coin.png');
         this.currentCommandoTexture = 'kupaR2';
     }
 
@@ -67,11 +77,11 @@ class Scene3_1 extends MainScene {
             repeat: -1
         });
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 160; i++) {
              const y =  this.sys.canvas.height - 125;
-             const runnerSprite = this.spriteGroup.create(200 + (i + 1) * 1400, y, 'runner1');
+             const runnerSprite = this.spriteGroup.create(200 + (i + 1) * (1400 - 3*i), y, 'runner1');
              runnerSprite.id = i;
-             runnerSprite.speedX = 2;
+             runnerSprite.speedX = 2 + Math.floor(i/15);
              runnerSprite.speedY = 0;
              runnerSprite.setDepth(3);
              runnerSprite.play('runner-run');

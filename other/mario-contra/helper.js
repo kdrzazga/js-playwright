@@ -150,7 +150,7 @@ class SpriteGroupHelper {
     }
 
     createSpritesLevel3_1(spriteGroup) {
-        for (let i = 0; i < 69; i++) {
+        for (let i = 0; i < 120; i++) {
              const x = i * 206;
              const sprite = this.scene.add.sprite(x, config.height-96/2, 'road');
              spriteGroup.add(sprite);
@@ -171,11 +171,49 @@ class SpriteGroupHelper {
             spriteGroup.add(sprite);
         }
 
-        const helicopter = this.scene.add.sprite(65*206, config.height - 212, 'helicopter');
+        const helicopter = this.scene.add.sprite(65*(206+40), config.height - 212, 'helicopter');
         spriteGroup.add(helicopter);
+        const angryComputer = this.scene.add.sprite(65*(215+40), 310+50, 'angry-computer');
+        angryComputer.setDepth(4);
+        spriteGroup.add(angryComputer);
 
         const building1 = this.scene.add.sprite(1500, 96*7.5/5, 'background1');
         spriteGroup.add(building1);
+
+        const head = this.scene.add.sprite(3000, 290, 'head');
+        head.setDepth(4);
+        spriteGroup.add(head);
+        const headEntrance = this.scene.add.sprite(2750, 481, 'head-entrance');
+        spriteGroup.add(headEntrance);
+        const headExit = this.scene.add.sprite(3220, 470, 'head-exit');
+        spriteGroup.add(headExit);
+
+        const head2 = this.scene.add.sprite(10000 + 2500, 290, 'head');
+        head2.setDepth(4);
+        spriteGroup.add(head2);
+        const headEntrance2 = this.scene.add.sprite(9750 + 2500, 481, 'head-entrance');
+        spriteGroup.add(headEntrance2);
+        const headExit2 = this.scene.add.sprite(10220 + 2500, 470, 'head-exit');
+        spriteGroup.add(headExit2);
+
+        const eggBossShift = 225; //81;
+
+        const eggBoss = this.scene.add.sprite(65*(eggBossShift + 3), 244, 'egg-boss');
+        eggBoss.setDepth(-1);
+        spriteGroup.add(eggBoss);
+
+        for (let x = 0; x < 7; x++){
+            let egg = this.scene.add.sprite(65 * eggBossShift +  64*x + 32*Math.random(), 444 -  32*Math.random(), 'question');
+            let egg2 = this.scene.add.sprite(65 * eggBossShift +  32*x + 64*Math.random(), 480 -  64*Math.sin(x/Math.PI), 'question');
+            let egg3 = this.scene.add.sprite(65 * eggBossShift +  16*x + 128*Math.random(), 512 -  128*Math.sin(x/Math.PI), 'question');
+
+            const eggs = [egg, egg2, egg3];
+
+            eggs.forEach(e => {
+                e.setDepth(-1);
+                spriteGroup.add(e);
+            });
+        }
 
         return spriteGroup;
     }
