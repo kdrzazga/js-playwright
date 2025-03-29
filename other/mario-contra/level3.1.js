@@ -132,6 +132,9 @@ class Scene3_1 extends MainScene {
             this.bulletAngle = -0.05;
         }
         else this.bulletAngle = 0;
+
+        this.checkJumpKeys();
+
         if (this.cursors.right.isDown) {
             this.spriteGroup.children.iterate(function (child) {
                 child.x -= MainScene.COMMANDO_SPEED;

@@ -9,6 +9,8 @@ class MainScene extends Phaser.Scene {
         this.bulletAngle = 0;
         this.bulletRange = 460;
         this.bulletFiringRate = 400;
+        this.playerCanJump = true;
+        this.playerFalling = false;
         this.extraDelay = 0;
 
         this.mainCharacterPic = 'commando';
@@ -150,6 +152,9 @@ class MainScene extends Phaser.Scene {
             this.bulletAngle = -0.05;
         }
         else this.bulletAngle = 0;
+
+        this.checkJumpKeys();
+
         if (this.cursors.right.isDown) {
             this.spriteGroup.children.iterate(function (child) {
                 child.x -= MainScene.COMMANDO_SPEED;
@@ -164,6 +169,49 @@ class MainScene extends Phaser.Scene {
             this.commando.setTexture(this.currentCommandoTexture);
         }
     }
+
+    checkJumpKeys(){
+        const ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+        const shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        if (this.input.keyboard.checkDown(ctrlKey, 100) ||
+            this.input.keyboard.checkDown(shiftKey, 100) ||
+            this.input.keyboard.checkDown(spaceKey, 100)) {
+                this.jump();
+            }
+    }
+
+    jump() {
+        if (!this.playerCanJump || this.playerFalling) return;
+
+        this.playerCanJump = false;
+        const jumpHeight = 100;
+        const duration = 750;
+
+        const jumpTween = {
+            targets: this.commando,
+            y: this.commando.y - jumpHeight,
+            duration: duration / 2, // move up for half the duration
+            ease: 'Linear',
+            onComplete: () => {
+
+                const comeDownTween = {
+                    targets: this.commando,
+                    y: this.commando.y + jumpHeight, // Move down
+                    duration: duration / 2,
+                    ease: 'Linear',
+                    onComplete: () => {
+                        this.playerCanJump = true;
+                    }
+                };
+                this.tweens.add(comeDownTween);
+            }
+        }
+
+        this.tweens.add(jumpTween);
+    }
+
 
     checkEnemyCollision() {
         if (this.spriteGroup == undefined)
