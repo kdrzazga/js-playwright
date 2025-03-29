@@ -80,7 +80,6 @@ class LevelScene extends Phaser.Scene {
                     duration: duration / 2,
                     ease: 'Linear',
                     onComplete: () => {
-                        // Re-enable jumping after 1 second
                         this.playerCanJump = true;
                     }
                 };
