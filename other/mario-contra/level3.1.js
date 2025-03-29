@@ -133,7 +133,7 @@ class Scene3_1 extends MainScene {
         }
         else this.bulletAngle = 0;
 
-        this.checkJumpKeys();
+        this.checkJumpKeys(500);
 
         if (this.cursors.right.isDown) {
             this.spriteGroup.children.iterate(function (child) {

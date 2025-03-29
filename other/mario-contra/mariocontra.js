@@ -153,7 +153,7 @@ class MainScene extends Phaser.Scene {
         }
         else this.bulletAngle = 0;
 
-        this.checkJumpKeys();
+        this.checkJumpKeys(750);
 
         if (this.cursors.right.isDown) {
             this.spriteGroup.children.iterate(function (child) {
@@ -170,7 +170,7 @@ class MainScene extends Phaser.Scene {
         }
     }
 
-    checkJumpKeys(){
+    checkJumpKeys(duration){
         const ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
         const shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -178,16 +178,15 @@ class MainScene extends Phaser.Scene {
         if (this.input.keyboard.checkDown(ctrlKey, 100) ||
             this.input.keyboard.checkDown(shiftKey, 100) ||
             this.input.keyboard.checkDown(spaceKey, 100)) {
-                this.jump();
+                this.jump(duration);
             }
     }
 
-    jump() {
+    jump(duration) {
         if (!this.playerCanJump || this.playerFalling) return;
 
         this.playerCanJump = false;
         const jumpHeight = 100;
-        const duration = 750;
 
         const jumpTween = {
             targets: this.commando,
