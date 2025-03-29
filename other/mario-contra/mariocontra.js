@@ -153,15 +153,7 @@ class MainScene extends Phaser.Scene {
         }
         else this.bulletAngle = 0;
 
-        const ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
-        const shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-        const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-        if (this.input.keyboard.checkDown(ctrlKey, 100) ||
-            this.input.keyboard.checkDown(shiftKey, 100) ||
-            this.input.keyboard.checkDown(spaceKey, 100)) {
-                this.jump();
-            }
+        this.checkJumpKeys();
 
         if (this.cursors.right.isDown) {
             this.spriteGroup.children.iterate(function (child) {
@@ -178,6 +170,17 @@ class MainScene extends Phaser.Scene {
         }
     }
 
+    checkJumpKeys(){
+        const ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+        const shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        if (this.input.keyboard.checkDown(ctrlKey, 100) ||
+            this.input.keyboard.checkDown(shiftKey, 100) ||
+            this.input.keyboard.checkDown(spaceKey, 100)) {
+                this.jump();
+            }
+    }
 
     jump() {
         if (!this.playerCanJump || this.playerFalling) return;
