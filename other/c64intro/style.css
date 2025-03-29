@@ -1,0 +1,13 @@
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+td {
+    background-color: purple;
+}
+
+@font-face {
+    font-family: 'ArcadeClassic';
+    src: url('files/ARCADECLASSIC.TTF');
+}

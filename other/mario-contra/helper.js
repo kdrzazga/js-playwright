@@ -177,9 +177,6 @@ class SpriteGroupHelper {
         angryComputer.setDepth(4);
         spriteGroup.add(angryComputer);
 
-        const building1 = this.scene.add.sprite(1500, 96*7.5/5, 'background1');
-        spriteGroup.add(building1);
-
         const head = this.scene.add.sprite(3000, 290, 'head');
         head.setDepth(4);
         spriteGroup.add(head);
@@ -196,7 +193,7 @@ class SpriteGroupHelper {
         const headExit2 = this.scene.add.sprite(10220 + 2500, 470, 'head-exit');
         spriteGroup.add(headExit2);
 
-        const eggBossShift = 225; //81;
+        const eggBossShift = (1500 - 3) / 65;
 
         const eggBoss = this.scene.add.sprite(65*(eggBossShift + 3), 244, 'egg-boss');
         eggBoss.setDepth(-1);
@@ -214,6 +211,9 @@ class SpriteGroupHelper {
                 spriteGroup.add(e);
             });
         }
+
+        const building1 = this.scene.add.sprite(65*(225/*81*/ + 3), 96*7.5/5, 'background1');
+        spriteGroup.add(building1);
 
         return spriteGroup;
     }
