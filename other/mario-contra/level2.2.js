@@ -70,7 +70,7 @@ class Scene2_2 extends MainScene {
             this.bulletAngle = -0.05;
         }
         else this.bulletAngle = 0;
-        this.checkJumpKeys();
+        this.checkJumpKeys(750);
 
         if (this.cursors.right.isDown) {
             if (time - this.lastTextureChange > 300) {
