@@ -27,13 +27,14 @@ class IntroScene extends Phaser.Scene {
     create() {
         this.graphics = this.add.graphics();
         this.startX = 0;
-        this.startY = 250;
+        this.startY = 240;
         this.endX = Constants.SCREEN_WIDTH;
         this.endY = 300;
         this.frequency = 0.02;
-        this.amplitude = 50;
+        this.amplitude = 170;
         this.offset = 0;
 
+        this.counter = 0;
         this.time.addEvent({
             delay: 10,
             callback: this.updateLine,
@@ -70,10 +71,29 @@ class IntroScene extends Phaser.Scene {
         for(let index = 0; index < this.lines.length; index++){
             this.lines[index].y = yPos + index;
         }
+
+        if (yPos > 5.2*Constants.SCREEN_HEIGHT/8) {
+            this.logoToBack();
+        }
+        else if (yPos < 1*Constants.SCREEN_HEIGHT/8) {
+            this.logoToFront();
+        }
     }
 
-    update() {
+    update(time, delta) {
+        //console.log(time + ", " + delta + ", " + this.counter);
+        this.counter++;
+    }
 
+    logoToFront(){
+        this.circle.setDepth(-3);
+        this.c64.setDepth(-3);
+    }
+
+    logoToBack(){
+        this.circle.setDepth(3);
+        this.c64.setDepth(3);
+        console.log('Logo moved to back');
     }
 }
 
