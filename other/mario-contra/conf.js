@@ -1,4 +1,3 @@
-
 const config = {
     type: Phaser.AUTO,
     parent: 'game-container',
@@ -38,4 +37,5 @@ function start(){
     footer.innerHTML = '<td></td><td>MARIO</td><td></td><td>CONTRA</td><td></td><td></td><td></td><td></td>';
     play();
     const game = new Phaser.Game(config)
+    return game;
 }
