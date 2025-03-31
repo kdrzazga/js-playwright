@@ -97,7 +97,7 @@ class MainScene extends Phaser.Scene {
 
     _isEnemy(child) {
         const pic = child.texture.key;
-        return pic === 'gumba' || pic === 'gumbaL' || pic === 'turtle'
+        return pic === 'gumba' || pic === 'gumbaL' || pic === 'turtle' || pic === 'hole'
             || pic.startsWith('runner') || pic.startsWith('scorp');
     }
 

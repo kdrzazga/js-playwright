@@ -8,6 +8,7 @@ class Scene1_1 extends MainScene {
 
         this.load.image('brick', 'files/cross.png');
         this.load.image('grass', 'files/grass.png');
+        this.load.image('hole', 'files/holeBlack.png');
         this.load.image('turtle', 'files/zombie.png');
         this.load.image('cloud', 'files/distant-mountain.png');
         this.load.image('stocks', 'files/stocks.png');
