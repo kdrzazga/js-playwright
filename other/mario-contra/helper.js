@@ -9,9 +9,14 @@ class SpriteGroupHelper {
         const floor1Height = 5.5;
         const canvasHeight = this.scene.sys.canvas.height;
 
+        const holes = [9, 45, 75, 130];
+
         for (let i = 0; i < 240; i++) {
             const x = i * tileWidth;
-            const sprite = this.scene.add.sprite(x, canvasHeight - 50, 'grass');
+            let texture = 'grass';
+            if (holes.includes(i))
+                texture = 'h';
+            const sprite = this.scene.add.sprite(x, canvasHeight - 50, texture);
             spriteGroup.add(sprite);
         }
 
