@@ -27,6 +27,7 @@ class MainScene extends Phaser.Scene {
         this.load.image('bullet', this.bulletPic);
         this.load.image('gumba', 'files/scythe1.png');
         this.load.image('gumbaL', 'files/scythe2.png');
+        this.load.image('h', 'files/h.png');
         this.currentCommandoTexture = 'kupa';
     }
 
@@ -97,7 +98,7 @@ class MainScene extends Phaser.Scene {
 
     _isEnemy(child) {
         const pic = child.texture.key;
-        return pic === 'gumba' || pic === 'gumbaL' || pic === 'turtle' || pic === 'hole'
+        return pic === 'gumba' || pic === 'gumbaL' || pic === 'turtle'
             || pic.startsWith('runner') || pic.startsWith('scorp');
     }
 
@@ -217,7 +218,7 @@ class MainScene extends Phaser.Scene {
             return;
 
         this.spriteGroup.children.iterate((child) => {
-            if (this._isEnemy(child)){
+            if (this._isEnemy(child) || child.texture.key == 'h'){
                 this._checkEnemyDistance(child, this.commando.x, this.commando.y, 50, () => {
                     const footer = document.getElementById('footer');
                     footer.innerHTML = "<td colspan='7'><table><tr><div style='text-align: center;'><img src='files/lose.png'></div></td></tr>"

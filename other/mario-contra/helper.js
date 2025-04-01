@@ -14,6 +14,8 @@ class SpriteGroupHelper {
         for (let i = 0; i < 240; i++) {
             const x = i * tileWidth;
             let texture = 'grass';
+            if (holes.includes(i))
+                texture = 'h';
             const sprite = this.scene.add.sprite(x, canvasHeight - 50, texture);
             spriteGroup.add(sprite);
         }
