@@ -18,15 +18,15 @@ class IntroScene extends Phaser.Scene {
     constructor() {
         super({ key: 'Intro' });
         this.lines = [];
+        this.yPos = 0;
     }
 
     preload() {
         this.load.image('c64', 'c64.png');
 
-        this.load.image('karateka1', 'c64.png');
-        this.load.image('karateka2', 'c64.png');
-        this.load.image('karateka3', 'c64.png');
-        this.load.image('karateka4', 'c64.png');
+        this.load.image('saboteur1', 'pics/sab1.png');
+        this.load.image('saboteur2', 'pics/sab2.png');
+        this.load.image('saboteur3', 'pics/sab3.png');
 
         this.load.image('giana-calm1', 'c64.png');
         this.load.image('giana-calm2', 'c64.png');
@@ -73,22 +73,23 @@ class IntroScene extends Phaser.Scene {
             this.lines.push(line);
         });
 
-     }
+        this.saboteur = SpriteManager.createSaboteur(this);
+    }
 
     updateLine() {
         console.log('update line');
         this.graphics.clear();
         this.offset += this.frequency;
 
-        const yPos = this.startY + Math.sin(this.offset) * this.amplitude;
+        this.yPos = this.startY + Math.sin(this.offset) * this.amplitude;
         for(let index = 0; index < this.lines.length; index++){
-            this.lines[index].y = yPos + index;
+            this.lines[index].y = this.yPos + index;
         }
 
-        if (yPos > 5.2*Constants.SCREEN_HEIGHT/8) {
+        if (this.yPos > 5.2*Constants.SCREEN_HEIGHT/8) {
             this.logoToBack();
         }
-        else if (yPos < 1*Constants.SCREEN_HEIGHT/8) {
+        else if (this.yPos < 1*Constants.SCREEN_HEIGHT/8) {
             this.logoToFront();
         }
     }
@@ -96,6 +97,8 @@ class IntroScene extends Phaser.Scene {
     update(time, delta) {
         //console.log(time + ", " + delta + ", " + this.counter);
         this.counter++;
+
+        SpriteManager.moveSaboteur(this.saboteur, this.yPos);
     }
 
     logoToFront(){

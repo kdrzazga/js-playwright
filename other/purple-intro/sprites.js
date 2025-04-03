@@ -1,17 +1,34 @@
-class Creator {
+class SpriteManager {
 
-    static createKarateka(scene){
+    static createSaboteur(scene){
         scene.anims.create({
-            key: 'karateka-walk',
+            key: 'saboteur-walk',
             frames: [
-                { key: 'karateka1' },
-                { key: 'karateka2' },
-                { key: 'karateka3' },
-                { key: 'karateka4' }
+                { key: 'saboteur1' },
+                { key: 'saboteur2' },
+                { key: 'saboteur3' }
             ],
-            frameRate: 3,
+            frameRate: 7,
             repeat: -1
         });
+
+        const saboteur = scene.add.sprite(0, 545, 'saboteur1');
+        saboteur.setDepth(-5);
+        saboteur.play('saboteur-walk');
+
+        return saboteur;
+    }
+
+    static moveSaboteur(saboteur, yPos){
+        if (yPos > 400)
+            ;
+        else{
+            saboteur.x++;
+            }
+
+        if (saboteur.x > 2000){
+            saboteur.x = 0;
+        }
     }
 
     static createGianaCalm(scene){
