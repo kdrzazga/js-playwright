@@ -16,12 +16,25 @@ class Constants{
 }
 class IntroScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'MyScene' });
+        super({ key: 'Intro' });
         this.lines = [];
     }
 
     preload() {
         this.load.image('c64', 'c64.png');
+
+        this.load.image('karateka1', 'c64.png');
+        this.load.image('karateka2', 'c64.png');
+        this.load.image('karateka3', 'c64.png');
+        this.load.image('karateka4', 'c64.png');
+
+        this.load.image('giana-calm1', 'c64.png');
+        this.load.image('giana-calm2', 'c64.png');
+        this.load.image('giana-calm3', 'c64.png');
+
+        this.load.image('giana-crazy1', 'c64.png');
+        this.load.image('giana-crazy2', 'c64.png');
+        this.load.image('giana-crazy3', 'c64.png');
     }
 
     create() {
