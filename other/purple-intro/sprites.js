@@ -1,4 +1,37 @@
-class Saboteur{
+class DemoSprite {
+    move(yPos){
+            if (yPos > 400)
+                ;
+            else{
+                this.sprite.x++;
+                }
+
+            if (this.sprite.x > 2000){
+                this.sprite.x = 0;
+            }
+        }
+}
+
+class DigDug extends DemoSprite{
+    constructor(scene){
+        this.scene = scene;
+        this.scene.anims.create({
+                         key: 'dig-dug-walk',
+                         frames: [
+                             { key: 'dig-dug1' },
+                             { key: 'dig-dug2' },
+                             { key: 'dig-dug3' }
+                         ],
+                         frameRate: 7,
+                         repeat: -1
+                     });
+        this.sprite = scene.add.sprite(0, 545, 'dig-dug');
+        this.sprite.setDepth(-5);
+        this.sprite.play('dig-dug-walk');
+    }
+}
+
+class Saboteur extends DemoSprite{
 
     constructor(scene){
         this.scene = scene;
@@ -16,18 +49,6 @@ class Saboteur{
         this.sprite.setDepth(-5);
         this.sprite.play('saboteur-walk');
     }
-
-    move(yPos){
-            if (yPos > 400)
-                ;
-            else{
-                this.sprite.x++;
-                }
-
-            if (this.sprite.x > 2000){
-                this.sprite.x = 0;
-            }
-        }
 }
 
 class SpriteManager {
