@@ -98,7 +98,7 @@ class IntroScene extends Phaser.Scene {
         //console.log(time + ", " + delta + ", " + this.counter);
         this.counter++;
 
-        SpriteManager.moveSaboteur(this.saboteur, this.yPos);
+        this.saboteur.move(this.yPos);
     }
 
     logoToFront(){

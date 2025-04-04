@@ -1,35 +1,41 @@
+class Saboteur{
+
+    constructor(scene){
+        this.scene = scene;
+        this.scene.anims.create({
+                         key: 'saboteur-walk',
+                         frames: [
+                             { key: 'saboteur1' },
+                             { key: 'saboteur2' },
+                             { key: 'saboteur3' }
+                         ],
+                         frameRate: 7,
+                         repeat: -1
+                     });
+        this.sprite = scene.add.sprite(0, 545, 'saboteur1');
+        this.sprite.setDepth(-5);
+        this.sprite.play('saboteur-walk');
+    }
+
+    move(yPos){
+            if (yPos > 400)
+                ;
+            else{
+                this.sprite.x++;
+                }
+
+            if (this.sprite.x > 2000){
+                this.sprite.x = 0;
+            }
+        }
+}
+
 class SpriteManager {
 
     static createSaboteur(scene){
-        scene.anims.create({
-            key: 'saboteur-walk',
-            frames: [
-                { key: 'saboteur1' },
-                { key: 'saboteur2' },
-                { key: 'saboteur3' }
-            ],
-            frameRate: 7,
-            repeat: -1
-        });
-
-        const saboteur = scene.add.sprite(0, 545, 'saboteur1');
-        saboteur.setDepth(-5);
-        saboteur.play('saboteur-walk');
-
-        return saboteur;
+        return new Saboteur(scene);
     }
 
-    static moveSaboteur(saboteur, yPos){
-        if (yPos > 400)
-            ;
-        else{
-            saboteur.x++;
-            }
-
-        if (saboteur.x > 2000){
-            saboteur.x = 0;
-        }
-    }
 
     static createGianaCalm(scene){
         scene.anims.create({
