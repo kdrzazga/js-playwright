@@ -1,40 +1,42 @@
 class DemoSprite {
 
-    constructor(scene, limitX){
+    constructor(scene, limitX = 805){
         this.scene = scene;
         this.limitX = limitX;
+        this.minX = -10;
+        this.walkingLeft = true;
+        this.speed = 1;
     }
 
     move(yPos){
-        if (yPos > 400)
-            ;
-        else{
-            this.sprite.x++;
-            }
+        if (this.walkingLeft)
+            this.moveLeft();
+        else
+            this.moveRight();
 
-        if (this.sprite.x > 2000){
-            this.sprite.x = 0;
+        if (this.sprite.x >= this.limitX || this.sprite.x < 1){
+            this.walkingLeft = !this.walkingLeft;
         }
     }
 
     moveLeft(){
         this.sprite.flipX = true;
-        if (this.sprite.x > -10){
-            this.sprite.x--;
+        if (this.sprite.x > this.minX){
+            this.sprite.x -= this.speed;
         }
     }
 
     moveRight(){
         this.sprite.flipX = false;
         if (this.sprite.x < this.limitX){
-            this.sprite.x++;
+            this.sprite.x += this.speed;
         }
     }
 }
 
 class DigDug extends DemoSprite{
     constructor(scene, limitX){
-        super(scene, 999);
+        super(scene);
         this.scene.anims.create({
             key: 'dig-dug-walk',
             frames: [
@@ -53,7 +55,7 @@ class DigDug extends DemoSprite{
 
 class Saboteur extends DemoSprite{
     constructor(scene){
-        super(scene);
+        super(scene, 1111);
         this.scene.anims.create({
             key: 'saboteur-walk',
             frames: [
@@ -64,9 +66,11 @@ class Saboteur extends DemoSprite{
             frameRate: 7,
             repeat: -1
         });
-        this.sprite = scene.add.sprite(0, 545, 'saboteur1');
+        this.sprite = scene.add.sprite(100, 545, 'saboteur1');
         this.sprite.setDepth(-5);
         this.sprite.play('saboteur-walk');
+        this.speed = 1;
+        this.walkingLeft = false;
     }
 }
 
