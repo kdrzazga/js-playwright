@@ -4,31 +4,45 @@ class DemoSprite {
     }
 
     move(yPos){
-            if (yPos > 400)
-                ;
-            else{
-                this.sprite.x++;
-                }
-
-            if (this.sprite.x > 2000){
-                this.sprite.x = 0;
+        if (yPos > 400)
+            ;
+        else{
+            this.sprite.x++;
             }
+
+        if (this.sprite.x > 2000){
+            this.sprite.x = 0;
         }
+    }
+
+    moveLeft(){
+        this.sprite.flipX = true;
+        if (this.sprite.x > -10){
+            this.sprite.x--;
+        }
+    }
+
+    moveRight(){
+        this.sprite.flipX = false;
+        if (this.sprite.x < 810){
+            this.sprite.x++;
+        }
+    }
 }
 
 class DigDug extends DemoSprite{
     constructor(scene){
         super(scene);
         this.scene.anims.create({
-                         key: 'dig-dug-walk',
-                         frames: [
-                             { key: 'dig-dug1' },
-                             { key: 'dig-dug2' },
-                             { key: 'dig-dug3' }
-                         ],
-                         frameRate: 7,
-                         repeat: -1
-                     });
+                key: 'dig-dug-walk',
+                frames: [
+                    { key: 'dig-dug1' },
+                    { key: 'dig-dug2' },
+                    { key: 'dig-dug3' }
+                ],
+                frameRate: 7,
+                repeat: -1
+            });
         this.sprite = scene.add.sprite(500, 300, 'dig-dug');
         this.sprite.setDepth(-5);
         this.sprite.play('dig-dug-walk');

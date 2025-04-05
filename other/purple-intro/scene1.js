@@ -16,7 +16,14 @@ class Scene1 extends Phaser.Scene {
 
     update(time, delta) {
         console.log(time + ", " + delta + ", ");
-        if (time > 5000){
+        if (time < 8000)
+            this.digdug.moveLeft();
+        else if (time < 20000)
+            this.digdug.moveRight();
+        else if (time > 20000)
+            this.digdug.moveLeft();
+
+        if (time > 31000){
             this.scene.start('Scene2');
         }
     }
