@@ -11,7 +11,7 @@ class Scene1 extends Phaser.Scene {
         this.load.image('dig-dug2', 'pics/dig-dug2.png');
         this.load.image('dig-dug3', 'pics/dig-dug3.png');
         this.load.image('loading', 'pics/loading.png');
-        this.load.audio('backgroundMusic', 'fst.mp3');
+        this.load.audio('backgroundMusic', 'muza.mp3');
     }
 
     create() {
@@ -20,6 +20,7 @@ class Scene1 extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.add.sprite(400, 185, 'loading');
         this.music = this.sound.add('backgroundMusic');
+        this.music.setLoop(true);
     }
 
     update(time, delta) {
