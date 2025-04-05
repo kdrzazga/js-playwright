@@ -1,4 +1,8 @@
 class DemoSprite {
+    constructor(scene){
+        this.scene = scene;
+    }
+
     move(yPos){
             if (yPos > 400)
                 ;
@@ -14,7 +18,7 @@ class DemoSprite {
 
 class DigDug extends DemoSprite{
     constructor(scene){
-        this.scene = scene;
+        super(scene);
         this.scene.anims.create({
                          key: 'dig-dug-walk',
                          frames: [
@@ -32,9 +36,8 @@ class DigDug extends DemoSprite{
 }
 
 class Saboteur extends DemoSprite{
-
     constructor(scene){
-        this.scene = scene;
+        super(scene);
         this.scene.anims.create({
                          key: 'saboteur-walk',
                          frames: [
@@ -57,6 +60,9 @@ class SpriteManager {
         return new Saboteur(scene);
     }
 
+    static createDigDug(scene){
+        return new DigDug(scene);
+    }
 
     static createGianaCalm(scene){
         scene.anims.create({
