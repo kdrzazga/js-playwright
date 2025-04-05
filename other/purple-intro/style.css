@@ -8,6 +8,6 @@ td {
 }
 
 @font-face {
-    font-family: 'ArcadeClassic';
-    src: url('files/ARCADECLASSIC.TTF');
+    font-family: 'c64-mono';
+    src: url('C64_Pro_Mono-STYLE.ttf');
 }

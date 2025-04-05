@@ -1,6 +1,8 @@
 class DemoSprite {
-    constructor(scene){
+
+    constructor(scene, limitX){
         this.scene = scene;
+        this.limitX = limitX;
     }
 
     move(yPos){
@@ -24,26 +26,26 @@ class DemoSprite {
 
     moveRight(){
         this.sprite.flipX = false;
-        if (this.sprite.x < 810){
+        if (this.sprite.x < this.limitX){
             this.sprite.x++;
         }
     }
 }
 
 class DigDug extends DemoSprite{
-    constructor(scene){
-        super(scene);
+    constructor(scene, limitX){
+        super(scene, 999);
         this.scene.anims.create({
-                key: 'dig-dug-walk',
-                frames: [
-                    { key: 'dig-dug1' },
-                    { key: 'dig-dug2' },
-                    { key: 'dig-dug3' }
-                ],
-                frameRate: 7,
-                repeat: -1
-            });
-        this.sprite = scene.add.sprite(500, 300, 'dig-dug');
+            key: 'dig-dug-walk',
+            frames: [
+                { key: 'dig-dug1' },
+                { key: 'dig-dug2' },
+                { key: 'dig-dug3' }
+            ],
+            frameRate: 7,
+            repeat: -1
+        });
+        this.sprite = scene.add.sprite(500, 450, 'dig-dug');
         this.sprite.setDepth(-5);
         this.sprite.play('dig-dug-walk');
     }
@@ -53,15 +55,15 @@ class Saboteur extends DemoSprite{
     constructor(scene){
         super(scene);
         this.scene.anims.create({
-                         key: 'saboteur-walk',
-                         frames: [
-                             { key: 'saboteur1' },
-                             { key: 'saboteur2' },
-                             { key: 'saboteur3' }
-                         ],
-                         frameRate: 7,
-                         repeat: -1
-                     });
+            key: 'saboteur-walk',
+            frames: [
+                { key: 'saboteur1' },
+                { key: 'saboteur2' },
+                { key: 'saboteur3' }
+            ],
+            frameRate: 7,
+            repeat: -1
+        });
         this.sprite = scene.add.sprite(0, 545, 'saboteur1');
         this.sprite.setDepth(-5);
         this.sprite.play('saboteur-walk');
@@ -74,8 +76,12 @@ class SpriteManager {
         return new Saboteur(scene);
     }
 
-    static createDigDug(scene){
-        return new DigDug(scene);
+    static createDigDug(scene, limitX){
+        return new DigDug(scene, limitX);
+    }
+
+    static createLoadingHeader(scene){
+        scene.add
     }
 
     static createGianaCalm(scene){
