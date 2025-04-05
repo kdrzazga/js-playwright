@@ -5,9 +5,9 @@ class Scene1 extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('dig-dug1', 'pics/dig-dug1.gif');
-        this.load.image('dig-dug2', 'pics/dig-dug2.gif');
-        this.load.image('dig-dug3', 'pics/dig-dug3.gif');
+        this.load.image('dig-dug1', 'pics/dig-dug1.png');
+        this.load.image('dig-dug2', 'pics/dig-dug2.png');
+        this.load.image('dig-dug3', 'pics/dig-dug3.png');
     }
 
     create() {
@@ -15,8 +15,8 @@ class Scene1 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        //console.log(time + ", " + delta + ", " + this.counter);
-        if (time = 2000){
+        console.log(time + ", " + delta + ", ");
+        if (time > 5000){
             this.scene.start('Scene2');
         }
     }

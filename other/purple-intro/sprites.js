@@ -29,7 +29,7 @@ class DigDug extends DemoSprite{
                          frameRate: 7,
                          repeat: -1
                      });
-        this.sprite = scene.add.sprite(0, 545, 'dig-dug');
+        this.sprite = scene.add.sprite(500, 300, 'dig-dug');
         this.sprite.setDepth(-5);
         this.sprite.play('dig-dug-walk');
     }
