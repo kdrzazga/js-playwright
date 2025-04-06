@@ -16,6 +16,8 @@ class Alphabet {
 
         this.scene.load.image('o', 'pics/alphabet/o.png');
         this.scene.load.image('p', 'pics/alphabet/p.png');
+        this.scene.load.image('r', 'pics/alphabet/r.png');
+        this.scene.load.image('u', 'pics/alphabet/u.png');
     }
 
     createCaption(text, xStart, yStart, distanceFactor=1){

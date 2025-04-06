@@ -18,9 +18,9 @@ td {
 }
 
 #scroll {
-  position: absolute;
-  top: 1%;
-  width: 122%;
-  height: 3%;
-  z-index: 1;
+    position: absolute;
+    top: 1%;
+    width: 122%;
+    height: 3%;
+    z-index: 1;
 }
