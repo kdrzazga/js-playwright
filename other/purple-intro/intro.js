@@ -23,7 +23,6 @@ function conditionalScrollReset() {
 }
 
 setInterval(()=>{
-    console.log('t');
     moveScroll();
     conditionalScrollReset();
 }, 120);

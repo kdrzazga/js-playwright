@@ -3,6 +3,7 @@ class Scene2 extends Phaser.Scene {
         super({ key: 'Scene2' });
         this.lines = [];
         this.yPos = 0;
+        this.alphabet = null;
     }
 
     preload() {
@@ -12,10 +13,7 @@ class Scene2 extends Phaser.Scene {
         this.load.image('saboteur2', 'pics/sab2.png');
         this.load.image('saboteur3', 'pics/sab3.png');
 
-
-        this.load.image('giana-crazy1', 'c64.png');
-        this.load.image('giana-crazy2', 'c64.png');
-        this.load.image('giana-crazy3', 'c64.png');
+        this.alphabet = new Alphabet(this);
     }
 
     create() {
@@ -55,10 +53,12 @@ class Scene2 extends Phaser.Scene {
         });
 
         this.saboteur = SpriteManager.createSaboteur(this);
+
+        this.demoCaption = this.alphabet.createCaption('demo', 100, 100);
     }
 
     updateLine() {
-        console.log('update line');
+        //console.log('update line');
         this.graphics.clear();
         this.offset += this.frequency;
 
