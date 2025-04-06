@@ -3,6 +3,7 @@ class Scene2 extends Phaser.Scene {
         super({ key: 'Scene2' });
         this.lines = [];
         this.yPos = 0;
+        this.alphabet = null;
     }
 
     preload() {
@@ -12,10 +13,7 @@ class Scene2 extends Phaser.Scene {
         this.load.image('saboteur2', 'pics/sab2.png');
         this.load.image('saboteur3', 'pics/sab3.png');
 
-
-        this.load.image('giana-crazy1', 'c64.png');
-        this.load.image('giana-crazy2', 'c64.png');
-        this.load.image('giana-crazy3', 'c64.png');
+        this.alphabet = new Alphabet(this);
     }
 
     create() {
@@ -28,7 +26,7 @@ class Scene2 extends Phaser.Scene {
         this.amplitude = 170;
         this.offset = 0;
 
-        this.counter = 0;
+        this.demoCounter = 0;
         this.time.addEvent({
             delay: 10,
             callback: this.updateLine,
@@ -58,7 +56,7 @@ class Scene2 extends Phaser.Scene {
     }
 
     updateLine() {
-        console.log('update line');
+        //console.log('update line');
         this.graphics.clear();
         this.offset += this.frequency;
 
@@ -76,10 +74,32 @@ class Scene2 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        //console.log(time + ", " + delta + ", " + this.counter);
-        this.counter++;
+        //console.log(time + ", " + delta + ", " + this.demoCounter);
+        this.demoCounter++;
 
         this.saboteur.move(this.yPos);
+
+        if (this.demoCounter > 500 && this.demoCounter < 900)
+            this.createDemoCaption();
+
+        if (this.demoCounter > 1000 && this.demoCounter < 1300){
+            this.demoCaption.children.iterate(function (child) {
+                            child.x ++;
+                        });
+        }
+        /*if (this.demoCounter > 1400 && this.demoCounter < 1600){
+            this.demoCaption.children.iterate(function (child) {
+                            child.y ++;
+                        });
+        }*/
+    }
+
+    createDemoCaption(){
+        if (this.demoCaption != undefined)
+            return;
+
+        this.demoCaption = this.alphabet.createCaption('demo', 100, 100);
+        this.alphabet.waveSinusoidally(this.demoCaption, 15);
     }
 
     logoToFront(){
