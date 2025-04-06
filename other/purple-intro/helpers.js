@@ -36,4 +36,21 @@ class Alphabet {
 
         return spriteGroup;
     }
+
+    waveSinusoidally(spriteGroup, amplitude) {
+        const speed = 0.05;
+        const startTime = this.scene.time.now;
+
+        this.scene.tweens.add({
+            targets: spriteGroup.getChildren(),
+            y: (sprite) => {
+                const timeElapsed = this.scene.time.now - startTime;
+                const sineValue = Math.sin(timeElapsed * speed + sprite.x * 0.1);
+                return sprite.y + (sineValue * amplitude);
+            },
+            duration: 1000,
+            repeat: -1,
+            yoyo: true
+        });
+    }
 }
