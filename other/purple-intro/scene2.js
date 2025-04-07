@@ -85,19 +85,28 @@ class Scene2 extends DigDugScene {
 
         this.saboteur.move(this.yPos);
 
-        if (this.demoCounter > 500 && this.demoCounter < 900)
+        let letterOPosition = -1;
+        if (this.demoCounter > 500 && this.demoCounter < 900){
             this.createDemoCaption();
+            //letterOPosition = this.demoCaption.children[0].x;
+        }
 
-        if (this.demoCounter > 666 && this.digdug.sprite.x < 780 && !this.digdug.walkingLeft)
+        if (this.demoCounter > 666 && this.digdug.sprite.x < 800 && !this.digdug.walkingLeft)
+            this.digdug.move();
+        else if (this.demoCounter > 700 && this.digdug.sprite.x < letterOPosition)
         {
+            this.digdug.walkingLeft = true;
             this.digdug.move();
         }
 
-
-        if (this.demoCounter > 1200 && this.demoCounter < 1500){
-            this.demoCaption.children.iterate(function (child) {
-                            child.x ++;
-                        });
+        if (this.demoCounter > 1200 && this.demoCounter < 1500) {
+            if (this.demoCaption && this.demoCaption.children) {
+                this.demoCaption.children.iterate(function (child) {
+                    child.x ++;
+                });
+            } else {
+                console.error("this.demoCaption or this.demoCaption.children is undefined");
+            }
         }
         /*if (this.demoCounter > 1400 && this.demoCounter < 1600){
             this.demoCaption.children.iterate(function (child) {
