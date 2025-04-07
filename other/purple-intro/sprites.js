@@ -14,9 +14,10 @@ class DemoSprite {
         else
             this.moveRight();
 
-        if (this.sprite.x >= this.limitX || this.sprite.x < 1){
-            this.walkingLeft = !this.walkingLeft;
-        }
+        if (this.sprite.x >= this.limitX)
+            this.walkingLeft = true;
+        else if (this.sprite.x < 1)
+            this.walkingLeft = false;
     }
 
     moveLeft(){
@@ -36,7 +37,7 @@ class DemoSprite {
 
 class DigDug extends DemoSprite{
     constructor(scene, limitX){
-        super(scene);
+        super(scene, 750);
         this.scene.anims.create({
             key: 'dig-dug-walk',
             frames: [

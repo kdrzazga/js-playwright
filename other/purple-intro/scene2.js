@@ -4,6 +4,7 @@ class Scene2 extends DigDugScene {
         this.lines = [];
         this.yPos = 0;
         this.alphabet = null;
+        this.demoCaption = null;
     }
 
     preload() {
@@ -57,6 +58,7 @@ class Scene2 extends DigDugScene {
         this.digdug.sprite.x = -44;
         this.digdug.sprite.y = 34;
         this.digdug.sprite.setScale(0.5);
+        this.digdug.walkingLeft = false;
     }
 
     updateLine() {
@@ -86,8 +88,11 @@ class Scene2 extends DigDugScene {
         if (this.demoCounter > 500 && this.demoCounter < 900)
             this.createDemoCaption();
 
-        if (this.demoCounter > 666)
-            this.digdug.sprite.x++;
+        if (this.demoCounter > 666 && this.digdug.sprite.x < 780 && !this.digdug.walkingLeft)
+        {
+            this.digdug.move();
+        }
+
 
         if (this.demoCounter > 1200 && this.demoCounter < 1500){
             this.demoCaption.children.iterate(function (child) {
