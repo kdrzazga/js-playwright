@@ -30,6 +30,7 @@ class Alphabet {
             const texture = this.scene.textures.get(letter);
             xStart += previousLetterWidth * distanceFactor;
             let letterSprite = this.scene.add.sprite(xStart, yStart, texture);
+            letterSprite.setScale(0.5);
             spriteGroup.add(letterSprite);
             previousLetterWidth = texture.getSourceImage().width;
         }

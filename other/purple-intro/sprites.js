@@ -84,9 +84,6 @@ class SpriteManager {
         return new DigDug(scene, limitX);
     }
 
-    static createLoadingHeader(scene){
-        scene.add
-    }
 
     static createGianaCalm(scene){
         scene.anims.create({

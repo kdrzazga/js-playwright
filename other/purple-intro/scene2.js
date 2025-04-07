@@ -1,4 +1,4 @@
-class Scene2 extends Phaser.Scene {
+class Scene2 extends DigDugScene {
     constructor() {
         super({ key: 'Scene2' });
         this.lines = [];
@@ -53,6 +53,10 @@ class Scene2 extends Phaser.Scene {
         });
 
         this.saboteur = SpriteManager.createSaboteur(this);
+        this.digdug = SpriteManager.createDigDug(this, 852);
+        this.digdug.sprite.x = -44;
+        this.digdug.sprite.y = 34;
+        this.digdug.sprite.setScale(0.5);
     }
 
     updateLine() {
@@ -82,7 +86,10 @@ class Scene2 extends Phaser.Scene {
         if (this.demoCounter > 500 && this.demoCounter < 900)
             this.createDemoCaption();
 
-        if (this.demoCounter > 1000 && this.demoCounter < 1300){
+        if (this.demoCounter > 666)
+            this.digdug.sprite.x++;
+
+        if (this.demoCounter > 1200 && this.demoCounter < 1500){
             this.demoCaption.children.iterate(function (child) {
                             child.x ++;
                         });
