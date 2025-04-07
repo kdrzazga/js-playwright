@@ -18,7 +18,7 @@ class Scene1 extends DigDugScene {
     preload() {
         super.preload();
         this.load.image('loading', 'pics/loading.png');
-        this.load.audio('backgroundMusic', 'muza.mp3');
+        this.load.audio('backgroundMusic', 'music/Everlasting.mp3');
     }
 
     create() {

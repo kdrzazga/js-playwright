@@ -1,15 +1,3 @@
-const audio = new Audio('fst.mp3');
-
-function playAudio() {
-    const button = document.getElementById('play');
-    button.style.display = "none";
-    audio.play();
-
-    setTimeout(() => {
-      playAudio();
-    }, 45000);
-  }
-
 function moveScroll() {
     var scroll = document.getElementById('scroll');
     scroll.style.left = (parseInt(scroll.style.left) - 5) + 'px';
