@@ -82,7 +82,7 @@ class Game {
     }
 
     playHand(player) {
-        game.table = player.discard.concat(player.hand);
+        game.table = [...player.hand];
         player.hand.length = 0;
     }
 }
