@@ -77,7 +77,7 @@ class Scene3_1 extends MainScene {
             repeat: -1
         });
 
-        for (let i = 0; i < 160; i++) {
+        for (let i = 0; i < 260; i++) {
              const y =  this.sys.canvas.height - 125;
              const runnerSprite = this.spriteGroup.create(200 + (i + 1) * (1400 - 3*i), y, 'runner1');
              runnerSprite.id = i;

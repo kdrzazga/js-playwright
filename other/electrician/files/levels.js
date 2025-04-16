@@ -233,6 +233,16 @@ class LevelScene extends Phaser.Scene {
 
     checkVictory(){
         const allConnected = this.building.wires.every(wire => wire.isConnected());
+
+        const sceneLevelNumberJson = {
+            "1": "Level1",
+            "2": "Level2",
+            "3": "Level3",
+            "4": "Level4",
+            "5": "Level5",
+            "6": "Outro"
+        }
+
         if (allConnected){
             console.log(`All floors are connected. Advancing to the next level ${this.nextLevel}`);
             sessionStorage.setItem('level', this.nextLevel);
