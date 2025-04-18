@@ -27,8 +27,10 @@ class MainScene extends Phaser.Scene {
 	}
 	
 	create(){
+
+		this.physics.world.setBounds(0, 0, config.width, config.height);
         this.cursors = this.input.keyboard.createCursorKeys();
-		this.damnd = this.add.sprite(70, this.sys.canvas.height - 150, 'd1');
+		this.damnd = this.add.sprite(this.sys.canvas.height/2, this.sys.canvas.height - 150, 'd1');
 		
 		this.anims.create({
             key: 'damnd-stand',
@@ -83,16 +85,17 @@ class MainScene extends Phaser.Scene {
          }
 
          if (this.cursors.right.isDown) {
-             this.spriteGroup.children.iterate(function (child) {
+
+             if (this.damnd.x <7*config.height/8){
+                this.damnd.x += MainScene.PLAYER_SPEED;
+             }
+             else this.spriteGroup.children.iterate(function (child) {
                  child.x -= MainScene.PLAYER_SPEED;
              });
 
          }
          else if (this.cursors.left.isDown) {
-             this.spriteGroup.children.iterate(function (child) {
-                 child.x += MainScene.PLAYER_SPEED;
-             });
-
+             this.damnd.x -= MainScene.PLAYER_SPEED;
          }
      }
 }
