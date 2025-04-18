@@ -1,6 +1,7 @@
 class MainScene extends Phaser.Scene {
     static TILE_WIDTH = 60;
     static PLAYER_SPEED = 5;
+
     constructor(name) {
         super(name);
         this.lastTextureChange = 0;
@@ -13,10 +14,9 @@ class MainScene extends Phaser.Scene {
         this.playerFalling = false;
         this.extraDelay = 0;
 
-        this.mainCharacterPic = 'commando';
-        this.mainCharacterRunningPic = 'commando2';
         this.backgroundColor = 'black';
         this.spriteGroup = null;
+        this.damndCounter = 0;
     }
 	
 	preload(){
@@ -24,11 +24,12 @@ class MainScene extends Phaser.Scene {
 		this.load.image('d1', 'd1.png');
 		this.load.image('d2', 'd2.png');
 		this.load.image('d3', 'd3.png');
+		this.load.image('dw1', 'dw1.png');
+		this.load.image('dw2', 'dw2.png');
+		this.load.image('dw3', 'dw3.png');
 	}
 	
 	create(){
-
-		this.physics.world.setBounds(0, 0, config.width, config.height);
         this.cursors = this.input.keyboard.createCursorKeys();
 		this.damnd = this.add.sprite(this.sys.canvas.height/2, this.sys.canvas.height - 150, 'd1');
 		
@@ -52,14 +53,28 @@ class MainScene extends Phaser.Scene {
             frameRate: 2,
             repeat: -1
         });
-		
-		this.damnd.play('damnd-stand');
-		
+
+		this.anims.create({
+            key: 'damnd-walk',
+            frames: [
+                { key: 'dw1' },
+                { key: 'dw2' },
+                { key: 'dw3' }
+            ],
+            frameRate: 7,
+            repeat: -1
+        });
+
+		this.animKey = 'damnd-stand';
+		this.damnd.play(this.animKey);
 		this.createSpriteGroup();
 	}
 	
 	update(time, delta) {
 	    this.move(time);
+	    this.damndCounter += 1;
+
+
 	}
 
 	createSpriteGroup(){
@@ -69,35 +84,43 @@ class MainScene extends Phaser.Scene {
 
 	    for (let i = 0; i < 240; i++) {
             const x = i * tileWidth;
-            const sprite = this.add.sprite(x, config.height - 73, 'floor');
+            const sprite = this.add.sprite(x, this.sys.canvas.height - 73, 'floor');
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
         }
 	}
 
-	 move(time){
-         //this.cameras.main.setBackgroundColor(this.backgroundColor);
-         if (this.cursors.down.isDown && this.damnd.y <= config.height - 120) {
-             this.damnd.y += 2*MainScene.PLAYER_SPEED/3;
-         }
-         else if (this.cursors.up.isDown && this.damnd.y > 360) {
-             this.damnd.y -= 2*MainScene.PLAYER_SPEED/3;
-         }
+    move(time) {
+        let newAnimKey = 'damnd-stand';
 
-         if (this.cursors.right.isDown) {
+        if (this.cursors.down.isDown && this.damnd.y <= this.sys.canvas.height - 120) {
+            this.damnd.y += 2 * MainScene.PLAYER_SPEED / 3;
+            newAnimKey = 'damnd-walk';
+        } else if (this.cursors.up.isDown && this.damnd.y > 360) {
+            this.damnd.y -= 2 * MainScene.PLAYER_SPEED / 3;
+        }
 
-             if (this.damnd.x <7*config.height/8){
+        if (this.cursors.right.isDown) {
+            this.damnd.setFlipX(false);
+            if (this.damnd.x < 7 * this.sys.canvas.height / 8) {
                 this.damnd.x += MainScene.PLAYER_SPEED;
-             }
-             else this.spriteGroup.children.iterate(function (child) {
-                 child.x -= MainScene.PLAYER_SPEED;
-             });
+            } else {
+                this.spriteGroup.children.iterate(function (child) {
+                    child.x -= MainScene.PLAYER_SPEED;
+                });
+            }
+            newAnimKey = 'damnd-walk';
+        } else if (this.cursors.left.isDown && this.damnd.x > 44) {
+            this.damnd.x -= MainScene.PLAYER_SPEED;
+            this.damnd.setFlipX(true);
+            newAnimKey = 'damnd-walk';
+        }
 
-         }
-         else if (this.cursors.left.isDown && this.damnd.x> 44) {
-             this.damnd.x -= MainScene.PLAYER_SPEED;
-         }
-     }
+        if (newAnimKey !== this.animKey) {
+            this.animKey = newAnimKey;
+            this.damnd.play(this.animKey);
+        }
+    }
 }
 
 
