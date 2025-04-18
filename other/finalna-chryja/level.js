@@ -77,10 +77,10 @@ class MainScene extends Phaser.Scene {
 
 	 move(time){
          //this.cameras.main.setBackgroundColor(this.backgroundColor);
-         if (this.cursors.down.isDown) {
+         if (this.cursors.down.isDown && this.damnd.y <= config.height - 120) {
              this.damnd.y += 2*MainScene.PLAYER_SPEED/3;
          }
-         else if (this.cursors.up.isDown) {
+         else if (this.cursors.up.isDown && this.damnd.y > 360) {
              this.damnd.y -= 2*MainScene.PLAYER_SPEED/3;
          }
 
@@ -94,7 +94,7 @@ class MainScene extends Phaser.Scene {
              });
 
          }
-         else if (this.cursors.left.isDown) {
+         else if (this.cursors.left.isDown && this.damnd.x> 44) {
              this.damnd.x -= MainScene.PLAYER_SPEED;
          }
      }
