@@ -1,6 +1,6 @@
 class MainScene extends Phaser.Scene {
     static TILE_WIDTH = 60;
-    static COMMANDO_SPEED = 5;
+    static PLAYER_SPEED = 5;
     constructor(name) {
         super(name);
         this.lastTextureChange = 0;
@@ -21,17 +21,24 @@ class MainScene extends Phaser.Scene {
 	
 	preload(){
 		this.load.image('floor', 'floor.png');
-		this.load.image('d1', 'd1.bmp');
-		this.load.image('d2', 'd2.bmp');
-		this.load.image('d3', 'd3.bmp');
+		this.load.image('d1', 'd1.png');
+		this.load.image('d2', 'd2.png');
+		this.load.image('d3', 'd3.png');
 	}
 	
 	create(){
+        this.cursors = this.input.keyboard.createCursorKeys();
 		this.damnd = this.add.sprite(70, this.sys.canvas.height - 150, 'd1');
 		
 		this.anims.create({
-            key: 'damnd-walk',
+            key: 'damnd-stand',
             frames: [
+                { key: 'd1' },
+                { key: 'd2' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd2' },
+                { key: 'd2' },
                 { key: 'd1' },
                 { key: 'd2' },
                 { key: 'd1' },
@@ -44,12 +51,13 @@ class MainScene extends Phaser.Scene {
             repeat: -1
         });
 		
-		this.damnd.play('damnd-walk');
+		this.damnd.play('damnd-stand');
 		
 		this.createSpriteGroup();
 	}
 	
 	update(time, delta) {
+	    this.move(time);
 	}
 
 	createSpriteGroup(){
@@ -59,11 +67,34 @@ class MainScene extends Phaser.Scene {
 
 	    for (let i = 0; i < 240; i++) {
             const x = i * tileWidth;
-            const sprite = this.add.sprite(x, config.height - 100, 'floor');
+            const sprite = this.add.sprite(x, config.height - 73, 'floor');
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
         }
 	}
+
+	 move(time){
+         //this.cameras.main.setBackgroundColor(this.backgroundColor);
+         if (this.cursors.down.isDown) {
+             this.damnd.y += 2*MainScene.PLAYER_SPEED/3;
+         }
+         else if (this.cursors.up.isDown) {
+             this.damnd.y -= 2*MainScene.PLAYER_SPEED/3;
+         }
+
+         if (this.cursors.right.isDown) {
+             this.spriteGroup.children.iterate(function (child) {
+                 child.x -= MainScene.PLAYER_SPEED;
+             });
+
+         }
+         else if (this.cursors.left.isDown) {
+             this.spriteGroup.children.iterate(function (child) {
+                 child.x += MainScene.PLAYER_SPEED;
+             });
+
+         }
+     }
 }
 
 
