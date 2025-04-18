@@ -34,19 +34,35 @@ class MainScene extends Phaser.Scene {
             frames: [
                 { key: 'd1' },
                 { key: 'd2' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd2' },
+                { key: 'd2' },
                 { key: 'd3' }
             ],
-            frameRate: 3,
+            frameRate: 2,
             repeat: -1
         });
 		
 		this.damnd.play('damnd-walk');
 		
-		this.floor = this.add.sprite(70, this.sys.canvas.height - 150, 'floor');
-		this.floor.setDepth(-5);
+		this.createSpriteGroup();
 	}
 	
 	update(time, delta) {
+	}
+
+	createSpriteGroup(){
+
+	    const tileWidth = 240;
+	    this.spriteGroup = this.add.group();
+
+	    for (let i = 0; i < 240; i++) {
+            const x = i * tileWidth;
+            const sprite = this.add.sprite(x, config.height - 100, 'floor');
+            sprite.setDepth(-5);
+            this.spriteGroup.add(sprite);
+        }
 	}
 }
 
