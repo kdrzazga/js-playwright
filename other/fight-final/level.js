@@ -147,8 +147,13 @@ class MainScene extends Phaser.Scene {
 	    this.damndCounter += 1;
 	    this.laughConditionally();
 	    this.spriteGroup.children.iterate(sprite => {
-	        if (sprite.data == 'enemy')
-	            sprite.x -= MainScene.PLAYER_SPEED/2;
+	        if (sprite.data == 'enemy'){
+	                sprite.x -= MainScene.PLAYER_SPEED/2;
+	                if (sprite.y > this.damnd.y)
+	                    sprite.setDepth(1); //this.damnd who is human player has depth = 0
+	                else
+	                    sprite.setDepth(-1);
+	            }
 	    });
 	}
 
@@ -177,7 +182,6 @@ class MainScene extends Phaser.Scene {
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
         }
-
 
         for (let i = 0; i < 75; i++){
 		    const cody = this.add.sprite(this.sys.canvas.height * 5 + (0.8 + 0.8*Math.random())*i * this.sys.canvas.width, this.sys.canvas.height - 150 - 60*Math.random(), 'cw1');
