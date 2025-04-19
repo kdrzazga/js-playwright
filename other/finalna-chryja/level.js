@@ -27,6 +27,8 @@ class MainScene extends Phaser.Scene {
 		this.load.image('dw1', 'dw1.png');
 		this.load.image('dw2', 'dw2.png');
 		this.load.image('dw3', 'dw3.png');
+		this.load.image('dp1', 'dp1.png');
+		this.load.image('dp2', 'dp2.png');
 	}
 	
 	create(){
@@ -65,6 +67,17 @@ class MainScene extends Phaser.Scene {
             repeat: -1
         });
 
+		this.anims.create({
+            key: 'damnd-punch',
+            frames: [
+                { key: 'dp1' },
+                { key: 'dp2' },
+                { key: 'dp1' }
+            ],
+            frameRate: 1,
+            repeat: 1
+        });
+
 		this.animKey = 'damnd-stand';
 		this.damnd.play(this.animKey);
 		this.createSpriteGroup();
@@ -73,8 +86,6 @@ class MainScene extends Phaser.Scene {
 	update(time, delta) {
 	    this.move(time);
 	    this.damndCounter += 1;
-
-
 	}
 
 	createSpriteGroup(){
@@ -98,6 +109,7 @@ class MainScene extends Phaser.Scene {
             newAnimKey = 'damnd-walk';
         } else if (this.cursors.up.isDown && this.damnd.y > 360) {
             this.damnd.y -= 2 * MainScene.PLAYER_SPEED / 3;
+            newAnimKey = 'damnd-walk'
         }
 
         if (this.cursors.right.isDown) {
@@ -114,6 +126,10 @@ class MainScene extends Phaser.Scene {
             this.damnd.x -= MainScene.PLAYER_SPEED;
             this.damnd.setFlipX(true);
             newAnimKey = 'damnd-walk';
+        } else {
+            const key = this.checkPunchKeys();
+            if (key !== '')
+                newAnimKey = key;
         }
 
         if (newAnimKey !== this.animKey) {
@@ -121,7 +137,17 @@ class MainScene extends Phaser.Scene {
             this.damnd.play(this.animKey);
         }
     }
+
+    checkPunchKeys(){
+        const ctrlKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+        const shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        if (this.input.keyboard.checkDown(ctrlKey, 100) ||
+            this.input.keyboard.checkDown(shiftKey, 100) ||
+            this.input.keyboard.checkDown(spaceKey, 100)) {
+                return 'damnd-punch';
+            }
+        return '';
+    }
 }
-
-
-
