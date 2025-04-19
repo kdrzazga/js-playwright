@@ -1,6 +1,7 @@
 class MainScene extends Phaser.Scene {
     static TILE_WIDTH = 60;
     static PLAYER_SPEED = 5;
+    static CURRENT_ID = 1;
 
     constructor(name) {
         super(name);
@@ -39,6 +40,14 @@ class MainScene extends Phaser.Scene {
 		this.load.image('cw3', 'codyw3.png');
 		this.load.image('cw4', 'codyw4.png');
 		this.load.image('cw5', 'codyw5.png');
+
+		this.load.image('hw1', 'haggard1.png');
+		this.load.image('hw2', 'haggard2.png');
+		this.load.image('hw3', 'haggard3.png');
+		this.load.image('hw4', 'haggard4.png');
+		this.load.image('hw5', 'haggard5.png');
+
+		this.load.image('oriber', 'ffOriber.png');
 
 		this.load.audio('laugh', 'hehe.m4a');
 	}
@@ -135,6 +144,19 @@ class MainScene extends Phaser.Scene {
             repeat: -1
         });
 
+        this.anims.create({
+            key: 'haggard-walk',
+            frames: [
+                { key: 'hw1'},
+                { key: 'hw2'},
+                { key: 'hw3'},
+                { key: 'hw4'},
+                { key: 'hw5'}
+            ],
+            frameRate: 5,
+            repeat: -1
+        });
+
         this.laughSound = this.sound.add('laugh');
 
 		this.animKey = 'damnd-stand';
@@ -147,8 +169,9 @@ class MainScene extends Phaser.Scene {
 	    this.damndCounter += 1;
 	    this.laughConditionally();
 	    this.spriteGroup.children.iterate(sprite => {
-	        if (sprite.data == 'enemy'){
-	                sprite.x -= MainScene.PLAYER_SPEED/2;
+	        if (sprite.data)
+	        if (sprite.data.startsWith('enemy')){
+	                if (sprite.data.endsWith('alive')) sprite.x -= MainScene.PLAYER_SPEED + 2*Math.cos(sprite.id);
 	                if (sprite.y > this.damnd.y)
 	                    sprite.setDepth(1); //this.damnd who is human player has depth = 0
 	                else
@@ -186,9 +209,30 @@ class MainScene extends Phaser.Scene {
         for (let i = 0; i < 75; i++){
 		    const cody = this.add.sprite(this.sys.canvas.height * 5 + (0.8 + 0.8*Math.random())*i * this.sys.canvas.width, this.sys.canvas.height - 150 - 60*Math.random(), 'cw1');
 		    cody.play('cody-walk');
-		    cody.data = 'enemy';
+		    cody.data = 'enemy-alive';
+		    cody.id = MainScene.CURRENT_ID;
+		    MainScene.CURRENT_ID += 1;
 		    this.spriteGroup.add(cody);
 		}
+
+        for (let i = 0; i < 62; i++){
+		    const haggard = this.add.sprite(11111 + (0.8 + 0.8*Math.random())*i * this.sys.canvas.width, this.sys.canvas.height - 150 - 60*Math.random(), 'hw1');
+		    haggard.play('haggard-walk');
+		    haggard.data = 'enemy-alive';
+		    haggard.id = MainScene.CURRENT_ID;
+		    MainScene.CURRENT_ID += 1;
+		    haggard.setFlipX(true);
+		    this.spriteGroup.add(haggard);
+		}
+
+        for (let i = 1; i< 24; i += 1){
+		    const deadOriber = this.add.sprite(1000 + i*2222 + 1000*Math.random(), this.sys.canvas.height - 150- 60*Math.random(), 'oriber');
+		    deadOriber.data = 'enemy-dead';
+            deadOriber.setDepth(-4);
+            if (i % 2 < 1)
+                deadOriber.setFlipX(true);
+            this.spriteGroup.add(deadOriber);
+        }
 	}
 
 	laughConditionally(){
