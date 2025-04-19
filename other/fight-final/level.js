@@ -146,6 +146,10 @@ class MainScene extends Phaser.Scene {
 	    this.move(time);
 	    this.damndCounter += 1;
 	    this.laughConditionally();
+	    this.spriteGroup.children.iterate(sprite => {
+	        if (sprite.data == 'enemy')
+	            sprite.x -= MainScene.PLAYER_SPEED/2;
+	    });
 	}
 
 	createSpriteGroup(){
@@ -175,9 +179,10 @@ class MainScene extends Phaser.Scene {
         }
 
 
-        for (let i = 0; i < 15; i++){
+        for (let i = 0; i < 75; i++){
 		    const cody = this.add.sprite(this.sys.canvas.height * 5 + (0.8 + 0.8*Math.random())*i * this.sys.canvas.width, this.sys.canvas.height - 150 - 60*Math.random(), 'cw1');
 		    cody.play('cody-walk');
+		    cody.data = 'enemy';
 		    this.spriteGroup.add(cody);
 		}
 	}
