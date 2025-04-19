@@ -4,14 +4,10 @@ class MainScene extends Phaser.Scene {
 
     constructor(name) {
         super(name);
-        this.lastTextureChange = 0;
-        this.lastBulletTime = 0;
-        this.bullets = [];
-        this.bulletAngle = 0;
-        this.bulletRange = 460;
-        this.bulletFiringRate = 400;
-        this.playerCanJump = true;
-        this.playerFalling = false;
+
+        this.isPunching = false;
+        this.punchDuration = 500;
+        this.punchEndTime = 0;
         this.extraDelay = 0;
 
         this.backgroundColor = 'black';
@@ -74,7 +70,7 @@ class MainScene extends Phaser.Scene {
                 { key: 'dp2' },
                 { key: 'dp1' }
             ],
-            frameRate: 1,
+            frameRate: 4,
             repeat: 1
         });
 
@@ -104,12 +100,20 @@ class MainScene extends Phaser.Scene {
     move(time) {
         let newAnimKey = 'damnd-stand';
 
+        if (this.isPunching) {
+            if (time < this.punchEndTime) {
+                newAnimKey = 'damnd-punch';
+            } else {
+                this.isPunching = false;
+            }
+        }
+
         if (this.cursors.down.isDown && this.damnd.y <= this.sys.canvas.height - 120) {
             this.damnd.y += 2 * MainScene.PLAYER_SPEED / 3;
             newAnimKey = 'damnd-walk';
         } else if (this.cursors.up.isDown && this.damnd.y > 360) {
             this.damnd.y -= 2 * MainScene.PLAYER_SPEED / 3;
-            newAnimKey = 'damnd-walk'
+            newAnimKey = 'damnd-walk';
         }
 
         if (this.cursors.right.isDown) {
@@ -128,8 +132,11 @@ class MainScene extends Phaser.Scene {
             newAnimKey = 'damnd-walk';
         } else {
             const key = this.checkPunchKeys();
-            if (key !== '')
-                newAnimKey = key;
+            if (key === 'damnd-punch') {
+                this.isPunching = true;
+                this.punchEndTime = time + this.punchDuration;
+                newAnimKey = 'damnd-punch';
+            }
         }
 
         if (newAnimKey !== this.animKey) {
