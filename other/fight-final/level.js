@@ -19,6 +19,10 @@ class MainScene extends Phaser.Scene {
 	
 	preload(){
 		this.load.image('floor', 'floor.png');
+		this.load.image('door-wall', 'door-wall.png');
+		this.load.image('window-wall', 'window-wall.png');
+		this.load.image('building-end', 'building-end.png');
+
 		this.load.image('d1', 'd1.png');
 		this.load.image('d2', 'd2.png');
 		this.load.image('d3', 'd3.png');
@@ -130,6 +134,20 @@ class MainScene extends Phaser.Scene {
 	    for (let i = 0; i < 240; i++) {
             const x = i * tileWidth;
             const sprite = this.add.sprite(x, this.sys.canvas.height - 73, 'floor');
+            sprite.setDepth(-5);
+            this.spriteGroup.add(sprite);
+        }
+
+        for (let shift = 0; shift <= tileWidth * 22 * 4; shift += tileWidth * 22){
+
+	        for (let i = 5; i < 8; i++) {
+                const x = i * (tileWidth + 22) + shift;
+                const sprite = this.add.sprite(x, this.sys.canvas.height - 385 + 5, 'window-wall');
+                sprite.setDepth(-5);
+                this.spriteGroup.add(sprite);
+            }
+
+            let sprite = this.add.sprite(8.5 * (tileWidth + 11) + shift, this.sys.canvas.height - 385 + 5, 'building-end');
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
         }
