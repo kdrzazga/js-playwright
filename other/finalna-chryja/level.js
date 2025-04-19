@@ -6,8 +6,10 @@ class MainScene extends Phaser.Scene {
         super(name);
 
         this.isPunching = false;
-        this.punchDuration = 500;
+        this.isLaughing = false;
+        this.punchDuration = 900;
         this.punchEndTime = 0;
+        this.laughEndTime = 0;
         this.extraDelay = 0;
 
         this.backgroundColor = 'black';
@@ -25,6 +27,10 @@ class MainScene extends Phaser.Scene {
 		this.load.image('dw3', 'dw3.png');
 		this.load.image('dp1', 'dp1.png');
 		this.load.image('dp2', 'dp2.png');
+		this.load.image('dp3', 'dp3.png');
+		this.load.image('dp4', 'dp4.png');
+
+		this.load.audio('laugh', 'hehe.m4a');
 	}
 	
 	create(){
@@ -36,19 +42,43 @@ class MainScene extends Phaser.Scene {
             frames: [
                 { key: 'd1' },
                 { key: 'd2' },
+                { key: 'd2' },
+                { key: 'd3' },
+                { key: 'd2' },
+                { key: 'd3' },
+                { key: 'd2' },
+                { key: 'd3' },
+                { key: 'd1' },
+                { key: 'd2' },
                 { key: 'd1' },
                 { key: 'd1' },
                 { key: 'd2' },
                 { key: 'd2' },
                 { key: 'd1' },
-                { key: 'd2' },
                 { key: 'd1' },
                 { key: 'd1' },
-                { key: 'd2' },
-                { key: 'd2' },
-                { key: 'd3' }
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' },
+                { key: 'd1' }
             ],
-            frameRate: 2,
+            frameRate: 3,
             repeat: -1
         });
 
@@ -68,11 +98,18 @@ class MainScene extends Phaser.Scene {
             frames: [
                 { key: 'dp1' },
                 { key: 'dp2' },
+                { key: 'dp3' },
+                { key: 'dp4' },
+                { key: 'dp4' },
+                { key: 'dp3' },
+                { key: 'dp2' },
                 { key: 'dp1' }
             ],
-            frameRate: 4,
+            frameRate: 5,
             repeat: 1
         });
+
+        this.laughSound = this.sound.add('laugh');
 
 		this.animKey = 'damnd-stand';
 		this.damnd.play(this.animKey);
@@ -82,6 +119,7 @@ class MainScene extends Phaser.Scene {
 	update(time, delta) {
 	    this.move(time);
 	    this.damndCounter += 1;
+	    this.laughConditionally();
 	}
 
 	createSpriteGroup(){
@@ -95,6 +133,11 @@ class MainScene extends Phaser.Scene {
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
         }
+	}
+
+	laughConditionally(){
+	    if (this.damnd.texture.key === 'd3') //&& this.isLaughing)
+	        this.laughSound.play();
 	}
 
     move(time) {
