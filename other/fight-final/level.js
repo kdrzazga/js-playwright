@@ -138,7 +138,7 @@ class MainScene extends Phaser.Scene {
             this.spriteGroup.add(sprite);
         }
 
-        for (let shift = 0; shift <= tileWidth * 22 * 4; shift += tileWidth * 22){
+        for (let shift = 0; shift <= tileWidth * 22 * 8; shift += tileWidth * 22){
 
 	        for (let i = 5; i < 8; i++) {
                 const x = i * (tileWidth + 22) + shift;
