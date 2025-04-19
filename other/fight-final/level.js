@@ -34,13 +34,19 @@ class MainScene extends Phaser.Scene {
 		this.load.image('dp3', 'dp3.png');
 		this.load.image('dp4', 'dp4.png');
 
+		this.load.image('cw1', 'codyw1.png');
+		this.load.image('cw2', 'codyw2.png');
+		this.load.image('cw3', 'codyw3.png');
+		this.load.image('cw4', 'codyw4.png');
+		this.load.image('cw5', 'codyw5.png');
+
 		this.load.audio('laugh', 'hehe.m4a');
 	}
 	
 	create(){
         this.cursors = this.input.keyboard.createCursorKeys();
 		this.damnd = this.add.sprite(this.sys.canvas.height/2, this.sys.canvas.height - 150, 'd1');
-		
+
 		this.anims.create({
             key: 'damnd-stand',
             frames: [
@@ -113,6 +119,22 @@ class MainScene extends Phaser.Scene {
             repeat: 1
         });
 
+        this.anims.create({
+            key: 'cody-walk',
+            frames: [
+                { key: 'cw1'},
+                { key: 'cw2'},
+                { key: 'cw3'},
+                { key: 'cw4'},
+                { key: 'cw5'},
+                { key: 'cw4'},
+                { key: 'cw3'},
+                { key: 'cw2'},
+            ],
+            frameRate: 4,
+            repeat: -1
+        });
+
         this.laughSound = this.sound.add('laugh');
 
 		this.animKey = 'damnd-stand';
@@ -151,6 +173,13 @@ class MainScene extends Phaser.Scene {
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
         }
+
+
+        for (let i = 0; i < 15; i++){
+		    const cody = this.add.sprite(this.sys.canvas.height * 5 + (0.8 + 0.8*Math.random())*i * this.sys.canvas.width, this.sys.canvas.height - 150 - 60*Math.random(), 'cw1');
+		    cody.play('cody-walk');
+		    this.spriteGroup.add(cody);
+		}
 	}
 
 	laughConditionally(){
