@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" href="style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+        <script src="manager.js"></script>
         <script src="level.js"></script>
         <script src="conf.js"></script>
         <script src="ff.js"></script>
@@ -12,15 +13,23 @@
                 height: auto;
             }
 
+            @font-face {
+                  font-family: 'ff3';
+                  src: url('final-fight-3-snes.ttf') format('truetype');
+                }
+
             body {
                 background-color: black;
+                font-family: 'ff3';
+                color: white;
             }
         </style>
     </head>
     <body>
         <table>
-            <tr id="header"></tr>
-            <tr id="header2"></tr>
+            <tr id="header"><td colspan="7"></tr>
+            <tr id="header2"><td></td><td>FIGHT FINAL - tribute to game from 1992&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SCORE:</td><td id="score">0</td><td colspan="5"></td></tr>
+            <tr id="header3"><td colspan="7"></tr>
             <tr>
                 <td></td>
                 <td id="game-container" colspan="7"></td>
