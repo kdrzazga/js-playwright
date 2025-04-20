@@ -11,7 +11,7 @@ class MainScene extends Phaser.Scene {
         this.punchDuration = 900;
         this.punchEndTime = 0;
         this.laughEndTime = 0;
-        this.extraDelay = 0;
+        this.score = 0;
 
         this.backgroundColor = 'black';
         this.spriteGroup = null;
@@ -62,6 +62,10 @@ class MainScene extends Phaser.Scene {
                         if (distance < 30){
                             const pushback = this.damnd.flipX ? -180 : 180;
                             sprite.x += pushback;
+                            this.score++;
+
+                            const scoreDiv = document.getElementById('score');
+                            score.innerText = this.score;
                         }
                     }
 	        });
