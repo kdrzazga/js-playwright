@@ -295,7 +295,8 @@ class MainScene extends Phaser.Scene {
 
         if (this.input.keyboard.checkDown(ctrlKey, 100) ||
             this.input.keyboard.checkDown(shiftKey, 100) ||
-            this.input.keyboard.checkDown(spaceKey, 100)) {
+            this.input.keyboard.checkDown(spaceKey, 100) ||
+            this.input.mousePointer.isDown) {
                 return 'damnd-punch';
             }
         return '';
