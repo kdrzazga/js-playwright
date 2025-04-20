@@ -42,7 +42,7 @@ class MainScene extends Phaser.Scene {
 	    this.laughConditionally();
 	    this.spriteGroup.children.iterate(sprite => {
 	        if (sprite.data)
-	        if (sprite.data.startsWith('enemy')){
+	            if (sprite.data.startsWith('enemy')){
 	                if (sprite.data.endsWith('alive')) sprite.x -= MainScene.PLAYER_SPEED + 2*Math.cos(sprite.id);
 	                if (sprite.y > this.damnd.y)
 	                    sprite.setDepth(1); //this.damnd who is human player has depth = 0
@@ -50,6 +50,22 @@ class MainScene extends Phaser.Scene {
 	                    sprite.setDepth(-1);
 	            }
 	    });
+
+        //const punchFrames = ['dp1', 'dp2', 'dp3', 'dp4'];
+        const punchFrames = ['dp2', 'dp3'];
+
+        if (punchFrames.includes(this.damnd.texture.key)){
+	        this.spriteGroup.children.iterate(sprite => {
+                if (sprite.data)
+                    if (sprite.data == 'enemy-alive'){
+                        let distance = Phaser.Math.Distance.Between(sprite.x, sprite.y, this.damnd.x, this.damnd.y);
+                        if (distance < 30){
+                            const pushback = this.damnd.flipX ? -180 : 180;
+                            sprite.x += pushback;
+                        }
+                    }
+	        });
+	    }
 	}
 
 	createSpriteGroup(){

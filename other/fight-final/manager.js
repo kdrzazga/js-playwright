@@ -39,7 +39,6 @@ class Manager {
         return this.scene;
     }
 
-
     createAnims(){
 
 		this.scene.anims.create({
