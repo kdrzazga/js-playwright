@@ -9,8 +9,8 @@
 <body style="background-color: black; color:white;">
 <table>
     <tr><td>Mandelbrot</td><td>Koch</td></tr>
-    <tr><td>Iterations: <input type="range" id="iterationSliderM" min="1" max="500" value="100" onchange="getParamsFromUi();"></td>
-        <td>Iterations: <input type="range" id="iterationSliderK" min="1" max="500" value="100" onchange="getParamsFromUi();"</td></tr>
+    <tr><td>Iterations: <input type="range" id="iterationSliderM" min="1" max="500" value="100" onchange="getMandelParamsFromUi();"></td>
+        <td>Iterations: <input type="range" id="iterationSliderK" min="1" max="500" value="100"></td></tr>
     <tr><td><div id="mandelbrot"></div></td><td><div id="kochFractal"></div></td></tr>
 </table>
 <script src="mandelbrot.js"></script>
