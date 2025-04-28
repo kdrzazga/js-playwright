@@ -8,6 +8,7 @@ class MainScene extends ExtendedScene {
 
         this.nonBrickRows = [];
         this.nonBrickColumns = [];
+        this.skullRows= [ {'row': 2, 'side': 'right'} ];
     }
 
     create(){
@@ -65,6 +66,27 @@ class MainScene extends ExtendedScene {
                     }
                 }
         }
+
+        for (let i = 0; i < this.skullRows.length; i++) {
+            let x = config.width / 2;
+
+            const y = this.skullRows[i].row * MainScene.TILE_WIDTH;
+            let s = this.add.sprite(x, y , 'skull1');
+
+            if (this.skullRows[i].side === 'right'){
+                s.x += config.width /4;
+                s.minX = config.width/2;
+                s.maxX = config.width - 15;
+            }
+            else {
+                 s.x -= config.width /4;
+                 s.minX = 15;
+                 s.maxX = config.width/2 - 15;
+             }
+
+            s.play('skull-move')
+        }
+
     }
 }
 
