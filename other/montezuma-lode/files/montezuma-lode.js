@@ -10,6 +10,7 @@ class MainScene extends ExtendedScene {
         this.nonBrickColumns = [];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.enemyTextures = ['skull'];
+        this.ladderColumns = [ {'column' : 5, 'start' : 3, 'end' : 11}];
     }
 
     preload(){
@@ -22,6 +23,8 @@ class MainScene extends ExtendedScene {
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
+
+        this.load.image('ladder', 'files/background/ladder.png');
     }
 
     create(){
@@ -102,6 +105,16 @@ class MainScene extends ExtendedScene {
             this.spriteGroup.add(s);
         }
 
+        for (let i = 0; i < this.ladderColumns.length; i++){
+            const y1 = this.ladderColumns[i].start * MainScene.TILE_WIDTH;
+            const y2 = this.ladderColumns[i].end * MainScene.TILE_WIDTH;
+            const x = this.ladderColumns[i].column * MainScene.TILE_WIDTH;
+
+            for (let y = y1; y < y2; y += MainScene.TILE_WIDTH){
+                const ladderCell = this.add.sprite(x, y, 'ladder');
+                this.spriteGroup.add(ladderCell);
+            }
+        }
     }
 }
 
