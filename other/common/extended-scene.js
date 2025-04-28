@@ -3,15 +3,24 @@ class ExtendedScene extends Phaser.Scene {
     constructor(name){
         super(name);
 
+        this.enemyTextures = [];
+
         this.player = null;
 
         this.playerCanJump = true;
         this.playerFalling = false;
         this.spriteGroup = null;
+        this.backgroundColor = 0;
     }
 
     create(){
         this.spriteGroup = this.add.group();
+    }
+
+    update(time, delta) {
+        this.cameras.main.setBackgroundColor(this.backgroundColor);
+
+        this.moveEnemies(time);
     }
 
     checkJumpKeys(duration){
@@ -56,6 +65,15 @@ class ExtendedScene extends Phaser.Scene {
         this.tweens.add(jumpTween);
     }
 
+    moveEnemies(time){
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)) {
+                child.x -= child.speedX;
+                child.y += child.speedY;
+            }
+        });
+    }
+
     checkEnemyCollision() {
         if (this.spriteGroup == undefined)
             return;
@@ -72,4 +90,10 @@ class ExtendedScene extends Phaser.Scene {
         });
     }
 
+    _isEnemy(s) {
+        return s != null &&
+               s.texture != null &&
+               s.texture.key != null &&
+               this.enemyTextures.includes(s);
+    }
 }

@@ -21,4 +21,4 @@ function start(){
     return game;
 }
 
-start();
+const g = start();
