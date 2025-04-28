@@ -91,9 +91,13 @@ class ExtendedScene extends Phaser.Scene {
     }
 
     _isEnemy(s) {
-        return s != null &&
-               s.texture != null &&
-               s.texture.key != null &&
-               this.enemyTextures.includes(s);
-    }
+         if (s != null && s.texture != null && s.texture.key != null) {
+             for (let t of this.enemyTextures) {
+                 if (s.texture.key.startsWith(t)) {
+                     return true;
+                 }
+             }
+         }
+         return false;
+     }
 }

@@ -9,6 +9,19 @@ class MainScene extends ExtendedScene {
         this.nonBrickRows = [];
         this.nonBrickColumns = [];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.enemyTextures = ['skull'];
+    }
+
+    preload(){
+        this.load.image('skull1', 'files/enemies/skull/skull1.gif');
+        this.load.image('skull2', 'files/enemies/skull/skull2.gif');
+        this.load.image('skull3', 'files/enemies/skull/skull3.gif');
+        this.load.image('skull4', 'files/enemies/skull/skull4.gif');
+        this.load.image('skull5', 'files/enemies/skull/skull5.gif');
+
+        this.load.image('brick',  'files/background/brick/brick.png');
+        this.load.image('brick1', 'files/background/brick/dissolve1.png');
+        this.load.image('brick2', 'files/background/brick/dissolve2.png');
     }
 
     create(){
@@ -39,16 +52,15 @@ class MainScene extends ExtendedScene {
         });
     }
 
-    preload(){
-        this.load.image('skull1', 'files/enemies/skull/skull1.gif');
-        this.load.image('skull2', 'files/enemies/skull/skull2.gif');
-        this.load.image('skull3', 'files/enemies/skull/skull3.gif');
-        this.load.image('skull4', 'files/enemies/skull/skull4.gif');
-        this.load.image('skull5', 'files/enemies/skull/skull5.gif');
+    update(time, delta) {
+        super.update(time, delta);
 
-        this.load.image('brick',  'files/background/brick/brick.png');
-        this.load.image('brick1', 'files/background/brick/dissolve1.png');
-        this.load.image('brick2', 'files/background/brick/dissolve2.png');
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)) {
+                if (child.x < child.minX || child.x > child.maxX)
+                    child.speedX = -child.speedX;
+            }
+        });
     }
 
     createSpriteGroup() {
@@ -72,11 +84,13 @@ class MainScene extends ExtendedScene {
 
             const y = this.skullRows[i].row * MainScene.TILE_WIDTH;
             let s = this.add.sprite(x, y , 'skull1');
+            s.speedY = 0;
 
             if (this.skullRows[i].side === 'right'){
                 s.x += config.width /4;
                 s.minX = config.width/2;
                 s.maxX = config.width - 15;
+                s.speedX = 1;
             }
             else {
                  s.x -= config.width /4;
@@ -84,7 +98,8 @@ class MainScene extends ExtendedScene {
                  s.maxX = config.width/2 - 15;
              }
 
-            s.play('skull-move')
+            s.play('skull-move');
+            this.spriteGroup.add(s);
         }
 
     }

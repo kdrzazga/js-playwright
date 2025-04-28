@@ -9,7 +9,6 @@ class Scene1 extends MainScene{
 
     create(){
         super.create();
-        console.log('c');
         this.createSpriteGroup();
     }
 
