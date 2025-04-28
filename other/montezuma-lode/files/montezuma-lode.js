@@ -14,6 +14,8 @@ class MainScene extends ExtendedScene {
     }
 
     preload(){
+        this.load.image('joe', 'files/joe-16.bmp');
+
         this.load.image('skull1', 'files/enemies/skull/skull1.gif');
         this.load.image('skull2', 'files/enemies/skull/skull2.gif');
         this.load.image('skull3', 'files/enemies/skull/skull3.gif');
@@ -29,6 +31,8 @@ class MainScene extends ExtendedScene {
 
     create(){
         super.create();
+
+        this.player = this.add.sprite(50, 2*MainScene.TILE_WIDTH - 20, 'joe');
 
         this.anims.create({
             key: 'skull-move',
