@@ -9,6 +9,7 @@ class Manager {
 		this.scene.load.image('door-wall', 'door-wall.png');
 		this.scene.load.image('window-wall', 'window-wall.png');
         this.scene.load.image('building-end', 'building-end.png');
+        this.scene.load.image('wreck', 'wreck.png');
 
         this.scene.load.image('d1', 'd1.png');
         this.scene.load.image('d2', 'd2.png');
