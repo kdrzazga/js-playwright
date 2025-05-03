@@ -96,6 +96,10 @@ class MainScene extends Phaser.Scene {
             let sprite = this.add.sprite(8.5 * (tileWidth + 11) + shift, this.sys.canvas.height - 385 + 5, 'building-end');
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
+
+            sprite = this.add.sprite(8.5 * (tileWidth + 88) + shift, this.sys.canvas.height - 385 + 27, 'wreck');
+            sprite.setDepth(-5);
+            this.spriteGroup.add(sprite);
         }
 
         for (let i = 0; i < 75; i++){

@@ -46,3 +46,7 @@ https://kdrzazga.github.io/js-playwright/other/cube
 Simple animation - Runner:
 --
 https://kdrzazga.github.io/js-playwright/other/ts-anim-runner/runner.html
+
+Fight Final
+--
+https://kdrzazga.github.io/js-playwright/montezuma-lode/index.html
