@@ -1,6 +1,6 @@
 class MainScene extends Phaser.Scene {
     static TILE_WIDTH = 60;
-    static PLAYER_SPEED = 5;
+    static PLAYER_SPEED = 25;
     static CURRENT_ID = 1;
 
     constructor(name) {
@@ -100,6 +100,27 @@ class MainScene extends Phaser.Scene {
             sprite = this.add.sprite(8.5 * (tileWidth + 88) + shift, this.sys.canvas.height - 385 + 27, 'wreck');
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
+
+	        for (let i = 13; i < 18; i++) {
+                const x = i * (tileWidth + 22) + shift;
+                let texture = i == 15 ? 'door-wall' : 'window-wall';
+                texture = i == 17 ? 'building-end' : 'window-wall';
+                const sprite = this.add.sprite(x, this.sys.canvas.height - 385 + 5, texture);
+                sprite.setDepth(-5);
+                this.spriteGroup.add(sprite);
+            }
+
+	        for (let i = 19; i < 28; i++) {
+                let x = i * tileWidth + shift;
+                let texture = 'fence';
+                let sprite = this.add.sprite(x, this.sys.canvas.height - 385 + 5, texture);
+                sprite.setDepth(-6);
+                this.spriteGroup.add(sprite);
+                texture = 'skyline';
+                sprite = this.add.sprite(x, this.sys.canvas.height - 385 + 5, texture);
+                sprite.setDepth(-7);
+                this.spriteGroup.add(sprite);
+            }
         }
 
         for (let i = 0; i < 75; i++){
