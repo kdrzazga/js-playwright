@@ -101,9 +101,10 @@ class MainScene extends Phaser.Scene {
             sprite.setDepth(-5);
             this.spriteGroup.add(sprite);
 
-	        for (let i = 13; i < 17; i++) {
+	        for (let i = 13; i < 18; i++) {
                 const x = i * (tileWidth + 22) + shift;
                 let texture = i == 15 ? 'door-wall' : 'window-wall';
+                texture = i == 17 ? 'building-end' : 'window-wall';
                 const sprite = this.add.sprite(x, this.sys.canvas.height - 385 + 5, texture);
                 sprite.setDepth(-5);
                 this.spriteGroup.add(sprite);
