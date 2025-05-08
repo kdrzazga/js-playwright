@@ -1,6 +1,6 @@
 class MainScene extends Phaser.Scene {
     static TILE_WIDTH = 60;
-    static PLAYER_SPEED = 25;
+    static PLAYER_SPEED = 5;
     static CURRENT_ID = 1;
 
     constructor(name) {
