@@ -34,8 +34,9 @@ class Velocity {
 
 class Ball{
 
-    constructor(){
-        #TODO
+    constructor(sprite){
+        this.sprite = sprite;
+        this.velocity = new Velocity(3);
     }
 }
 
