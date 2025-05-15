@@ -123,8 +123,9 @@ class MainScene extends Phaser.Scene {
             }
         }
 
-        for (let i = 0; i < 75; i++){
-		    const cody = this.add.sprite(this.sys.canvas.height * 5 + (0.8 + 0.8*Math.random())*i * this.sys.canvas.width, this.sys.canvas.height - 150 - 60*Math.random(), 'cw1');
+        for (let i = 0; i < 775; i++){
+            const shift2 = i < 600 ? 0.8 : 0.1
+		    const cody = this.add.sprite(this.sys.canvas.height * 5 + (shift2 + shift2*Math.random())*i * this.sys.canvas.width, this.sys.canvas.height - 150 - 60*Math.random(), 'cw1');
 		    cody.play('cody-walk');
 		    cody.data = 'enemy-alive';
 		    cody.id = MainScene.CURRENT_ID;

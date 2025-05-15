@@ -112,7 +112,7 @@ class Manager {
                 { key: 'dp2' },
                 { key: 'dp1' }
             ],
-            frameRate: 5,
+            frameRate: 10,
             repeat: 1
         });
 
