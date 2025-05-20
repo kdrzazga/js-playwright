@@ -74,6 +74,14 @@ class MainScene extends ExtendedScene {
             repeat: -1
         });
         this.player = this.add.sprite(MainScene.TILE_WIDTH, 2 * MainScene.TILE_WIDTH, 'player');
+
+        let rectangle = this.add.graphics();
+        rectangle.lineStyle(4, 0xffff00);
+        rectangle.strokeRect(0, 0, MainScene.TILE_WIDTH, MainScene.TILE_WIDTH);
+        rectangle.generateTexture('highlight', MainScene.TILE_WIDTH, MainScene.TILE_WIDTH);
+        rectangle.destroy();
+        this.rectSprite = this.add.sprite(2*MainScene.TILE_WIDTH, 3*MainScene.TILE_WIDTH, 'highlight');
+        this.rectSprite.setDepth(3);
     }
 
     update(time, delta) {
@@ -88,18 +96,43 @@ class MainScene extends ExtendedScene {
         });
     }
 
+    calculatePlayerSquare(){
+        const x = Math.floor(this.player.x / MainScene.TILE_WIDTH);
+        const y = Math.floor(this.player.y / MainScene.TILE_WIDTH);
+
+        return [x, y];
+    }
+
+    calculateHighlightSquare(){
+        const playerSquare = this.calculatePlayerSquare();
+        const y = playerSquare[1] + 1;
+        const x = playerSquare[0];
+
+        return[x, y];
+    }
+
+    moveHighlight(){
+        const highlightSquare = this.calculateHighlightSquare();
+        this.rectSprite.x = highlightSquare[0] * MainScene.TILE_WIDTH;
+        this.rectSprite.y = highlightSquare[1] * MainScene.TILE_WIDTH;
+        if (!this.player.flipX)
+            this.rectSprite.x += MainScene.TILE_WIDTH;
+    }
+
     move(time){
         let newAnimKey = 'player';
         if (this.cursors.right.isDown) {
             this.player.setFlipX(false);
             if (this.player.x < this.sys.canvas.width) {
                 this.player.x += MainScene.PLAYER_SPEED;
+                this.moveHighlight();
                 newAnimKey = 'player-walk';
             }
         } else if (this.cursors.left.isDown) {
             this.player.setFlipX(true);
             if (this.player.x > MainScene.PLAYER_SPEED)
                 this.player.x -= MainScene.PLAYER_SPEED;
+                this.moveHighlight();
                 newAnimKey = 'player-walk';
         }
         else {
@@ -168,4 +201,3 @@ class MainScene extends ExtendedScene {
         }
     }
 }
-
