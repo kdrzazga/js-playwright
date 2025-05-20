@@ -1,9 +1,11 @@
 class MainScene extends ExtendedScene {
 
     static TILE_WIDTH = 60;
+    static PLAYER_SPEED = 2;
 
     constructor(name){
         super(name);
+        this.player = null;
         this.backgroundColor = 0x880015;
 
         this.nonBrickRows = [];
@@ -24,11 +26,17 @@ class MainScene extends ExtendedScene {
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
 
+        this.load.image('player',  'files/character/stand.png');
+        this.load.image('player1', 'files/character/m1.png');
+        this.load.image('player2', 'files/character/m2.png');
+        this.load.image('player3', 'files/character/m3.png');
+
         this.load.image('ladder', 'files/background/ladder.png');
     }
 
     create(){
         super.create();
+        this.cursors = this.input.keyboard.createCursorKeys();
 
         this.anims.create({
             key: 'skull-move',
@@ -53,10 +61,23 @@ class MainScene extends ExtendedScene {
             frameRate: 3,
             repeat: 1
         });
+
+        this.anims.create({
+            key: 'player-walk',
+            frames: [
+                { key: 'player1' },
+                { key: 'player2' },
+                { key: 'player3' }
+            ],
+            frameRate: 3,
+            repeat: -1
+        });
+        this.player = this.add.sprite(MainScene.TILE_WIDTH, 2 * MainScene.TILE_WIDTH, 'player');
     }
 
     update(time, delta) {
         super.update(time, delta);
+        this.move(time);
 
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)) {
@@ -64,6 +85,21 @@ class MainScene extends ExtendedScene {
                     child.speedX = -child.speedX;
             }
         });
+    }
+
+    move(time){
+        if (this.cursors.right.isDown) {
+            this.player.setFlipX(false);
+            if (this.player.x < 8 * this.sys.canvas.width / 8) {
+                this.player.x += MainScene.PLAYER_SPEED;
+            }
+            //newAnimKey = 'damnd-walk';
+        } else if (this.cursors.left.isDown) {
+            this.player.setFlipX(true);
+            if (this.player.x > MainScene.PLAYER_SPEED)
+                this.player.x -= MainScene.PLAYER_SPEED;
+            //newAnimKey = 'damnd-walk';
+        }
     }
 
     createSpriteGroup() {
