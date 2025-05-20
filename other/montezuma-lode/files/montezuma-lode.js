@@ -6,6 +6,7 @@ class MainScene extends ExtendedScene {
     constructor(name){
         super(name);
         this.player = null;
+        this.animKey = 'stand';
         this.backgroundColor = 0x880015;
 
         this.nonBrickRows = [];
@@ -69,7 +70,7 @@ class MainScene extends ExtendedScene {
                 { key: 'player2' },
                 { key: 'player3' }
             ],
-            frameRate: 3,
+            frameRate: 5,
             repeat: -1
         });
         this.player = this.add.sprite(MainScene.TILE_WIDTH, 2 * MainScene.TILE_WIDTH, 'player');
@@ -88,17 +89,31 @@ class MainScene extends ExtendedScene {
     }
 
     move(time){
+        let newAnimKey = 'player';
         if (this.cursors.right.isDown) {
             this.player.setFlipX(false);
-            if (this.player.x < 8 * this.sys.canvas.width / 8) {
+            if (this.player.x < this.sys.canvas.width) {
                 this.player.x += MainScene.PLAYER_SPEED;
+                newAnimKey = 'player-walk';
             }
-            //newAnimKey = 'damnd-walk';
         } else if (this.cursors.left.isDown) {
             this.player.setFlipX(true);
             if (this.player.x > MainScene.PLAYER_SPEED)
                 this.player.x -= MainScene.PLAYER_SPEED;
-            //newAnimKey = 'damnd-walk';
+                newAnimKey = 'player-walk';
+        }
+        else {
+            newAnimKey = 'player';
+        }
+        if (newAnimKey !== this.animKey) {
+            this.animKey = newAnimKey;
+
+            if (newAnimKey === 'player'){
+                this.player.anims.stop();
+                this.player.setTexture('player')
+            }
+            else
+                this.player.play(this.animKey);
         }
     }
 
