@@ -60,7 +60,7 @@ class MainScene extends ExtendedScene {
                 { key: 'brick2' }
             ],
             frameRate: 3,
-            repeat: 1
+            repeat: 0
         });
 
         this.anims.create({
@@ -86,6 +86,7 @@ class MainScene extends ExtendedScene {
 
     update(time, delta) {
         super.update(time, delta);
+        this.checkFireKeys()
         this.move(time);
 
         this.spriteGroup.children.iterate((child)=> {
@@ -96,27 +97,30 @@ class MainScene extends ExtendedScene {
         });
     }
 
-    calculatePlayerSquare(){
-        const x = Math.floor(this.player.x / MainScene.TILE_WIDTH);
-        const y = Math.floor(this.player.y / MainScene.TILE_WIDTH);
+    checkFireKeys(){
+        const keys = [
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M)
+        ];
 
-        return [x, y];
-    }
+        for (let key of keys) {
+            if (Phaser.Input.Keyboard.JustDown(key)) {
+                console.log(`Key ${key.keyCode} was pressed!`);
+                let toBeDissolved = this.calculateHighlightSquare();
 
-    calculateHighlightSquare(){
-        const playerSquare = this.calculatePlayerSquare();
-        const y = playerSquare[1] + 1;
-        const x = playerSquare[0];
+                this.spriteGroup.children.iterate(sprite => {
+                    if (sprite.texture.key === 'brick')
+                        if (sprite.posX === toBeDissolved[0] && sprite.posY === toBeDissolved[1])
+                            sprite.play('brick-dissolve');
+                });
 
-        return[x, y];
-    }
-
-    moveHighlight(){
-        const highlightSquare = this.calculateHighlightSquare();
-        this.rectSprite.x = highlightSquare[0] * MainScene.TILE_WIDTH;
-        this.rectSprite.y = highlightSquare[1] * MainScene.TILE_WIDTH;
-        if (!this.player.flipX)
-            this.rectSprite.x += MainScene.TILE_WIDTH;
+            }
+        }
     }
 
     move(time){
@@ -161,6 +165,8 @@ class MainScene extends ExtendedScene {
                         const y = j * MainScene.TILE_WIDTH;
                         let texture = 'brick';
                         const sprite = this.add.sprite(x, y, texture);
+                        sprite.posX = i;
+                        sprite.posY = j;
                         this.spriteGroup.add(sprite);
                     }
                 }
@@ -200,4 +206,28 @@ class MainScene extends ExtendedScene {
             }
         }
     }
+
+    calculatePlayerSquare(){
+        const x = Math.floor(this.player.x / MainScene.TILE_WIDTH);
+        const y = Math.floor(this.player.y / MainScene.TILE_WIDTH);
+
+        return [x, y];
+    }
+
+    calculateHighlightSquare(){
+        const playerSquare = this.calculatePlayerSquare();
+        const y = playerSquare[1] + 1;
+        const x = playerSquare[0];
+
+        return[x, y];
+    }
+
+    moveHighlight(){
+        const highlightSquare = this.calculateHighlightSquare();
+        this.rectSprite.x = highlightSquare[0] * MainScene.TILE_WIDTH;
+        this.rectSprite.y = highlightSquare[1] * MainScene.TILE_WIDTH;
+        if (!this.player.flipX)
+            this.rectSprite.x += MainScene.TILE_WIDTH;
+    }
+
 }
