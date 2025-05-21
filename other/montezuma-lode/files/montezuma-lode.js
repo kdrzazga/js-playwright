@@ -1,11 +1,6 @@
-class Globals {
-    static TILE_WIDTH = 60;
-    static PLAYER_X = Globals.TILE_WIDTH;
-    static PLAYER_Y = 2 * Globals.TILE_WIDTH;
-}
-
 class MainScene extends ExtendedScene {
 
+    static TILE_WIDTH = 60;
     static PLAYER_SPEED = 2;
 
     constructor(name){
@@ -19,41 +14,6 @@ class MainScene extends ExtendedScene {
         this.skullRows= [];
         this.enemyTextures = ['skull'];
         this.ladderColumns = [];
-
-        this.exits = {
-            'top': {
-                'x': '',
-                'y': ''
-            },
-            'bottom': {
-                'bottomX': '',
-                'bottomY': ''
-            },
-            'left': {
-                'leftX': '',
-                'leftY': ''
-            },
-            'right': {
-                'rightX': '',
-                'rightY': ''
-            }
-        };
-
-        this.nextScene = {
-            'top': '',
-            'topX': '',
-            'topY': '',
-            'bottom': '',
-            'bottomX': '',
-            'bottomY': '',
-            'left': '',
-            'leftX': '',
-            'leftY': '',
-            'right': '',
-            'rightX': '',
-            'rightY': ''
-        };
-
     }
 
     preload(){
@@ -113,14 +73,14 @@ class MainScene extends ExtendedScene {
             frameRate: 5,
             repeat: -1
         });
-        this.player = this.add.sprite(Globals.PLAYER_X, Globals.PLAYER_Y, 'player');
+        this.player = this.add.sprite(MainScene.TILE_WIDTH, 2 * MainScene.TILE_WIDTH, 'player');
 
         let rectangle = this.add.graphics();
         rectangle.lineStyle(4, 0xffff00);
-        rectangle.strokeRect(0, 0, Globals.TILE_WIDTH, Globals.TILE_WIDTH);
-        rectangle.generateTexture('highlight', Globals.TILE_WIDTH, Globals.TILE_WIDTH);
+        rectangle.strokeRect(0, 0, MainScene.TILE_WIDTH, MainScene.TILE_WIDTH);
+        rectangle.generateTexture('highlight', MainScene.TILE_WIDTH, MainScene.TILE_WIDTH);
         rectangle.destroy();
-        this.rectSprite = this.add.sprite(2*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'highlight');
+        this.rectSprite = this.add.sprite(2*MainScene.TILE_WIDTH, 3*MainScene.TILE_WIDTH, 'highlight');
         this.rectSprite.setDepth(3);
     }
 
@@ -128,7 +88,6 @@ class MainScene extends ExtendedScene {
         super.update(time, delta);
         this.checkFireKeys()
         this.move(time);
-        this.checkExit();
 
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)) {
@@ -170,7 +129,6 @@ class MainScene extends ExtendedScene {
             this.player.setFlipX(false);
             if (this.player.x < this.sys.canvas.width) {
                 this.player.x += MainScene.PLAYER_SPEED;
-                Globals.PLAYER_X = this.player.x;
                 this.moveHighlight();
                 newAnimKey = 'player-walk';
             }
@@ -178,7 +136,6 @@ class MainScene extends ExtendedScene {
             this.player.setFlipX(true);
             if (this.player.x > MainScene.PLAYER_SPEED)
                 this.player.x -= MainScene.PLAYER_SPEED;
-                Globals.PLAYER_X = this.player.x;
                 this.moveHighlight();
                 newAnimKey = 'player-walk';
         }
@@ -204,8 +161,8 @@ class MainScene extends ExtendedScene {
                 for (let i = 0; i < 14; i++) {
                     if (!this.nonBrickColumns.includes(i))
                     {
-                        const x = i * Globals.TILE_WIDTH;
-                        const y = j * Globals.TILE_WIDTH;
+                        const x = i * MainScene.TILE_WIDTH;
+                        const y = j * MainScene.TILE_WIDTH;
                         let texture = 'brick';
                         const sprite = this.add.sprite(x, y, texture);
                         sprite.posX = i;
@@ -218,7 +175,7 @@ class MainScene extends ExtendedScene {
         for (let i = 0; i < this.skullRows.length; i++) {
             let x = config.width / 2;
 
-            const y = this.skullRows[i].row * Globals.TILE_WIDTH;
+            const y = this.skullRows[i].row * MainScene.TILE_WIDTH;
             let s = this.add.sprite(x, y , 'skull1');
             s.speedY = 0;
 
@@ -239,11 +196,11 @@ class MainScene extends ExtendedScene {
         }
 
         for (let i = 0; i < this.ladderColumns.length; i++){
-            const y1 = this.ladderColumns[i].start * Globals.TILE_WIDTH;
-            const y2 = this.ladderColumns[i].end * Globals.TILE_WIDTH;
-            const x = this.ladderColumns[i].column * Globals.TILE_WIDTH;
+            const y1 = this.ladderColumns[i].start * MainScene.TILE_WIDTH;
+            const y2 = this.ladderColumns[i].end * MainScene.TILE_WIDTH;
+            const x = this.ladderColumns[i].column * MainScene.TILE_WIDTH;
 
-            for (let y = y1; y < y2; y += Globals.TILE_WIDTH){
+            for (let y = y1; y < y2; y += MainScene.TILE_WIDTH){
                 const ladderCell = this.add.sprite(x, y, 'ladder');
                 this.spriteGroup.add(ladderCell);
             }
@@ -251,8 +208,8 @@ class MainScene extends ExtendedScene {
     }
 
     calculatePlayerSquare(){
-        const x = Math.floor(this.player.x / Globals.TILE_WIDTH);
-        const y = Math.floor(this.player.y / Globals.TILE_WIDTH);
+        const x = Math.floor(this.player.x / MainScene.TILE_WIDTH);
+        const y = Math.floor(this.player.y / MainScene.TILE_WIDTH);
 
         return [x, y];
     }
@@ -269,29 +226,8 @@ class MainScene extends ExtendedScene {
 
     moveHighlight(){
         const highlightSquare = this.calculateHighlightSquare();
-        this.rectSprite.x = highlightSquare[0] * Globals.TILE_WIDTH;
-        this.rectSprite.y = highlightSquare[1] * Globals.TILE_WIDTH;
+        this.rectSprite.x = highlightSquare[0] * MainScene.TILE_WIDTH;
+        this.rectSprite.y = highlightSquare[1] * MainScene.TILE_WIDTH;
     }
 
-    checkExit(){
-        const coords = this.calculatePlayerSquare();
-
-        const directions = ['top', 'bottom', 'left', 'right'];
-
-        directions.forEach( d => {
-            const exitX = this.exits[d]['x'];
-            const exitY = this.exits[d]['y'];
-
-            if (coords[0] == exitX && coords[1] == exitY){
-                this.scene.start(this.nextScene[d]);
-
-                if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                }
-                else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                }
-            }
-        });
-    }
 }
