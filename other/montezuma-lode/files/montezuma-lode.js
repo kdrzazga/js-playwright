@@ -11,9 +11,9 @@ class MainScene extends ExtendedScene {
 
         this.nonBrickRows = [];
         this.nonBrickColumns = [];
-        this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.skullRows= [];
         this.enemyTextures = ['skull'];
-        this.ladderColumns = [ {'column' : 5, 'start' : 3, 'end' : 11}];
+        this.ladderColumns = [];
     }
 
     preload(){
