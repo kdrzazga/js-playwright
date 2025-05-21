@@ -14,6 +14,37 @@ class MainScene extends ExtendedScene {
         this.skullRows= [];
         this.enemyTextures = ['skull'];
         this.ladderColumns = [];
+
+        this.exits = {
+            'top': '',
+            'topX': '',
+            'topY': '',
+            'bottom': '',
+            'bottomX': '',
+            'bottomY': '',
+            'left': '',
+            'leftX': '',
+            'leftY': '',
+            'right': '',
+            'rightX': '',
+            'rightY': ''
+        };
+
+        this.nextScene = {
+            'top': '',
+            'topX': '',
+            'topY': '',
+            'bottom': '',
+            'bottomX': '',
+            'bottomY': '',
+            'left': '',
+            'leftX': '',
+            'leftY': '',
+            'right': '',
+            'rightX': '',
+            'rightY': ''
+        };
+
     }
 
     preload(){
