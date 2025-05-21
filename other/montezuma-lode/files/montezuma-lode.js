@@ -16,18 +16,22 @@ class MainScene extends ExtendedScene {
         this.ladderColumns = [];
 
         this.exits = {
-            'top': '',
-            'topX': '',
-            'topY': '',
-            'bottom': '',
-            'bottomX': '',
-            'bottomY': '',
-            'left': '',
-            'leftX': '',
-            'leftY': '',
-            'right': '',
-            'rightX': '',
-            'rightY': ''
+            'top': {
+                'x': '',
+                'y': ''
+            },
+            'bottom': {
+                'bottomX': '',
+                'bottomY': ''
+            },
+            'left': {
+                'leftX': '',
+                'leftY': ''
+            },
+            'right': {
+                'rightX': '',
+                'rightY': ''
+            }
         };
 
         this.nextScene = {
@@ -119,6 +123,7 @@ class MainScene extends ExtendedScene {
         super.update(time, delta);
         this.checkFireKeys()
         this.move(time);
+        this.checkExit();
 
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)) {
@@ -261,4 +266,18 @@ class MainScene extends ExtendedScene {
         this.rectSprite.y = highlightSquare[1] * MainScene.TILE_WIDTH;
     }
 
+    checkExit(){
+        const coords = this.calculatePlayerSquare();
+
+        const directions = ['top', 'bottom', 'left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY)
+                this.scene.start(this.nextScene[d]);
+
+        });
+    }
 }
