@@ -6,7 +6,7 @@ class Scene1 extends MainScene{
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.nextScene['right'] = 'Scene2';
-        this.exits['right']['x'] = '12';
+        this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '2';
     }
 
