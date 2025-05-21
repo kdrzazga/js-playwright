@@ -144,12 +144,14 @@ class LevelScene extends Phaser.Scene {
         if (this.cursors.left.isDown) {
             velocityX = -160;
             this.currentPlayerPic = 'sprite';
+            this.player.setFlipX(false);
             if (this.cursors.up.isDown) {
                 this.jump('left');
             }
         } else if (this.cursors.right.isDown) {
             velocityX = 160;
             this.currentPlayerPic = 'spriteRight';
+            //this.player.setFlipX(true);
             if (this.cursors.up.isDown) {
                 this.jump('right');
             }

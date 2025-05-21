@@ -316,6 +316,7 @@ class Rat extends Enemy{
         this.sprite.x += this.sprite.velocity.x;
         if (this.sprite.x >= this.maxX || this.sprite.x <= this.minX){
             this.sprite.velocity.x *= -1;
+            this.sprite.setFlipX(!this.sprite.flipX);
         }
     }
 

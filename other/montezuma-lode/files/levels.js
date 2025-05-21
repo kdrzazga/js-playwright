@@ -83,7 +83,7 @@ class Scene4 extends MainScene{
 
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
-        this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'left'} ];
+        this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'right'} , {'row': 7, 'side': 'left'} ];
 
         this.nextScene['left'] = 'Scene3';
         this.nextScene['right'] = 'Scene5';
