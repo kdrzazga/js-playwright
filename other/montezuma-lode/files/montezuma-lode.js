@@ -217,7 +217,9 @@ class MainScene extends ExtendedScene {
     calculateHighlightSquare(){
         const playerSquare = this.calculatePlayerSquare();
         const y = playerSquare[1] + 1;
-        const x = playerSquare[0];
+        let x = playerSquare[0];
+        if (!this.player.flipX)
+            x += 1;
 
         return[x, y];
     }
@@ -226,8 +228,6 @@ class MainScene extends ExtendedScene {
         const highlightSquare = this.calculateHighlightSquare();
         this.rectSprite.x = highlightSquare[0] * MainScene.TILE_WIDTH;
         this.rectSprite.y = highlightSquare[1] * MainScene.TILE_WIDTH;
-        if (!this.player.flipX)
-            this.rectSprite.x += MainScene.TILE_WIDTH;
     }
 
 }
