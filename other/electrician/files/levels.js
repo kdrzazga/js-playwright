@@ -14,7 +14,6 @@ class LevelScene extends Phaser.Scene {
         console.log('Floor height = ' + Floor.HEIGHT);
 
         this.load.image('sprite', 'files/electrician.png');
-        this.load.image('spriteRight', 'files/electricianRight.png');
         this.load.image('spriteClimb', 'files/electricianClimp.png');
 
         for (let i = 1; i <= 8; i++) {
@@ -29,7 +28,6 @@ class LevelScene extends Phaser.Scene {
 
         this.loadFloorImages();
 
-        //const ladderTexture = this.textures.get('floor0');
         this.load.image('power-line-left', 'files/powerlineL.png');
         this.load.image('power-line-right', 'files/powerlineR.png');
 
@@ -150,8 +148,8 @@ class LevelScene extends Phaser.Scene {
             }
         } else if (this.cursors.right.isDown) {
             velocityX = 160;
-            this.currentPlayerPic = 'spriteRight';
-            //this.player.setFlipX(true);
+            this.currentPlayerPic = 'sprite';
+            this.player.setFlipX(true);
             if (this.cursors.up.isDown) {
                 this.jump('right');
             }
