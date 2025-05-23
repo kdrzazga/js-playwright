@@ -43,7 +43,7 @@ class ExtendedScene extends Phaser.Scene {
         const jumpHeight = 100;
 
         const jumpTween = {
-            targets: this.commando,
+            targets: this.player,
             y: this.player.y - jumpHeight,
             duration: duration / 2, // move up for half the duration
             ease: 'Linear',

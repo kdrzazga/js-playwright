@@ -215,6 +215,7 @@ class MainScene extends ExtendedScene {
                 }
         }
 
+        console.log(this.skullRows.length);
         for (let i = 0; i < this.skullRows.length; i++) {
             let x = config.width / 2;
 
@@ -232,9 +233,10 @@ class MainScene extends ExtendedScene {
                  s.x -= config.width /4;
                  s.minX = 15;
                  s.maxX = config.width/2 - 15;
-             }
+            }
 
             s.play('skull-move');
+            s.setDepth(5);
             this.spriteGroup.add(s);
         }
 
