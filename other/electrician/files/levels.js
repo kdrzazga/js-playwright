@@ -14,7 +14,9 @@ class LevelScene extends Phaser.Scene {
         console.log('Floor height = ' + Floor.HEIGHT);
 
         this.load.image('sprite', 'files/electrician.png');
+        this.load.image('spriteWalk', 'files/electricianWalk.png');
         this.load.image('spriteClimb', 'files/electricianClimp.png');
+        this.load.image('spriteClimbR', 'files/electricianClimpR.png');
 
         for (let i = 1; i <= 8; i++) {
             this.load.image(`rat${i}`, 'files/rat.png');
@@ -48,6 +50,16 @@ class LevelScene extends Phaser.Scene {
          this.building = creatorMethodRef(this.physics);
          this.player = this.physics.add.sprite(100, 400, 'sprite');
          this.player.setCollideWorldBounds(true);
+
+         this.anims.create({
+              key: 'climb',
+              frames: [
+                  { key: 'spriteClimb' },
+                  { key: 'spriteClimbR' }
+                  ],
+                      frameRate: 3,
+                      repeat: -1
+            });
     }
 
     update() {
