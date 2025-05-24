@@ -49,4 +49,4 @@ https://kdrzazga.github.io/js-playwright/other/ts-anim-runner/runner.html
 
 Fight Final
 --
-https://kdrzazga.github.io/js-playwright/montezuma-lode/index.html
+https://kdrzazga.github.io/js-playwright/other/fight-final/index.html

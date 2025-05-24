@@ -6,6 +6,7 @@ class LevelScene extends Phaser.Scene {
         this.nextLevel = '';
         this.extraInfoFrameVisible = "left: 85%; visibility: hidden";
         this.currentPlayerPic = 'sprite';
+        this.playerAnimKey = '';
     }
 
     preload() {
@@ -14,8 +15,9 @@ class LevelScene extends Phaser.Scene {
         console.log('Floor height = ' + Floor.HEIGHT);
 
         this.load.image('sprite', 'files/electrician.png');
-        this.load.image('spriteRight', 'files/electricianRight.png');
+        this.load.image('spriteWalk', 'files/electricianWalk.png');
         this.load.image('spriteClimb', 'files/electricianClimp.png');
+        this.load.image('spriteClimbR', 'files/electricianClimpR.png');
 
         for (let i = 1; i <= 8; i++) {
             this.load.image(`rat${i}`, 'files/rat.png');
@@ -29,7 +31,6 @@ class LevelScene extends Phaser.Scene {
 
         this.loadFloorImages();
 
-        //const ladderTexture = this.textures.get('floor0');
         this.load.image('power-line-left', 'files/powerlineL.png');
         this.load.image('power-line-right', 'files/powerlineR.png');
 
@@ -50,6 +51,35 @@ class LevelScene extends Phaser.Scene {
          this.building = creatorMethodRef(this.physics);
          this.player = this.physics.add.sprite(100, 400, 'sprite');
          this.player.setCollideWorldBounds(true);
+
+         this.anims.create({
+              key: 'climb',
+              frames: [
+                  { key: 'spriteClimb' },
+                  { key: 'spriteClimbR' }
+                  ],
+                      frameRate: 6,
+                      repeat: -1
+            });
+
+         this.anims.create({
+              key: 'walk',
+              frames: [
+                  { key: 'sprite' },
+                  { key: 'spriteWalk' }
+                  ],
+                      frameRate: 4,
+                      repeat: -1
+            });
+
+         this.anims.create({
+              key: 'stand',
+              frames: [
+                  { key: 'sprite' },
+                  ],
+                      frameRate: 1,
+                      repeat: -1
+            });
     }
 
     update() {
@@ -138,11 +168,13 @@ class LevelScene extends Phaser.Scene {
     }
 
     handlePlayerMovement() {
+        let newAnimKey = 'stand';
         let velocityX = 0;
         let velocityY = 0;
 
         if (this.cursors.left.isDown) {
             velocityX = -160;
+            newAnimKey = 'walk';
             this.currentPlayerPic = 'sprite';
             this.player.setFlipX(false);
             if (this.cursors.up.isDown) {
@@ -150,25 +182,33 @@ class LevelScene extends Phaser.Scene {
             }
         } else if (this.cursors.right.isDown) {
             velocityX = 160;
-            this.currentPlayerPic = 'spriteRight';
-            //this.player.setFlipX(true);
+            newAnimKey = 'walk';
+            this.currentPlayerPic = 'sprite';
+            this.player.setFlipX(true);
             if (this.cursors.up.isDown) {
                 this.jump('right');
             }
         }
 
+
         if(this.building.ladder.onLadder(this.player.x)){
             this.currentPlayerPic = 'spriteClimb';
             if (velocityX === 0) {
                 if (this.cursors.up.isDown) {
+                    newAnimKey = 'climb';
                     velocityY = -160;
                 } else if (this.cursors.down.isDown) {
+                    newAnimKey = 'climb';
                     velocityY = 160;
                 }
             }
         }
 
-        this.player.setTexture(this.currentPlayerPic);
+        if (newAnimKey !== this.playerAnimKey) {
+            this.playerAnimKey = newAnimKey;
+            this.player.play(this.playerAnimKey);
+        }
+
         this.player.setVelocityX(velocityX);
         this.player.setVelocityY(velocityY);
 
@@ -237,12 +277,12 @@ class LevelScene extends Phaser.Scene {
         const allConnected = this.building.wires.every(wire => wire.isConnected());
 
         const sceneLevelNumberJson = {
-            "1": "Level1",
-            "2": "Level2",
-            "3": "Level3",
-            "4": "Level4",
-            "5": "Level5",
-            "6": "Outro"
+            "lvl1" : "Level1",
+            "lvl2" : "Level2",
+            "lvl3" : "Level3",
+            "lvl4" : "Level4",
+            "lvl5" : "Level5",
+            "lvl6" : "Outro"
         }
 
         if (allConnected){
