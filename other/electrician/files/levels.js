@@ -58,7 +58,7 @@ class LevelScene extends Phaser.Scene {
                   { key: 'spriteClimb' },
                   { key: 'spriteClimbR' }
                   ],
-                      frameRate: 3,
+                      frameRate: 6,
                       repeat: -1
             });
 
