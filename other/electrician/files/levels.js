@@ -63,12 +63,21 @@ class LevelScene extends Phaser.Scene {
             });
 
          this.anims.create({
-              key: 'normal',
+              key: 'walk',
               frames: [
                   { key: 'sprite' },
                   { key: 'spriteWalk' }
                   ],
-                      frameRate: 2,
+                      frameRate: 4,
+                      repeat: -1
+            });
+
+         this.anims.create({
+              key: 'stand',
+              frames: [
+                  { key: 'sprite' },
+                  ],
+                      frameRate: 1,
                       repeat: -1
             });
     }
@@ -159,12 +168,13 @@ class LevelScene extends Phaser.Scene {
     }
 
     handlePlayerMovement() {
+        let newAnimKey = 'stand';
         let velocityX = 0;
         let velocityY = 0;
 
         if (this.cursors.left.isDown) {
             velocityX = -160;
-            this.playerAnimKey = 'normal';
+            newAnimKey = 'walk';
             this.currentPlayerPic = 'sprite';
             this.player.setFlipX(false);
             if (this.cursors.up.isDown) {
@@ -172,7 +182,7 @@ class LevelScene extends Phaser.Scene {
             }
         } else if (this.cursors.right.isDown) {
             velocityX = 160;
-            this.playerAnimKey = 'normal';
+            newAnimKey = 'walk';
             this.currentPlayerPic = 'sprite';
             this.player.setFlipX(true);
             if (this.cursors.up.isDown) {
@@ -185,17 +195,19 @@ class LevelScene extends Phaser.Scene {
             this.currentPlayerPic = 'spriteClimb';
             if (velocityX === 0) {
                 if (this.cursors.up.isDown) {
-                    this.playerAnimKey = 'climb';
+                    newAnimKey = 'climb';
                     velocityY = -160;
                 } else if (this.cursors.down.isDown) {
-                    this.playerAnimKey = 'climb';
+                    newAnimKey = 'climb';
                     velocityY = 160;
                 }
             }
         }
 
-        //this.player.setTexture(this.currentPlayerPic);
-        this.player.play(this.playerAnimKey);
+        if (newAnimKey !== this.playerAnimKey) {
+            this.playerAnimKey = newAnimKey;
+            this.player.play(this.playerAnimKey);
+        }
 
         this.player.setVelocityX(velocityX);
         this.player.setVelocityY(velocityY);
