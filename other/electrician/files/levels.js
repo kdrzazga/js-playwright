@@ -6,6 +6,7 @@ class LevelScene extends Phaser.Scene {
         this.nextLevel = '';
         this.extraInfoFrameVisible = "left: 85%; visibility: hidden";
         this.currentPlayerPic = 'sprite';
+        this.playerAnimKey = '';
     }
 
     preload() {
@@ -58,6 +59,15 @@ class LevelScene extends Phaser.Scene {
                   { key: 'spriteClimbR' }
                   ],
                       frameRate: 3,
+                      repeat: -1
+            });
+
+         this.anims.create({
+              key: 'normal',
+              frames: [
+                  { key: 'sprite' }
+                  ],
+                      frameRate: 1,
                       repeat: -1
             });
     }
@@ -153,32 +163,34 @@ class LevelScene extends Phaser.Scene {
 
         if (this.cursors.left.isDown) {
             velocityX = -160;
-            this.currentPlayerPic = 'sprite';
+            this.playerAnimKey = 'sprite';
             this.player.setFlipX(false);
             if (this.cursors.up.isDown) {
                 this.jump('left');
             }
         } else if (this.cursors.right.isDown) {
             velocityX = 160;
-            this.currentPlayerPic = 'sprite';
+            this.playerAnimKey = 'sprite';
             this.player.setFlipX(true);
             if (this.cursors.up.isDown) {
                 this.jump('right');
             }
         }
 
+        //this.player.setTexture(this.currentPlayerPic);
+
         if(this.building.ladder.onLadder(this.player.x)){
             this.currentPlayerPic = 'spriteClimb';
             if (velocityX === 0) {
                 if (this.cursors.up.isDown) {
+                    //this.player.play('climb');
                     velocityY = -160;
                 } else if (this.cursors.down.isDown) {
+                    //this.player.play('climb');
                     velocityY = 160;
                 }
             }
         }
-
-        this.player.setTexture(this.currentPlayerPic);
         this.player.setVelocityX(velocityX);
         this.player.setVelocityY(velocityY);
 
@@ -247,12 +259,12 @@ class LevelScene extends Phaser.Scene {
         const allConnected = this.building.wires.every(wire => wire.isConnected());
 
         const sceneLevelNumberJson = {
-            "1": "Level1",
-            "2": "Level2",
-            "3": "Level3",
-            "4": "Level4",
-            "5": "Level5",
-            "6": "Outro"
+            "lvl1" : "Level1",
+            "lvl2" : "Level2",
+            "lvl3" : "Level3",
+            "lvl4" : "Level4",
+            "lvl5" : "Level5",
+            "lvl6" : "Outro"
         }
 
         if (allConnected){
