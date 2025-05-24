@@ -65,9 +65,10 @@ class LevelScene extends Phaser.Scene {
          this.anims.create({
               key: 'normal',
               frames: [
-                  { key: 'sprite' }
+                  { key: 'sprite' },
+                  { key: 'spriteWalk' }
                   ],
-                      frameRate: 1,
+                      frameRate: 2,
                       repeat: -1
             });
     }
@@ -163,34 +164,39 @@ class LevelScene extends Phaser.Scene {
 
         if (this.cursors.left.isDown) {
             velocityX = -160;
-            this.playerAnimKey = 'sprite';
+            this.playerAnimKey = 'normal';
+            this.currentPlayerPic = 'sprite';
             this.player.setFlipX(false);
             if (this.cursors.up.isDown) {
                 this.jump('left');
             }
         } else if (this.cursors.right.isDown) {
             velocityX = 160;
-            this.playerAnimKey = 'sprite';
+            this.playerAnimKey = 'normal';
+            this.currentPlayerPic = 'sprite';
             this.player.setFlipX(true);
             if (this.cursors.up.isDown) {
                 this.jump('right');
             }
         }
 
-        //this.player.setTexture(this.currentPlayerPic);
 
         if(this.building.ladder.onLadder(this.player.x)){
             this.currentPlayerPic = 'spriteClimb';
             if (velocityX === 0) {
                 if (this.cursors.up.isDown) {
-                    //this.player.play('climb');
+                    this.playerAnimKey = 'climb';
                     velocityY = -160;
                 } else if (this.cursors.down.isDown) {
-                    //this.player.play('climb');
+                    this.playerAnimKey = 'climb';
                     velocityY = 160;
                 }
             }
         }
+
+        //this.player.setTexture(this.currentPlayerPic);
+        this.player.play(this.playerAnimKey);
+
         this.player.setVelocityX(velocityX);
         this.player.setVelocityY(velocityY);
 
