@@ -202,6 +202,7 @@ class Wire {
 
         this.slots[index] = wireType;
         const newSprite = this.physics.add.sprite(x, this.y, wireType.imageId);
+        newSprite.setDepth(-2);
         this.sprites[index] = newSprite;
         console.log(`Placing wire: [${x}, ${this.y}]. Index = ${index}`);
         this.updateWiringInfo();

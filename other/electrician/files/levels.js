@@ -413,7 +413,7 @@ class LevelOutroScene extends LevelScene{
 
      create() {
         super.create(Creator.createOutro);
-        this.physics.world.setBounds(Ladder.WIDTH + 20, 0, 800 - 150, 600);
+        this.physics.world.setBounds(Ladder.WIDTH + 21, 0, 800 - 150, 600);
         this.player.x = 400;
         this.player.y = 30;
         this.audioBing = new Audio(this.musicFile);
