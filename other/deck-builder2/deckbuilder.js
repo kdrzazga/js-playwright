@@ -85,6 +85,11 @@ class Game {
         game.table = [...player.hand];
         player.hand.length = 0;
     }
+
+    clearTable(player){
+        player.discard = [...game.table];
+        game.table = [];
+    }
 }
 
 class UI{
