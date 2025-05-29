@@ -97,7 +97,7 @@ class Game {
         var cardsCcount = 0;
 
         game.table
-            .filter(discardCard => discardCard !== undefined)
+            .filter(card => card !== undefined)
             .forEach(card =>{
                switch (card.name){
                     case 'sa' :
@@ -161,8 +161,6 @@ class UI{
         game.player1.hand
             .filter(handCard => handCard !== undefined)
             .forEach(handCard => {
-                if (handCard === undefined)
-                    return;
                 const newText = hand1.innerText + ' ' + handCard.id + ' ' + handCard.name + ', ';
                 hand1.value += newText;
             });
