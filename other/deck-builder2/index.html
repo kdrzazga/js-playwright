@@ -18,6 +18,9 @@
             <td><button id="drawHand5-1" onclick="game.player1.drawHand(5);ui.update(game);">Draw 5 cards</button></td>
             <td><button id="discardHand-1" onclick="game.player1.discardHand();ui.update(game);">Discard hand</button><br/>
                 <button id="playHand-1" onclick="game.playHand(game.player1);ui.update(game);ui.updatePoints(game);">Play hand</button>
+                <div id = 'playSingleCardDiv'>
+
+                </div>
             </td>
             <td><button id="pickCardA" onclick="game.pickCardFromSetA(game.player1);ui.update(game);">Pick from Set A</button><br/>
                 <button id="pickCardB" onclick="game.pickCardFromSetB(game.player1);ui.update(game);">Pick from Set B</button><br/>

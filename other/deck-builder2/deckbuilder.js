@@ -96,7 +96,9 @@ class Game {
         var cardsBcount = 0;
         var cardsCcount = 0;
 
-        game.table.forEach(card =>{
+        game.table
+            .filter(discardCard => discardCard !== undefined)
+            .forEach(card =>{
                switch (card.name){
                     case 'sa' :
                         cardsAcount++;
@@ -110,7 +112,7 @@ class Game {
                     default:
                         console.error('You should not get here XD');
                }
-        });
+            });
 
         return {
             'a' : cardsAcount,
@@ -156,22 +158,30 @@ class UI{
         });
 
         hand1.value = '';
-            game.player1.hand.forEach(handCard => {
-            const newText = hand1.innerText + ' ' + handCard.id + ' ' + handCard.name + ', ';
-            hand1.value += newText;
-        });
+        game.player1.hand
+            .filter(handCard => handCard !== undefined)
+            .forEach(handCard => {
+                if (handCard === undefined)
+                    return;
+                const newText = hand1.innerText + ' ' + handCard.id + ' ' + handCard.name + ', ';
+                hand1.value += newText;
+            });
 
         discard1.value = '';
-        game.player1.discard.forEach(discardCard => {
-            const newText = discard1.innerText + ' ' + discardCard.id + ' ' + discardCard.name + ', ';
-            discard1.value += newText;
-        });
+        game.player1.discard
+            .filter(discardCard => discardCard !== undefined)
+            .forEach(discardCard => {
+                const newText = discard1.innerText + ' ' + discardCard.id + ' ' + discardCard.name + ', ';
+                discard1.value += newText;
+            });
 
         table.value = '';
-        game.table.forEach(card => {
-            const newText = table.innerText + ' ' + card.id + ' ' + card.name + ', ';
-            table.value += newText;
-        });
+        game.table
+            .filter(card => card !== undefined)
+            .forEach(card => {
+                const newText = table.innerText + ' ' + card.id + ' ' + card.name + ', ';
+                table.value += newText;
+            });
 
         this.updatePoints(game);
     }
