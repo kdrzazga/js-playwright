@@ -17,7 +17,7 @@
         <tr>
             <td><button id="drawHand5-1" onclick="game.player1.drawHand(5);ui.update(game);">Draw 5 cards</button></td>
             <td><button id="discardHand-1" onclick="game.player1.discardHand();ui.update(game);">Discard hand</button><br/>
-                <button id="playHand-1" onclick="game.playHand(game.player1);ui.update(game);">Play hand</button>
+                <button id="playHand-1" onclick="game.playHand(game.player1);ui.update(game);ui.updatePoints(game);">Play hand</button>
             </td>
             <td><button id="pickCardA" onclick="game.pickCardFromSetA(game.player1);ui.update(game);">Pick from Set A</button><br/>
                 <button id="pickCardB" onclick="game.pickCardFromSetB(game.player1);ui.update(game);">Pick from Set B</button><br/>
@@ -27,7 +27,8 @@
         <!-- -->
         <tr><td><p>TABLE</p></td></tr>
         <tr>
-            <td colspan="3"><textarea id="table" style="width: 95%;"></textarea></td>
+            <td colspan="2"><textarea id="table" style="width: 95%;"></textarea></td>
+            <td><textarea id="table-points" style="width: 95%;"></textarea></td>
         </tr>
         <tr>
             <td colspan="3"><hr></td>

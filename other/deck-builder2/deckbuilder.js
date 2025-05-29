@@ -11,8 +11,8 @@ class Player {
 
     constructor(name){
         this.name = name;
-        this.playingDeck = [new Card('a'), new Card('a'), new Card('a'), new Card('a'), new Card('a'), new Card('a')
-            , new Card('a') , new Card('a'), new Card('a'), new Card('a')];
+        this.playingDeck = [new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa'), new Card('sb')
+            , new Card('sb') , new Card('sb'), new Card('sb'), new Card('sc')];
         this.hand = [];
         this.discard = [];
     }
@@ -87,8 +87,36 @@ class Game {
     }
 
     clearTable(player){
-        player.discard = [...game.table];
+        player.discard.push(...game.table);
         game.table = [];
+    }
+
+    countTablePoints(){
+        var cardsAcount = 0;
+        var cardsBcount = 0;
+        var cardsCcount = 0;
+
+        game.table.forEach(card =>{
+               switch (card.name){
+                    case 'sa' :
+                        cardsAcount++;
+                        break;
+                    case'sb' :
+                        cardsBcount++;
+                        break;
+                    case 'sc' :
+                        cardsCcount++;
+                        break;
+                    default:
+                        console.error('You should not get here XD');
+               }
+        });
+
+        return {
+            'a' : cardsAcount,
+            'b' : cardsBcount,
+            'c' : cardsCcount
+        };
     }
 }
 
@@ -145,6 +173,14 @@ class UI{
             table.value += newText;
         });
 
+        this.updatePoints(game);
+    }
+
+    updatePoints(game){
+        const pointsJson = game.countTablePoints();
+        const tablePointsTextarea = document.getElementById('table-points');
+
+        tablePointsTextarea.value = JSON.stringify(pointsJson);
     }
 }
 
