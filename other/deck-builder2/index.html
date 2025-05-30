@@ -15,12 +15,10 @@
         <tr><td class="left">PLAYER 1</td></tr>
         <tr><td><textarea id="deck1"></textarea></td><td><textarea id="hand1"></textarea></td><td><textarea id="discard1"></textarea></td></tr>
         <tr>
-            <td><button id="drawHand5-1" onclick="game.player1.drawHand(5);ui.update(game);">Draw 5 cards</button></td>
-            <td><button id="discardHand-1" onclick="game.player1.discardHand();ui.update(game);">Discard hand</button><br/>
-                <button id="playHand-1" onclick="game.playHand(game.player1);ui.update(game);ui.updatePoints(game);">Play hand</button>
-                <div id = 'playSingleCardDiv'>
-
-                </div>
+            <td><button id="drawHand5-1" onclick="game.player1.drawHand(5);ui.update(game);ui.createSingleCardButtons(game.player1);">Draw 5 cards</button></td>
+            <td><button id="discardHand-1" onclick="game.player1.discardHand();ui.update(game);ui.createSingleCardButtons(game.player1);">Discard hand</button><br/>
+                <button id="playHand-1" onclick="game.playHand(game.player1);ui.update(game);ui.updatePoints(game);ui.createSingleCardButtons(game.player1);">Play hand</button>
+                <div id = 'playSingleCardDiv'></div>
             </td>
             <td><button id="pickCardA" onclick="game.pickCardFromSetA(game.player1);ui.update(game);">Pick from Set A</button><br/>
                 <button id="pickCardB" onclick="game.pickCardFromSetB(game.player1);ui.update(game);">Pick from Set B</button><br/>

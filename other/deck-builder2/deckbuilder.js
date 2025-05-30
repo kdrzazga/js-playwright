@@ -152,7 +152,9 @@ class UI{
         });
 
         deck1.value = '';
-        game.player1.playingDeck.forEach(deck1Card => {
+        game.player1.playingDeck
+          .filter(deck1Card => deck1Card !== undefined)
+          .forEach(deck1Card => {
             const newText = deck1.innerText + ' ' + deck1Card.id + ' ' + deck1Card.name + ', ';
             deck1.value += newText;
         });
@@ -189,6 +191,21 @@ class UI{
         const tablePointsTextarea = document.getElementById('table-points');
 
         tablePointsTextarea.value = JSON.stringify(pointsJson);
+    }
+
+    createSingleCardButtons(player){
+        const container = document.getElementById('playSingleCardDiv');
+        container.innerHTML = '';
+        for(let i =0; i < player.hand.length; i++){
+            const button = document.createElement('button');
+            button.innerText = i;
+            button.id = 'b' + i;
+            container.appendChild(button);
+            if (i % 5 == 4){
+                const br = document.createElement('br');
+                container.appendChild(br);
+            }
+        }
     }
 }
 
