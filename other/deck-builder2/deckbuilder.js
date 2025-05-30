@@ -11,8 +11,8 @@ class Player {
 
     constructor(name){
         this.name = name;
-        this.playingDeck = [new Card('a'), new Card('a'), new Card('a'), new Card('a'), new Card('a'), new Card('a')
-            , new Card('a') , new Card('a'), new Card('a'), new Card('a')];
+        this.playingDeck = [new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa'), new Card('sa'), new Card('sb')
+            , new Card('sb') , new Card('sb'), new Card('sb'), new Card('sc')];
         this.hand = [];
         this.discard = [];
     }
@@ -85,6 +85,41 @@ class Game {
         game.table = [...player.hand];
         player.hand.length = 0;
     }
+
+    clearTable(player){
+        player.discard.push(...game.table);
+        game.table = [];
+    }
+
+    countTablePoints(){
+        var cardsAcount = 0;
+        var cardsBcount = 0;
+        var cardsCcount = 0;
+
+        game.table
+            .filter(card => card !== undefined)
+            .forEach(card =>{
+               switch (card.name){
+                    case 'sa' :
+                        cardsAcount++;
+                        break;
+                    case'sb' :
+                        cardsBcount++;
+                        break;
+                    case 'sc' :
+                        cardsCcount++;
+                        break;
+                    default:
+                        console.error('You should not get here XD');
+               }
+            });
+
+        return {
+            'a' : cardsAcount,
+            'b' : cardsBcount,
+            'c' : cardsCcount
+        };
+    }
 }
 
 class UI{
@@ -117,29 +152,62 @@ class UI{
         });
 
         deck1.value = '';
-        game.player1.playingDeck.forEach(deck1Card => {
+        game.player1.playingDeck
+          .filter(deck1Card => deck1Card !== undefined)
+          .forEach(deck1Card => {
             const newText = deck1.innerText + ' ' + deck1Card.id + ' ' + deck1Card.name + ', ';
             deck1.value += newText;
         });
 
         hand1.value = '';
-            game.player1.hand.forEach(handCard => {
-            const newText = hand1.innerText + ' ' + handCard.id + ' ' + handCard.name + ', ';
-            hand1.value += newText;
-        });
+        game.player1.hand
+            .filter(handCard => handCard !== undefined)
+            .forEach(handCard => {
+                const newText = hand1.innerText + ' ' + handCard.id + ' ' + handCard.name + ', ';
+                hand1.value += newText;
+            });
 
         discard1.value = '';
-        game.player1.discard.forEach(discardCard => {
-            const newText = discard1.innerText + ' ' + discardCard.id + ' ' + discardCard.name + ', ';
-            discard1.value += newText;
-        });
+        game.player1.discard
+            .filter(discardCard => discardCard !== undefined)
+            .forEach(discardCard => {
+                const newText = discard1.innerText + ' ' + discardCard.id + ' ' + discardCard.name + ', ';
+                discard1.value += newText;
+            });
 
         table.value = '';
-        game.table.forEach(card => {
-            const newText = table.innerText + ' ' + card.id + ' ' + card.name + ', ';
-            table.value += newText;
-        });
+        game.table
+            .filter(card => card !== undefined)
+            .forEach(card => {
+                const newText = table.innerText + ' ' + card.id + ' ' + card.name + ', ';
+                table.value += newText;
+            });
 
+        this.updatePoints(game);
+    }
+
+    updatePoints(game){
+        const pointsJson = game.countTablePoints();
+        const tablePointsTextarea = document.getElementById('table-points');
+
+        tablePointsTextarea.value = JSON.stringify(pointsJson);
+    }
+
+    createSingleCardButtons(player){
+        //TODO  remove return
+        return;
+        const container = document.getElementById('playSingleCardDiv');
+        container.innerHTML = '';
+        for(let i =0; i < player.hand.length; i++){
+            const button = document.createElement('button');
+            button.innerText = i;
+            button.id = 'b' + i;
+            container.appendChild(button);
+            if (i % 5 == 4){
+                const br = document.createElement('br');
+                container.appendChild(br);
+            }
+        }
     }
 }
 
