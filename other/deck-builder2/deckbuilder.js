@@ -194,6 +194,8 @@ class UI{
     }
 
     createSingleCardButtons(player){
+        //TODO  remove return
+        return;
         const container = document.getElementById('playSingleCardDiv');
         container.innerHTML = '';
         for(let i =0; i < player.hand.length; i++){
