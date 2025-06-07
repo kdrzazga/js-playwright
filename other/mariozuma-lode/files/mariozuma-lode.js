@@ -278,8 +278,6 @@ class MainScene extends ExtendedScene {
         });
     }
 
-
-
     //@Override
     moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
