@@ -288,6 +288,8 @@ class LevelScene extends Phaser.Scene {
         if (allConnected){
             console.log(`All floors are connected. Advancing to the next level ${this.nextLevel}`);
             sessionStorage.setItem('level', this.nextLevel);
+            const nextLevelKey = sceneLevelNumberJson[this.nextLevel];
+            //this.scene.start(nextLevelKey);
             location.reload();
         }
     }

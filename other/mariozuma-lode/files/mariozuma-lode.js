@@ -127,7 +127,8 @@ class MainScene extends ExtendedScene {
     update(time, delta) {
         super.update(time, delta);
         this.checkFireKeys()
-        this.move(time);
+        this.movePlayer(time);
+        this.checkJumpKeys(1400);
         this.checkExit();
 
         this.spriteGroup.children.iterate((child)=> {
@@ -152,7 +153,7 @@ class MainScene extends ExtendedScene {
         for (let key of keys) {
             if (Phaser.Input.Keyboard.JustDown(key)) {
                 console.log(`Key ${key.keyCode} was pressed!`);
-                let toBeDissolved = this.calculateHighlightSquare();
+                let toBeDissolved = this.calculateHighlightSquare(this.player);
 
                 this.spriteGroup.children.iterate(sprite => {
                     if (sprite.texture.key === 'brick')
@@ -164,7 +165,7 @@ class MainScene extends ExtendedScene {
         }
     }
 
-    move(time){
+    movePlayer(time){
         let newAnimKey = 'player';
         if (this.cursors.right.isDown) {
             this.player.setFlipX(false);
@@ -215,7 +216,7 @@ class MainScene extends ExtendedScene {
                 }
         }
 
-        console.log(this.skullRows.length);
+        //console.log(this.skullRows.length);
         for (let i = 0; i < this.skullRows.length; i++) {
             let x = config.width / 2;
 
@@ -252,17 +253,48 @@ class MainScene extends ExtendedScene {
         }
     }
 
-    calculatePlayerSquare(){
-        const x = Math.floor(this.player.x / Globals.TILE_WIDTH);
-        const y = Math.floor(this.player.y / Globals.TILE_WIDTH);
+    conditionallyStopEnemy(enemySprite){
+        const underlyingSquareCoords = this.calculateHighlightSquare(enemySprite);
+
+        this.spriteGroup.children.iterate((child)=> {
+            if (child.texture.key === 'brick2') {
+                const enemyTileX = Math.ceil(child.x/Globals.TILE_WIDTH);
+                const enemyTileY = Math.ceil(child.y/Globals.TILE_WIDTH);
+                /*console.log(`${child.texture.key}[${child.x}][${child.y}] is non-enemy. [${enemyTileX}][${enemyTileY}]`);
+                console.log(`[${underlyingSquareCoords[0]}][${underlyingSquareCoords[1]}]`);
+                const shift = enemySprite.speedX > 0 ? 0 : 0;
+                */
+                if (enemyTileX === (underlyingSquareCoords[0] + shift) && enemyTileY === underlyingSquareCoords[1]){
+                    //console.log(child.texture.key);
+                    enemySprite.speedX = 0;
+                    enemySprite.y += Globals.TILE_WIDTH;
+                }
+            }
+        });
+    }
+
+    //@Override
+    moveEnemies(time){
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)) {
+                child.x -= child.speedX;
+                child.y += child.speedY;
+                this.conditionallyStopEnemy(child);
+            }
+        });
+    }
+
+    calculateSpriteSquare(sprite){
+        const x = Math.floor(sprite.x / Globals.TILE_WIDTH);
+        const y = Math.floor(sprite.y / Globals.TILE_WIDTH);
 
         return [x, y];
     }
 
-    calculateHighlightSquare(){
-        const playerSquare = this.calculatePlayerSquare();
-        const y = playerSquare[1] + 1;
-        let x = playerSquare[0];
+    calculateHighlightSquare(sprite){
+        const spriteSquare = this.calculateSpriteSquare(sprite);
+        const y = spriteSquare[1] + 1;
+        let x = spriteSquare[0];
         if (!this.player.flipX)
             x += 1;
 
@@ -270,13 +302,13 @@ class MainScene extends ExtendedScene {
     }
 
     moveHighlight(){
-        const highlightSquare = this.calculateHighlightSquare();
+        const highlightSquare = this.calculateHighlightSquare(this.player);
         this.rectSprite.x = highlightSquare[0] * Globals.TILE_WIDTH;
         this.rectSprite.y = highlightSquare[1] * Globals.TILE_WIDTH;
     }
 
     checkExit(){
-        const coords = this.calculatePlayerSquare();
+        const coords = this.calculateSpriteSquare(this.player);
 
         const directions = ['top', 'bottom', 'left', 'right'];
 
