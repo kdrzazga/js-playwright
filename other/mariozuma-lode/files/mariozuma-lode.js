@@ -270,7 +270,7 @@ class MainScene extends ExtendedScene {
                     enemySprite.y = child.y;
                     child.setTexture('brick1');
 
-                    this.time.delayedCall(1000, () => {
+                    this.time.delayedCall(3000, () => {
                         child.setTexture('brick');
                     });
                 }
