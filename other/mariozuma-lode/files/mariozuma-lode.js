@@ -77,6 +77,11 @@ class MainScene extends ExtendedScene {
 
     create(){
         super.create();
+
+        let levelDiv = document.getElementById('room-number');
+        let name = this.scene.key;
+        levelDiv.innerText = 'ROOM ' + name.match(/\d+/g);
+
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.anims.create({

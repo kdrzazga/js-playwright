@@ -29,7 +29,7 @@ class Scene2 extends MainScene{
         this.nonBrickRows = [1,2, 4,6, 8];
 
         this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'right'}
-            , {'row': 6, 'side': 'right'}, {'row': 2, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'right'}
             , {'row': 6, 'side': 'right'}, {'row': 8, 'side': 'right'}
             , {'row': 8, 'side': 'right'}, {'row': 8, 'side': 'right'}
             ];
@@ -54,7 +54,7 @@ class Scene2 extends MainScene{
             if (this._isEnemy(child)){
                 child.speedX += increase % 4;
                 increase = increase + 1;
-                child.x += Globals.TILE_WIDTH*increase/3;
+                //child.x += Globals.TILE_WIDTH*increase/3;
             }
         });
     }
@@ -120,6 +120,14 @@ class Scene4 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                increase = increase + 0.5;
+                child.speedX = 1.5 +( increase/6);
+                child.x += increase;
+            }
+        });
     }
 }
 
