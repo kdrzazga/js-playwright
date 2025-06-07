@@ -127,7 +127,7 @@ class MainScene extends ExtendedScene {
     update(time, delta) {
         super.update(time, delta);
         this.checkFireKeys()
-        this.move(time);
+        this.movePlayer(time);
         this.checkJumpKeys(1400);
         this.checkExit();
 
@@ -165,7 +165,7 @@ class MainScene extends ExtendedScene {
         }
     }
 
-    move(time){
+    movePlayer(time){
         let newAnimKey = 'player';
         if (this.cursors.right.isDown) {
             this.player.setFlipX(false);
@@ -251,6 +251,37 @@ class MainScene extends ExtendedScene {
                 this.spriteGroup.add(ladderCell);
             }
         }
+    }
+
+    conditionallyStopEnemy(enemySprite){
+        const underlyingSquareCoords = this.calculateHighlightSquare(enemySprite);
+
+        this.spriteGroup.children.iterate((child)=> {
+            if (child.texture.key == 'brick2') {
+                const enemyTileX = child.x/Globals.TILE_WIDTH;
+                const enemyTileY = child.y/Globals.TILE_WIDTH;
+                /*console.log(`${child.texture.key}[${child.x}][${child.y}] is non-enemy. [${enemyTileX}][${enemyTileY}]`);
+                console.log(`[${underlyingSquareCoords[0]}][${underlyingSquareCoords[1]}]`);
+                */
+                const shift = enemySprite.speedX > 0 ? 1 : 0;
+                if (enemyTileX == (underlyingSquareCoords[0] + shift) && enemyTileY == underlyingSquareCoords[1]){
+                    //console.log(child.texture.key);
+                    enemySprite.speedX = 0;
+                    enemySprite.y += Globals.TILE_WIDTH;
+                }
+            }
+        });
+    }
+
+    //@Override
+    moveEnemies(time){
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)) {
+                child.x -= child.speedX;
+                child.y += child.speedY;
+                this.conditionallyStopEnemy(child);
+            }
+        });
     }
 
     calculateSpriteSquare(sprite){
