@@ -163,9 +163,10 @@ class Scene5 extends MainScene{
         let increase = 1;
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)){
-                increase = increase + 0.5;
+                increase = increase + 0.25;
                 child.speedX = 1.5 +( increase/6);
-                child.x = 13*Globals.TILE_WIDTH - Globals.TILE_WIDTH*increase;
+                child.x = 12*Globals.TILE_WIDTH - Globals.TILE_WIDTH*increase;
+                child.maxX = 11*Globals.TILE_WIDTH - 6;
             }
         });
     }

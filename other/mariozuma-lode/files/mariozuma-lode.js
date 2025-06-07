@@ -1,6 +1,7 @@
 class Globals {
     static TILE_WIDTH = 60;
     static PLAYER_X = Globals.TILE_WIDTH;
+    static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
     static PLAYER_Y = 2 * Globals.TILE_WIDTH;
 }
 
@@ -118,7 +119,7 @@ class MainScene extends ExtendedScene {
             frameRate: 5,
             repeat: -1
         });
-        this.player = this.add.sprite(Globals.PLAYER_X, Globals.PLAYER_Y, 'player');
+        this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.PLAYER_Y, 'player');
 
         let rectangle = this.add.graphics();
         rectangle.lineStyle(4, 0xffff00);
@@ -142,6 +143,8 @@ class MainScene extends ExtendedScene {
                     child.speedX = -child.speedX;
             }
         });
+
+        this.checkEnemyCollision();
     }
 
     checkFireKeys(){
@@ -331,9 +334,25 @@ class MainScene extends ExtendedScene {
 
                 if (d === 'left'){
                     Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                 }
                 else if (d === 'right'){
                     Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                }
+            }
+        });
+    }
+
+    checkEnemyCollision() {
+        if (this.spriteGroup == undefined)
+            return;
+
+        this.spriteGroup.children.iterate((child) => {
+            if (this._isEnemy(child)){
+                const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, child.x, child.y);
+                if (distance < Globals.TILE_WIDTH) {
+                    this.scene.restart();
                 }
             }
         });
