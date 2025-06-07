@@ -128,6 +128,7 @@ class MainScene extends ExtendedScene {
         super.update(time, delta);
         this.checkFireKeys()
         this.move(time);
+        this.checkJumpKeys(1400);
         this.checkExit();
 
         this.spriteGroup.children.iterate((child)=> {
