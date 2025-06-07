@@ -268,6 +268,7 @@ class MainScene extends ExtendedScene {
                     enemySprite.speedX = 0;
                     enemySprite.x = child.x;
                     enemySprite.y = child.y;
+                    child.setTexture('brick');
                 }
             }
         });
