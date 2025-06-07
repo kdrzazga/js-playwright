@@ -216,7 +216,7 @@ class MainScene extends ExtendedScene {
                 }
         }
 
-        //console.log(this.skullRows.length);
+        console.log(`${this.constructor.name} skulls count = ${this.skullRows.length}`);
         for (let i = 0; i < this.skullRows.length; i++) {
             let x = config.width / 2;
 

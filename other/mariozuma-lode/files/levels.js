@@ -28,7 +28,7 @@ class Scene2 extends MainScene{
 
         this.nonBrickRows = [1,2, 4,6, 8];
 
-        this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'left'} ];
+        this.skullRows= [ {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'right'} ];
 
         this.nextScene['left'] = 'Scene1';
         this.nextScene['right'] = 'Scene3';
@@ -56,7 +56,7 @@ class Scene3 extends MainScene{
 
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
-        this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'left'} ];
+        this.skullRows= [ {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'right'} ];
 
         this.nextScene['left'] = 'Scene2';
         this.nextScene['right'] = 'Scene4';
