@@ -268,11 +268,17 @@ class MainScene extends ExtendedScene {
                     enemySprite.speedX = 0;
                     enemySprite.x = child.x;
                     enemySprite.y = child.y;
-                    child.setTexture('brick');
+                    child.setTexture('brick1');
+
+                    this.time.delayedCall(1000, () => {
+                        child.setTexture('brick');
+                    });
                 }
             }
         });
     }
+
+
 
     //@Override
     moveEnemies(time){
