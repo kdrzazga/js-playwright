@@ -77,6 +77,11 @@ class MainScene extends ExtendedScene {
 
     create(){
         super.create();
+
+        let levelDiv = document.getElementById('room-number');
+        let name = this.scene.key;
+        levelDiv.innerText = 'ROOM ' + name.match(/\d+/g);
+
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.anims.create({
@@ -216,7 +221,7 @@ class MainScene extends ExtendedScene {
                 }
         }
 
-        //console.log(this.skullRows.length);
+        console.log(`${this.constructor.name} skulls count = ${this.skullRows.length}`);
         for (let i = 0; i < this.skullRows.length; i++) {
             let x = config.width / 2;
 
@@ -262,12 +267,17 @@ class MainScene extends ExtendedScene {
                 const enemyTileY = Math.ceil(child.y/Globals.TILE_WIDTH);
                 /*console.log(`${child.texture.key}[${child.x}][${child.y}] is non-enemy. [${enemyTileX}][${enemyTileY}]`);
                 console.log(`[${underlyingSquareCoords[0]}][${underlyingSquareCoords[1]}]`);
-                const shift = enemySprite.speedX > 0 ? 0 : 0;
                 */
-                if (enemyTileX === (underlyingSquareCoords[0] + shift) && enemyTileY === underlyingSquareCoords[1]){
+                if (enemyTileX === (underlyingSquareCoords[0]) && enemyTileY === underlyingSquareCoords[1]){
                     //console.log(child.texture.key);
                     enemySprite.speedX = 0;
-                    enemySprite.y += Globals.TILE_WIDTH;
+                    enemySprite.x = child.x;
+                    enemySprite.y = child.y;
+                    child.setTexture('brick1');
+
+                    this.time.delayedCall(3000, () => {
+                        child.setTexture('brick');
+                    });
                 }
             }
         });

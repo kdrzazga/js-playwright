@@ -28,7 +28,11 @@ class Scene2 extends MainScene{
 
         this.nonBrickRows = [1,2, 4,6, 8];
 
-        this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'left'} ];
+        this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'right'}
+            , {'row': 6, 'side': 'right'}, {'row': 8, 'side': 'right'}
+            , {'row': 8, 'side': 'right'}, {'row': 8, 'side': 'right'}
+            ];
 
         this.nextScene['left'] = 'Scene1';
         this.nextScene['right'] = 'Scene3';
@@ -45,6 +49,14 @@ class Scene2 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        let increase = 2;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase % 4;
+                increase = increase + 1;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
     }
 }
 
@@ -56,7 +68,7 @@ class Scene3 extends MainScene{
 
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
-        this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'left'} ];
+        this.skullRows= [ {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'right'} ];
 
         this.nextScene['left'] = 'Scene2';
         this.nextScene['right'] = 'Scene4';
@@ -73,6 +85,14 @@ class Scene3 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+
+        let factor = Globals.TILE_WIDTH;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.x += factor;
+                factor *= -1.6;
+            }
+        });
     }
 }
 
@@ -100,6 +120,14 @@ class Scene4 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                increase = increase + 0.5;
+                child.speedX = 1.5 +( increase/6);
+                child.x += increase;
+            }
+        });
     }
 }
 
@@ -111,7 +139,9 @@ class Scene5 extends MainScene{
         this.nonBrickRows = [1,2];
         this.nonBrickColumns = [5];
 
-        this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}];
         this.ladderColumns = [ {'column' : 5, 'start' : 3, 'end' : 11}];
 
 
@@ -127,5 +157,13 @@ class Scene5 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                increase = increase + 0.5;
+                child.speedX = 1.5 +( increase/6);
+                child.x = 13*Globals.TILE_WIDTH - Globals.TILE_WIDTH*increase;
+            }
+        });
     }
 }
