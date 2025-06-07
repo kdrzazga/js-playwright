@@ -129,7 +129,9 @@ class Scene5 extends MainScene{
         this.nonBrickRows = [1,2];
         this.nonBrickColumns = [5];
 
-        this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}];
+        this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}];
         this.ladderColumns = [ {'column' : 5, 'start' : 3, 'end' : 11}];
 
 
@@ -148,7 +150,7 @@ class Scene5 extends MainScene{
         let increase = 1;
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)){
-                increase = increase + 2;
+                increase = increase + 0.5;
                 child.speedX = 1.5 +( increase/6);
                 child.x = 13*Globals.TILE_WIDTH - Globals.TILE_WIDTH*increase;
             }
