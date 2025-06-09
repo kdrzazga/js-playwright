@@ -190,8 +190,13 @@ class MainScene extends ExtendedScene {
                 Globals.PLAYER_X = this.player.x;
                 this.moveHighlight();
                 newAnimKey = 'player-walk';
-        }
-        else {
+        } else {
+            const underlyingSquareCoords = this.calculateHighlightSquare(this.player);
+            const underlyingTile =  this.getTextureAt(underlyingSquareCoords[0], underlyingSquareCoords[1]);
+
+            if (this.cursors.down.isDown && underlyingTile === 'ladder')
+                this.player.y += MainScene.PLAYER_SPEED;
+
             newAnimKey = 'player';
         }
         if (newAnimKey !== this.animKey) {
@@ -344,6 +349,7 @@ class MainScene extends ExtendedScene {
         });
     }
 
+    //@Override
     checkEnemyCollision() {
         if (this.spriteGroup == undefined)
             return;
@@ -355,6 +361,27 @@ class MainScene extends ExtendedScene {
                     this.scene.restart();
                 }
             }
+        });
+    }
+
+    getTextureAt(row, column){
+        let texture = '';
+        this.spriteGroup.children.iterate(sprite => {
+                const posX = Math.floor(sprite.x / Globals.TILE_WIDTH);
+                const posY = Math.floor(sprite.y / Globals.TILE_WIDTH);
+                if (posX === row && posY === column){
+                    texture = sprite.texture.key;
+                }
+            });
+        return texture;
+    }
+
+    debugWriteAllSprites(){
+        //usage: g.scene.scenes[0].debugWriteAllSprites();
+        this.spriteGroup.children.iterate(sprite => {
+            const posX = Math.floor(sprite.x / Globals.TILE_WIDTH);
+            const posY = Math.floor(sprite.y / Globals.TILE_WIDTH);
+            console.log(posX + `${sprite.texture.key} at [${sprite.posX}, ${sprite.posY}]}`);
         });
     }
 }
