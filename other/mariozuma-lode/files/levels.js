@@ -219,8 +219,11 @@ class Scene7 extends MainScene{
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.nextScene['left'] = 'Scene6';
+        this.nextScene['right'] = 'Scene8';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
     }
 
     create(){
@@ -248,5 +251,35 @@ class Scene7 extends MainScene{
                 }
             }
         });
+    }
+}
+
+class Scene8 extends MainScene{
+
+    constructor(){
+        super('Scene8');
+
+        this.nonBrickRows = [1,2,5,6,7,8,9,10];
+        this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.nextScene['left'] = 'Scene7';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 7*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 5; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+
     }
 }

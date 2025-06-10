@@ -73,6 +73,33 @@ class MainScene extends ExtendedScene {
         this.load.image('player2', 'files/character/m2.png');
         this.load.image('player3', 'files/character/m3.png');
 
+        this.load.image('fire1', 'files/background/fire/fire (1).gif');
+        this.load.image('fire2', 'files/background/fire/fire (2).gif');
+        this.load.image('fire3', 'files/background/fire/fire (3).gif');
+        this.load.image('fire4', 'files/background/fire/fire (4).gif');
+        this.load.image('fire5', 'files/background/fire/fire (5).gif');
+        this.load.image('fire6', 'files/background/fire/fire (6).gif');
+        this.load.image('fire7', 'files/background/fire/fire (7).gif');
+        this.load.image('fire8', 'files/background/fire/fire (8).gif');
+        this.load.image('fire9', 'files/background/fire/fire (9).gif');
+        this.load.image('fire10', 'files/background/fire/fire (10).gif');
+        this.load.image('fire11', 'files/background/fire/fire (11).gif');
+        this.load.image('fire12', 'files/background/fire/fire (12).gif');
+        this.load.image('fire13', 'files/background/fire/fire (13).gif');
+        this.load.image('fire14', 'files/background/fire/fire (14).gif');
+        this.load.image('fire15', 'files/background/fire/fire (15).gif');
+        this.load.image('fire16', 'files/background/fire/fire (16).gif');
+        this.load.image('fire17', 'files/background/fire/fire (17).gif');
+        this.load.image('fire18', 'files/background/fire/fire (18).gif');
+        this.load.image('fire19', 'files/background/fire/fire (19).gif');
+        this.load.image('fire20', 'files/background/fire/fire (20).gif');
+        this.load.image('fire21', 'files/background/fire/fire (21).gif');
+        this.load.image('fire22', 'files/background/fire/fire (22).gif');
+        this.load.image('fire23', 'files/background/fire/fire (23).gif');
+        this.load.image('fire24', 'files/background/fire/fire (24).gif');
+        this.load.image('fire25', 'files/background/fire/fire (25).gif');
+        this.load.image('fire26', 'files/background/fire/fire (26).gif');
+
         this.load.image('ladder', 'files/background/ladder.png');
     }
 
@@ -117,6 +144,40 @@ class MainScene extends ExtendedScene {
                 { key: 'player3' }
             ],
             frameRate: 5,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'fire',
+            frames: [
+                { key: 'fire1' },
+                { key: 'fire2' },
+                { key: 'fire3' },
+                { key: 'fire4' },
+                { key: 'fire5' },
+                { key: 'fire6' },
+                { key: 'fire7' },
+                { key: 'fire8' },
+                { key: 'fire9' },
+                { key: 'fire10' },
+                { key: 'fire11' },
+                { key: 'fire12' },
+                { key: 'fire13' },
+                { key: 'fire14' },
+                { key: 'fire15' },
+                { key: 'fire16' },
+                { key: 'fire17' },
+                { key: 'fire18' },
+                { key: 'fire19' },
+                { key: 'fire20' },
+                { key: 'fire21' },
+                { key: 'fire22' },
+                { key: 'fire23' },
+                { key: 'fire24' },
+                { key: 'fire25' },
+                { key: 'fire26' }
+            ],
+            frameRate: 15,
             repeat: -1
         });
         this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.PLAYER_Y, 'player');
