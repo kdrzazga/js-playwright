@@ -147,10 +147,13 @@ class Scene5 extends MainScene{
 
         this.nextScene['left'] = 'Scene4';
         this.nextScene['right'] = 'Scene6';
+        this.nextScene['bottom'] = 'Scene9';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '2';
+        this.exits['bottom']['x'] = '4';
+        this.exits['bottom']['y'] = '10';
     }
 
     create(){
@@ -281,5 +284,51 @@ class Scene8 extends MainScene{
             xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
         }
 
+    }
+}
+
+class Scene9 extends MainScene{
+
+    constructor(){
+        super('Scene9');
+
+        this.nonBrickRows = [1,2, 4,6, 8,9,10];
+
+        this.skullRows= [ {'row': 4, 'side': 'right'}
+            , {'row': 6, 'side': 'right'}
+            , {'row': 6, 'side': 'right'}, {'row': 6, 'side': 'right'}
+            , {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'}
+            ];
+
+        /*this.nextScene['left'] = 'Scene5';
+        this.nextScene['right'] = 'Scene7';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';*/
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 6;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase;
+                increase = increase + 1;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 10.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 7; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
     }
 }
