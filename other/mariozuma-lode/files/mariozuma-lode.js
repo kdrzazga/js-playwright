@@ -120,6 +120,7 @@ class MainScene extends ExtendedScene {
             repeat: -1
         });
         this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.PLAYER_Y, 'player');
+        this.player.setDepth(2);
 
         let rectangle = this.add.graphics();
         rectangle.lineStyle(4, 0xffff00);
@@ -127,7 +128,7 @@ class MainScene extends ExtendedScene {
         rectangle.generateTexture('highlight', Globals.TILE_WIDTH, Globals.TILE_WIDTH);
         rectangle.destroy();
         this.rectSprite = this.add.sprite(2*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'highlight');
-        this.rectSprite.setDepth(3);
+        this.rectSprite.setDepth(4);
     }
 
     update(time, delta) {
@@ -199,9 +200,9 @@ class MainScene extends ExtendedScene {
             const underlyingSquareCoords = this.calculateHighlightSquare(this.player);
             const underlyingTile =  this.getTextureAt(underlyingSquareCoords[0], underlyingSquareCoords[1]);
 
-            if (this.cursors.down.isDown && underlyingTile === 'ladder')
+            if (this.cursors.down.isDown && underlyingTile === 'ladder' && underlyingSquareCoords[0] == playerTileX)
                 this.player.y += MainScene.PLAYER_SPEED;
-            else if (this.cursors.up.isDown && playerTile === 'ladder')
+            else if (this.cursors.up.isDown && playerTile === 'ladder' && underlyingSquareCoords[0] == playerTileX)
                 this.player.y -= MainScene.PLAYER_SPEED;
 
             newAnimKey = 'player';
@@ -228,10 +229,11 @@ class MainScene extends ExtendedScene {
                         const x = i * Globals.TILE_WIDTH;
                         const y = j * Globals.TILE_WIDTH;
                         let texture = 'brick';
-                        const sprite = this.add.sprite(x, y, texture);
-                        sprite.posX = i;
-                        sprite.posY = j;
-                        this.spriteGroup.add(sprite);
+                        const brickSprite = this.add.sprite(x, y, texture);
+                        brickSprite.setDepth(3);
+                        brickSprite.posX = i;
+                        brickSprite.posY = j;
+                        this.spriteGroup.add(brickSprite);
                     }
                 }
         }
@@ -268,6 +270,7 @@ class MainScene extends ExtendedScene {
 
             for (let y = y1; y < y2; y += Globals.TILE_WIDTH){
                 const ladderCell = this.add.sprite(x, y, 'ladder');
+                ladderCell.setDepth(1);
                 this.spriteGroup.add(ladderCell);
             }
         }
