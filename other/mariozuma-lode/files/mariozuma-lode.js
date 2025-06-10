@@ -175,7 +175,12 @@ class MainScene extends ExtendedScene {
 
     movePlayer(time){
         let newAnimKey = 'player';
-        if (this.cursors.right.isDown) {
+
+        const playerTileX = Math.ceil(this.player.x/Globals.TILE_WIDTH);
+        const playerTileY = Math.ceil(this.player.y/Globals.TILE_WIDTH);
+        const playerTile =  this.getTextureAt(playerTileX, playerTileY);
+
+        if (this.cursors.right.isDown && playerTile !== 'ladder') {
             this.player.setFlipX(false);
             if (this.player.x < this.sys.canvas.width) {
                 this.player.x += MainScene.PLAYER_SPEED;
@@ -183,7 +188,7 @@ class MainScene extends ExtendedScene {
                 this.moveHighlight();
                 newAnimKey = 'player-walk';
             }
-        } else if (this.cursors.left.isDown) {
+        } else if (this.cursors.left.isDown && playerTile !== 'ladder') {
             this.player.setFlipX(true);
             if (this.player.x > MainScene.PLAYER_SPEED)
                 this.player.x -= MainScene.PLAYER_SPEED;
@@ -196,6 +201,8 @@ class MainScene extends ExtendedScene {
 
             if (this.cursors.down.isDown && underlyingTile === 'ladder')
                 this.player.y += MainScene.PLAYER_SPEED;
+            else if (this.cursors.up.isDown && playerTile === 'ladder')
+                this.player.y -= MainScene.PLAYER_SPEED;
 
             newAnimKey = 'player';
         }
