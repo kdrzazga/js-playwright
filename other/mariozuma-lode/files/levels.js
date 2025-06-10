@@ -146,8 +146,11 @@ class Scene5 extends MainScene{
 
 
         this.nextScene['left'] = 'Scene4';
+        this.nextScene['right'] = 'Scene6';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
     }
 
     create(){
@@ -160,9 +163,89 @@ class Scene5 extends MainScene{
         let increase = 1;
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)){
-                increase = increase + 0.5;
+                increase = increase + 0.25;
                 child.speedX = 1.5 +( increase/6);
-                child.x = 13*Globals.TILE_WIDTH - Globals.TILE_WIDTH*increase;
+                child.x = 12*Globals.TILE_WIDTH - Globals.TILE_WIDTH*increase;
+                child.maxX = 11*Globals.TILE_WIDTH - 6;
+            }
+        });
+    }
+}
+
+class Scene6 extends MainScene{
+
+    constructor(){
+        super('Scene6');
+
+        this.nonBrickRows = [1,2, 4,6, 8];
+
+        this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'right'}
+            , {'row': 6, 'side': 'right'}, {'row': 8, 'side': 'right'}
+            , {'row': 8, 'side': 'right'}, {'row': 8, 'side': 'right'}
+            ];
+
+        this.nextScene['left'] = 'Scene5';
+        this.nextScene['right'] = 'Scene7';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 2;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase % 4;
+                increase = increase + 1;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+    }
+}
+
+class Scene7 extends MainScene{
+
+    constructor(){
+        super('Scene7');
+
+        this.nonBrickRows = [1,2];
+        this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.nextScene['left'] = 'Scene6';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let emptyCells = [[1,4], [1,5], [1,6], [1,7], [1,8], [2,8]
+            ,[4,8],[5,8],[6,8],[6,7],[6,6],[6,5],[6,4],[5,4],[4,4],[4,5],[4,6],[4,7]
+            ,[8,8],[9,8],[10,7],[10,6],[10,5],[9,4],[8,4],[8,5],[8,6],[8,7]
+            ,[12,4], [12,5], [12,6], [12,7], [12,8], [13,8], [13,6], [13,4]];
+
+        emptyCells.forEach(cell => {
+            cell[0] *= Globals.TILE_WIDTH;
+            cell[1] *= Globals.TILE_WIDTH;
+        });
+
+        this.spriteGroup.children.iterate(sprite => {
+            if (sprite.texture.key === 'brick'){
+                const isEmpty = emptyCells.some(cell => cell[0] === sprite.x && cell[1] === sprite.y);
+                if (isEmpty) {
+                    sprite.setTexture('ladder');
+                }
             }
         });
     }
