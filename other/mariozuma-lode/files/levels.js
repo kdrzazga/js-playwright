@@ -287,10 +287,10 @@ class Scene8 extends MainScene{
     }
 }
 
-class Scene9 extends MainScene{
+class Scene10 extends MainScene{
 
     constructor(){
-        super('Scene9');
+        super('Scene10');
 
         this.nonBrickRows = [1,2, 4,6, 8,9,10];
 
@@ -300,12 +300,12 @@ class Scene9 extends MainScene{
             , {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'}
             ];
 
-        /*this.nextScene['left'] = 'Scene5';
-        this.nextScene['right'] = 'Scene7';
+        this.nextScene['left'] = 'Scene9';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
+        this.nextScene['right'] = 'Scene11';
         this.exits['right']['x'] = '13';
-        this.exits['right']['y'] = '2';*/
+        this.exits['right']['y'] = '2';
     }
 
     create(){
@@ -328,6 +328,67 @@ class Scene9 extends MainScene{
         fireAnimation.play('fire');
         const xs = [0,1, 12, 13];
         for(let y = 7; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+    }
+}
+
+class Scene9 extends MainScene{
+
+    constructor(){
+        super('Scene9');
+
+        this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
+
+        this.skullRows= [ {'row': 2, 'side': 'right'}
+            ];
+
+            this.nextScene['right'] = 'Scene10';
+            this.exits['right']['x'] = '13';
+            this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 6.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 4; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+    }
+}
+
+class Scene11 extends MainScene{
+
+    constructor(){
+        super('Scene11');
+
+        this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
+
+            this.nextScene['left'] = 'Scene10';
+            this.exits['left']['x'] = '0';
+            this.exits['left']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 6.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 4; y < 11; y++){
             xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
         }
     }
