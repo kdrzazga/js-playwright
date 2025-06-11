@@ -19,7 +19,7 @@ class MainScene extends ExtendedScene {
         this.nonBrickColumns = [];
         this.skullRows= [];
         this.kupaRows= [];
-        this.enemyTextures = ['skull'];
+        this.enemyTextures = ['skull', 'kupa'];
         this.ladderColumns = [];
 
         this.exits = {
@@ -70,7 +70,20 @@ class MainScene extends ExtendedScene {
         this.load.image('skull4', 'files/enemies/skull/skull4.gif');
         this.load.image('skull5', 'files/enemies/skull/skull5.gif');
 
-        this.load.image('kupa1', 'files/enemies/kupa/kupa (1).gif');
+        this.load.image('kupa1', 'files/enemies/kupa/kupa (1).png');
+        this.load.image('kupa2', 'files/enemies/kupa/kupa (2).png');
+        this.load.image('kupa3', 'files/enemies/kupa/kupa (3).png');
+        this.load.image('kupa4', 'files/enemies/kupa/kupa (4).png');
+        this.load.image('kupa5', 'files/enemies/kupa/kupa (5).png');
+        this.load.image('kupa6', 'files/enemies/kupa/kupa (6).png');
+        this.load.image('kupa7', 'files/enemies/kupa/kupa (7).png');
+        this.load.image('kupa8', 'files/enemies/kupa/kupa (8).png');
+        this.load.image('kupa9', 'files/enemies/kupa/kupa (9).png');
+        this.load.image('kupa10', 'files/enemies/kupa/kupa (10).png');
+        this.load.image('kupa11', 'files/enemies/kupa/kupa (11).png');
+        this.load.image('kupa12', 'files/enemies/kupa/kupa (12).png');
+        this.load.image('kupa13', 'files/enemies/kupa/kupa (13).png');
+        this.load.image('kupa14', 'files/enemies/kupa/kupa (14).png');
 
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
@@ -123,6 +136,28 @@ class MainScene extends ExtendedScene {
                 { key: 'skull3' },
                 { key: 'skull4' },
                 { key: 'skull5' }
+            ],
+            frameRate: 7,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'kupa-move',
+            frames: [
+                { key: 'kupa1' },
+                { key: 'kupa2' },
+                { key: 'kupa3' },
+                { key: 'kupa4' },
+                { key: 'kupa5' },
+                { key: 'kupa6' },
+                { key: 'kupa7' },
+                { key: 'kupa8' },
+                { key: 'kupa9' },
+                { key: 'kupa10' },
+                { key: 'kupa11' },
+                { key: 'kupa12' },
+                { key: 'kupa13' },
+                { key: 'kupa14' }
             ],
             frameRate: 7,
             repeat: -1
@@ -283,7 +318,7 @@ class MainScene extends ExtendedScene {
         }
     }
 
-    createEnemy(rowConfig, texture){
+    createEnemy(rowConfig, texture, speed, scale){
         let x = config.width / 2;
 
         const y = rowConfig.row * Globals.TILE_WIDTH;
@@ -300,8 +335,16 @@ class MainScene extends ExtendedScene {
              s.maxX = 3*config.width/4 - 15;
         }
 
-        s.speedX = 1;
-        s.play('skull-move');
+        s.speedX = speed;
+        s.setScale(scale);
+        if (scale < 1)
+            s.y += (scale/6) * Globals.TILE_WIDTH;
+
+        const textureAnimationJson = {
+            'skull1': 'skull-move',
+            'kupa1' : 'kupa-move'
+        }
+        s.play(textureAnimationJson[texture]);
         s.setDepth(5);
 
         return s;
@@ -328,7 +371,11 @@ class MainScene extends ExtendedScene {
 
         console.log(`${this.constructor.name} skulls count = ${this.skullRows.length}`);
         for (let i = 0; i < this.skullRows.length; i++) {
-            let s = this.createEnemy(this.skullRows[i], 'skull1');
+            let s = this.createEnemy(this.skullRows[i], 'skull1', 1, 1);
+            this.spriteGroup.add(s);
+        }
+        for (let i = 0; i < this.kupaRows.length; i++) {
+            let s = this.createEnemy(this.kupaRows[i], 'kupa1', 0, 1);
             this.spriteGroup.add(s);
         }
 
@@ -436,7 +483,7 @@ class MainScene extends ExtendedScene {
         this.spriteGroup.children.iterate((child) => {
             if (this._isEnemy(child)){
                 const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, child.x, child.y);
-                if (distance < Globals.TILE_WIDTH) {
+                if (distance < 3*Globals.TILE_WIDTH/4) {
                     this.scene.restart();
                 }
             }

@@ -102,7 +102,7 @@ class Scene4 extends MainScene{
         this.backgroundColor = 'black';
 
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
-
+        this.kupaRows= [ {'row': 2, 'side': 'left'} ];
         this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'right'} , {'row': 7, 'side': 'left'} ];
 
         this.nextScene['left'] = 'Scene3';
@@ -124,7 +124,8 @@ class Scene4 extends MainScene{
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)){
                 increase = increase + 0.5;
-                child.speedX = 1.5 +( increase/6);
+                if (!child.texture.key.startsWith('kupa'))
+                    child.speedX = 1.5 +( increase/6);
                 child.x += increase;
             }
         });
@@ -287,6 +288,40 @@ class Scene8 extends MainScene{
     }
 }
 
+class Scene9 extends MainScene{
+
+    constructor(){
+        super('Scene9');
+
+        this.nonBrickRows = [0,1,2, 4,5,6,7, 8,9,10];
+
+        this.skullRows= [ {'row': 2, 'side': 'right'}
+            ];
+
+        this.ladderColumns = [ {'column' : 1, 'start' : 0, 'end' : 2}, {'column' : 12, 'start' : 0, 'end' : 2}];
+
+            this.nextScene['right'] = 'Scene10';
+            this.exits['right']['x'] = '13';
+            this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 6.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 4; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+    }
+}
+
 class Scene10 extends MainScene{
 
     constructor(){
@@ -333,38 +368,6 @@ class Scene10 extends MainScene{
     }
 }
 
-class Scene9 extends MainScene{
-
-    constructor(){
-        super('Scene9');
-
-        this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
-
-        this.skullRows= [ {'row': 2, 'side': 'right'}
-            ];
-
-            this.nextScene['right'] = 'Scene10';
-            this.exits['right']['x'] = '13';
-            this.exits['right']['y'] = '2';
-    }
-
-    create(){
-        super.create();
-        this.createSpriteGroup();
-    }
-
-    createSpriteGroup() {
-        super.createSpriteGroup();
-
-        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 6.5*Globals.TILE_WIDTH, 'fire1');
-        fireAnimation.play('fire');
-        const xs = [0,1, 12, 13];
-        for(let y = 4; y < 11; y++){
-            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
-        }
-    }
-}
-
 class Scene11 extends MainScene{
 
     constructor(){
@@ -372,9 +375,11 @@ class Scene11 extends MainScene{
 
         this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
 
-            this.nextScene['left'] = 'Scene10';
-            this.exits['left']['x'] = '0';
-            this.exits['left']['y'] = '2';
+        this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
+
+        this.nextScene['left'] = 'Scene10';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
     }
 
     create(){
