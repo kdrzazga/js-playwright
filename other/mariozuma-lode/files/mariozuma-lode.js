@@ -18,6 +18,7 @@ class MainScene extends ExtendedScene {
         this.nonBrickRows = [];
         this.nonBrickColumns = [];
         this.skullRows= [];
+        this.kupaRows= [];
         this.enemyTextures = ['skull'];
         this.ladderColumns = [];
 
@@ -58,20 +59,22 @@ class MainScene extends ExtendedScene {
     }
 
     preload(){
+        this.load.image('player',  'files/character/stand.png');
+        this.load.image('player1', 'files/character/m1.png');
+        this.load.image('player2', 'files/character/m2.png');
+        this.load.image('player3', 'files/character/m3.png');
+
         this.load.image('skull1', 'files/enemies/skull/skull1.gif');
         this.load.image('skull2', 'files/enemies/skull/skull2.gif');
         this.load.image('skull3', 'files/enemies/skull/skull3.gif');
         this.load.image('skull4', 'files/enemies/skull/skull4.gif');
         this.load.image('skull5', 'files/enemies/skull/skull5.gif');
 
+        this.load.image('kupa1', 'files/enemies/kupa/kupa (1).gif');
+
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
-
-        this.load.image('player',  'files/character/stand.png');
-        this.load.image('player1', 'files/character/m1.png');
-        this.load.image('player2', 'files/character/m2.png');
-        this.load.image('player3', 'files/character/m3.png');
 
         this.load.image('fire1', 'files/background/fire/fire (1).gif');
         this.load.image('fire2', 'files/background/fire/fire (2).gif');
@@ -280,6 +283,30 @@ class MainScene extends ExtendedScene {
         }
     }
 
+    createEnemy(rowConfig, texture){
+        let x = config.width / 2;
+
+        const y = rowConfig.row * Globals.TILE_WIDTH;
+        let s = this.add.sprite(x, y , texture);
+        s.speedY = 0;
+
+        if (rowConfig.side === 'right'){
+            s.x += config.width /4;
+            s.minX = config.width/2;
+            s.maxX = config.width - 15;
+        }
+        else {
+             s.minX = 15;
+             s.maxX = 3*config.width/4 - 15;
+        }
+
+        s.speedX = 1;
+        s.play('skull-move');
+        s.setDepth(5);
+
+        return s;
+    }
+
     createSpriteGroup() {
 
         for (let j = 0; j < 14; j++){
@@ -301,26 +328,7 @@ class MainScene extends ExtendedScene {
 
         console.log(`${this.constructor.name} skulls count = ${this.skullRows.length}`);
         for (let i = 0; i < this.skullRows.length; i++) {
-            let x = config.width / 2;
-
-            const y = this.skullRows[i].row * Globals.TILE_WIDTH;
-            let s = this.add.sprite(x, y , 'skull1');
-            s.speedY = 0;
-
-            if (this.skullRows[i].side === 'right'){
-                s.x += config.width /4;
-                s.minX = config.width/2;
-                s.maxX = config.width - 15;
-                s.speedX = 1;
-            }
-            else {
-                 s.x -= config.width /4;
-                 s.minX = 15;
-                 s.maxX = config.width/2 - 15;
-            }
-
-            s.play('skull-move');
-            s.setDepth(5);
+            let s = this.createEnemy(this.skullRows[i], 'skull1');
             this.spriteGroup.add(s);
         }
 
