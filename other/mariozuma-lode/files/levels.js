@@ -443,7 +443,7 @@ class Scene12 extends MainScene{
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
 
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'Scene13';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '9';
     }
@@ -476,6 +476,143 @@ class Scene12 extends MainScene{
                     Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
+}
+
+class Scene13 extends MainScene{
+
+    constructor(){
+        super('Scene13');
+
+        this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9];
+        this.skullRows= Globals.skullSwarm;
+
+        this.nextScene['left'] = 'Scene12';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9 ';
+
+        this.nextScene['right'] = 'Scene14';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase;
+                increase = (increase + 1)%7;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+
+        this.add.sprite(6.75*Globals.TILE_WIDTH, 3.34*Globals.TILE_WIDTH, 'skull-pile');
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
+}
+
+class Scene14 extends MainScene{
+
+    constructor(){
+        super('Scene14');
+
+        this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9];
+        this.skullRows= Globals.skullSwarm;
+        this.kupaRows= [ {'row': 9, 'side': 'left'}, {'row': 9, 'side': 'right'},{'row': 9, 'side': 'left'}, {'row': 9, 'side': 'right'},{'row': 9, 'side': 'left'}, {'row': 9, 'side': 'right'} ];
+
+        this.nextScene['left'] = 'Scene13';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9 ';
+
+        this.nextScene['right'] = 'Scene12';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                if (child.texture.key.startsWith('kupa')){
+                    child.x += increase*Globals.TILE_WIDTH;
+                    child.speedX = Math.cos(Math.PI*increase);
+                } else
+                    child.speedX += increase;
+                increase = (increase + 1)%7;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+
+        this.add.sprite(6.75*Globals.TILE_WIDTH, 3.34*Globals.TILE_WIDTH, 'skull-pile');
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
                 else if (d === 'right'){

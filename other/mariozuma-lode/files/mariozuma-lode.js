@@ -4,6 +4,31 @@ class Globals {
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
     static PLAYER_Y = 2 * Globals.TILE_WIDTH;
     static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
+    static skullSwarm = [ {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
+        , {'row': 9, 'side': 'right'}, {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
+        , {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
+        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'},
+        {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
+        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
+        , {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
+        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
+        ];
 }
 
 class MainScene extends ExtendedScene {
@@ -118,6 +143,7 @@ class MainScene extends ExtendedScene {
         this.load.image('fire26', 'files/background/fire/fire (26).gif');
 
         this.load.image('montezuma', 'files/background/montezuma.png');
+        this.load.image('skull-pile', 'files/background/skulls.png');
 
         this.load.image('ladder', 'files/background/ladder.png');
     }
