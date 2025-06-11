@@ -3,6 +3,7 @@ class Globals {
     static PLAYER_X = Globals.TILE_WIDTH;
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
     static PLAYER_Y = 2 * Globals.TILE_WIDTH;
+    static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
 }
 
 class MainScene extends ExtendedScene {
@@ -116,6 +117,8 @@ class MainScene extends ExtendedScene {
         this.load.image('fire25', 'files/background/fire/fire (25).gif');
         this.load.image('fire26', 'files/background/fire/fire (26).gif');
 
+        this.load.image('montezuma', 'files/background/montezuma.png');
+
         this.load.image('ladder', 'files/background/ladder.png');
     }
 
@@ -218,7 +221,7 @@ class MainScene extends ExtendedScene {
             frameRate: 15,
             repeat: -1
         });
-        this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.PLAYER_Y, 'player');
+        this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.INITIAL_PLAYER_Y, 'player');
         this.player.setDepth(2);
 
         let rectangle = this.add.graphics();
