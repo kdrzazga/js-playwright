@@ -307,7 +307,8 @@ class MainScene extends ExtendedScene {
 
         const playerTileX = Math.ceil(this.player.x/Globals.TILE_WIDTH);
         const playerTileY = Math.ceil(this.player.y/Globals.TILE_WIDTH);
-        const playerTile =  this.getTextureAt(playerTileX, playerTileY);
+        const playerTile = this.getTextureAt(playerTileX, playerTileY);
+        const tileAbove = this.getTextureAt(playerTileX, playerTileY - 1);
 
         if (this.cursors.right.isDown && playerTile !== 'ladder') {
             this.player.setFlipX(false);
@@ -330,7 +331,7 @@ class MainScene extends ExtendedScene {
 
             if (this.cursors.down.isDown && underlyingTile === 'ladder' && underlyingSquareCoords[0] == playerTileX)
                 this.player.y += MainScene.PLAYER_SPEED;
-            else if (this.cursors.up.isDown && playerTile === 'ladder' && underlyingSquareCoords[0] == playerTileX)
+            else if (this.cursors.up.isDown && (playerTile === 'ladder' || tileAbove === 'ladder') && underlyingSquareCoords[0] == playerTileX)
                 this.player.y -= MainScene.PLAYER_SPEED;
 
             newAnimKey = 'player';
