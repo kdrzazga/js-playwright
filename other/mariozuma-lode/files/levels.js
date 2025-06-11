@@ -266,6 +266,7 @@ class Scene8 extends MainScene{
         this.nonBrickRows = [1,2,5,6,7,8,9,10];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.nextScene['left'] = 'Scene7';
+        //no passage to 'Scene9';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
     }
@@ -541,7 +542,7 @@ class Scene13 extends MainScene{
                 if (d === 'left'){
                     Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
+                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
                 else if (d === 'right'){
@@ -568,7 +569,7 @@ class Scene14 extends MainScene{
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
 
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'Scene15';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '9';
     }
@@ -623,5 +624,40 @@ class Scene14 extends MainScene{
                 }
             }
         });
+    }
+}
+
+class Scene15 extends MainScene{
+
+    constructor(){
+        super('Scene15');
+
+        this.nonBrickRows = [0,1,2,3,4,5,6,8,9];
+        this.skullRows= [ {'row': 9, 'side': 'right'} ];
+        this.ladderColumns = [ {'column' : 13, 'start' : 0, 'end' : 10}];
+
+        this.nextScene['left'] = 'Scene14';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9 ';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 3.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12];
+        for(let y = 0; y < 8; y++){
+             xs.forEach(x => {
+                const b = this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick');
+                b.setDepth(10);
+             });
+        }
+
     }
 }
