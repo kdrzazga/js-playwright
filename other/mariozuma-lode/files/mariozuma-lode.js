@@ -3,6 +3,32 @@ class Globals {
     static PLAYER_X = Globals.TILE_WIDTH;
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
     static PLAYER_Y = 2 * Globals.TILE_WIDTH;
+    static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
+    static skullSwarm = [ {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
+        , {'row': 9, 'side': 'right'}, {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
+        , {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
+        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'},
+        {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
+        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
+        , {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
+        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
+        ];
 }
 
 class MainScene extends ExtendedScene {
@@ -18,7 +44,8 @@ class MainScene extends ExtendedScene {
         this.nonBrickRows = [];
         this.nonBrickColumns = [];
         this.skullRows= [];
-        this.enemyTextures = ['skull'];
+        this.kupaRows= [];
+        this.enemyTextures = ['skull', 'kupa'];
         this.ladderColumns = [];
 
         this.exits = {
@@ -58,20 +85,65 @@ class MainScene extends ExtendedScene {
     }
 
     preload(){
+        this.load.image('player',  'files/character/stand.png');
+        this.load.image('player1', 'files/character/m1.png');
+        this.load.image('player2', 'files/character/m2.png');
+        this.load.image('player3', 'files/character/m3.png');
+
         this.load.image('skull1', 'files/enemies/skull/skull1.gif');
         this.load.image('skull2', 'files/enemies/skull/skull2.gif');
         this.load.image('skull3', 'files/enemies/skull/skull3.gif');
         this.load.image('skull4', 'files/enemies/skull/skull4.gif');
         this.load.image('skull5', 'files/enemies/skull/skull5.gif');
 
+        this.load.image('kupa1', 'files/enemies/kupa/kupa (1).png');
+        this.load.image('kupa2', 'files/enemies/kupa/kupa (2).png');
+        this.load.image('kupa3', 'files/enemies/kupa/kupa (3).png');
+        this.load.image('kupa4', 'files/enemies/kupa/kupa (4).png');
+        this.load.image('kupa5', 'files/enemies/kupa/kupa (5).png');
+        this.load.image('kupa6', 'files/enemies/kupa/kupa (6).png');
+        this.load.image('kupa7', 'files/enemies/kupa/kupa (7).png');
+        this.load.image('kupa8', 'files/enemies/kupa/kupa (8).png');
+        this.load.image('kupa9', 'files/enemies/kupa/kupa (9).png');
+        this.load.image('kupa10', 'files/enemies/kupa/kupa (10).png');
+        this.load.image('kupa11', 'files/enemies/kupa/kupa (11).png');
+        this.load.image('kupa12', 'files/enemies/kupa/kupa (12).png');
+        this.load.image('kupa13', 'files/enemies/kupa/kupa (13).png');
+        this.load.image('kupa14', 'files/enemies/kupa/kupa (14).png');
+
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
 
-        this.load.image('player',  'files/character/stand.png');
-        this.load.image('player1', 'files/character/m1.png');
-        this.load.image('player2', 'files/character/m2.png');
-        this.load.image('player3', 'files/character/m3.png');
+        this.load.image('fire1', 'files/background/fire/fire (1).gif');
+        this.load.image('fire2', 'files/background/fire/fire (2).gif');
+        this.load.image('fire3', 'files/background/fire/fire (3).gif');
+        this.load.image('fire4', 'files/background/fire/fire (4).gif');
+        this.load.image('fire5', 'files/background/fire/fire (5).gif');
+        this.load.image('fire6', 'files/background/fire/fire (6).gif');
+        this.load.image('fire7', 'files/background/fire/fire (7).gif');
+        this.load.image('fire8', 'files/background/fire/fire (8).gif');
+        this.load.image('fire9', 'files/background/fire/fire (9).gif');
+        this.load.image('fire10', 'files/background/fire/fire (10).gif');
+        this.load.image('fire11', 'files/background/fire/fire (11).gif');
+        this.load.image('fire12', 'files/background/fire/fire (12).gif');
+        this.load.image('fire13', 'files/background/fire/fire (13).gif');
+        this.load.image('fire14', 'files/background/fire/fire (14).gif');
+        this.load.image('fire15', 'files/background/fire/fire (15).gif');
+        this.load.image('fire16', 'files/background/fire/fire (16).gif');
+        this.load.image('fire17', 'files/background/fire/fire (17).gif');
+        this.load.image('fire18', 'files/background/fire/fire (18).gif');
+        this.load.image('fire19', 'files/background/fire/fire (19).gif');
+        this.load.image('fire20', 'files/background/fire/fire (20).gif');
+        this.load.image('fire21', 'files/background/fire/fire (21).gif');
+        this.load.image('fire22', 'files/background/fire/fire (22).gif');
+        this.load.image('fire23', 'files/background/fire/fire (23).gif');
+        this.load.image('fire24', 'files/background/fire/fire (24).gif');
+        this.load.image('fire25', 'files/background/fire/fire (25).gif');
+        this.load.image('fire26', 'files/background/fire/fire (26).gif');
+
+        this.load.image('montezuma', 'files/background/montezuma.png');
+        this.load.image('skull-pile', 'files/background/skulls.png');
 
         this.load.image('ladder', 'files/background/ladder.png');
     }
@@ -99,6 +171,28 @@ class MainScene extends ExtendedScene {
         });
 
         this.anims.create({
+            key: 'kupa-move',
+            frames: [
+                { key: 'kupa1' },
+                { key: 'kupa2' },
+                { key: 'kupa3' },
+                { key: 'kupa4' },
+                { key: 'kupa5' },
+                { key: 'kupa6' },
+                { key: 'kupa7' },
+                { key: 'kupa8' },
+                { key: 'kupa9' },
+                { key: 'kupa10' },
+                { key: 'kupa11' },
+                { key: 'kupa12' },
+                { key: 'kupa13' },
+                { key: 'kupa14' }
+            ],
+            frameRate: 7,
+            repeat: -1
+        });
+
+        this.anims.create({
             key: 'brick-dissolve',
             frames: [
                 { key: 'brick' },
@@ -119,7 +213,42 @@ class MainScene extends ExtendedScene {
             frameRate: 5,
             repeat: -1
         });
-        this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.PLAYER_Y, 'player');
+
+        this.anims.create({
+            key: 'fire',
+            frames: [
+                { key: 'fire1' },
+                { key: 'fire2' },
+                { key: 'fire3' },
+                { key: 'fire4' },
+                { key: 'fire5' },
+                { key: 'fire6' },
+                { key: 'fire7' },
+                { key: 'fire8' },
+                { key: 'fire9' },
+                { key: 'fire10' },
+                { key: 'fire11' },
+                { key: 'fire12' },
+                { key: 'fire13' },
+                { key: 'fire14' },
+                { key: 'fire15' },
+                { key: 'fire16' },
+                { key: 'fire17' },
+                { key: 'fire18' },
+                { key: 'fire19' },
+                { key: 'fire20' },
+                { key: 'fire21' },
+                { key: 'fire22' },
+                { key: 'fire23' },
+                { key: 'fire24' },
+                { key: 'fire25' },
+                { key: 'fire26' }
+            ],
+            frameRate: 15,
+            repeat: -1
+        });
+        this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.INITIAL_PLAYER_Y, 'player');
+        this.player.setDepth(2);
 
         let rectangle = this.add.graphics();
         rectangle.lineStyle(4, 0xffff00);
@@ -127,7 +256,7 @@ class MainScene extends ExtendedScene {
         rectangle.generateTexture('highlight', Globals.TILE_WIDTH, Globals.TILE_WIDTH);
         rectangle.destroy();
         this.rectSprite = this.add.sprite(2*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'highlight');
-        this.rectSprite.setDepth(3);
+        this.rectSprite.setDepth(4);
     }
 
     update(time, delta) {
@@ -175,7 +304,12 @@ class MainScene extends ExtendedScene {
 
     movePlayer(time){
         let newAnimKey = 'player';
-        if (this.cursors.right.isDown) {
+
+        const playerTileX = Math.ceil(this.player.x/Globals.TILE_WIDTH);
+        const playerTileY = Math.ceil(this.player.y/Globals.TILE_WIDTH);
+        const playerTile =  this.getTextureAt(playerTileX, playerTileY);
+
+        if (this.cursors.right.isDown && playerTile !== 'ladder') {
             this.player.setFlipX(false);
             if (this.player.x < this.sys.canvas.width) {
                 this.player.x += MainScene.PLAYER_SPEED;
@@ -183,7 +317,7 @@ class MainScene extends ExtendedScene {
                 this.moveHighlight();
                 newAnimKey = 'player-walk';
             }
-        } else if (this.cursors.left.isDown) {
+        } else if (this.cursors.left.isDown && playerTile !== 'ladder') {
             this.player.setFlipX(true);
             if (this.player.x > MainScene.PLAYER_SPEED)
                 this.player.x -= MainScene.PLAYER_SPEED;
@@ -194,8 +328,10 @@ class MainScene extends ExtendedScene {
             const underlyingSquareCoords = this.calculateHighlightSquare(this.player);
             const underlyingTile =  this.getTextureAt(underlyingSquareCoords[0], underlyingSquareCoords[1]);
 
-            if (this.cursors.down.isDown && underlyingTile === 'ladder')
+            if (this.cursors.down.isDown && underlyingTile === 'ladder' && underlyingSquareCoords[0] == playerTileX)
                 this.player.y += MainScene.PLAYER_SPEED;
+            else if (this.cursors.up.isDown && playerTile === 'ladder' && underlyingSquareCoords[0] == playerTileX)
+                this.player.y -= MainScene.PLAYER_SPEED;
 
             newAnimKey = 'player';
         }
@@ -211,6 +347,38 @@ class MainScene extends ExtendedScene {
         }
     }
 
+    createEnemy(rowConfig, texture, speed, scale){
+        let x = config.width / 2;
+
+        const y = rowConfig.row * Globals.TILE_WIDTH;
+        let s = this.add.sprite(x, y , texture);
+        s.speedY = 0;
+
+        if (rowConfig.side === 'right'){
+            s.x += config.width /4;
+            s.minX = config.width/2;
+            s.maxX = config.width - 15;
+        }
+        else {
+             s.minX = 15;
+             s.maxX = 3*config.width/4 - 15;
+        }
+
+        s.speedX = speed;
+        s.setScale(scale);
+        if (scale < 1)
+            s.y += (scale/6) * Globals.TILE_WIDTH;
+
+        const textureAnimationJson = {
+            'skull1': 'skull-move',
+            'kupa1' : 'kupa-move'
+        }
+        s.play(textureAnimationJson[texture]);
+        s.setDepth(5);
+
+        return s;
+    }
+
     createSpriteGroup() {
 
         for (let j = 0; j < 14; j++){
@@ -221,36 +389,22 @@ class MainScene extends ExtendedScene {
                         const x = i * Globals.TILE_WIDTH;
                         const y = j * Globals.TILE_WIDTH;
                         let texture = 'brick';
-                        const sprite = this.add.sprite(x, y, texture);
-                        sprite.posX = i;
-                        sprite.posY = j;
-                        this.spriteGroup.add(sprite);
+                        const brickSprite = this.add.sprite(x, y, texture);
+                        brickSprite.setDepth(3);
+                        brickSprite.posX = i;
+                        brickSprite.posY = j;
+                        this.spriteGroup.add(brickSprite);
                     }
                 }
         }
 
         console.log(`${this.constructor.name} skulls count = ${this.skullRows.length}`);
         for (let i = 0; i < this.skullRows.length; i++) {
-            let x = config.width / 2;
-
-            const y = this.skullRows[i].row * Globals.TILE_WIDTH;
-            let s = this.add.sprite(x, y , 'skull1');
-            s.speedY = 0;
-
-            if (this.skullRows[i].side === 'right'){
-                s.x += config.width /4;
-                s.minX = config.width/2;
-                s.maxX = config.width - 15;
-                s.speedX = 1;
-            }
-            else {
-                 s.x -= config.width /4;
-                 s.minX = 15;
-                 s.maxX = config.width/2 - 15;
-            }
-
-            s.play('skull-move');
-            s.setDepth(5);
+            let s = this.createEnemy(this.skullRows[i], 'skull1', 1, 1);
+            this.spriteGroup.add(s);
+        }
+        for (let i = 0; i < this.kupaRows.length; i++) {
+            let s = this.createEnemy(this.kupaRows[i], 'kupa1', 0, 1);
             this.spriteGroup.add(s);
         }
 
@@ -261,6 +415,7 @@ class MainScene extends ExtendedScene {
 
             for (let y = y1; y < y2; y += Globals.TILE_WIDTH){
                 const ladderCell = this.add.sprite(x, y, 'ladder');
+                ladderCell.setDepth(1);
                 this.spriteGroup.add(ladderCell);
             }
         }
@@ -357,7 +512,7 @@ class MainScene extends ExtendedScene {
         this.spriteGroup.children.iterate((child) => {
             if (this._isEnemy(child)){
                 const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, child.x, child.y);
-                if (distance < Globals.TILE_WIDTH) {
+                if (distance < 3*Globals.TILE_WIDTH/4) {
                     this.scene.restart();
                 }
             }
