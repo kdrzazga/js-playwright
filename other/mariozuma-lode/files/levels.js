@@ -130,6 +130,12 @@ class Scene4 extends MainScene{
                 child.x += increase;
             }
         });
+        this.time.delayedCall(18000, () => {
+            const kupa = Array.from(this.spriteGroup.getChildren()).find(child =>
+                child.texture && child.texture.key.startsWith('kupa'));
+
+            kupa.speedY += 1;
+        });
     }
 }
 
@@ -743,6 +749,28 @@ class Scene16 extends MainScene{
         }
 
     }
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
 }
 
 class Scene17 extends MainScene{
@@ -785,7 +813,7 @@ class Scene18 extends MainScene{
         this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'} , {'row': 6, 'side': 'left'}
             , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} , {'row': 10, 'side': 'left'} ];
 
-        this.nextScene['left'] = 'Scene18';
+        this.nextScene['left'] = 'Scene19';
         this.nextScene['right'] = 'Scene17';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
@@ -800,5 +828,35 @@ class Scene18 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+    }
+}
+
+class Scene19 extends MainScene{
+
+    constructor(){
+        super('Scene19');
+
+        this.nonBrickRows = [1,2,5,6,7,8,9,10];
+        this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.nextScene['right'] = 'Scene18';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const lodeRunnerAnimation = this.add.sprite(6.25*Globals.TILE_WIDTH + 13, 7.5*Globals.TILE_WIDTH, 'lode-runner1');
+        lodeRunnerAnimation.play('lode-runner');
+        const xs = [0,1, 12, 13];
+        for(let y = 5; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+
     }
 }

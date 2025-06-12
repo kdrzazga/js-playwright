@@ -150,6 +150,33 @@ class MainScene extends ExtendedScene {
         this.load.image('fire25', 'files/background/fire/fire (25).gif');
         this.load.image('fire26', 'files/background/fire/fire (26).gif');
 
+        this.load.image('lode-runner1', 'files/background/lode-runner/lode-runner (1).gif');
+        this.load.image('lode-runner2', 'files/background/lode-runner/lode-runner (2).gif');
+        this.load.image('lode-runner3', 'files/background/lode-runner/lode-runner (3).gif');
+        this.load.image('lode-runner4', 'files/background/lode-runner/lode-runner (4).gif');
+        this.load.image('lode-runner5', 'files/background/lode-runner/lode-runner (5).gif');
+        this.load.image('lode-runner6', 'files/background/lode-runner/lode-runner (6).gif');
+        this.load.image('lode-runner7', 'files/background/lode-runner/lode-runner (7).gif');
+        this.load.image('lode-runner8', 'files/background/lode-runner/lode-runner (8).gif');
+        this.load.image('lode-runner9', 'files/background/lode-runner/lode-runner (9).gif');
+        this.load.image('lode-runner10', 'files/background/lode-runner/lode-runner (10).gif');
+        this.load.image('lode-runner11', 'files/background/lode-runner/lode-runner (11).gif');
+        this.load.image('lode-runner12', 'files/background/lode-runner/lode-runner (12).gif');
+        this.load.image('lode-runner13', 'files/background/lode-runner/lode-runner (13).gif');
+        this.load.image('lode-runner14', 'files/background/lode-runner/lode-runner (14).gif');
+        this.load.image('lode-runner15', 'files/background/lode-runner/lode-runner (15).gif');
+        this.load.image('lode-runner16', 'files/background/lode-runner/lode-runner (16).gif');
+        this.load.image('lode-runner17', 'files/background/lode-runner/lode-runner (17).gif');
+        this.load.image('lode-runner18', 'files/background/lode-runner/lode-runner (18).gif');
+        this.load.image('lode-runner19', 'files/background/lode-runner/lode-runner (19).gif');
+        this.load.image('lode-runner20', 'files/background/lode-runner/lode-runner (20).gif');
+        this.load.image('lode-runner21', 'files/background/lode-runner/lode-runner (21).gif');
+        this.load.image('lode-runner22', 'files/background/lode-runner/lode-runner (22).gif');
+        this.load.image('lode-runner23', 'files/background/lode-runner/lode-runner (23).gif');
+        this.load.image('lode-runner24', 'files/background/lode-runner/lode-runner (24).gif');
+        this.load.image('lode-runner25', 'files/background/lode-runner/lode-runner (25).gif');
+        this.load.image('lode-runner26', 'files/background/lode-runner/lode-runner (26).gif');
+
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
 
@@ -268,6 +295,34 @@ class MainScene extends ExtendedScene {
             frameRate: 15,
             repeat: -1
         });
+
+        this.anims.create({
+            key: 'lode-runner',
+            frames: [
+                { key: 'lode-runner1' },
+                { key: 'lode-runner2' },
+                { key: 'lode-runner3' },
+                { key: 'lode-runner4' },
+                { key: 'lode-runner5' },
+                { key: 'lode-runner6' },
+                { key: 'lode-runner7' },
+                { key: 'lode-runner8' },
+                { key: 'lode-runner9' },
+                { key: 'lode-runner10' },
+                { key: 'lode-runner11' },
+                { key: 'lode-runner12' },
+                { key: 'lode-runner13' },
+                { key: 'lode-runner14' },
+                { key: 'lode-runner15' },
+                { key: 'lode-runner16' },
+                { key: 'lode-runner17' },
+                { key: 'lode-runner18' },
+                { key: 'lode-runner19' }
+            ],
+            frameRate: 20,
+            repeat: -1
+        });
+
         this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.INITIAL_PLAYER_Y, 'player');
         this.player.setDepth(2);
 
