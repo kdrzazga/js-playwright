@@ -289,8 +289,10 @@ class MainScene extends ExtendedScene {
 
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)) {
-                if (child.x < child.minX || child.x > child.maxX)
+                if (child.x < child.minX || child.x > child.maxX && child.minX < child.maxX){
                     child.speedX = -child.speedX;
+                    //child.setFlipX(!child.flipX);
+                }
             }
         });
 
