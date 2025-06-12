@@ -711,9 +711,9 @@ class Scene16 extends MainScene{
         this.ladderColumns = [ {'column' : 13, 'start' : 3, 'end' : 9}];
         this.skullRows= [ {'row': 2, 'side': 'right'},{'row': 2, 'side': 'right'},{'row': 2, 'side': 'right'} ];
 
-        this.nextScene['left'] = 'Scene14';
+        this.nextScene['left'] = 'Scene17';
         this.exits['left']['x'] = '0';
-        this.exits['left']['y'] = '9';
+        this.exits['left']['y'] = '2';
     }
 
     create(){
@@ -742,5 +742,63 @@ class Scene16 extends MainScene{
              });
         }
 
+    }
+}
+
+class Scene17 extends MainScene{
+
+    constructor(){
+        super('Scene17');
+        this.backgroundColor = 'black';
+
+        this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
+
+        this.snakeRows= [ {'row': 4, 'side': 'right'}, {'row': 5, 'side': 'right'} , {'row': 6, 'side': 'left'}
+            , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} , {'row': 10, 'side': 'left'} ];
+
+        this.nextScene['left'] = 'Scene18';
+        this.nextScene['right'] = 'Scene16';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+    }
+}
+
+class Scene18 extends MainScene{
+
+    constructor(){
+        super('Scene18');
+        this.backgroundColor = 'black';
+
+        this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
+
+        this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'} , {'row': 6, 'side': 'left'}
+            , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} , {'row': 10, 'side': 'left'} ];
+
+        this.nextScene['left'] = 'Scene18';
+        this.nextScene['right'] = 'Scene17';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
     }
 }
