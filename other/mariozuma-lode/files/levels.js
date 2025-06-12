@@ -298,7 +298,7 @@ class Scene9 extends MainScene{
         this.skullRows= [ {'row': 2, 'side': 'right'}
             ];
 
-        this.ladderColumns = [ {'column' : 2, 'start' : 0, 'end' : 2}, {'column' : 12, 'start' : 0, 'end' : 2}];
+        this.ladderColumns = [ {'column' : 2, 'start' : 0, 'end' : 1}, {'column' : 12, 'start' : 0, 'end' : 1}];
 
             this.nextScene['right'] = 'Scene10';
             this.exits['right']['x'] = '13';
@@ -678,9 +678,9 @@ class Scene15 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'top'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 13;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 10;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
                 else if (d === 'bottom'){
@@ -699,12 +699,13 @@ class Scene16 extends MainScene{
     constructor(){
         super('Scene16');
 
-        this.nonBrickRows = [3,4,5,6,7,8,9,10];
-        this.ladderColumns = [ {'column' : 13, 'start' : 0, 'end' : 11}];
+        this.nonBrickRows = [1,2,4,5,6,7,8,9,10];
+        this.ladderColumns = [ {'column' : 13, 'start' : 3, 'end' : 9}];
+        this.skullRows= [ {'row': 2, 'side': 'right'},{'row': 2, 'side': 'right'},{'row': 2, 'side': 'right'} ];
 
         this.nextScene['left'] = 'Scene14';
         this.exits['left']['x'] = '0';
-        this.exits['left']['y'] = '9 ';
+        this.exits['left']['y'] = '9';
     }
 
     create(){
@@ -714,11 +715,19 @@ class Scene16 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const childrenArray = this.spriteGroup.getChildren();
+        const skull1 = childrenArray.find(child =>
+            child.texture && child.texture.key && child.texture.key.startsWith('skull')
+        );
+
+        skull1.speedX = 0;
+        skull1.x = Globals.TILE_WIDTH * 12;
+        skull1.y = Globals.TILE_WIDTH * 9;
 
         const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 6.5*Globals.TILE_WIDTH, 'fire1');
         fireAnimation.play('fire');
         const xs = [0,1, 12];
-        for(let y = 0; y < 11; y++){
+        for(let y = 4; y < 11; y++){
              xs.forEach(x => {
                 const b = this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick');
                 b.setDepth(10);

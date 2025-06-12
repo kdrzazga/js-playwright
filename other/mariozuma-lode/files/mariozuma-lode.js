@@ -1,4 +1,5 @@
 class Globals {
+    static ENEMIES_COUNT = 0;
     static TILE_WIDTH = 60;
     static PLAYER_X = Globals.TILE_WIDTH;
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
@@ -353,6 +354,7 @@ class MainScene extends ExtendedScene {
 
         const y = rowConfig.row * Globals.TILE_WIDTH;
         let s = this.add.sprite(x, y , texture);
+        Globals.ENEMIES_COUNT += 1;
         s.speedY = 0;
 
         if (rowConfig.side === 'right'){
@@ -365,7 +367,7 @@ class MainScene extends ExtendedScene {
              s.maxX = 3*config.width/4 - 15;
         }
 
-        s.speedX = speed;
+        s.speedX = speed + (Globals.ENEMIES_COUNT % 5)/5;
         s.setScale(scale);
         if (scale < 1)
             s.y += (scale/6) * Globals.TILE_WIDTH;
@@ -500,6 +502,10 @@ class MainScene extends ExtendedScene {
                 else if (d === 'right'){
                     Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                }
+                else if (d === 'top'){
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 10;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
             }
         });
