@@ -46,7 +46,8 @@ class MainScene extends ExtendedScene {
         this.nonBrickColumns = [];
         this.skullRows= [];
         this.kupaRows= [];
-        this.enemyTextures = ['skull', 'kupa'];
+        this.snakeRows= [];
+        this.enemyTextures = ['skull', 'kupa', 'snake'];
         this.ladderColumns = [];
 
         this.exits = {
@@ -96,6 +97,12 @@ class MainScene extends ExtendedScene {
         this.load.image('skull3', 'files/enemies/skull/skull3.gif');
         this.load.image('skull4', 'files/enemies/skull/skull4.gif');
         this.load.image('skull5', 'files/enemies/skull/skull5.gif');
+
+        this.load.image('snake1', 'files/enemies/snake/snake (1).gif');
+        this.load.image('snake2', 'files/enemies/snake/snake (2).gif');
+        this.load.image('snake3', 'files/enemies/snake/snake (3).gif');
+        this.load.image('snake4', 'files/enemies/snake/snake (4).gif');
+        this.load.image('snake5', 'files/enemies/snake/snake (5).gif');
 
         this.load.image('kupa1', 'files/enemies/kupa/kupa (1).png');
         this.load.image('kupa2', 'files/enemies/kupa/kupa (2).png');
@@ -166,6 +173,19 @@ class MainScene extends ExtendedScene {
                 { key: 'skull3' },
                 { key: 'skull4' },
                 { key: 'skull5' }
+            ],
+            frameRate: 7,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'snake-move',
+            frames: [
+                { key: 'snake1' },
+                { key: 'snake2' },
+                { key: 'snake3' },
+                { key: 'snake4' },
+                { key: 'snake5' }
             ],
             frameRate: 7,
             repeat: -1
@@ -374,7 +394,8 @@ class MainScene extends ExtendedScene {
 
         const textureAnimationJson = {
             'skull1': 'skull-move',
-            'kupa1' : 'kupa-move'
+            'kupa1' : 'kupa-move',
+            'snake1' : 'snake-move'
         }
         s.play(textureAnimationJson[texture]);
         s.setDepth(5);
@@ -408,6 +429,11 @@ class MainScene extends ExtendedScene {
         }
         for (let i = 0; i < this.kupaRows.length; i++) {
             let s = this.createEnemy(this.kupaRows[i], 'kupa1', 0, 1);
+            this.spriteGroup.add(s);
+        }
+
+        for (let i = 0; i < this.snakeRows.length; i++) {
+            let s = this.createEnemy(this.snakeRows[i], 'snake1', 0, 0.23);
             this.spriteGroup.add(s);
         }
 

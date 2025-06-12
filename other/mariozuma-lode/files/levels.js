@@ -69,6 +69,7 @@ class Scene3 extends MainScene{
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
         this.skullRows= [ {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'left'} , {'row': 8, 'side': 'right'} ];
+        this.snakeRows= [ {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'left'} ];
 
         this.nextScene['left'] = 'Scene2';
         this.nextScene['right'] = 'Scene4';
@@ -205,7 +206,7 @@ class Scene6 extends MainScene{
         super.createSpriteGroup();
         let increase = 2;
         this.spriteGroup.children.iterate((child)=> {
-            if (this._isEnemy(child)){
+            if (this._isEnemy(child) && !child.texture.key.startsWith('snake')){
                 child.speedX += increase % 4;
                 increase = increase + 1;
                 //child.x += Globals.TILE_WIDTH*increase/3;
@@ -298,6 +299,9 @@ class Scene9 extends MainScene{
         this.skullRows= [ {'row': 2, 'side': 'right'}
             ];
 
+        this.snakeRows= [ {'row': 2, 'side': 'left'}
+            ];
+
         this.ladderColumns = [ {'column' : 2, 'start' : 0, 'end' : 1}, {'column' : 12, 'start' : 0, 'end' : 1}];
 
             this.nextScene['right'] = 'Scene10';
@@ -335,6 +339,9 @@ class Scene10 extends MainScene{
             , {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'}
             ];
 
+        this.snakeRows= [ {'row': 4, 'side': 'right'}
+        ]
+
         this.nextScene['left'] = 'Scene9';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
@@ -352,7 +359,7 @@ class Scene10 extends MainScene{
         super.createSpriteGroup();
         let increase = 6;
         this.spriteGroup.children.iterate((child)=> {
-            if (this._isEnemy(child)){
+            if (this._isEnemy(child) && !child.texture.key.startsWith('snake')){
                 child.speedX += increase;
                 increase = increase + 1;
                 //child.x += Globals.TILE_WIDTH*increase/3;
@@ -633,6 +640,7 @@ class Scene15 extends MainScene{
 
         this.nonBrickRows = [0,1,2,3,4,5,6,8,9];
         this.skullRows= [ {'row': 9, 'side': 'right'} ];
+        this.snakeRows= [ {'row': 9, 'side': 'right'} ];
         this.ladderColumns = [ {'column' : 13, 'start' : 0, 'end' : 9}];
 
         this.nextScene['left'] = 'Scene14';
