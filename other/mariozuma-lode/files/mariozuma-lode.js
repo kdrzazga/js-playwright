@@ -48,6 +48,7 @@ class MainScene extends ExtendedScene {
         this.kupaRows= [];
         this.snakeRows= [];
         this.bullets = [];
+        this.keyRows = [];
         this.enemyTextures = ['skull', 'kupa', 'snake', 'bullet'];
         this.ladderColumns = [];
 
@@ -184,6 +185,9 @@ class MainScene extends ExtendedScene {
         this.load.image('skull-pile', 'files/background/skulls.png');
 
         this.load.image('ladder', 'files/background/ladder.png');
+        this.load.image('red-key', 'files/items/key-red.png');
+        this.load.image('green-key', 'files/items/key-green.png');
+        this.load.image('blue-key', 'files/items/key-blue.png');
     }
 
     create(){
@@ -499,6 +503,13 @@ class MainScene extends ExtendedScene {
         for (let i = 0; i < this.snakeRows.length; i++) {
             let s = this.createEnemy(this.snakeRows[i], 'snake1', 0, 0.23);
             this.spriteGroup.add(s);
+        }
+
+        for (let i = 0; i < this.keyRows.length; i++) {
+            const y = this.keyRows[i].row * Globals.TILE_WIDTH;
+            x = 6 * Globals.TILE_WIDTH;
+            let k = this.add.sprite(x, y , 'red-key');
+            this.spriteGroup.add(k);
         }
 
         this.bullets.forEach(bullet => { //g.scene.scenes[4].getSprites('bullet')[0].y
