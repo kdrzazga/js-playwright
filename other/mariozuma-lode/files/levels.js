@@ -130,7 +130,7 @@ class Scene4 extends MainScene{
                 child.x += increase;
             }
         });
-        this.time.delayedCall(18000, () => {
+        this.time.delayedCall(5155, () => {
             const kupa = Array.from(this.spriteGroup.getChildren()).find(child =>
                 child.texture && child.texture.key.startsWith('kupa'));
 

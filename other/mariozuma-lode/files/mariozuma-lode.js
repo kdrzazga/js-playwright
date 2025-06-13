@@ -610,13 +610,14 @@ class MainScene extends ExtendedScene {
         if (this.spriteGroup == undefined)
             return;
 
-        this.spriteGroup.children.iterate((child) => {
-            if (this._isEnemy(child)){
-                const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, child.x, child.y);
+        this.enemyTextures.forEach(enemyTexture => {
+            const allTextureSprites = this.getSprites(enemyTexture);
+            allTextureSprites.forEach(enemy => {
+                const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y);
                 if (distance < 3*Globals.TILE_WIDTH/4) {
                     this.scene.restart();
                 }
-            }
+            });
         });
     }
 
@@ -630,6 +631,16 @@ class MainScene extends ExtendedScene {
                 }
             });
         return texture;
+    }
+
+    getSprites(textureKey){
+        const allChildren = this.spriteGroup.getChildren();
+
+        const sprites = allChildren.filter((child) => {
+            return child.texture && child.texture.key.startsWith(textureKey);
+        });
+
+        return sprites;
     }
 
     debugWriteAllSprites(){
