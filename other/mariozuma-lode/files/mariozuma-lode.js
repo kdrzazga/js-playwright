@@ -47,7 +47,8 @@ class MainScene extends ExtendedScene {
         this.skullRows= [];
         this.kupaRows= [];
         this.snakeRows= [];
-        this.enemyTextures = ['skull', 'kupa', 'snake'];
+        this.bullets = [];
+        this.enemyTextures = ['skull', 'kupa', 'snake', 'bullet'];
         this.ladderColumns = [];
 
         this.exits = {
@@ -91,6 +92,8 @@ class MainScene extends ExtendedScene {
         this.load.image('player1', 'files/character/m1.png');
         this.load.image('player2', 'files/character/m2.png');
         this.load.image('player3', 'files/character/m3.png');
+
+        this.load.image('bullet', 'files/enemies/bullet.png');
 
         this.load.image('skull1', 'files/enemies/skull/skull1.gif');
         this.load.image('skull2', 'files/enemies/skull/skull2.gif');
@@ -454,7 +457,8 @@ class MainScene extends ExtendedScene {
             'kupa1' : 'kupa-move',
             'snake1' : 'snake-move'
         }
-        s.play(textureAnimationJson[texture]);
+        if (textureAnimationJson[texture] != null)
+            s.play(textureAnimationJson[texture]);
         s.setDepth(5);
 
         return s;
@@ -493,6 +497,13 @@ class MainScene extends ExtendedScene {
             let s = this.createEnemy(this.snakeRows[i], 'snake1', 0, 0.23);
             this.spriteGroup.add(s);
         }
+
+        this.bullets.forEach(bullet => {
+            let sprite = this.createEnemy(Math.ceil(bullet.y/Globals.TILE_WIDTH), 'bullet', 0, 1);
+            //sprite.x = bullet.x;
+            sprite.setDepth(4);
+            this.spriteGroup.add(sprite);
+        })
 
         for (let i = 0; i < this.ladderColumns.length; i++){
             const y1 = this.ladderColumns[i].start * Globals.TILE_WIDTH;

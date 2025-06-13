@@ -150,6 +150,12 @@ class Scene5 extends MainScene{
         this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
             , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
             , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}];
+
+        this.bullets = [
+            {x: 200, y: 5*Globals.TILE_WIDTH, speedX: 1},
+            {x: 190, y: 7*Globals.TILE_WIDTH, speedX: 2},
+            {x: 180, y: 8*Globals.TILE_WIDTH, speedX: 1},
+            ];
         this.ladderColumns = [ {'column' : 5, 'start' : 3, 'end' : 11}];
 
         this.nextScene['left'] = 'Scene4';
@@ -852,6 +858,7 @@ class Scene19 extends MainScene{
         super.createSpriteGroup();
 
         const lodeRunnerAnimation = this.add.sprite(6.25*Globals.TILE_WIDTH + 13, 7.5*Globals.TILE_WIDTH, 'lode-runner1');
+        lodeRunnerAnimation.setScale(1.1);
         lodeRunnerAnimation.play('lode-runner');
         const xs = [0,1, 12, 13];
         for(let y = 5; y < 11; y++){
