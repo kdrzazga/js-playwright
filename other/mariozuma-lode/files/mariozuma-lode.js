@@ -1,4 +1,5 @@
 class Globals {
+    static ENEMIES_COUNT = 0;
     static TILE_WIDTH = 60;
     static PLAYER_X = Globals.TILE_WIDTH;
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
@@ -45,7 +46,9 @@ class MainScene extends ExtendedScene {
         this.nonBrickColumns = [];
         this.skullRows= [];
         this.kupaRows= [];
-        this.enemyTextures = ['skull', 'kupa'];
+        this.snakeRows= [];
+        this.bullets = [];
+        this.enemyTextures = ['skull', 'kupa', 'snake', 'bullet'];
         this.ladderColumns = [];
 
         this.exits = {
@@ -90,11 +93,19 @@ class MainScene extends ExtendedScene {
         this.load.image('player2', 'files/character/m2.png');
         this.load.image('player3', 'files/character/m3.png');
 
+        this.load.image('bullet', 'files/enemies/bullet.png');
+
         this.load.image('skull1', 'files/enemies/skull/skull1.gif');
         this.load.image('skull2', 'files/enemies/skull/skull2.gif');
         this.load.image('skull3', 'files/enemies/skull/skull3.gif');
         this.load.image('skull4', 'files/enemies/skull/skull4.gif');
         this.load.image('skull5', 'files/enemies/skull/skull5.gif');
+
+        this.load.image('snake1', 'files/enemies/snake/snake (1).gif');
+        this.load.image('snake2', 'files/enemies/snake/snake (2).gif');
+        this.load.image('snake3', 'files/enemies/snake/snake (3).gif');
+        this.load.image('snake4', 'files/enemies/snake/snake (4).gif');
+        this.load.image('snake5', 'files/enemies/snake/snake (5).gif');
 
         this.load.image('kupa1', 'files/enemies/kupa/kupa (1).png');
         this.load.image('kupa2', 'files/enemies/kupa/kupa (2).png');
@@ -142,6 +153,33 @@ class MainScene extends ExtendedScene {
         this.load.image('fire25', 'files/background/fire/fire (25).gif');
         this.load.image('fire26', 'files/background/fire/fire (26).gif');
 
+        this.load.image('lode-runner1', 'files/background/lode-runner/lode-runner (1).gif');
+        this.load.image('lode-runner2', 'files/background/lode-runner/lode-runner (2).gif');
+        this.load.image('lode-runner3', 'files/background/lode-runner/lode-runner (3).gif');
+        this.load.image('lode-runner4', 'files/background/lode-runner/lode-runner (4).gif');
+        this.load.image('lode-runner5', 'files/background/lode-runner/lode-runner (5).gif');
+        this.load.image('lode-runner6', 'files/background/lode-runner/lode-runner (6).gif');
+        this.load.image('lode-runner7', 'files/background/lode-runner/lode-runner (7).gif');
+        this.load.image('lode-runner8', 'files/background/lode-runner/lode-runner (8).gif');
+        this.load.image('lode-runner9', 'files/background/lode-runner/lode-runner (9).gif');
+        this.load.image('lode-runner10', 'files/background/lode-runner/lode-runner (10).gif');
+        this.load.image('lode-runner11', 'files/background/lode-runner/lode-runner (11).gif');
+        this.load.image('lode-runner12', 'files/background/lode-runner/lode-runner (12).gif');
+        this.load.image('lode-runner13', 'files/background/lode-runner/lode-runner (13).gif');
+        this.load.image('lode-runner14', 'files/background/lode-runner/lode-runner (14).gif');
+        this.load.image('lode-runner15', 'files/background/lode-runner/lode-runner (15).gif');
+        this.load.image('lode-runner16', 'files/background/lode-runner/lode-runner (16).gif');
+        this.load.image('lode-runner17', 'files/background/lode-runner/lode-runner (17).gif');
+        this.load.image('lode-runner18', 'files/background/lode-runner/lode-runner (18).gif');
+        this.load.image('lode-runner19', 'files/background/lode-runner/lode-runner (19).gif');
+        this.load.image('lode-runner20', 'files/background/lode-runner/lode-runner (20).gif');
+        this.load.image('lode-runner21', 'files/background/lode-runner/lode-runner (21).gif');
+        this.load.image('lode-runner22', 'files/background/lode-runner/lode-runner (22).gif');
+        this.load.image('lode-runner23', 'files/background/lode-runner/lode-runner (23).gif');
+        this.load.image('lode-runner24', 'files/background/lode-runner/lode-runner (24).gif');
+        this.load.image('lode-runner25', 'files/background/lode-runner/lode-runner (25).gif');
+        this.load.image('lode-runner26', 'files/background/lode-runner/lode-runner (26).gif');
+
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
 
@@ -165,6 +203,19 @@ class MainScene extends ExtendedScene {
                 { key: 'skull3' },
                 { key: 'skull4' },
                 { key: 'skull5' }
+            ],
+            frameRate: 7,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'snake-move',
+            frames: [
+                { key: 'snake1' },
+                { key: 'snake2' },
+                { key: 'snake3' },
+                { key: 'snake4' },
+                { key: 'snake5' }
             ],
             frameRate: 7,
             repeat: -1
@@ -247,6 +298,34 @@ class MainScene extends ExtendedScene {
             frameRate: 15,
             repeat: -1
         });
+
+        this.anims.create({
+            key: 'lode-runner',
+            frames: [
+                { key: 'lode-runner1' },
+                { key: 'lode-runner2' },
+                { key: 'lode-runner3' },
+                { key: 'lode-runner4' },
+                { key: 'lode-runner5' },
+                { key: 'lode-runner6' },
+                { key: 'lode-runner7' },
+                { key: 'lode-runner8' },
+                { key: 'lode-runner9' },
+                { key: 'lode-runner10' },
+                { key: 'lode-runner11' },
+                { key: 'lode-runner12' },
+                { key: 'lode-runner13' },
+                { key: 'lode-runner14' },
+                { key: 'lode-runner15' },
+                { key: 'lode-runner16' },
+                { key: 'lode-runner17' },
+                { key: 'lode-runner18' },
+                { key: 'lode-runner19' }
+            ],
+            frameRate: 20,
+            repeat: -1
+        });
+
         this.player = this.add.sprite(Globals.INITIAL_PLAYER_X, Globals.INITIAL_PLAYER_Y, 'player');
         this.player.setDepth(2);
 
@@ -268,8 +347,10 @@ class MainScene extends ExtendedScene {
 
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)) {
-                if (child.x < child.minX || child.x > child.maxX)
+                if (child.x < child.minX || child.x > child.maxX && child.minX < child.maxX){
                     child.speedX = -child.speedX;
+                    //child.setFlipX(!child.flipX);
+                }
             }
         });
 
@@ -307,7 +388,8 @@ class MainScene extends ExtendedScene {
 
         const playerTileX = Math.ceil(this.player.x/Globals.TILE_WIDTH);
         const playerTileY = Math.ceil(this.player.y/Globals.TILE_WIDTH);
-        const playerTile =  this.getTextureAt(playerTileX, playerTileY);
+        const playerTile = this.getTextureAt(playerTileX, playerTileY);
+        const tileAbove = this.getTextureAt(playerTileX, playerTileY - 1);
 
         if (this.cursors.right.isDown && playerTile !== 'ladder') {
             this.player.setFlipX(false);
@@ -330,7 +412,7 @@ class MainScene extends ExtendedScene {
 
             if (this.cursors.down.isDown && underlyingTile === 'ladder' && underlyingSquareCoords[0] == playerTileX)
                 this.player.y += MainScene.PLAYER_SPEED;
-            else if (this.cursors.up.isDown && playerTile === 'ladder' && underlyingSquareCoords[0] == playerTileX)
+            else if (this.cursors.up.isDown && (playerTile === 'ladder' || tileAbove === 'ladder') && underlyingSquareCoords[0] == playerTileX)
                 this.player.y -= MainScene.PLAYER_SPEED;
 
             newAnimKey = 'player';
@@ -352,6 +434,7 @@ class MainScene extends ExtendedScene {
 
         const y = rowConfig.row * Globals.TILE_WIDTH;
         let s = this.add.sprite(x, y , texture);
+        Globals.ENEMIES_COUNT += 1;
         s.speedY = 0;
 
         if (rowConfig.side === 'right'){
@@ -364,16 +447,18 @@ class MainScene extends ExtendedScene {
              s.maxX = 3*config.width/4 - 15;
         }
 
-        s.speedX = speed;
+        s.speedX = speed + (Globals.ENEMIES_COUNT % 5)/5;
         s.setScale(scale);
         if (scale < 1)
             s.y += (scale/6) * Globals.TILE_WIDTH;
 
         const textureAnimationJson = {
             'skull1': 'skull-move',
-            'kupa1' : 'kupa-move'
+            'kupa1' : 'kupa-move',
+            'snake1' : 'snake-move'
         }
-        s.play(textureAnimationJson[texture]);
+        if (textureAnimationJson[texture] != null)
+            s.play(textureAnimationJson[texture]);
         s.setDepth(5);
 
         return s;
@@ -407,6 +492,18 @@ class MainScene extends ExtendedScene {
             let s = this.createEnemy(this.kupaRows[i], 'kupa1', 0, 1);
             this.spriteGroup.add(s);
         }
+
+        for (let i = 0; i < this.snakeRows.length; i++) {
+            let s = this.createEnemy(this.snakeRows[i], 'snake1', 0, 0.23);
+            this.spriteGroup.add(s);
+        }
+
+        this.bullets.forEach(bullet => {
+            let sprite = this.createEnemy(Math.ceil(bullet.y/Globals.TILE_WIDTH), 'bullet', 0, 1);
+            //sprite.x = bullet.x;
+            sprite.setDepth(4);
+            this.spriteGroup.add(sprite);
+        })
 
         for (let i = 0; i < this.ladderColumns.length; i++){
             const y1 = this.ladderColumns[i].start * Globals.TILE_WIDTH;
@@ -500,6 +597,10 @@ class MainScene extends ExtendedScene {
                     Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                 }
+                else if (d === 'top'){
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 10;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
             }
         });
     }
@@ -509,13 +610,14 @@ class MainScene extends ExtendedScene {
         if (this.spriteGroup == undefined)
             return;
 
-        this.spriteGroup.children.iterate((child) => {
-            if (this._isEnemy(child)){
-                const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, child.x, child.y);
+        this.enemyTextures.forEach(enemyTexture => {
+            const allTextureSprites = this.getSprites(enemyTexture);
+            allTextureSprites.forEach(enemy => {
+                const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y);
                 if (distance < 3*Globals.TILE_WIDTH/4) {
                     this.scene.restart();
                 }
-            }
+            });
         });
     }
 
@@ -529,6 +631,16 @@ class MainScene extends ExtendedScene {
                 }
             });
         return texture;
+    }
+
+    getSprites(textureKey){
+        const allChildren = this.spriteGroup.getChildren();
+
+        const sprites = allChildren.filter((child) => {
+            return child.texture && child.texture.key.startsWith(textureKey);
+        });
+
+        return sprites;
     }
 
     debugWriteAllSprites(){
