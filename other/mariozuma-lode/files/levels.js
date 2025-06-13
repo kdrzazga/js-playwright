@@ -69,7 +69,7 @@ class Scene3 extends MainScene{
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
         this.skullRows= [ {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'left'} , {'row': 8, 'side': 'right'} ];
-        this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'left'} , {'row': 8, 'side': 'left'} ];
+        this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'} , {'row': 8, 'side': 'right'} ];
 
         this.nextScene['left'] = 'Scene2';
         this.nextScene['right'] = 'Scene4';
@@ -581,7 +581,7 @@ class Scene14 extends MainScene{
 
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9];
         this.skullRows= Globals.skullSwarm;
-        this.kupaRows= [ {'row': 9, 'side': 'left'}, {'row': 9, 'side': 'right'},{'row': 9, 'side': 'left'}, {'row': 9, 'side': 'right'},{'row': 9, 'side': 'left'}, {'row': 9, 'side': 'right'} ];
+        this.kupaRows= [ {'row': 9, 'side': 'left'}, {'row': 9, 'side': 'right'},{'row': 9, 'side': 'left'}, {'row': 9, 'side': 'right'} ];
 
         this.nextScene['left'] = 'Scene13';
         this.exits['left']['x'] = '0';
@@ -788,7 +788,7 @@ class Scene17 extends MainScene{
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
         this.snakeRows= [ {'row': 4, 'side': 'right'}, {'row': 5, 'side': 'right'} , {'row': 6, 'side': 'left'}
-            , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} , {'row': 10, 'side': 'left'} ];
+            , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} ];
 
         this.nextScene['left'] = 'Scene18';
         this.nextScene['right'] = 'Scene16';
@@ -817,7 +817,7 @@ class Scene18 extends MainScene{
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
         this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'} , {'row': 6, 'side': 'left'}
-            , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} , {'row': 10, 'side': 'left'} ];
+            , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'}];
 
         this.nextScene['left'] = 'Scene19';
         this.nextScene['right'] = 'Scene17';
