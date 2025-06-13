@@ -370,7 +370,7 @@ class MainScene extends ExtendedScene {
 
         for (let key of keys) {
             if (Phaser.Input.Keyboard.JustDown(key)) {
-                console.log(`Key ${key.keyCode} was pressed!`);
+                //console.log(`Key ${key.keyCode} was pressed!`);
                 let toBeDissolved = this.calculateHighlightSquare(this.player);
 
                 this.spriteGroup.children.iterate(sprite => {
@@ -447,6 +447,9 @@ class MainScene extends ExtendedScene {
              s.maxX = 3*config.width/4 - 15;
         }
 
+        if (texture === 'bullet')
+            s.maxX += 1000;
+
         s.speedX = speed + (Globals.ENEMIES_COUNT % 5)/5;
         s.setScale(scale);
         if (scale < 1)
@@ -500,12 +503,12 @@ class MainScene extends ExtendedScene {
 
         this.bullets.forEach(bullet => { //g.scene.scenes[4].getSprites('bullet')[0].y
             let sprite = this.createEnemy(Math.ceil(bullet.y/Globals.TILE_WIDTH), 'bullet', 0, 1);
+            console.log(`${sprite.minX} ${sprite.maxX}  `);
             sprite.y = bullet.y;
             sprite.minX = -100 + Globals.ENEMIES_COUNT;
-            sprite.maxX = bullet.x;
             sprite.setDepth(4);
             this.spriteGroup.add(sprite);
-        })
+        });
 
         for (let i = 0; i < this.ladderColumns.length; i++){
             const y1 = this.ladderColumns[i].start * Globals.TILE_WIDTH;

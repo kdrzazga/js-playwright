@@ -185,6 +185,16 @@ class Scene5 extends MainScene{
                 child.maxX = 11*Globals.TILE_WIDTH - 6;
             }
         });
+
+        let iter = 0;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= iter;
+            bullet.maxX +=800 + iter;
+            bullet.speedX += Math.floor(iter/100);
+            iter += 111;
+
+            bullet.x +=400;
+        });
     }
 }
 
@@ -200,6 +210,10 @@ class Scene6 extends MainScene{
             , {'row': 6, 'side': 'left'}, {'row': 8, 'side': 'left'}
             , {'row': 8, 'side': 'left'}, {'row': 8, 'side': 'left'}
             ];
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+                    {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 12},
+                    {x: 1200, y: 3*Globals.TILE_WIDTH, speedX: 25},
+                    ];
 
         this.nextScene['left'] = 'Scene5';
         this.nextScene['right'] = 'Scene7';
@@ -223,6 +237,15 @@ class Scene6 extends MainScene{
                 increase = increase + 1;
                 //child.x += Globals.TILE_WIDTH*increase/3;
             }
+        });
+        let iter = 0;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= iter;
+            bullet.maxX +=800 + iter;
+            bullet.speedX += Math.floor(iter/100);
+            iter += 111;
+
+            bullet.x +=400;
         });
     }
 }
@@ -458,6 +481,10 @@ class Scene12 extends MainScene{
 
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
 
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+                    {x: 900, y: 8*Globals.TILE_WIDTH, speedX: 12},
+                    {x: 1200, y: 8*Globals.TILE_WIDTH, speedX: 25},
+                    ];
         this.nextScene['left'] = 'Scene11';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
@@ -476,6 +503,16 @@ class Scene12 extends MainScene{
         super.createSpriteGroup();
 
         const montezuma = this.add.sprite(6.75*Globals.TILE_WIDTH, 3.35*Globals.TILE_WIDTH, 'montezuma');
+
+        let oldSpeed = 55;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= 2*oldSpeed;
+            bullet.maxX +=800 + oldSpeed;
+            bullet.speedX += oldSpeed/11;
+            oldSpeed = bullet.speedX;
+
+            bullet.x +=400;
+        });
     }
 
     //@Overrride
