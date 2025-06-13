@@ -1,7 +1,7 @@
 class Scene1 extends MainScene{
 
     constructor(){
-        super('Scene1');
+        super('Scene1'); //g.scene.scenes[0].sys.settings.key
 
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
@@ -151,10 +151,10 @@ class Scene5 extends MainScene{
             , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
             , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}];
 
-        this.bullets = [
-            {x: 200, y: 5*Globals.TILE_WIDTH, speedX: 1},
-            {x: 190, y: 7*Globals.TILE_WIDTH, speedX: 2},
-            {x: 180, y: 8*Globals.TILE_WIDTH, speedX: 1},
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+            {x: 900, y: 5*Globals.TILE_WIDTH, speedX: 12},
+            {x: 1200, y: 7*Globals.TILE_WIDTH, speedX: 25},
+            {x: 1500, y: 8*Globals.TILE_WIDTH, speedX: 8},
             ];
         this.ladderColumns = [ {'column' : 5, 'start' : 3, 'end' : 11}];
 

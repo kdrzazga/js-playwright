@@ -349,7 +349,7 @@ class MainScene extends ExtendedScene {
             if (this._isEnemy(child)) {
                 if (child.x < child.minX || child.x > child.maxX && child.minX < child.maxX){
                     child.speedX = -child.speedX;
-                    //child.setFlipX(!child.flipX);
+                    child.setFlipX(child.speedX < 0);
                 }
             }
         });
@@ -498,9 +498,11 @@ class MainScene extends ExtendedScene {
             this.spriteGroup.add(s);
         }
 
-        this.bullets.forEach(bullet => {
+        this.bullets.forEach(bullet => { //g.scene.scenes[4].getSprites('bullet')[0].y
             let sprite = this.createEnemy(Math.ceil(bullet.y/Globals.TILE_WIDTH), 'bullet', 0, 1);
-            //sprite.x = bullet.x;
+            sprite.y = bullet.y;
+            sprite.minX = -100 + Globals.ENEMIES_COUNT;
+            sprite.maxX = bullet.x;
             sprite.setDepth(4);
             this.spriteGroup.add(sprite);
         })
