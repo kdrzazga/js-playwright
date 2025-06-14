@@ -711,7 +711,7 @@ class MainScene extends ExtendedScene {
 
         doors.forEach(door => {
             const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, door.x, door.y);
-            if (distance > Globals.TILE_WIDTH)
+            if (distance > 1.1*Globals.TILE_WIDTH)
                 return;
 
             const doorColor = door.texture.key.replace('door-', '');
@@ -726,8 +726,13 @@ class MainScene extends ExtendedScene {
                     const sceneKey = this.sys.settings.key;
                     Globals.doors[sceneKey][door.texture.key] = false;
                 }
+                else {
+                    let diff = door.x - this.player.x;
+                    this.player.x -= Globals.TILE_WIDTH * Math.sign(diff);
+                }
             } else {
                 console.warn(`DOOR REMAINS CLOSE. No key element found for color: ${doorColor}`);
+
             }
         });
     }
