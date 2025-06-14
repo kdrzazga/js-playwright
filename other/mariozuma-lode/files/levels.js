@@ -257,7 +257,7 @@ class Scene7 extends MainScene{
 
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
-        this.doorTiles = [ {'tileX' : 3, 'tileY': 2, 'color': 'door-green' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 2, 'color': 'door-green' }];
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
