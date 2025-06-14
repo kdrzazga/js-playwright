@@ -684,12 +684,16 @@ class MainScene extends ExtendedScene {
         if (doorKeys.length <= 0)
             return;
 
+        const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, doorKeys[0].x, doorKeys[0].y);
+        if (distance > 3*Globals.TILE_WIDTH/4)
+            return;
+
         let keyCell = document.getElementById(doorKeys[0].texture.key);
         if (keyCell.innerText === ''){
             keyCell.innerText = 'KEY';
             const sceneKey = this.sys.settings.key;
             Globals.doorKeys[sceneKey] = false;
-            //TODO remove key from scene
+            doorKeys[0].y = 2000;
         }
     }
 
