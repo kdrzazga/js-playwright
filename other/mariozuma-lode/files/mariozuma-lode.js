@@ -1,4 +1,24 @@
 class Globals {
+    static doors = {
+        'Scene7' : {
+            'door-green': true
+        },
+        'Scene10' : {
+            'door-red': true,
+            'door-blue': true
+        },
+        'Scene13' : {
+            'door-red': true
+        }
+    }
+
+    static doorKeys = {
+        'Scene4' : true,
+        'Scene7' : true,
+        'Scene8' : true,
+        'Scene9' : true
+    }
+
     static ENEMIES_COUNT = 0;
     static TILE_WIDTH = 60;
     static PLAYER_X = Globals.TILE_WIDTH;
@@ -48,6 +68,8 @@ class MainScene extends ExtendedScene {
         this.kupaRows= [];
         this.snakeRows= [];
         this.bullets = [];
+        this.keyRows = [];
+        this.doorTiles = [];
         this.enemyTextures = ['skull', 'kupa', 'snake', 'bullet'];
         this.ladderColumns = [];
 
@@ -184,6 +206,12 @@ class MainScene extends ExtendedScene {
         this.load.image('skull-pile', 'files/background/skulls.png');
 
         this.load.image('ladder', 'files/background/ladder.png');
+        this.load.image('door-red', 'files/background/door/redDoor2.png');
+        this.load.image('door-green', 'files/background/door/greenDoor.png');
+        this.load.image('door-blue', 'files/background/door/blueDoor.png');
+        this.load.image('key-red', 'files/items/key-red.png');
+        this.load.image('key-green', 'files/items/key-green.png');
+        this.load.image('key-blue', 'files/items/key-blue.png');
     }
 
     create(){
@@ -349,12 +377,14 @@ class MainScene extends ExtendedScene {
             if (this._isEnemy(child)) {
                 if (child.x < child.minX || child.x > child.maxX && child.minX < child.maxX){
                     child.speedX = -child.speedX;
-                    //child.setFlipX(!child.flipX);
+                    child.setFlipX(child.speedX < 0);
                 }
             }
         });
 
         this.checkEnemyCollision();
+        this.checkKeyGrab();
+        this.checkDoor();
     }
 
     checkFireKeys(){
@@ -370,7 +400,7 @@ class MainScene extends ExtendedScene {
 
         for (let key of keys) {
             if (Phaser.Input.Keyboard.JustDown(key)) {
-                console.log(`Key ${key.keyCode} was pressed!`);
+                //console.log(`Key ${key.keyCode} was pressed!`);
                 let toBeDissolved = this.calculateHighlightSquare(this.player);
 
                 this.spriteGroup.children.iterate(sprite => {
@@ -447,6 +477,9 @@ class MainScene extends ExtendedScene {
              s.maxX = 3*config.width/4 - 15;
         }
 
+        if (texture === 'bullet')
+            s.maxX += 1000;
+
         s.speedX = speed + (Globals.ENEMIES_COUNT % 5)/5;
         s.setScale(scale);
         if (scale < 1)
@@ -498,12 +531,38 @@ class MainScene extends ExtendedScene {
             this.spriteGroup.add(s);
         }
 
-        this.bullets.forEach(bullet => {
+        for (let i = 0; i < this.keyRows.length; i++) {
+            const sceneKey = this.sys.settings.key;
+            if (!Globals.doorKeys[sceneKey])
+                continue;
+
+            const y = this.keyRows[i].row * Globals.TILE_WIDTH;
+            const x = 6 * Globals.TILE_WIDTH;
+            let k = this.add.sprite(x, y, this.keyRows[i].color);
+            k.setScale(0.3);
+            this.spriteGroup.add(k);
+        }
+
+        for (let i = 0; i < this.doorTiles.length; i++){
+            const color = this.doorTiles[i].color;
+            const sceneKey = this.sys.settings.key;
+            if (!Globals.doors[sceneKey][color])
+                continue;
+
+            const y = this.doorTiles[i].tileY * Globals.TILE_WIDTH;
+            const x = this.doorTiles[i].tileX * Globals.TILE_WIDTH;
+            let d = this.add.sprite(x, y, color);
+            this.spriteGroup.add(d);
+        }
+
+        this.bullets.forEach(bullet => { //g.scene.scenes[4].getSprites('bullet')[0].y
             let sprite = this.createEnemy(Math.ceil(bullet.y/Globals.TILE_WIDTH), 'bullet', 0, 1);
-            //sprite.x = bullet.x;
+            console.log(`${sprite.minX} ${sprite.maxX}  `);
+            sprite.y = bullet.y;
+            sprite.minX = -100 + Globals.ENEMIES_COUNT;
             sprite.setDepth(4);
             this.spriteGroup.add(sprite);
-        })
+        });
 
         for (let i = 0; i < this.ladderColumns.length; i++){
             const y1 = this.ladderColumns[i].start * Globals.TILE_WIDTH;
@@ -621,6 +680,58 @@ class MainScene extends ExtendedScene {
         });
     }
 
+    checkKeyGrab(){
+        let doorKeys = this.getSprites('key-');
+        if (doorKeys.length <= 0)
+            return;
+
+        const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, doorKeys[0].x, doorKeys[0].y);
+        if (distance > 3*Globals.TILE_WIDTH/4)
+            return;
+
+        let keyCell = document.getElementById(doorKeys[0].texture.key);
+        if (keyCell.innerText === ''){
+            keyCell.innerText = 'KEY';
+            const sceneKey = this.sys.settings.key;
+            Globals.doorKeys[sceneKey] = false;
+            doorKeys[0].y = 2000;
+        }
+    }
+
+    checkDoor(){
+        let doors = this.getSprites('door-');
+        if (doors.length <= 0)
+            return;
+
+        const keyElementPairs = {
+          'red': document.getElementById('key-red'),
+          'green': document.getElementById('key-green'),
+          'blue': document.getElementById('key-blue')
+        };
+
+        doors.forEach(door => {
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, door.x, door.y);
+            if (distance > Globals.TILE_WIDTH)
+                return;
+
+            const doorColor = door.texture.key.replace('door-', '');
+            const keyElement = keyElementPairs[doorColor];
+
+            if (keyElement) {
+                if (keyElement.innerText === 'KEY') {
+                    //console.log('Key matches door:', doorColor);
+                    door.y = 2000;
+                    keyElement.innerText = '';
+
+                    const sceneKey = this.sys.settings.key;
+                    Globals.doors[sceneKey][door.texture.key] = false;
+                }
+            } else {
+                console.warn(`DOOR REMAINS CLOSE. No key element found for color: ${doorColor}`);
+            }
+        });
+    }
+
     getTextureAt(row, column){
         let texture = '';
         this.spriteGroup.children.iterate(sprite => {
@@ -631,6 +742,18 @@ class MainScene extends ExtendedScene {
                 }
             });
         return texture;
+    }
+
+    addKeyToInventory(color){
+        const keyCellSelector = color + '-item';
+        const keyCell = document.getElementById(keyCellSelector);
+        keyCell.innerText = 'KEY';
+    }
+
+    removeKeyFromInventory(color){
+        const keyCellSelector = color + '-item';
+        const keyCell = document.getElementById(keyCellSelector);
+        keyCell.innerText = '';
     }
 
     getSprites(textureKey){
