@@ -257,6 +257,7 @@ class Scene7 extends MainScene{
 
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.doorTiles = [ {'tileX' : 3, 'tileY': 2, 'color': 'green-door' }];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
         this.exits['left']['x'] = '0';
@@ -375,7 +376,9 @@ class Scene10 extends MainScene{
             ];
 
         this.snakeRows= [ {'row': 4, 'side': 'right'}
-        ]
+        ];
+
+        this.doorTiles = [ {'tileX' : 6, 'tileY': 2, 'color': 'red-door' },{'tileX' : 9, 'tileY': 2, 'color': 'blue-door' }, ];
 
         this.nextScene['left'] = 'Scene9';
         this.exits['left']['x'] = '0';
@@ -552,6 +555,8 @@ class Scene13 extends MainScene{
 
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9];
         this.skullRows= Globals.skullSwarm;
+
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'red-door' }];
 
         this.nextScene['left'] = 'Scene12';
         this.exits['left']['x'] = '0';
@@ -826,6 +831,8 @@ class Scene17 extends MainScene{
 
         this.snakeRows= [ {'row': 4, 'side': 'right'}, {'row': 5, 'side': 'right'} , {'row': 6, 'side': 'left'}
             , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} ];
+
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 3, 'color': 'red-door' }];
 
         this.nextScene['left'] = 'Scene18';
         this.nextScene['right'] = 'Scene16';

@@ -49,6 +49,7 @@ class MainScene extends ExtendedScene {
         this.snakeRows= [];
         this.bullets = [];
         this.keyRows = [];
+        this.doorTiles = [];
         this.enemyTextures = ['skull', 'kupa', 'snake', 'bullet'];
         this.ladderColumns = [];
 
@@ -185,6 +186,9 @@ class MainScene extends ExtendedScene {
         this.load.image('skull-pile', 'files/background/skulls.png');
 
         this.load.image('ladder', 'files/background/ladder.png');
+        this.load.image('red-door', 'files/background/door/redDoor2.png');
+        this.load.image('green-door', 'files/background/door/greenDoor.png');
+        this.load.image('blue-door', 'files/background/door/blueDoor.png');
         this.load.image('red-key', 'files/items/key-red.png');
         this.load.image('green-key', 'files/items/key-green.png');
         this.load.image('blue-key', 'files/items/key-blue.png');
@@ -508,8 +512,16 @@ class MainScene extends ExtendedScene {
         for (let i = 0; i < this.keyRows.length; i++) {
             const y = this.keyRows[i].row * Globals.TILE_WIDTH;
             x = 6 * Globals.TILE_WIDTH;
-            let k = this.add.sprite(x, y , 'red-key');
+            let k = this.add.sprite(x, y, 'red-key');
             this.spriteGroup.add(k);
+        }
+
+        for (let i = 0; i < this.doorTiles.length; i++){
+
+            const y = this.doorTiles[i].tileY * Globals.TILE_WIDTH;
+            const x = this.doorTiles[i].tileX * Globals.TILE_WIDTH;
+            let d = this.add.sprite(x, y, this.doorTiles[i].color);
+            this.spriteGroup.add(d);
         }
 
         this.bullets.forEach(bullet => { //g.scene.scenes[4].getSprites('bullet')[0].y
@@ -647,6 +659,18 @@ class MainScene extends ExtendedScene {
                 }
             });
         return texture;
+    }
+
+    addKeyToInventory(color){
+        const keyCellSelector = color + '-item';
+        const keyCell = document.getElementById(keyCellSelector);
+        keyCell.innerText = 'KEY';
+    }
+
+    removeKeyFromInventory(color){
+        const keyCellSelector = color + '-item';
+        const keyCell = document.getElementById(keyCellSelector);
+        keyCell.innerText = '';
     }
 
     getSprites(textureKey){
