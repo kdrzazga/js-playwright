@@ -994,7 +994,7 @@ class Scene21 extends MainScene{
         this.skullRows= Globals.skullSwarm;
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
 
-        this.nextScene['left'] = 'Scene21';
+        this.nextScene['left'] = 'Scene22';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
 
@@ -1051,3 +1051,72 @@ class Scene21 extends MainScene{
         });
     }
 }
+
+
+class Scene22 extends MainScene{
+
+    constructor(){
+        super('Scene22');
+
+        this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
+
+        this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
+
+        this.nextScene['left'] = 'Scene10';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene21';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 6.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 4; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+
+        let pipe = this.add.sprite(60, 450 -Globals.TILE_WIDTH, 'pipe-down');
+        pipe.setDepth(10)
+    }
+
+    //@Overrride
+    checkExit(){
+         const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
+}
+

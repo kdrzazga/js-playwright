@@ -151,6 +151,7 @@ class MainScene extends ExtendedScene {
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
+        this.load.image('pipe-down', 'files/background/pipeD.png');
 
         this.load.image('fire1', 'files/background/fire/fire (1).gif');
         this.load.image('fire2', 'files/background/fire/fire (2).gif');
