@@ -511,13 +511,13 @@ class MainScene extends ExtendedScene {
 
         for (let i = 0; i < this.keyRows.length; i++) {
             const y = this.keyRows[i].row * Globals.TILE_WIDTH;
-            x = 6 * Globals.TILE_WIDTH;
-            let k = this.add.sprite(x, y, 'red-key');
+            const x = 6 * Globals.TILE_WIDTH;
+            let k = this.add.sprite(x, y, this.keyRows[i].color);
+            k.setScale(0.3);
             this.spriteGroup.add(k);
         }
 
         for (let i = 0; i < this.doorTiles.length; i++){
-
             const y = this.doorTiles[i].tileY * Globals.TILE_WIDTH;
             const x = this.doorTiles[i].tileX * Globals.TILE_WIDTH;
             let d = this.add.sprite(x, y, this.doorTiles[i].color);

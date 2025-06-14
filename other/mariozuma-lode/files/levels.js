@@ -105,6 +105,8 @@ class Scene4 extends MainScene{
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
         this.kupaRows= [ {'row': 2, 'side': 'left'} ];
         this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'right'} , {'row': 7, 'side': 'left'} ];
+        this.keyRows = [ {'row': 2, 'color': 'green-key'}
+        ];
 
         this.nextScene['left'] = 'Scene3';
         this.nextScene['right'] = 'Scene5';
@@ -258,6 +260,8 @@ class Scene7 extends MainScene{
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.doorTiles = [ {'tileX' : 3, 'tileY': 2, 'color': 'green-door' }];
+        this.keyRows = [ {'row': 2, 'color': 'red-key'}
+        ];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
         this.exits['left']['x'] = '0';
@@ -301,6 +305,8 @@ class Scene8 extends MainScene{
 
         this.nonBrickRows = [1,2,5,6,7,8,9,10];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.keyRows = [ {'row': 2, 'color': 'blue-key'}
+        ];
         this.nextScene['left'] = 'Scene7';
         //no passage to 'Scene9';
         this.exits['left']['x'] = '0';
@@ -337,6 +343,8 @@ class Scene9 extends MainScene{
 
         this.snakeRows= [ {'row': 2, 'side': 'left'}
             ];
+        this.keyRows = [ {'row': 2, 'color': 'blue-key'}
+        ];
 
         this.ladderColumns = [ {'column' : 2, 'start' : 0, 'end' : 1}, {'column' : 12, 'start' : 0, 'end' : 1}];
 
@@ -831,8 +839,6 @@ class Scene17 extends MainScene{
 
         this.snakeRows= [ {'row': 4, 'side': 'right'}, {'row': 5, 'side': 'right'} , {'row': 6, 'side': 'left'}
             , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} ];
-
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 3, 'color': 'red-door' }];
 
         this.nextScene['left'] = 'Scene18';
         this.nextScene['right'] = 'Scene16';
