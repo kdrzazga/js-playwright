@@ -19,7 +19,8 @@ class Globals {
         'Scene4' : true,
         'Scene7' : true,
         'Scene8' : true,
-        'Scene9' : true
+        'Scene9' : true,
+        'Scene21' : true
     }
 
     static ENEMIES_COUNT = 0;
