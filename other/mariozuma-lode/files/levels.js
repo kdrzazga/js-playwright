@@ -561,7 +561,7 @@ class Scene13 extends MainScene{
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9];
         this.skullRows= Globals.skullSwarm;
 
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'door-red' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'door-blue' }];
 
         this.nextScene['left'] = 'Scene12';
         this.exits['left']['x'] = '0';
