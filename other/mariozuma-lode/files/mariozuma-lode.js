@@ -383,6 +383,7 @@ class MainScene extends ExtendedScene {
         });
 
         this.checkEnemyCollision();
+        this.checkKeyGrab();
     }
 
     checkFireKeys(){
@@ -676,6 +677,20 @@ class MainScene extends ExtendedScene {
                 }
             });
         });
+    }
+
+    checkKeyGrab(){
+        let doorKeys = this.getSprites('key-');
+        if (doorKeys.length <= 0)
+            return;
+
+        let keyCell = document.getElementById(doorKeys[0].texture.key);
+        if (keyCell.innerText === ''){
+            keyCell.innerText = 'KEY';
+            const sceneKey = this.sys.settings.key;
+            Globals.doorKeys[sceneKey] = false;
+            //TODO remove key from scene
+        }
     }
 
     getTextureAt(row, column){
