@@ -892,8 +892,11 @@ class Scene19 extends MainScene{
         this.nonBrickRows = [1,2,5,6,7,8,9,10];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.nextScene['right'] = 'Scene18';
+        this.nextScene['left'] = 'Scene20';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '2';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
     }
 
     create(){
@@ -911,5 +914,73 @@ class Scene19 extends MainScene{
         for(let y = 5; y < 11; y++){
             xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
         }
+    }
+}
+
+class Scene20 extends MainScene{
+
+    constructor(){
+        super('Scene20');
+
+        this.nonBrickRows = [ 1,2,  4,5,6, 7,8,9,10];
+        this.skullRows= Globals.skullSwarm;
+
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 2, 'color': 'door-blue' }];
+
+        this.nextScene['left'] = 'Scene20';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene19';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase;
+                increase = (increase + 1)%7;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+
+        this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'skull-pile');
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
     }
 }

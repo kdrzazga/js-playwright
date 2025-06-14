@@ -9,6 +9,9 @@ class Globals {
         },
         'Scene13' : {
             'door-red': true
+        },
+        'Scene20' : {
+            'door-blue': true
         }
     }
 
@@ -25,28 +28,28 @@ class Globals {
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
     static PLAYER_Y = 2 * Globals.TILE_WIDTH;
     static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
-    static skullSwarm = [ {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
-        , {'row': 9, 'side': 'right'}, {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+    static skullSwarm = [ {'row': 3, 'side': 'left'}, {'row': 5, 'side': 'left'}
+        , {'row': 9, 'side': 'right'}, {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
-        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 6, 'side': 'right'}, {'row': 5, 'side': 'right'}
+        , {'row': 6, 'side': 'right'}, {'row': 6, 'side': 'right'}
         , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
-        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 5, 'side': 'left'}
+        , {'row': 3, 'side': 'left'}, {'row': 6, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
-        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 1, 'side': 'right'}, {'row': 5, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 7, 'side': 'right'}
         , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'},
-        {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
-        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 4, 'side': 'left'}, {'row': 4, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'}
         , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
         , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
-        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'}
+        , {'row': 6, 'side': 'left'}, {'row': 4, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'}
         , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
         , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
         ];
