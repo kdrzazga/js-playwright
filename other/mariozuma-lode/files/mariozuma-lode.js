@@ -9,6 +9,9 @@ class Globals {
         },
         'Scene13' : {
             'door-red': true
+        },
+        'Scene20' : {
+            'door-blue': true
         }
     }
 
@@ -16,7 +19,8 @@ class Globals {
         'Scene4' : true,
         'Scene7' : true,
         'Scene8' : true,
-        'Scene9' : true
+        'Scene9' : true,
+        'Scene21' : true
     }
 
     static ENEMIES_COUNT = 0;
@@ -25,28 +29,28 @@ class Globals {
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
     static PLAYER_Y = 2 * Globals.TILE_WIDTH;
     static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
-    static skullSwarm = [ {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
-        , {'row': 9, 'side': 'right'}, {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+    static skullSwarm = [ {'row': 3, 'side': 'left'}, {'row': 5, 'side': 'left'}
+        , {'row': 9, 'side': 'right'}, {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
-        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 6, 'side': 'right'}, {'row': 5, 'side': 'right'}
+        , {'row': 6, 'side': 'right'}, {'row': 6, 'side': 'right'}
         , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
-        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 5, 'side': 'left'}, {'row': 5, 'side': 'left'}
+        , {'row': 3, 'side': 'left'}, {'row': 6, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
-        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
+        , {'row': 1, 'side': 'right'}, {'row': 5, 'side': 'right'}
+        , {'row': 3, 'side': 'right'}, {'row': 7, 'side': 'right'}
         , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'},
-        {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
-        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'left'}
+        , {'row': 4, 'side': 'left'}, {'row': 4, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'}
         , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
         , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 1, 'side': 'left'}, {'row': 2, 'side': 'left'}
-        , {'row': 3, 'side': 'left'}, {'row': 4, 'side': 'left'}
+        , {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'}
+        , {'row': 6, 'side': 'left'}, {'row': 4, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 2, 'side': 'right'}
+        , {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'}
         , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
         , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
         ];
@@ -147,6 +151,7 @@ class MainScene extends ExtendedScene {
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
+        this.load.image('pipe-down', 'files/background/pipeD.png');
 
         this.load.image('fire1', 'files/background/fire/fire (1).gif');
         this.load.image('fire2', 'files/background/fire/fire (2).gif');
@@ -711,7 +716,7 @@ class MainScene extends ExtendedScene {
 
         doors.forEach(door => {
             const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, door.x, door.y);
-            if (distance > Globals.TILE_WIDTH)
+            if (distance > 1.1*Globals.TILE_WIDTH)
                 return;
 
             const doorColor = door.texture.key.replace('door-', '');
@@ -726,8 +731,13 @@ class MainScene extends ExtendedScene {
                     const sceneKey = this.sys.settings.key;
                     Globals.doors[sceneKey][door.texture.key] = false;
                 }
+                else {
+                    let diff = door.x - this.player.x;
+                    this.player.x -= Globals.TILE_WIDTH * Math.sign(diff);
+                }
             } else {
                 console.warn(`DOOR REMAINS CLOSE. No key element found for color: ${doorColor}`);
+
             }
         });
     }
