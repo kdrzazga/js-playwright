@@ -1,4 +1,24 @@
 class Globals {
+    static doors = {
+        'Scene7' : {
+            'door-green': true
+        },
+        'Scene10' : {
+            'door-red': true,
+            'door-blue': true
+        },
+        'Scene13' : {
+            'door-red': true
+        }
+    }
+
+    static doorKeys = {
+        'Scene4' : true,
+        'Scene7' : true,
+        'Scene8' : true,
+        'Scene9' : true
+    }
+
     static ENEMIES_COUNT = 0;
     static TILE_WIDTH = 60;
     static PLAYER_X = Globals.TILE_WIDTH;
@@ -186,12 +206,12 @@ class MainScene extends ExtendedScene {
         this.load.image('skull-pile', 'files/background/skulls.png');
 
         this.load.image('ladder', 'files/background/ladder.png');
-        this.load.image('red-door', 'files/background/door/redDoor2.png');
-        this.load.image('green-door', 'files/background/door/greenDoor.png');
-        this.load.image('blue-door', 'files/background/door/blueDoor.png');
-        this.load.image('red-key', 'files/items/key-red.png');
-        this.load.image('green-key', 'files/items/key-green.png');
-        this.load.image('blue-key', 'files/items/key-blue.png');
+        this.load.image('door-red', 'files/background/door/redDoor2.png');
+        this.load.image('door-green', 'files/background/door/greenDoor.png');
+        this.load.image('door-blue', 'files/background/door/blueDoor.png');
+        this.load.image('key-red', 'files/items/key-red.png');
+        this.load.image('key-green', 'files/items/key-green.png');
+        this.load.image('key-blue', 'files/items/key-blue.png');
     }
 
     create(){
@@ -510,6 +530,10 @@ class MainScene extends ExtendedScene {
         }
 
         for (let i = 0; i < this.keyRows.length; i++) {
+            const sceneKey = this.sys.settings.key;
+            if (!Globals.doorKeys[sceneKey])
+                continue;
+
             const y = this.keyRows[i].row * Globals.TILE_WIDTH;
             const x = 6 * Globals.TILE_WIDTH;
             let k = this.add.sprite(x, y, this.keyRows[i].color);
@@ -518,9 +542,14 @@ class MainScene extends ExtendedScene {
         }
 
         for (let i = 0; i < this.doorTiles.length; i++){
+            const color = this.doorTiles[i].color;
+            const sceneKey = this.sys.settings.key;
+            if (!Globals.doors[sceneKey][color])
+                continue;
+
             const y = this.doorTiles[i].tileY * Globals.TILE_WIDTH;
             const x = this.doorTiles[i].tileX * Globals.TILE_WIDTH;
-            let d = this.add.sprite(x, y, this.doorTiles[i].color);
+            let d = this.add.sprite(x, y, color);
             this.spriteGroup.add(d);
         }
 

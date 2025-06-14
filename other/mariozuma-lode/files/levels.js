@@ -105,7 +105,7 @@ class Scene4 extends MainScene{
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
         this.kupaRows= [ {'row': 2, 'side': 'left'} ];
         this.skullRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'right'} , {'row': 7, 'side': 'left'} ];
-        this.keyRows = [ {'row': 2, 'color': 'green-key'}
+        this.keyRows = [ {'row': 2, 'color': 'key-green'}
         ];
 
         this.nextScene['left'] = 'Scene3';
@@ -259,8 +259,8 @@ class Scene7 extends MainScene{
 
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
-        this.doorTiles = [ {'tileX' : 3, 'tileY': 2, 'color': 'green-door' }];
-        this.keyRows = [ {'row': 2, 'color': 'red-key'}
+        this.doorTiles = [ {'tileX' : 3, 'tileY': 2, 'color': 'door-green' }];
+        this.keyRows = [ {'row': 2, 'color': 'key-red'}
         ];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
@@ -305,7 +305,7 @@ class Scene8 extends MainScene{
 
         this.nonBrickRows = [1,2,5,6,7,8,9,10];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
-        this.keyRows = [ {'row': 2, 'color': 'blue-key'}
+        this.keyRows = [ {'row': 2, 'color': 'key-blue'}
         ];
         this.nextScene['left'] = 'Scene7';
         //no passage to 'Scene9';
@@ -343,7 +343,7 @@ class Scene9 extends MainScene{
 
         this.snakeRows= [ {'row': 2, 'side': 'left'}
             ];
-        this.keyRows = [ {'row': 2, 'color': 'blue-key'}
+        this.keyRows = [ {'row': 2, 'color': 'key-blue'}
         ];
 
         this.ladderColumns = [ {'column' : 2, 'start' : 0, 'end' : 1}, {'column' : 12, 'start' : 0, 'end' : 1}];
@@ -386,7 +386,7 @@ class Scene10 extends MainScene{
         this.snakeRows= [ {'row': 4, 'side': 'right'}
         ];
 
-        this.doorTiles = [ {'tileX' : 6, 'tileY': 2, 'color': 'red-door' },{'tileX' : 9, 'tileY': 2, 'color': 'blue-door' }, ];
+        this.doorTiles = [ {'tileX' : 6, 'tileY': 2, 'color': 'door-red' },{'tileX' : 9, 'tileY': 2, 'color': 'door-blue' }, ];
 
         this.nextScene['left'] = 'Scene9';
         this.exits['left']['x'] = '0';
@@ -564,7 +564,7 @@ class Scene13 extends MainScene{
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9];
         this.skullRows= Globals.skullSwarm;
 
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'red-door' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'door-red' }];
 
         this.nextScene['left'] = 'Scene12';
         this.exits['left']['x'] = '0';
@@ -914,6 +914,5 @@ class Scene19 extends MainScene{
         for(let y = 5; y < 11; y++){
             xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
         }
-
     }
 }
