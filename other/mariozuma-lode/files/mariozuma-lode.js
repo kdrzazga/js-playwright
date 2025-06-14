@@ -384,6 +384,7 @@ class MainScene extends ExtendedScene {
 
         this.checkEnemyCollision();
         this.checkKeyGrab();
+        this.checkDoor();
     }
 
     checkFireKeys(){
@@ -695,6 +696,36 @@ class MainScene extends ExtendedScene {
             Globals.doorKeys[sceneKey] = false;
             doorKeys[0].y = 2000;
         }
+    }
+
+    checkDoor(){
+        let doors = this.getSprites('door-');
+        if (doors.length <= 0)
+            return;
+
+        const keyElementPairs = {
+          'red': document.getElementById('key-red'),
+          'green': document.getElementById('key-green'),
+          'blue': document.getElementById('key-blue')
+        };
+
+        doors.forEach(door => {
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, door.x, door.y);
+            if (distance > Globals.TILE_WIDTH)
+                return;
+
+            const doorColor = door.texture.key.replace('door-', '');
+            const keyElement = keyElementPairs[doorColor];
+
+            if (keyElement) {
+                if (keyElement.innerText === 'KEY') {
+                    console.log('Key matches door:', doorColor);
+                    door.y = 2000;
+                }
+            } else {
+                console.warn(`No key element found for color: ${doorColor}`);
+            }
+        });
     }
 
     getTextureAt(row, column){

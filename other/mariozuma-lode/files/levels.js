@@ -148,9 +148,8 @@ class Scene5 extends MainScene{
         this.nonBrickRows = [1,2];
         this.nonBrickColumns = [5];
 
-        this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
-            , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}
-            , {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}, {'row': 2, 'side': 'right'}];
+        const skullRow = {'row': 1, 'side': 'right'};
+        this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow,skullRow];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
             {x: 900, y: 5*Globals.TILE_WIDTH, speedX: 12},
