@@ -719,11 +719,15 @@ class MainScene extends ExtendedScene {
 
             if (keyElement) {
                 if (keyElement.innerText === 'KEY') {
-                    console.log('Key matches door:', doorColor);
+                    //console.log('Key matches door:', doorColor);
                     door.y = 2000;
+                    keyElement.innerText = '';
+
+                    const sceneKey = this.sys.settings.key;
+                    Globals.doors[sceneKey][door.texture.key] = false;
                 }
             } else {
-                console.warn(`No key element found for color: ${doorColor}`);
+                console.warn(`DOOR REMAINS CLOSE. No key element found for color: ${doorColor}`);
             }
         });
     }
