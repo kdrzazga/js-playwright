@@ -431,7 +431,7 @@ class Scene11 extends MainScene{
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
 
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'Scene13';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '2';
     }
@@ -482,77 +482,6 @@ class Scene11 extends MainScene{
     }
 }
 
-class Scene12 extends MainScene{
-
-    constructor(){
-        super('Scene12');
-
-        this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
-
-        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
-                    {x: 900, y: 8*Globals.TILE_WIDTH, speedX: 12},
-                    {x: 1200, y: 8*Globals.TILE_WIDTH, speedX: 25},
-                    ];
-        this.nextScene['left'] = 'Scene11';
-        this.exits['left']['x'] = '0';
-        this.exits['left']['y'] = '9 ';
-
-        this.nextScene['right'] = 'Scene13';
-        this.exits['right']['x'] = '13';
-        this.exits['right']['y'] = '9';
-    }
-
-    create(){
-        super.create();
-        this.createSpriteGroup();
-    }
-
-    createSpriteGroup() {
-        super.createSpriteGroup();
-
-        const montezuma = this.add.sprite(6.75*Globals.TILE_WIDTH, 3.35*Globals.TILE_WIDTH, 'montezuma');
-
-        let oldSpeed = 55;
-        this.getSprites('bullet').forEach(bullet =>{
-            bullet.minX -= 2*oldSpeed;
-            bullet.maxX +=800 + oldSpeed;
-            bullet.speedX += oldSpeed/11;
-            oldSpeed = bullet.speedX;
-
-            bullet.x +=400;
-        });
-    }
-
-    //@Overrride
-    checkExit(){
-        const coords = this.calculateSpriteSquare(this.player);
-
-        const directions = ['left', 'right'];
-
-        directions.forEach( d => {
-            const exitX = this.exits[d]['x'];
-            const exitY = this.exits[d]['y'];
-
-            if (coords[0] == exitX && coords[1] == exitY){
-                this.scene.start(this.nextScene[d]);
-
-                if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
-                }
-                else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
-                }
-            }
-        });
-    }
-}
-
 class Scene13 extends MainScene{
 
     constructor(){
@@ -563,7 +492,7 @@ class Scene13 extends MainScene{
 
         this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'door-blue' }];
 
-        this.nextScene['left'] = 'Scene12';
+        this.nextScene['left'] = 'Scene11';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
 
@@ -1258,7 +1187,7 @@ class Scene25 extends MainScene{
                     ];
 
         this.nextScene['left'] = 'Scene24';
-        this.nextScene['right'] = 'Scene25';
+        this.nextScene['right'] = 'Scene12';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1292,3 +1221,73 @@ class Scene25 extends MainScene{
     }
 }
 
+class Scene12 extends MainScene{
+
+    constructor(){
+        super('Scene12');
+
+        this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
+
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+                    {x: 900, y: 8*Globals.TILE_WIDTH, speedX: 12},
+                    {x: 1200, y: 8*Globals.TILE_WIDTH, speedX: 25},
+                    ];
+        this.nextScene['left'] = 'Scene25';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9 ';
+
+        this.nextScene['right'] = 'Scene12';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const montezuma = this.add.sprite(6.75*Globals.TILE_WIDTH, 3.35*Globals.TILE_WIDTH, 'montezuma');
+
+        let oldSpeed = 55;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= 2*oldSpeed;
+            bullet.maxX +=800 + oldSpeed;
+            bullet.speedX += oldSpeed/11;
+            oldSpeed = bullet.speedX;
+
+            bullet.x +=400;
+        });
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
+}
