@@ -1132,6 +1132,8 @@ class Scene24 extends MainScene{
             , {'row': 8, 'side': 'right'}, {'row': 9, 'side': 'left'}
             ];
 
+        this.conveyors= [ {'row' : 7, 'rowX' : 5, 'rowY' : 7}];
+
         this.nextScene['left'] = 'Scene24';
         this.nextScene['right'] = 'Scene25';
         this.exits['left']['x'] = '0';

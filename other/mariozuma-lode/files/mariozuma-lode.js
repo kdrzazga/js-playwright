@@ -75,6 +75,7 @@ class MainScene extends ExtendedScene {
         this.kupaRows= [];
         this.snakeRows= [];
         this.bullets = [];
+        this.conveyors = [];
         this.keyRows = [];
         this.doorTiles = [];
         this.enemyTextures = ['skull', 'kupa', 'snake', 'bullet'];
@@ -210,6 +211,21 @@ class MainScene extends ExtendedScene {
         this.load.image('lode-runner25', 'files/background/lode-runner/lode-runner (25).gif');
         this.load.image('lode-runner26', 'files/background/lode-runner/lode-runner (26).gif');
 
+        this.load.image('conveyor1', 'files/background/conveyor/conveyor (1).png');
+        this.load.image('conveyor2', 'files/background/conveyor/conveyor (2).png');
+        this.load.image('conveyor3', 'files/background/conveyor/conveyor (3).png');
+        this.load.image('conveyor4', 'files/background/conveyor/conveyor (4).png');
+        this.load.image('conveyor5', 'files/background/conveyor/conveyor (5).png');
+        this.load.image('conveyor6', 'files/background/conveyor/conveyor (6).png');
+        this.load.image('conveyor7', 'files/background/conveyor/conveyor (7).png');
+        this.load.image('conveyor8', 'files/background/conveyor/conveyor (8).png');
+        this.load.image('conveyor9', 'files/background/conveyor/conveyor (9).png');
+        this.load.image('conveyor10', 'files/background/conveyor/conveyor (10).gif');
+        this.load.image('conveyor11', 'files/background/conveyor/conveyor (11).gif');
+        this.load.image('conveyor12', 'files/background/conveyor/conveyor (12).gif');
+        this.load.image('conveyor13', 'files/background/conveyor/conveyor (13).gif');
+        this.load.image('conveyor14', 'files/background/conveyor/conveyor (14).gif');
+
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
 
@@ -296,6 +312,23 @@ class MainScene extends ExtendedScene {
                 { key: 'player1' },
                 { key: 'player2' },
                 { key: 'player3' }
+            ],
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'conveyor-move',
+            frames: [
+                { key: 'conveyor1' },
+                { key: 'conveyor2' },
+                { key: 'conveyor3' },
+                { key: 'conveyor4' },
+                { key: 'conveyor5' },
+                { key: 'conveyor6' },
+                { key: 'conveyor7' },
+                { key: 'conveyor8' },
+                { key: 'conveyor9' }
             ],
             frameRate: 5,
             repeat: -1
@@ -582,6 +615,17 @@ class MainScene extends ExtendedScene {
                 ladderCell.setDepth(1);
                 this.spriteGroup.add(ladderCell);
             }
+        }
+
+        for (let i = 0; i < this.conveyors.length; i++){
+            const x = this.conveyors[i].rowX * Globals.TILE_WIDTH;
+            const y = this.conveyors[i].rowY * Globals.TILE_WIDTH;
+            const conveyor = this.add.sprite(x, y, 'conveyor1');
+            conveyor.setDepth(11);
+            conveyor.setScale(0.5);
+            conveyor.play('conveyor-move');
+
+            this.spriteGroup.add(conveyor);
         }
     }
 
