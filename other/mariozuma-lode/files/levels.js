@@ -148,7 +148,7 @@ class Scene5 extends MainScene{
         this.nonBrickRows = [1,2];
         this.nonBrickColumns = [5];
 
-        const skullRow = {'row': 1, 'side': 'right'};
+        const skullRow = {'row': 2, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow,skullRow];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
@@ -257,7 +257,7 @@ class Scene7 extends MainScene{
 
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
-        this.doorTiles = [ {'tileX' : 3, 'tileY': 2, 'color': 'door-green' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 2, 'color': 'door-green' }];
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
@@ -431,7 +431,7 @@ class Scene11 extends MainScene{
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
 
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'Scene13';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '2';
     }
@@ -482,77 +482,6 @@ class Scene11 extends MainScene{
     }
 }
 
-class Scene12 extends MainScene{
-
-    constructor(){
-        super('Scene12');
-
-        this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
-
-        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
-                    {x: 900, y: 8*Globals.TILE_WIDTH, speedX: 12},
-                    {x: 1200, y: 8*Globals.TILE_WIDTH, speedX: 25},
-                    ];
-        this.nextScene['left'] = 'Scene11';
-        this.exits['left']['x'] = '0';
-        this.exits['left']['y'] = '9 ';
-
-        this.nextScene['right'] = 'Scene13';
-        this.exits['right']['x'] = '13';
-        this.exits['right']['y'] = '9';
-    }
-
-    create(){
-        super.create();
-        this.createSpriteGroup();
-    }
-
-    createSpriteGroup() {
-        super.createSpriteGroup();
-
-        const montezuma = this.add.sprite(6.75*Globals.TILE_WIDTH, 3.35*Globals.TILE_WIDTH, 'montezuma');
-
-        let oldSpeed = 55;
-        this.getSprites('bullet').forEach(bullet =>{
-            bullet.minX -= 2*oldSpeed;
-            bullet.maxX +=800 + oldSpeed;
-            bullet.speedX += oldSpeed/11;
-            oldSpeed = bullet.speedX;
-
-            bullet.x +=400;
-        });
-    }
-
-    //@Overrride
-    checkExit(){
-        const coords = this.calculateSpriteSquare(this.player);
-
-        const directions = ['left', 'right'];
-
-        directions.forEach( d => {
-            const exitX = this.exits[d]['x'];
-            const exitY = this.exits[d]['y'];
-
-            if (coords[0] == exitX && coords[1] == exitY){
-                this.scene.start(this.nextScene[d]);
-
-                if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
-                }
-                else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
-                }
-            }
-        });
-    }
-}
-
 class Scene13 extends MainScene{
 
     constructor(){
@@ -563,7 +492,7 @@ class Scene13 extends MainScene{
 
         this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'door-blue' }];
 
-        this.nextScene['left'] = 'Scene12';
+        this.nextScene['left'] = 'Scene11';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
 
@@ -892,8 +821,11 @@ class Scene19 extends MainScene{
         this.nonBrickRows = [1,2,5,6,7,8,9,10];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.nextScene['right'] = 'Scene18';
+        this.nextScene['left'] = 'Scene20';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '2';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
     }
 
     create(){
@@ -911,5 +843,453 @@ class Scene19 extends MainScene{
         for(let y = 5; y < 11; y++){
             xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
         }
+    }
+}
+
+class Scene20 extends MainScene{
+
+    constructor(){
+        super('Scene20');
+
+        this.nonBrickRows = [ 1,2,  4,5,6, 7,8,9,10];
+        this.skullRows= Globals.skullSwarm;
+
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 2, 'color': 'door-blue' }];
+
+        this.nextScene['left'] = 'Scene21';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene19';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase;
+                increase = (increase + 1)%7;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+
+        this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'skull-pile');
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
+}
+
+class Scene21 extends MainScene{
+
+    constructor(){
+        super('Scene21');
+
+        this.nonBrickRows = [ 1,2,  4,5,6, 7,8,9,10];
+        this.skullRows= Globals.skullSwarm;
+        this.keyRows = [ {'row': 2, 'color': 'key-red'}];
+
+        this.nextScene['left'] = 'Scene22';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene20';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase;
+                increase = (increase + 1)%7;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+
+        this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'skull-pile');
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
+}
+
+class Scene22 extends MainScene{
+
+    constructor(){
+        super('Scene22');
+
+        this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
+
+        this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
+
+        this.nextScene['left'] = 'Scene23';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene21';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 6.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 4; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+
+        let pipe = this.add.sprite(61, 440 -Globals.TILE_WIDTH, 'pipe-down');
+        pipe.setDepth(10)
+    }
+
+    //@Overrride
+    checkExit(){
+         const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
+}
+
+class Scene23 extends MainScene{
+
+    constructor(){
+        super('Scene23');
+
+        this.nonBrickRows = [0,1,2, 3,4,5,6, 8,9];
+        this.keyRows = [ {'row': 8, 'color': 'key-green'}];
+
+        this.nextScene['left'] = 'Scene23';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene24';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 3.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 0; y < 7; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+
+        let pipe = this.add.sprite(738, 800, 'pipe-down');
+        pipe.setFlipX(true);
+        pipe.setDepth(10)
+        let pipeLeft = this.add.sprite(-3, 235, 'pipe-down');
+        pipeLeft.setFlipX(true);
+        pipeLeft.setDepth(10)
+    }
+
+    //@Overrride
+    checkExit(){
+         const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
+    }
+}
+
+class Scene24 extends MainScene{
+
+    constructor(){
+        super('Scene24');
+
+        this.nonBrickRows = [1,2, 4,6, 8,9];
+        this.keyRows = [ {'row': 6, 'color': 'key-blue'}];
+
+        this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
+            , {'row': 6, 'side': 'left'}, {'row': 9, 'side': 'left'}
+            , {'row': 8, 'side': 'right'}, {'row': 9, 'side': 'left'}
+            ];
+
+        this.conveyors= [ {'row' : 7, 'rowX' : 5, 'rowY' : 7}];
+
+        this.nextScene['left'] = 'Scene24';
+        this.nextScene['right'] = 'Scene25';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 2;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase % 4;
+                increase = increase + 1;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+
+    let pipeLeft = this.add.sprite(-3, 235-4*Globals.TILE_WIDTH, 'pipe-down');
+    pipeLeft.setFlipX(true);
+    pipeLeft.setDepth(10)
+    let pipeMid = this.add.sprite(5.5*Globals.TILE_WIDTH, 235-2*Globals.TILE_WIDTH, 'pipe-down');
+    pipeMid.setFlipX(true);
+    pipeMid.setDepth(10)
+    let pipeRight = this.add.sprite(12*Globals.TILE_WIDTH, 235, 'pipe-down');
+    pipeLeft.setFlipX(true);
+    pipeRight.setDepth(10)
+    }
+}
+
+class Scene25 extends MainScene{
+
+    constructor(){
+        super('Scene25');
+
+        this.nonBrickRows = [1,2, 4,6, 8,9];
+        this.keyRows = [ {'row': 6, 'color': 'key-blue'}];
+
+        this.kupaRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'left'}
+            , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
+            , {'row': 6, 'side': 'left'}, {'row': 9, 'side': 'left'}
+            , {'row': 9, 'side': 'left'}
+            ];
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+                    {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 12},
+                    {x: 1200, y: 3*Globals.TILE_WIDTH, speedX: 25},
+                    ];
+
+        this.nextScene['left'] = 'Scene24';
+        this.nextScene['right'] = 'Scene12';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 2;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child) && !child.texture.key.startsWith('snake')){
+                child.speedX += increase % 4;
+                increase = increase + 1;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+        let iter = 0;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= iter;
+            bullet.maxX +=800 + iter;
+            bullet.speedX += Math.floor(iter/100);
+            iter += 111;
+
+            bullet.x +=400;
+        });
+    }
+}
+
+class Scene12 extends MainScene{
+
+    constructor(){
+        super('Scene12');
+
+        this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
+
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+                    {x: 900, y: 8*Globals.TILE_WIDTH, speedX: 12},
+                    {x: 1200, y: 8*Globals.TILE_WIDTH, speedX: 25},
+                    ];
+        this.nextScene['left'] = 'Scene25';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9 ';
+
+        this.nextScene['right'] = 'Scene12';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const montezuma = this.add.sprite(6.75*Globals.TILE_WIDTH, 3.35*Globals.TILE_WIDTH, 'montezuma');
+
+        let oldSpeed = 55;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= 2*oldSpeed;
+            bullet.maxX +=800 + oldSpeed;
+            bullet.speedX += oldSpeed/11;
+            oldSpeed = bullet.speedX;
+
+            bullet.x +=400;
+        });
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
+                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                }
+            }
+        });
     }
 }
