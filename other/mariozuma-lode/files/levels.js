@@ -1239,18 +1239,18 @@ class Scene24 extends MainScene{
     }
 }
 
-
 class Scene25 extends MainScene{
 
     constructor(){
         super('Scene25');
 
         this.nonBrickRows = [1,2, 4,6, 8,9];
+        this.keyRows = [ {'row': 6, 'color': 'key-blue'}];
 
         this.kupaRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'left'}
             , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
             , {'row': 6, 'side': 'left'}, {'row': 9, 'side': 'left'}
-            , {'row': 9, 'side': 'left'}, {'row': 9, 'side': 'left'}
+            , {'row': 9, 'side': 'left'}
             ];
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
                     {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 12},
