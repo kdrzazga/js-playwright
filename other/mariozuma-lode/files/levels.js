@@ -1204,7 +1204,7 @@ class Scene24 extends MainScene{
             ];
 
         this.nextScene['left'] = 'Scene24';
-        this.nextScene['right'] = 'Scene24';
+        this.nextScene['right'] = 'Scene25';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1236,6 +1236,59 @@ class Scene24 extends MainScene{
     let pipeRight = this.add.sprite(12*Globals.TILE_WIDTH, 235, 'pipe-down');
     pipeLeft.setFlipX(true);
     pipeRight.setDepth(10)
+    }
+}
+
+
+class Scene25 extends MainScene{
+
+    constructor(){
+        super('Scene25');
+
+        this.nonBrickRows = [1,2, 4,6, 8,9];
+
+        this.kupaRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'left'}
+            , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
+            , {'row': 6, 'side': 'left'}, {'row': 9, 'side': 'left'}
+            , {'row': 9, 'side': 'left'}, {'row': 9, 'side': 'left'}
+            ];
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+                    {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 12},
+                    {x: 1200, y: 3*Globals.TILE_WIDTH, speedX: 25},
+                    ];
+
+        this.nextScene['left'] = 'Scene24';
+        this.nextScene['right'] = 'Scene25';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 2;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child) && !child.texture.key.startsWith('snake')){
+                child.speedX += increase % 4;
+                increase = increase + 1;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+        let iter = 0;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= iter;
+            bullet.maxX +=800 + iter;
+            bullet.speedX += Math.floor(iter/100);
+            iter += 111;
+
+            bullet.x +=400;
+        });
     }
 }
 
