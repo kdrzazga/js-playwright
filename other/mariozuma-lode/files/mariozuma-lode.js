@@ -220,11 +220,6 @@ class MainScene extends ExtendedScene {
         this.load.image('conveyor7', 'files/background/conveyor/conveyor (7).png');
         this.load.image('conveyor8', 'files/background/conveyor/conveyor (8).png');
         this.load.image('conveyor9', 'files/background/conveyor/conveyor (9).png');
-        this.load.image('conveyor10', 'files/background/conveyor/conveyor (10).gif');
-        this.load.image('conveyor11', 'files/background/conveyor/conveyor (11).gif');
-        this.load.image('conveyor12', 'files/background/conveyor/conveyor (12).gif');
-        this.load.image('conveyor13', 'files/background/conveyor/conveyor (13).gif');
-        this.load.image('conveyor14', 'files/background/conveyor/conveyor (14).gif');
 
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
