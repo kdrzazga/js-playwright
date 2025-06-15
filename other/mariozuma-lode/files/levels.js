@@ -1119,22 +1119,21 @@ class Scene22 extends MainScene{
     }
 }
 
-
 class Scene23 extends MainScene{
 
     constructor(){
         super('Scene23');
 
         this.nonBrickRows = [0,1,2, 3,4,5,6, 8,9];
-
+        this.keyRows = [ {'row': 8, 'color': 'key-green'}];
 
         this.nextScene['left'] = 'Scene23';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
 
-        this.nextScene['right'] = 'Scene23';
+        this.nextScene['right'] = 'Scene24';
         this.exits['right']['x'] = '13';
-        this.exits['right']['y'] = '2';
+        this.exits['right']['y'] = '9';
     }
 
     create(){
@@ -1180,13 +1179,63 @@ class Scene23 extends MainScene{
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
+                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
             }
         });
+    }
+}
+
+class Scene24 extends MainScene{
+
+    constructor(){
+        super('Scene24');
+
+        this.nonBrickRows = [1,2, 4,6, 8,9];
+        this.keyRows = [ {'row': 6, 'color': 'key-blue'}];
+
+        this.skullRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'right'}
+            , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
+            , {'row': 6, 'side': 'left'}, {'row': 9, 'side': 'left'}
+            , {'row': 8, 'side': 'right'}, {'row': 9, 'side': 'left'}
+            ];
+
+        this.nextScene['left'] = 'Scene24';
+        this.nextScene['right'] = 'Scene24';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 2;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                child.speedX += increase % 4;
+                increase = increase + 1;
+                //child.x += Globals.TILE_WIDTH*increase/3;
+            }
+        });
+
+    let pipeLeft = this.add.sprite(-3, 235-4*Globals.TILE_WIDTH, 'pipe-down');
+    pipeLeft.setFlipX(true);
+    pipeLeft.setDepth(10)
+    let pipeMid = this.add.sprite(5.5*Globals.TILE_WIDTH, 235-2*Globals.TILE_WIDTH, 'pipe-down');
+    pipeMid.setFlipX(true);
+    pipeMid.setDepth(10)
+    let pipeRight = this.add.sprite(12*Globals.TILE_WIDTH, 235, 'pipe-down');
+    pipeLeft.setFlipX(true);
+    pipeRight.setDepth(10)
     }
 }
 
