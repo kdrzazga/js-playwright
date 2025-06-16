@@ -382,6 +382,7 @@ class Scene10 extends MainScene{
 
         this.snakeRows= [ {'row': 4, 'side': 'right'}
         ];
+        this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 5}];
 
         this.doorTiles = [ {'tileX' : 6, 'tileY': 2, 'color': 'door-red' },{'tileX' : 9, 'tileY': 2, 'color': 'door-blue' }, ];
 
@@ -1132,7 +1133,7 @@ class Scene24 extends MainScene{
             , {'row': 8, 'side': 'right'}, {'row': 9, 'side': 'left'}
             ];
 
-        this.conveyors= [ {'row' : 7, 'rowX' : 5, 'rowY' : 7}];
+        this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 7}];
 
         this.nextScene['left'] = 'Scene24';
         this.nextScene['right'] = 'Scene25';
