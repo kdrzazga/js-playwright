@@ -675,7 +675,7 @@ class Scene15 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'top'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 13;
+                    Globals.PLAYER_X = 776; //to allow climbing the ladder
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
@@ -691,7 +691,7 @@ class Scene15 extends MainScene{
     }
 }
 
-class Scene16 extends MainScene{
+class Scene16 extends MainScene{ //g.scene.scenes[14].scene.key
 
     constructor(){
         super('Scene16');
@@ -764,7 +764,7 @@ class Scene17 extends MainScene{
 
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
-        this.snakeRows= [ {'row': 4, 'side': 'right'}, {'row': 5, 'side': 'right'} , {'row': 6, 'side': 'left'}
+        this.snakeRows= [ {'row': 2, 'side': 'right'}, {'row': 5, 'side': 'right'} , {'row': 6, 'side': 'left'}
             , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} ];
 
         this.nextScene['left'] = 'Scene18';
@@ -794,7 +794,7 @@ class Scene18 extends MainScene{
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
         this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'} , {'row': 6, 'side': 'left'}
-            , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'}];
+            , {'row': 7, 'side': 'left'} , {'row': 2, 'side': 'left'}];
 
         this.nextScene['left'] = 'Scene19';
         this.nextScene['right'] = 'Scene17';
@@ -1033,7 +1033,7 @@ class Scene22 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 0.2;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
@@ -1232,8 +1232,8 @@ class Scene12 extends MainScene{
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
-                    {x: 900, y: 9*Globals.TILE_WIDTH, speedX: 12},
-                    {x: 1200, y: 8*Globals.TILE_WIDTH, speedX: 25},
+                    {x: 300, y: 9*Globals.TILE_WIDTH, speedX: 7},
+                    {x: 1600, y: 8*Globals.TILE_WIDTH, speedX: 12},
                     ];
         this.nextScene['left'] = 'Scene25';
         this.exits['left']['x'] = '0';
