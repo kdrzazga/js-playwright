@@ -30,7 +30,7 @@ class Globals {
     static TILE_WIDTH = 60;
     static PLAYER_X = Globals.TILE_WIDTH;
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
-    static PLAYER_Y = 2 * Globals.TILE_WIDTH;
+    static PLAYER_Y = Globals.TILE_WIDTH * 2;
     static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
     static skullSwarm = [ {'row': 3, 'side': 'left'}, {'row': 5, 'side': 'left'}
         , {'row': 9, 'side': 'right'}, {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
@@ -155,6 +155,7 @@ class MainScene extends ExtendedScene {
         this.load.image('princess', '../common/pics/princess.png');
         this.load.image('cage', '../common/pics/cage.png');
         this.load.image('save-me', '../common/pics/saveMe.png');
+        this.load.image('thank-you', '../common/pics/thankYou.png');
         this.load.image('help', '../common/pics/help.png');
         this.load.image('nothing', '../common/pics/nothing.png');
         this.load.image('panama-joe', 'files/background/panamaJoe.png');

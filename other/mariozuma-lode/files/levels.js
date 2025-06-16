@@ -1305,7 +1305,8 @@ class Scene26 extends MainScene{
 
         const skullRow = {'row': 9, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
-            , skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow];
+            , skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
+            , skullRow, skullRow, skullRow, skullRow];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
             {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 50},
@@ -1324,6 +1325,13 @@ class Scene26 extends MainScene{
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '9';
+        
+        this.princess;
+        this.princessCage;
+        this.princessSpeechBubble;
+        this.panamaJoe;
+        this.panamaJoeCage;
+        this.panamaJoeSpeechBubble;
     }
 
     create(){
@@ -1343,27 +1351,49 @@ class Scene26 extends MainScene{
             }
         });
 
-        const princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
-        const princessCage = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
-        const princessSpeechBubble =  this.add.sprite(4*Globals.TILE_WIDTH, 4.5 * Globals.TILE_WIDTH, 'speech-bubble');
-        princessSpeechBubble.setDepth(12);
-        const panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
-        const cage2 = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
-        const speechBubble2 =  this.add.sprite(9.5*Globals.TILE_WIDTH, 4.5 * Globals.TILE_WIDTH, 'speech-bubble');
-        speechBubble2.setDepth(12);
+        this.princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
+        this.princessCage = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
+        this.princessSpeechBubble =  this.add.sprite(4*Globals.TILE_WIDTH, 4.5 * Globals.TILE_WIDTH, 'speech-bubble');
+        this.princessSpeechBubble.setDepth(12);
+        this.panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
+        this.panamaJoeCage = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
+        this.panamaJoeSpeechBubble =  this.add.sprite(9.5*Globals.TILE_WIDTH, 4.5 * Globals.TILE_WIDTH, 'speech-bubble');
+        this.panamaJoeSpeechBubble.setDepth(12);
 
-        princessSpeechBubble.play('speech-bubble');
-        speechBubble2.play('speech-bubble');
-        speechBubble2.anims.timeScale = 2;
+        this.princessSpeechBubble.play('speech-bubble');
+        this.panamaJoeSpeechBubble.play('speech-bubble');
+        this.panamaJoeSpeechBubble.anims.timeScale = 2;
 
         let iter = 0;
         this.getSprites('bullet').forEach(bullet =>{
             bullet.minX -= iter;
             bullet.maxX +=800 + iter;
-            bullet.speedX += Math.floor(iter/100);
-            iter += 111;
 
             bullet.x +=400;
+        });
+    }
+
+    update(time, delta) {
+        super.update(time, delta);
+
+        if(this.princessCage.y > 1000 && this.panamaJoeCage.y > 1000)
+            this.time.delayedCall(3456, () => {
+                this.scene.start('Scene27');
+            });
+    }
+
+    //@Override
+    checkEnemyCollision() {
+        super.checkEnemyCollision();
+        const cageBubblePairs = [[this.princessCage, this.princessSpeechBubble], [this.panamaJoeCage,this.panamaJoeSpeechBubble]];
+
+        cageBubblePairs.forEach(pair => {
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, pair[0].x, pair[0].y);
+            if (distance < Globals.TILE_WIDTH){
+                pair[0].y += 2000;
+                pair[1].anims.stop();
+                pair[1].setTexture('thank-you');
+            }
         });
     }
 }
