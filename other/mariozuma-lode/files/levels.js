@@ -1396,14 +1396,18 @@ class Scene26 extends MainScene{
     //@Override
     checkEnemyCollision() {
         super.checkEnemyCollision();
-        const cageBubblePairs = [[this.princessCage, this.princessSpeechBubble], [this.panamaJoeCage,this.panamaJoeSpeechBubble]];
+        
+        const cageBubbleSelectorQuartet = [[this.princessCage, this.princessSpeechBubble, "princess", '../common/pics/princess']
+            , [this.panamaJoeCage,this.panamaJoeSpeechBubble, "joe-panama", 'files/background/panamaJoe']];
 
-        cageBubblePairs.forEach(pair => {
-            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, pair[0].x, pair[0].y);
+        cageBubbleSelectorQuartet.forEach(quartet => {
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, quartet[0].x, quartet[0].y);
             if (distance < Globals.TILE_WIDTH){
-                pair[0].y += 2000;
-                pair[1].anims.stop();
-                pair[1].setTexture('thank-you');
+                quartet[0].y += 2000;
+                quartet[1].anims.stop();
+                quartet[1].setTexture('thank-you');
+                const tdElement = document.getElementById(quartet[2]);
+                tdElement.innerHTML = '<img src="'+ quartet[3] + '.png" style="width:35%;">';
             }
         });
     }
