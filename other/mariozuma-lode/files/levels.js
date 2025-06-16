@@ -1345,7 +1345,16 @@ class Scene26 extends MainScene{
 
         const princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
         const princessCage = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
+        const princessSpeechBubble =  this.add.sprite(4*Globals.TILE_WIDTH, 4.5 * Globals.TILE_WIDTH, 'speech-bubble');
+        princessSpeechBubble.setDepth(12);
+        const panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
         const cage2 = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
+        const speechBubble2 =  this.add.sprite(9.5*Globals.TILE_WIDTH, 4.5 * Globals.TILE_WIDTH, 'speech-bubble');
+        speechBubble2.setDepth(12);
+
+        princessSpeechBubble.play('speech-bubble');
+        speechBubble2.play('speech-bubble');
+        speechBubble2.anims.timeScale = 2;
 
         let iter = 0;
         this.getSprites('bullet').forEach(bullet =>{

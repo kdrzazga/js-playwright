@@ -154,6 +154,10 @@ class MainScene extends ExtendedScene {
 
         this.load.image('princess', '../common/pics/princess.png');
         this.load.image('cage', '../common/pics/cage.png');
+        this.load.image('save-me', '../common/pics/saveMe.png');
+        this.load.image('help', '../common/pics/help.png');
+        this.load.image('nothing', '../common/pics/nothing.png');
+        this.load.image('panama-joe', 'files/background/panamaJoe.png');
 
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
@@ -244,6 +248,19 @@ class MainScene extends ExtendedScene {
         levelDiv.innerText = 'ROOM ' + name.match(/\d+/g);
 
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.anims.create({
+            key: 'speech-bubble',
+            frames: [
+                {key: 'nothing'},
+                {key: 'help'},
+                {key: 'nothing'},
+                {key: 'nothing'},
+                {key: 'save-me'}
+            ],
+            frameRate: 0.3,
+            repeat: 30
+        });
 
         this.anims.create({
             key: 'skull-move',
