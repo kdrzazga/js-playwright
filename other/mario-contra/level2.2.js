@@ -7,14 +7,14 @@ class Scene2_2 extends MainScene {
     preload(){
         super.preload();
         this.load.image('kupa', 'files/koopa.png');
-        this.load.image('princess', 'files/princess.png');
-        this.load.image('cage', 'files/cage.png');
-        this.load.image('help', 'files/help.png');
-        this.load.image('save-me', 'files/saveMe.png');
-        this.load.image('thank-you', 'files/thankYou.png');
-        this.load.image('shit', 'files/sht.png');
-        this.load.image('nothing', 'files/nothing.png');
-        this.load.image('energy', 'files/energy.png');
+        this.load.image('princess', '../common/pics/princess.png');
+        this.load.image('cage', '../common/pics/cage.png');
+        this.load.image('help', '../common/pics/help.png');
+        this.load.image('save-me', '../common/pics/saveMe.png');
+        this.load.image('thank-you', '../common/pics/thankYou.png');
+        this.load.image('shit', '../common/pics/sht.png');
+        this.load.image('nothing', '../common/pics/nothing.png');
+        this.load.image('energy', '../common/pics/energy.png');
     }
 
     create(){

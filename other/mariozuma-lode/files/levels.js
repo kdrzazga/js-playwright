@@ -382,6 +382,7 @@ class Scene10 extends MainScene{
 
         this.snakeRows= [ {'row': 4, 'side': 'right'}
         ];
+        this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 5}];
 
         this.doorTiles = [ {'tileX' : 6, 'tileY': 2, 'color': 'door-red' },{'tileX' : 9, 'tileY': 2, 'color': 'door-blue' }, ];
 
@@ -674,7 +675,7 @@ class Scene15 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'top'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 13;
+                    Globals.PLAYER_X = 776; //to allow climbing the ladder
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
@@ -690,7 +691,7 @@ class Scene15 extends MainScene{
     }
 }
 
-class Scene16 extends MainScene{
+class Scene16 extends MainScene{ //g.scene.scenes[14].scene.key
 
     constructor(){
         super('Scene16');
@@ -763,7 +764,7 @@ class Scene17 extends MainScene{
 
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
-        this.snakeRows= [ {'row': 4, 'side': 'right'}, {'row': 5, 'side': 'right'} , {'row': 6, 'side': 'left'}
+        this.snakeRows= [ {'row': 2, 'side': 'right'}, {'row': 5, 'side': 'right'} , {'row': 6, 'side': 'left'}
             , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'} , {'row': 9, 'side': 'left'} ];
 
         this.nextScene['left'] = 'Scene18';
@@ -793,7 +794,7 @@ class Scene18 extends MainScene{
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
         this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'} , {'row': 6, 'side': 'left'}
-            , {'row': 7, 'side': 'left'} , {'row': 8, 'side': 'left'}];
+            , {'row': 7, 'side': 'left'} , {'row': 2, 'side': 'left'}];
 
         this.nextScene['left'] = 'Scene19';
         this.nextScene['right'] = 'Scene17';
@@ -1032,7 +1033,7 @@ class Scene22 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 2;
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 0.2;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
@@ -1132,7 +1133,7 @@ class Scene24 extends MainScene{
             , {'row': 8, 'side': 'right'}, {'row': 9, 'side': 'left'}
             ];
 
-        this.conveyors= [ {'row' : 7, 'rowX' : 5, 'rowY' : 7}];
+        this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 7}];
 
         this.nextScene['left'] = 'Scene24';
         this.nextScene['right'] = 'Scene25';
@@ -1231,14 +1232,14 @@ class Scene12 extends MainScene{
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
-                    {x: 900, y: 8*Globals.TILE_WIDTH, speedX: 12},
-                    {x: 1200, y: 8*Globals.TILE_WIDTH, speedX: 25},
+                    {x: 300, y: 9*Globals.TILE_WIDTH, speedX: 7},
+                    {x: 1600, y: 8*Globals.TILE_WIDTH, speedX: 12},
                     ];
         this.nextScene['left'] = 'Scene25';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
 
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'Scene26';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '9';
     }
@@ -1292,4 +1293,144 @@ class Scene12 extends MainScene{
             }
         });
     }
+}
+
+
+class Scene26 extends MainScene{
+
+    constructor(){
+        super('Scene26');
+
+        this.nonBrickRows = [5,6,8,9];
+
+        const skullRow = {'row': 9, 'side': 'right'};
+        this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
+            , skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
+            , skullRow, skullRow, skullRow, skullRow];
+
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+            {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 50},
+            {x: 900, y: 2*Globals.TILE_WIDTH, speedX: 45},
+            {x: 900, y: 3*Globals.TILE_WIDTH, speedX: 33},
+            {x: 900, y: 4*Globals.TILE_WIDTH, speedX: 22},
+            {x: 900, y: 0, speedX: 18},
+            {x: 1200, y: 7*Globals.TILE_WIDTH, speedX: 25},
+            {x: 1500, y: 8*Globals.TILE_WIDTH, speedX: 8},
+            {x: 1500, y: 9*Globals.TILE_WIDTH, speedX: 4},
+            ];
+
+        this.nextScene['left'] = 'Scene12';
+        this.nextScene['right'] = 'Scene27';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+        
+        this.princess;
+        this.princessCage;
+        this.princessSpeechBubble;
+        this.panamaJoe;
+        this.panamaJoeCage;
+        this.panamaJoeSpeechBubble;
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                increase = increase + 0.05;
+                child.speedX = 1.5 +( increase/6);
+                child.x = 12*Globals.TILE_WIDTH - Globals.TILE_WIDTH*increase;
+                child.maxX = 11*Globals.TILE_WIDTH - 6;
+            }
+        });
+
+        this.princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
+        this.princessCage = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
+        this.princessSpeechBubble =  this.add.sprite(4*Globals.TILE_WIDTH, 4.5 * Globals.TILE_WIDTH, 'speech-bubble');
+        this.princessSpeechBubble.setDepth(12);
+        this.panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
+        this.panamaJoeCage = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
+        this.panamaJoeSpeechBubble =  this.add.sprite(9.5*Globals.TILE_WIDTH, 4.5 * Globals.TILE_WIDTH, 'speech-bubble');
+        this.panamaJoeSpeechBubble.setDepth(12);
+
+        this.princessSpeechBubble.play('speech-bubble');
+        this.panamaJoeSpeechBubble.play('speech-bubble');
+        this.panamaJoeSpeechBubble.anims.timeScale = 2;
+
+        let iter = 0;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= iter;
+            bullet.maxX +=800 + iter;
+
+            bullet.x +=400;
+        });
+    }
+
+    update(time, delta) {
+        super.update(time, delta);
+
+        if(this.princessCage.y > 1000 && this.panamaJoeCage.y > 1000)
+            this.time.delayedCall(3456, () => {
+                this.scene.start('Scene27');
+            });
+    }
+
+    //@Override
+    checkEnemyCollision() {
+        super.checkEnemyCollision();
+        const cageBubblePairs = [[this.princessCage, this.princessSpeechBubble], [this.panamaJoeCage,this.panamaJoeSpeechBubble]];
+
+        cageBubblePairs.forEach(pair => {
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, pair[0].x, pair[0].y);
+            if (distance < Globals.TILE_WIDTH){
+                pair[0].y += 2000;
+                pair[1].anims.stop();
+                pair[1].setTexture('thank-you');
+            }
+        });
+    }
+}
+
+
+class Scene27 extends MainScene{
+
+    constructor(){
+        super('Scene27');
+
+        this.nonBrickRows = [0,1,2,3, 4,5,6, 7,8,9];
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'treasure');
+
+        this.time.delayedCall(3456, () => {
+            alert("CONGRATULATIONS! You found Montezuma's gold!");
+            if (confirm("Do you want to return to previous room and save Panama Joe and the Princess?")){
+                Globals.PLAYER_X = Globals.TILE_WIDTH * 6;
+                Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                Globals.PLAYER_Y = Globals.TILE_WIDTH * 6;
+                Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                this.scene.start('Scene26');
+            }
+            else {
+                alert("You keep all the GOLD for YOURSELF! You are selfish and ... rich !");
+                alert("GAME OVER! YOU WIN!");
+                location.reload();
+            }
+        });
+    }
+
 }

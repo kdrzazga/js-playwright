@@ -30,7 +30,7 @@ class Globals {
     static TILE_WIDTH = 60;
     static PLAYER_X = Globals.TILE_WIDTH;
     static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
-    static PLAYER_Y = 2 * Globals.TILE_WIDTH;
+    static PLAYER_Y = Globals.TILE_WIDTH * 2;
     static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
     static skullSwarm = [ {'row': 3, 'side': 'left'}, {'row': 5, 'side': 'left'}
         , {'row': 9, 'side': 'right'}, {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
@@ -152,6 +152,14 @@ class MainScene extends ExtendedScene {
         this.load.image('kupa13', 'files/enemies/kupa/kupa (13).png');
         this.load.image('kupa14', 'files/enemies/kupa/kupa (14).png');
 
+        this.load.image('princess', '../common/pics/princess.png');
+        this.load.image('cage', '../common/pics/cage.png');
+        this.load.image('save-me', '../common/pics/saveMe.png');
+        this.load.image('thank-you', '../common/pics/thankYou.png');
+        this.load.image('help', '../common/pics/help.png');
+        this.load.image('nothing', '../common/pics/nothing.png');
+        this.load.image('panama-joe', 'files/background/panamaJoe.png');
+
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
@@ -223,6 +231,7 @@ class MainScene extends ExtendedScene {
 
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
+        this.load.image('treasure', 'files/background/treasure.jpg');
 
         this.load.image('ladder', 'files/background/ladder.png');
         this.load.image('door-red', 'files/background/door/redDoor2.png');
@@ -241,6 +250,19 @@ class MainScene extends ExtendedScene {
         levelDiv.innerText = 'ROOM ' + name.match(/\d+/g);
 
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.anims.create({
+            key: 'speech-bubble',
+            frames: [
+                {key: 'nothing'},
+                {key: 'help'},
+                {key: 'nothing'},
+                {key: 'nothing'},
+                {key: 'save-me'}
+            ],
+            frameRate: 0.3,
+            repeat: 30
+        });
 
         this.anims.create({
             key: 'skull-move',
