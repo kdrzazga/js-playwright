@@ -1407,6 +1407,30 @@ class Scene26 extends MainScene{
             }
         });
     }
+
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 6;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                }
+            }
+        });
+    }
 }
 
 

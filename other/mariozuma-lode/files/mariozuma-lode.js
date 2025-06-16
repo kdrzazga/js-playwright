@@ -466,7 +466,6 @@ class MainScene extends ExtendedScene {
                         if (sprite.posX === toBeDissolved[0] && sprite.posY === toBeDissolved[1])
                             sprite.play('brick-dissolve');
                 });
-
             }
         }
     }
