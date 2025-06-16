@@ -1033,7 +1033,7 @@ class Scene22 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 2;
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
@@ -1232,14 +1232,14 @@ class Scene12 extends MainScene{
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
-                    {x: 900, y: 8*Globals.TILE_WIDTH, speedX: 12},
+                    {x: 900, y: 9*Globals.TILE_WIDTH, speedX: 12},
                     {x: 1200, y: 8*Globals.TILE_WIDTH, speedX: 25},
                     ];
         this.nextScene['left'] = 'Scene25';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
 
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'Scene26';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '9';
     }
@@ -1291,6 +1291,70 @@ class Scene12 extends MainScene{
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
             }
+        });
+    }
+}
+
+
+class Scene26 extends MainScene{
+
+    constructor(){
+        super('Scene26');
+
+        this.nonBrickRows = [5,6,8,9];
+
+        const skullRow = {'row': 9, 'side': 'right'};
+        this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
+            , skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow];
+
+        this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
+            {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 50},
+            {x: 900, y: 2*Globals.TILE_WIDTH, speedX: 45},
+            {x: 900, y: 3*Globals.TILE_WIDTH, speedX: 33},
+            {x: 900, y: 4*Globals.TILE_WIDTH, speedX: 22},
+            {x: 900, y: 0, speedX: 18},
+            {x: 1200, y: 7*Globals.TILE_WIDTH, speedX: 25},
+            {x: 1500, y: 8*Globals.TILE_WIDTH, speedX: 8},
+            {x: 1500, y: 9*Globals.TILE_WIDTH, speedX: 4},
+            ];
+
+        this.nextScene['left'] = 'Scene12';
+        this.nextScene['right'] = 'Scene12';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        let increase = 1;
+        this.spriteGroup.children.iterate((child)=> {
+            if (this._isEnemy(child)){
+                increase = increase + 0.05;
+                child.speedX = 1.5 +( increase/6);
+                child.x = 12*Globals.TILE_WIDTH - Globals.TILE_WIDTH*increase;
+                child.maxX = 11*Globals.TILE_WIDTH - 6;
+            }
+        });
+
+        const princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
+        const princessCage = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
+        const cage2 = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'cage');
+
+        let iter = 0;
+        this.getSprites('bullet').forEach(bullet =>{
+            bullet.minX -= iter;
+            bullet.maxX +=800 + iter;
+            bullet.speedX += Math.floor(iter/100);
+            iter += 111;
+
+            bullet.x +=400;
         });
     }
 }

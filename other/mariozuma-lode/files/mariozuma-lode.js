@@ -152,6 +152,9 @@ class MainScene extends ExtendedScene {
         this.load.image('kupa13', 'files/enemies/kupa/kupa (13).png');
         this.load.image('kupa14', 'files/enemies/kupa/kupa (14).png');
 
+        this.load.image('princess', '../common/pics/princess.png');
+        this.load.image('cage', '../common/pics/cage.png');
+
         this.load.image('brick',  'files/background/brick/brick.png');
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
