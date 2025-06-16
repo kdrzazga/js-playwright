@@ -1319,7 +1319,7 @@ class Scene26 extends MainScene{
             ];
 
         this.nextScene['left'] = 'Scene12';
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'Scene27';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1366,4 +1366,41 @@ class Scene26 extends MainScene{
             bullet.x +=400;
         });
     }
+}
+
+
+class Scene27 extends MainScene{
+
+    constructor(){
+        super('Scene27');
+
+        this.nonBrickRows = [0,1,2,3, 4,5,6, 7,8,9];
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'treasure');
+
+        this.time.delayedCall(3456, () => {
+            alert("CONGRATULATIONS! You found Montezuma's gold!");
+            if (confirm("Do you want to return to previous room and save Panama Joe and the Princess?")){
+                Globals.PLAYER_X = Globals.TILE_WIDTH * 6;
+                Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                Globals.PLAYER_Y = Globals.TILE_WIDTH * 6;
+                Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                this.scene.start('Scene26');
+            }
+            else {
+                alert("You keep all the GOLD for YOURSELF! You are selfish and ... rich !");
+                alert("GAME OVER! YOU WIN!");
+                location.reload();
+            }
+        });
+    }
+
 }

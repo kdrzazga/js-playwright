@@ -230,6 +230,7 @@ class MainScene extends ExtendedScene {
 
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
+        this.load.image('treasure', 'files/background/treasure.jpg');
 
         this.load.image('ladder', 'files/background/ladder.png');
         this.load.image('door-red', 'files/background/door/redDoor2.png');
