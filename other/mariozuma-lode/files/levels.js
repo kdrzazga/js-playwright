@@ -1455,6 +1455,15 @@ class Scene27 extends MainScene{
         super.createSpriteGroup();
         this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'treasure');
 
+
+        const princessSavedCell = document.getElementById('princess');
+        if (princessSavedCell.innerHTML == '')
+            this.proposeRescueMission();
+        else
+            this.finalTriumph();
+    }
+
+    proposeRescueMission(){
         this.time.delayedCall(3456, () => {
             alert("CONGRATULATIONS! You found Montezuma's gold!");
             if (confirm("Do you want to return to previous room and save Panama Joe and the Princess?")){
@@ -1469,6 +1478,19 @@ class Scene27 extends MainScene{
                 alert("GAME OVER! YOU WIN!");
                 location.reload();
             }
+
+        });
+    }
+
+    finalTriumph(){
+        let princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
+        let panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
+        princess.setDepth(12);
+        panamaJoe.setDepth(12);
+        this.time.delayedCall(3456, () => {
+            alert("Now you need to divide the treasure to three! Silly!");
+            alert("GAME OVER! Let's assume you win :/");
+            location.reload();
         });
     }
 
