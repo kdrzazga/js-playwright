@@ -335,19 +335,16 @@ class Scene9 extends MainScene{
 
         this.nonBrickRows = [0,1,2, 4,5,6,7, 8,9,10];
 
-        this.skullRows= [ {'row': 2, 'side': 'right'}
-            ];
+        this.skullRows= [ {'row': 2, 'side': 'right'} ];
 
-        this.snakeRows= [ {'row': 2, 'side': 'left'}
-            ];
-        this.keyRows = [ {'row': 2, 'color': 'key-blue'}
-        ];
+        this.snakeRows= [ {'row': 2, 'side': 'left'}  ];
+        this.keyRows = [ {'row': 2, 'color': 'key-blue'}  ];
 
         this.ladderColumns = [ {'column' : 2, 'start' : 0, 'end' : 1}, {'column' : 12, 'start' : 0, 'end' : 1}];
 
-            this.nextScene['right'] = 'Scene10';
-            this.exits['right']['x'] = '13';
-            this.exits['right']['y'] = '2';
+        this.nextScene['right'] = 'Scene10';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
     }
 
     create(){
@@ -782,6 +779,13 @@ class Scene17 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const topSnake = this.getSprites('snake').filter(s => Math.round(s.y/Globals.TILE_WIDTH) == 2)[0];
+
+        this.time.delayedCall(5155, () => topSnake.speedY = 0.2);
+        this.time.delayedCall(6155, () => topSnake.speedY = -0.5);
+        this.time.delayedCall(7155, () => topSnake.speedY = 0.5);
+        this.time.delayedCall(9155, () => topSnake.speedY = -0.5);
+        this.time.delayedCall(11155, () => topSnake.speedY = 0.6);
     }
 }
 
@@ -811,6 +815,13 @@ class Scene18 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+
+        const topSnake = this.getSprites('snake').filter(s => Math.round(s.y/Globals.TILE_WIDTH) == 2)[0];
+        this.time.delayedCall(6155, () => topSnake.speedY = 0.2);
+        this.time.delayedCall(7155, () => topSnake.speedY = -0.5);
+        this.time.delayedCall(8155, () => topSnake.speedY = 0.5);
+        this.time.delayedCall(9155, () => topSnake.speedY = -0.5);
+        this.time.delayedCall(10000, () => topSnake.speedY = 0.6);
     }
 }
 
