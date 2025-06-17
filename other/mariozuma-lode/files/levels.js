@@ -464,17 +464,10 @@ class Scene11 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1.5;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
-                }
+                    this.setGlobalInitialPos(1.5, 8);                }
             }
         });
     }
@@ -485,16 +478,16 @@ class Scene12 extends MainScene{
     constructor(){
         super('Scene12'); //g.scene.scenes[0].sys.settings.key
 
-        this.nonBrickRows = [9];
+        this.nonBrickRows = [8];
         this.nextScene['left'] = 'Scene11';
         this.exits['left']['x'] = '0';
-        this.exits['left']['y'] = '9';
+        this.exits['left']['y'] = '8';
 
         this.nextScene['right'] = 'Scene13';
         this.exits['right']['x'] = '13';
-        this.exits['right']['y'] = '9';
+        this.exits['right']['y'] = '8';
 
-        this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 4, 'rowY' : 10}, {'coveredCells' : [1,9], 'rowX' : 10, 'rowY' : 10}];
+        this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 3.2, 'rowY' : 9}, {'coveredCells' : [1,9], 'rowX' : 11.8, 'rowY' : 9}];
     }
 
     create(){
@@ -587,7 +580,7 @@ class Scene13 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    this.setGlobalInitialPos(12,9);
+                    this.setGlobalInitialPos(12,8);
                 }
                 else if (d === 'right'){
                     this.setGlobalInitialPos(1,9);
