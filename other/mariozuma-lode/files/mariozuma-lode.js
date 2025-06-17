@@ -23,7 +23,8 @@ class Globals {
         'Scene21' : true,
         'Scene23' : true,
         'Scene24' : true,
-        'Scene25' : true
+        'Scene25' : true,
+        'Scene27' : true
     }
 
     static ENEMIES_COUNT = 0;
@@ -229,6 +230,7 @@ class MainScene extends ExtendedScene {
         this.load.image('conveyor8', 'files/background/conveyor/conveyor (8).png');
         this.load.image('conveyor9', 'files/background/conveyor/conveyor (9).png');
 
+        this.load.image('black-strip', 'files/background/black-strip.png');
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
         this.load.image('treasure', 'files/background/treasure.jpg');

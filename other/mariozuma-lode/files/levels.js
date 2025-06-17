@@ -421,7 +421,7 @@ class Scene11 extends MainScene{
     constructor(){
         super('Scene11');
 
-        this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
+        this.nonBrickRows = [1,2,3, 4,5,6,7, 8,9,10];
 
         this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
 
@@ -1172,7 +1172,7 @@ class Scene23 extends MainScene{
     }
 }
 
-class Scene24 extends MainScene{
+class Scene24 extends MainScene{ //multiple pipes to multiple floors
 
     constructor(){
         super('Scene24');
@@ -1188,7 +1188,7 @@ class Scene24 extends MainScene{
 
         this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 7}];
 
-        this.nextScene['left'] = 'Scene24';
+        this.nextScene['left'] = 'Scene26';
         this.nextScene['right'] = 'Scene25';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
@@ -1221,6 +1221,28 @@ class Scene24 extends MainScene{
     let pipeRight = this.add.sprite(12*Globals.TILE_WIDTH, 235, 'pipe-down');
     pipeLeft.setFlipX(true);
     pipeRight.setDepth(10)
+    }
+
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12,2);
+                }
+                else if (d === 'right'){
+                    this.setGlobalInitialPos(1,9);
+                }
+            }
+        });
     }
 }
 
@@ -1273,6 +1295,124 @@ class Scene25 extends MainScene{
             iter += 111;
 
             bullet.x +=400;
+        });
+    }
+}
+
+
+class Scene26 extends MainScene{
+
+    constructor(){
+        super('Scene26');
+        this.backgroundColor = 'black';
+
+        this.nonBrickRows = [1,2,3, 4,5,6,7, 8,9,10];
+
+        this.nextScene['left'] = 'Scene27';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene24';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 6.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 3; y < 11; y++){
+            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+        }
+
+        const fireEdgeHiding = this.add.sprite(7*Globals.TILE_WIDTH - 20, 2.5*Globals.TILE_WIDTH, 'black-strip');
+
+        const brickBridgeX = [4, 7, 9, 11];
+        brickBridgeX.forEach(x =>{
+            const brick = this.add.sprite(x*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'brick');
+        });
+    }
+
+    //@Overrride
+    checkExit(){
+         const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12, 8);
+                }
+                else if (d === 'right'){
+                    this.setGlobalInitialPos(1.5, 9);                }
+            }
+        });
+    }
+}
+
+class Scene27 extends MainScene{
+
+    constructor(){
+        super('Scene27'); //g.scene.scenes[0].sys.settings.key
+        this.keyRows = [ {'row': 8, 'color': 'key-blue'}];
+        this.nonBrickRows = [8];
+        //this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10,11];
+
+        this.nextScene['right'] = 'Scene26';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '8';
+        //no left exit
+        this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 3.2, 'rowY' : 9}, {'coveredCells' : [1,9], 'rowX' : 11.8, 'rowY' : 9}];
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+        this.playerCanJump = false;
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+    }
+
+    update(time, delta){
+        super.update(time, delta);
+        if (this.player.x > 3)
+            this.player.x -= 1;
+    }
+
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12,2);
+                }
+                else if (d === 'right'){
+                    this.setGlobalInitialPos(1,2);
+                }
+            }
         });
     }
 }
