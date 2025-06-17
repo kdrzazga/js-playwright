@@ -1329,7 +1329,11 @@ class Scene26 extends MainScene{
         fireAnimation.play('fire');
         const xs = [0,1, 12, 13];
         for(let y = 3; y < 11; y++){
-            xs.forEach(x => this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick'));
+            xs.forEach(x =>
+                {
+                    const brick = this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick');
+                    this.spriteGroup.add(brick);
+                });
         }
 
         const fireEdgeHiding = this.add.sprite(7*Globals.TILE_WIDTH - 20, 2.5*Globals.TILE_WIDTH, 'black-strip');
@@ -1337,12 +1341,23 @@ class Scene26 extends MainScene{
         const brickBridgeX = [4, 7, 9, 11];
         brickBridgeX.forEach(x =>{
             const brick = this.add.sprite(x*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'brick');
+            this.spriteGroup.add(brick);
         });
     }
 
+    movePlayer(time){
+        super.movePlayer(time);
+
+        const playerTile = this.calculateSpriteSquare(this.player);
+        const playerTileY = playerTile[1];
+        if (playerTileY >= 2 && this.getTextureAt(playerTile[0], playerTileY + 1) != 'brick'){
+            this.player.y += 5;
+        }
+
+    }
     //@Overrride
     checkExit(){
-         const coords = this.calculateSpriteSquare(this.player);
+        const coords = this.calculateSpriteSquare(this.player);
 
         const directions = ['left', 'right'];
 
@@ -1357,7 +1372,7 @@ class Scene26 extends MainScene{
                     this.setGlobalInitialPos(12, 8);
                 }
                 else if (d === 'right'){
-                    this.setGlobalInitialPos(1.5, 9);                }
+                    this.setGlobalInitialPos(1, 9);                }
             }
         });
     }
