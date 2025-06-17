@@ -1044,7 +1044,7 @@ class Scene22 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 0.2;
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 0.5;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
@@ -1201,7 +1201,7 @@ class Scene25 extends MainScene{
                     ];
 
         this.nextScene['left'] = 'Scene24';
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'SceneMontezuma';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1235,10 +1235,10 @@ class Scene25 extends MainScene{
     }
 }
 
-class Scene12 extends MainScene{
+class SceneMontezuma extends MainScene{
 
     constructor(){
-        super('Scene12');
+        super('SceneMontezuma');
 
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
 
@@ -1250,7 +1250,7 @@ class Scene12 extends MainScene{
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
 
-        this.nextScene['right'] = 'Scene26';
+        this.nextScene['right'] = 'SceneCages';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '9';
     }
@@ -1307,10 +1307,10 @@ class Scene12 extends MainScene{
 }
 
 
-class Scene26 extends MainScene{
+class SceneCages extends MainScene{
 
     constructor(){
-        super('Scene26');
+        super('SceneCages');
 
         this.nonBrickRows = [5,6,8,9];
 
@@ -1330,8 +1330,8 @@ class Scene26 extends MainScene{
             {x: 1500, y: 9*Globals.TILE_WIDTH, speedX: 4},
             ];
 
-        this.nextScene['left'] = 'Scene12';
-        this.nextScene['right'] = 'Scene27';
+        this.nextScene['left'] = 'SceneMontezuma';
+        this.nextScene['right'] = 'SceneTreasure';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1389,7 +1389,7 @@ class Scene26 extends MainScene{
 
         if(this.princessCage.y > 1000 && this.panamaJoeCage.y > 1000)
             this.time.delayedCall(3456, () => {
-                this.scene.start('Scene27');
+                this.scene.start('SceneTreasure');
             });
     }
 
@@ -1438,10 +1438,10 @@ class Scene26 extends MainScene{
 }
 
 
-class Scene27 extends MainScene{
+class SceneTreasure extends MainScene{
 
     constructor(){
-        super('Scene27');
+        super('SceneTreasure');
 
         this.nonBrickRows = [0,1,2,3, 4,5,6, 7,8,9];
     }
@@ -1471,7 +1471,7 @@ class Scene27 extends MainScene{
                 Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                 Globals.PLAYER_Y = Globals.TILE_WIDTH * 6;
                 Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
-                this.scene.start('Scene26');
+                this.scene.start('SceneCages');
             }
             else {
                 alert("You keep all the GOLD for YOURSELF! You are selfish and ... rich !");

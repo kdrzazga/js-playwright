@@ -247,7 +247,7 @@ class MainScene extends ExtendedScene {
 
         let levelDiv = document.getElementById('room-number');
         let name = this.scene.key;
-        levelDiv.innerText = 'ROOM ' + name.match(/\d+/g);
+        levelDiv.innerText = 'ROOM' + name.replace('Scene', ' ');
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -422,6 +422,8 @@ class MainScene extends ExtendedScene {
         rectangle.destroy();
         this.rectSprite = this.add.sprite(2*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'highlight');
         this.rectSprite.setDepth(4);
+        this.playerCanJump = true;
+        this.playerFalling = false;
     }
 
     update(time, delta) {
