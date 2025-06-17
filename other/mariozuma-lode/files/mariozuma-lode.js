@@ -23,7 +23,8 @@ class Globals {
         'Scene21' : true,
         'Scene23' : true,
         'Scene24' : true,
-        'Scene25' : true
+        'Scene25' : true,
+        'Scene27' : true
     }
 
     static ENEMIES_COUNT = 0;
@@ -191,6 +192,7 @@ class MainScene extends ExtendedScene {
         this.load.image('fire24', 'files/background/fire/fire (24).gif');
         this.load.image('fire25', 'files/background/fire/fire (25).gif');
         this.load.image('fire26', 'files/background/fire/fire (26).gif');
+        this.load.image('smoke-cloud', 'files/background/fire/smoke-cloud.png');
 
         this.load.image('lode-runner1', 'files/background/lode-runner/lode-runner (1).gif');
         this.load.image('lode-runner2', 'files/background/lode-runner/lode-runner (2).gif');
@@ -229,6 +231,7 @@ class MainScene extends ExtendedScene {
         this.load.image('conveyor8', 'files/background/conveyor/conveyor (8).png');
         this.load.image('conveyor9', 'files/background/conveyor/conveyor (9).png');
 
+        this.load.image('black-strip', 'files/background/black-strip.png');
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
         this.load.image('treasure', 'files/background/treasure.jpg');
@@ -422,8 +425,6 @@ class MainScene extends ExtendedScene {
         rectangle.destroy();
         this.rectSprite = this.add.sprite(2*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'highlight');
         this.rectSprite.setDepth(4);
-        this.playerCanJump = true;
-        this.playerFalling = false;
     }
 
     update(time, delta) {
@@ -848,5 +849,12 @@ class MainScene extends ExtendedScene {
             const posY = Math.floor(sprite.y / Globals.TILE_WIDTH);
             console.log(posX + `${sprite.texture.key} at [${sprite.posX}, ${sprite.posY}]}`);
         });
+    }
+
+    setGlobalInitialPos(tileX, tileY){
+        Globals.PLAYER_X = Globals.TILE_WIDTH * tileX;
+        Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+        Globals.PLAYER_Y = Globals.TILE_WIDTH * tileY;
+        Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
     }
 }
