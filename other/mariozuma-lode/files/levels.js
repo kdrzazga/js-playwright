@@ -470,7 +470,7 @@ class Scene11 extends MainScene{
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1.5;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
@@ -486,13 +486,15 @@ class Scene12 extends MainScene{
         super('Scene12'); //g.scene.scenes[0].sys.settings.key
 
         this.nonBrickRows = [9];
-         this.nextScene['left'] = 'Scene11';
-         this.exits['left']['x'] = '0';
-         this.exits['left']['y'] = '9';
+        this.nextScene['left'] = 'Scene11';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '9';
 
-         this.nextScene['right'] = 'Scene13';
-         this.exits['right']['x'] = '13';
-         this.exits['right']['y'] = '9';
+        this.nextScene['right'] = 'Scene13';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '9';
+
+        this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 4, 'rowY' : 10}, {'coveredCells' : [1,9], 'rowX' : 10, 'rowY' : 10}];
     }
 
     create(){
@@ -507,7 +509,7 @@ class Scene12 extends MainScene{
 
     update(time, delta){
         super.update(time, delta);
-        this.player.x += 1;
+        this.player.x -= 1;
     }
 
     checkExit(){
