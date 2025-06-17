@@ -429,7 +429,7 @@ class Scene11 extends MainScene{
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
 
-        this.nextScene['right'] = 'Scene13';
+        this.nextScene['right'] = 'Scene12';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '2';
     }
@@ -480,6 +480,59 @@ class Scene11 extends MainScene{
     }
 }
 
+class Scene12 extends MainScene{
+
+    constructor(){
+        super('Scene12'); //g.scene.scenes[0].sys.settings.key
+
+        this.nonBrickRows = [9];
+         this.nextScene['left'] = 'Scene11';
+         this.exits['left']['x'] = '0';
+         this.exits['left']['y'] = '9';
+
+         this.nextScene['right'] = 'Scene13';
+         this.exits['right']['x'] = '13';
+         this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+        this.playerCanJump = false;
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+    }
+
+    update(time, delta){
+        super.update(time, delta);
+        this.player.x += 1;
+    }
+
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12,2);
+                }
+                else if (d === 'right'){
+                    this.setGlobalInitialPos(1,9);
+                }
+            }
+        });
+    }
+}
+
 class Scene13 extends MainScene{
 
     constructor(){
@@ -490,7 +543,7 @@ class Scene13 extends MainScene{
 
         this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'door-blue' }];
 
-        this.nextScene['left'] = 'Scene11';
+        this.nextScene['left'] = 'Scene12';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
 
@@ -532,16 +585,10 @@ class Scene13 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12,9);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1,9);
                 }
             }
         });

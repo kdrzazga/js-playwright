@@ -15,6 +15,8 @@ class ExtendedScene extends Phaser.Scene {
 
     create(){
         this.spriteGroup = this.add.group();
+        this.playerCanJump = true;
+        this.playerFalling = false;
     }
 
     update(time, delta) {

@@ -422,8 +422,6 @@ class MainScene extends ExtendedScene {
         rectangle.destroy();
         this.rectSprite = this.add.sprite(2*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'highlight');
         this.rectSprite.setDepth(4);
-        this.playerCanJump = true;
-        this.playerFalling = false;
     }
 
     update(time, delta) {
@@ -848,5 +846,12 @@ class MainScene extends ExtendedScene {
             const posY = Math.floor(sprite.y / Globals.TILE_WIDTH);
             console.log(posX + `${sprite.texture.key} at [${sprite.posX}, ${sprite.posY}]}`);
         });
+    }
+
+    setGlobalInitialPos(tileX, tileY){
+        Globals.PLAYER_X = Globals.TILE_WIDTH * tileX;
+        Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+        Globals.PLAYER_Y = Globals.TILE_WIDTH * tileY;
+        Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
     }
 }
