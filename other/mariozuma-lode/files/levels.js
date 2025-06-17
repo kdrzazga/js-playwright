@@ -335,19 +335,16 @@ class Scene9 extends MainScene{
 
         this.nonBrickRows = [0,1,2, 4,5,6,7, 8,9,10];
 
-        this.skullRows= [ {'row': 2, 'side': 'right'}
-            ];
+        this.skullRows= [ {'row': 2, 'side': 'right'} ];
 
-        this.snakeRows= [ {'row': 2, 'side': 'left'}
-            ];
-        this.keyRows = [ {'row': 2, 'color': 'key-blue'}
-        ];
+        this.snakeRows= [ {'row': 2, 'side': 'left'}  ];
+        this.keyRows = [ {'row': 2, 'color': 'key-blue'}  ];
 
         this.ladderColumns = [ {'column' : 2, 'start' : 0, 'end' : 1}, {'column' : 12, 'start' : 0, 'end' : 1}];
 
-            this.nextScene['right'] = 'Scene10';
-            this.exits['right']['x'] = '13';
-            this.exits['right']['y'] = '2';
+        this.nextScene['right'] = 'Scene10';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
     }
 
     create(){
@@ -782,6 +779,13 @@ class Scene17 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const topSnake = this.getSprites('snake').filter(s => Math.round(s.y/Globals.TILE_WIDTH) == 2)[0];
+
+        this.time.delayedCall(5155, () => topSnake.speedY = 0.2);
+        this.time.delayedCall(6155, () => topSnake.speedY = -0.5);
+        this.time.delayedCall(7155, () => topSnake.speedY = 0.5);
+        this.time.delayedCall(9155, () => topSnake.speedY = -0.5);
+        this.time.delayedCall(11155, () => topSnake.speedY = 0.6);
     }
 }
 
@@ -811,6 +815,13 @@ class Scene18 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+
+        const topSnake = this.getSprites('snake').filter(s => Math.round(s.y/Globals.TILE_WIDTH) == 2)[0];
+        this.time.delayedCall(6155, () => topSnake.speedY = 0.2);
+        this.time.delayedCall(7155, () => topSnake.speedY = -0.5);
+        this.time.delayedCall(8155, () => topSnake.speedY = 0.5);
+        this.time.delayedCall(9155, () => topSnake.speedY = -0.5);
+        this.time.delayedCall(10000, () => topSnake.speedY = 0.6);
     }
 }
 
@@ -1033,7 +1044,7 @@ class Scene22 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 0.2;
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 0.5;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                     Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
@@ -1190,7 +1201,7 @@ class Scene25 extends MainScene{
                     ];
 
         this.nextScene['left'] = 'Scene24';
-        this.nextScene['right'] = 'Scene12';
+        this.nextScene['right'] = 'SceneMontezuma';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1224,10 +1235,10 @@ class Scene25 extends MainScene{
     }
 }
 
-class Scene12 extends MainScene{
+class SceneMontezuma extends MainScene{
 
     constructor(){
-        super('Scene12');
+        super('SceneMontezuma');
 
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9,];
 
@@ -1239,7 +1250,7 @@ class Scene12 extends MainScene{
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
 
-        this.nextScene['right'] = 'Scene26';
+        this.nextScene['right'] = 'SceneCages';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '9';
     }
@@ -1296,10 +1307,10 @@ class Scene12 extends MainScene{
 }
 
 
-class Scene26 extends MainScene{
+class SceneCages extends MainScene{
 
     constructor(){
-        super('Scene26');
+        super('SceneCages');
 
         this.nonBrickRows = [5,6,8,9];
 
@@ -1319,8 +1330,8 @@ class Scene26 extends MainScene{
             {x: 1500, y: 9*Globals.TILE_WIDTH, speedX: 4},
             ];
 
-        this.nextScene['left'] = 'Scene12';
-        this.nextScene['right'] = 'Scene27';
+        this.nextScene['left'] = 'SceneMontezuma';
+        this.nextScene['right'] = 'SceneTreasure';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1378,31 +1389,59 @@ class Scene26 extends MainScene{
 
         if(this.princessCage.y > 1000 && this.panamaJoeCage.y > 1000)
             this.time.delayedCall(3456, () => {
-                this.scene.start('Scene27');
+                this.scene.start('SceneTreasure');
             });
     }
 
     //@Override
     checkEnemyCollision() {
         super.checkEnemyCollision();
-        const cageBubblePairs = [[this.princessCage, this.princessSpeechBubble], [this.panamaJoeCage,this.panamaJoeSpeechBubble]];
+        
+        const cageBubbleSelectorQuartet = [[this.princessCage, this.princessSpeechBubble, "princess", '../common/pics/princess']
+            , [this.panamaJoeCage,this.panamaJoeSpeechBubble, "joe-panama", 'files/background/panamaJoe']];
 
-        cageBubblePairs.forEach(pair => {
-            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, pair[0].x, pair[0].y);
+        cageBubbleSelectorQuartet.forEach(quartet => {
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, quartet[0].x, quartet[0].y);
             if (distance < Globals.TILE_WIDTH){
-                pair[0].y += 2000;
-                pair[1].anims.stop();
-                pair[1].setTexture('thank-you');
+                quartet[0].y += 2000;
+                quartet[1].anims.stop();
+                quartet[1].setTexture('thank-you');
+                const tdElement = document.getElementById(quartet[2]);
+                tdElement.innerHTML = '<img src="'+ quartet[3] + '.png" style="width:35%;">';
+            }
+        });
+    }
+
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 6;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                }
+                else if (d === 'right'){
+                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
+                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                }
             }
         });
     }
 }
 
 
-class Scene27 extends MainScene{
+class SceneTreasure extends MainScene{
 
     constructor(){
-        super('Scene27');
+        super('SceneTreasure');
 
         this.nonBrickRows = [0,1,2,3, 4,5,6, 7,8,9];
     }
@@ -1416,6 +1455,15 @@ class Scene27 extends MainScene{
         super.createSpriteGroup();
         this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'treasure');
 
+
+        const princessSavedCell = document.getElementById('princess');
+        if (princessSavedCell.innerHTML == '')
+            this.proposeRescueMission();
+        else
+            this.finalTriumph();
+    }
+
+    proposeRescueMission(){
         this.time.delayedCall(3456, () => {
             alert("CONGRATULATIONS! You found Montezuma's gold!");
             if (confirm("Do you want to return to previous room and save Panama Joe and the Princess?")){
@@ -1423,13 +1471,26 @@ class Scene27 extends MainScene{
                 Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
                 Globals.PLAYER_Y = Globals.TILE_WIDTH * 6;
                 Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
-                this.scene.start('Scene26');
+                this.scene.start('SceneCages');
             }
             else {
                 alert("You keep all the GOLD for YOURSELF! You are selfish and ... rich !");
                 alert("GAME OVER! YOU WIN!");
                 location.reload();
             }
+
+        });
+    }
+
+    finalTriumph(){
+        let princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
+        let panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
+        princess.setDepth(12);
+        panamaJoe.setDepth(12);
+        this.time.delayedCall(3456, () => {
+            alert("Now you need to divide the treasure to three! Silly!");
+            alert("GAME OVER! Let's assume you win :/");
+            location.reload();
         });
     }
 
