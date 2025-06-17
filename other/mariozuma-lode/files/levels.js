@@ -421,7 +421,7 @@ class Scene11 extends MainScene{
     constructor(){
         super('Scene11');
 
-        this.nonBrickRows = [1,2,3, 4,5,6,7, 8,9,10];
+        this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
 
         this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
 
