@@ -1338,7 +1338,7 @@ class Scene26 extends MainScene{
 
         const fireEdgeHiding = this.add.sprite(7*Globals.TILE_WIDTH - 20, 2.5*Globals.TILE_WIDTH, 'black-strip');
 
-        const brickBridgeX = [4, 7, 9, 11];
+        const brickBridgeX = [3,4, 6,7, 9, 10];
         brickBridgeX.forEach(x =>{
             const brick = this.add.sprite(x*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'brick');
             this.spriteGroup.add(brick);
@@ -1352,6 +1352,14 @@ class Scene26 extends MainScene{
         const playerTileY = playerTile[1];
         if (playerTileY >= 2 && this.getTextureAt(playerTile[0], playerTileY + 1) != 'brick'){
             this.player.y += 5;
+            if (this.player.y > 550){
+                this.player.setTexture('smoke-cloud');
+                    this.player.y -= 6;
+                    this.player.x -= 1;
+                    this.time.delayedCall(1256, () => {
+                        this.scene.start('Scene26');
+                    });
+                }
         }
 
     }

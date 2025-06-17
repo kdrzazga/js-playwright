@@ -192,6 +192,7 @@ class MainScene extends ExtendedScene {
         this.load.image('fire24', 'files/background/fire/fire (24).gif');
         this.load.image('fire25', 'files/background/fire/fire (25).gif');
         this.load.image('fire26', 'files/background/fire/fire (26).gif');
+        this.load.image('smoke-cloud', 'files/background/fire/smoke-cloud.png');
 
         this.load.image('lode-runner1', 'files/background/lode-runner/lode-runner (1).gif');
         this.load.image('lode-runner2', 'files/background/lode-runner/lode-runner (2).gif');
