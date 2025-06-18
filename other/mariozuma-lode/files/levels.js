@@ -1338,7 +1338,7 @@ class Scene26 extends MainScene{
 
         const fireEdgeHiding = this.add.sprite(7*Globals.TILE_WIDTH - 20, 2.5*Globals.TILE_WIDTH, 'black-strip');
 
-        const brickBridgeX = [3,4, 6,7, 9, 10];
+        const brickBridgeX = [3.5 ,4, 6.5,7, 9.7, 10];
         brickBridgeX.forEach(x =>{
             const brick = this.add.sprite(x*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'brick');
             this.spriteGroup.add(brick);
