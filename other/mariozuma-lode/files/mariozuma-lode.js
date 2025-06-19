@@ -8,10 +8,16 @@ class Globals {
             'door-blue': true
         },
         'Scene13' : {
-            'door-red': true
+            'door-blue': true
         },
         'Scene20' : {
             'door-blue': true
+        },
+        'Scene25' : {
+            'door-blue': true
+        },
+        'SceneKamikaze' : {
+            'door-green': true
         }
     }
 
@@ -20,6 +26,7 @@ class Globals {
         'Scene7' : true,
         'Scene8' : true,
         'Scene9' : true,
+        'Scene15' : true,
         'Scene21' : true,
         'Scene23' : true,
         'Scene24' : true,
@@ -165,6 +172,7 @@ class MainScene extends ExtendedScene {
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
         this.load.image('pipe-down', 'files/background/pipeD.png');
+        this.load.image('pipe-short', 'files/background/pipe-short.png');
 
         this.load.image('fire1', 'files/background/fire/fire (1).gif');
         this.load.image('fire2', 'files/background/fire/fire (2).gif');
@@ -230,6 +238,10 @@ class MainScene extends ExtendedScene {
         this.load.image('conveyor7', 'files/background/conveyor/conveyor (7).png');
         this.load.image('conveyor8', 'files/background/conveyor/conveyor (8).png');
         this.load.image('conveyor9', 'files/background/conveyor/conveyor (9).png');
+
+        this.load.image('aztec-calendar', 'files/background/aztec/calendar.png');
+        this.load.image('aztec-snake', 'files/background/aztec/coatl-snake.png');
+        this.load.image('aztec-eagle', 'files/background/aztec/cuauhtli-eagle.png');
 
         this.load.image('black-strip', 'files/background/black-strip.png');
         this.load.image('montezuma', 'files/background/montezuma.png');
@@ -473,6 +485,17 @@ class MainScene extends ExtendedScene {
         }
     }
 
+    walkPlayer(left) {
+        this.player.setFlipX(left);
+        const condition = left ? this.player.x > MainScene.PLAYER_SPEED : this.player.x < this.sys.canvas.width
+        if (condition){
+            const movement = left ? -MainScene.PLAYER_SPEED : MainScene.PLAYER_SPEED;
+            this.player.x += movement;
+            Globals.PLAYER_X = this.player.x;
+            this.moveHighlight();
+        }
+    }
+
     movePlayer(time){
         let newAnimKey = 'player';
 
@@ -482,21 +505,16 @@ class MainScene extends ExtendedScene {
         const tileAbove = this.getTextureAt(playerTileX, playerTileY - 1);
 
         if (this.cursors.right.isDown && playerTile !== 'ladder') {
-            this.player.setFlipX(false);
-            if (this.player.x < this.sys.canvas.width) {
-                this.player.x += MainScene.PLAYER_SPEED;
-                Globals.PLAYER_X = this.player.x;
-                this.moveHighlight();
-                newAnimKey = 'player-walk';
-            }
-        } else if (this.cursors.left.isDown && playerTile !== 'ladder') {
-            this.player.setFlipX(true);
-            if (this.player.x > MainScene.PLAYER_SPEED)
-                this.player.x -= MainScene.PLAYER_SPEED;
-                Globals.PLAYER_X = this.player.x;
-                this.moveHighlight();
-                newAnimKey = 'player-walk';
-        } else {
+            this.walkPlayer(false);
+            newAnimKey = 'player-walk';
+        }
+
+        else if (this.cursors.left.isDown && playerTile !== 'ladder') {
+            this.walkPlayer(true);
+            newAnimKey = 'player-walk';
+        }
+
+        else {
             const underlyingSquareCoords = this.calculateHighlightSquare(this.player);
             const underlyingTile =  this.getTextureAt(underlyingSquareCoords[0], underlyingSquareCoords[1]);
 

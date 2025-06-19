@@ -17,6 +17,8 @@ class Scene1 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const pictograph = this.add.sprite(12*Globals.TILE_WIDTH, 4*Globals.TILE_WIDTH, 'aztec-snake');
+        pictograph.setDepth(10);
     }
 
 }
@@ -49,6 +51,12 @@ class Scene2 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const pictograph = this.add.sprite(12*Globals.TILE_WIDTH, 9.2*Globals.TILE_WIDTH, 'aztec-eagle');
+        const pictograph2 = this.add.sprite(1*Globals.TILE_WIDTH, 9.2*Globals.TILE_WIDTH, 'aztec-eagle');
+        pictograph.setDepth(10);
+        pictograph2.setDepth(10);
+        pictograph2.flipX = true;
+
         let increase = 2;
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)){
@@ -498,6 +506,22 @@ class Scene12 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+
+        const spriteData = [
+            { x: 3 * Globals.TILE_WIDTH, y: 6.2 * Globals.TILE_WIDTH, texture: 'aztec-eagle', flipX: true },
+            { x: 9 * Globals.TILE_WIDTH, y: 6.2 * Globals.TILE_WIDTH, texture: 'aztec-eagle', flipX: false },
+            { x: 3 * Globals.TILE_WIDTH, y: 2 * Globals.TILE_WIDTH, texture: 'aztec-snake', flipX: true },
+            { x: 9 * Globals.TILE_WIDTH, y: 2 * Globals.TILE_WIDTH, texture: 'aztec-snake', flipX: false },
+            { x: 6 * Globals.TILE_WIDTH, y: 4.1 * Globals.TILE_WIDTH, texture: 'aztec-calendar', flipX: false }
+        ];
+
+        spriteData.forEach(data => {
+            const sprite = this.add.sprite(data.x, data.y, data.texture);
+            sprite.setDepth(10);
+            if (data.flipX) {
+                sprite.setFlipX(true);
+            }
+        });
     }
 
     update(time, delta){
@@ -670,6 +694,7 @@ class Scene15 extends MainScene{
         this.skullRows= [ {'row': 9, 'side': 'right'} ];
         this.snakeRows= [ {'row': 9, 'side': 'right'} ];
         this.ladderColumns = [ {'column' : 13, 'start' : 0, 'end' : 9}];
+        this.keyRows = [ {'row': 9, 'color': 'key-blue'}];
 
         this.nextScene['left'] = 'Scene14';
         this.exits['left']['x'] = '0';
@@ -1254,6 +1279,8 @@ class Scene25 extends MainScene{
         this.nonBrickRows = [1,2, 4,6, 8,9];
         this.keyRows = [ {'row': 6, 'color': 'key-blue'}];
 
+        this.doorTiles = [ {'tileX' : 13, 'tileY': 9, 'color': 'door-blue' }];
+
         this.kupaRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'left'}
             , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
             , {'row': 6, 'side': 'left'}, {'row': 9, 'side': 'left'}
@@ -1265,7 +1292,7 @@ class Scene25 extends MainScene{
                     ];
 
         this.nextScene['left'] = 'Scene24';
-        this.nextScene['right'] = 'SceneMontezuma';
+        this.nextScene['right'] = 'SceneKamikaze';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1295,6 +1322,29 @@ class Scene25 extends MainScene{
             iter += 111;
 
             bullet.x +=400;
+        });
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12, 9);
+                }
+                else if (d === 'right'){
+                    this.setGlobalInitialPos(1, 2);
+                }
+            }
         });
     }
 }
@@ -1338,7 +1388,7 @@ class Scene26 extends MainScene{
 
         const fireEdgeHiding = this.add.sprite(7*Globals.TILE_WIDTH - 20, 2.5*Globals.TILE_WIDTH, 'black-strip');
 
-        const brickBridgeX = [3,4, 6,7, 9, 10];
+        const brickBridgeX = [3.5 ,4, 6.5,7, 9.7, 10];
         brickBridgeX.forEach(x =>{
             const brick = this.add.sprite(x*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'brick');
             this.spriteGroup.add(brick);
@@ -1380,6 +1430,137 @@ class Scene26 extends MainScene{
                     this.setGlobalInitialPos(12, 8);
                 }
                 else if (d === 'right'){
+                    this.setGlobalInitialPos(1, 9);
+                }
+            }
+        });
+    }
+}
+
+class SceneKamikaze extends MainScene{
+
+    constructor(){
+        super('SceneKamikaze');
+        this.backgroundColor = 'black';
+
+        this.nonBrickRows = [0, 1,2,3, 4,5,6,7, 8,9,10];
+        this.doorTiles = [ {'tileX' : 12.69, 'tileY': 7.5, 'color': 'door-green' }];
+
+        this.nextScene['right'] = 'SceneMontezuma';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '8';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        this.kupas = [];
+
+        const fireAnimation = this.add.sprite(6.5*Globals.TILE_WIDTH + 13, 9.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.setScale(1.3);
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 9; y < 11; y++){
+            xs.forEach(x =>
+                {
+                    const brick = this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick');
+                    this.spriteGroup.add(brick);
+                });
+        }
+
+        const fireEdgeHiding = this.add.sprite(7*Globals.TILE_WIDTH - 20, 4.25*Globals.TILE_WIDTH, 'black-strip');
+        fireEdgeHiding.setScale(1.5);
+
+        const pipe1 = this.add.sprite(Globals.TILE_WIDTH, 3.86 * Globals.TILE_WIDTH, 'pipe-short');
+        pipe1.setDepth(10);
+        pipe1.scaleY = 0.75;
+
+        const pipeLocationsX = [2.5, 5.5, 8.5, 11.3];
+
+        pipeLocationsX.forEach(x => {
+            const pipe = this.add.sprite(x * Globals.TILE_WIDTH, 3.27 * Globals.TILE_WIDTH, 'pipe-short');
+            pipe.setDepth(10);
+            const kupa = this.add.sprite(x * Globals.TILE_WIDTH, 0.5*Globals.TILE_WIDTH, 'kupa1');
+            kupa.speedY = 0;
+            kupa.scaleX = 0.8;
+            this.kupas.push(kupa);
+        });
+
+        const brickBridgeX = [3.5 ,4, 6.5,7, 9.7, 10];
+        brickBridgeX.forEach(x =>{
+            const brick = this.add.sprite(x*Globals.TILE_WIDTH, 9*Globals.TILE_WIDTH, 'brick');
+            this.spriteGroup.add(brick);
+        });
+
+        const doorList = this.getSprites('door');
+        if (doorList.length > 0)
+            doorList[0].setDepth(11);
+    }
+
+    walkPlayer(left){
+        super.walkPlayer(left);
+        const fallingSpeed = 7;
+
+        const xMinMax = {0: [1.4, 5], 1: [4.5, 7], 2: [10,11], 3:[11,12]}
+
+        for (let i = 0; i < Object.keys(xMinMax).length; i++){
+            console.log(xMinMax[i][0], xMinMax[i][1]);
+            if (this.player.x > xMinMax[i][0]*Globals.TILE_WIDTH && this.player.x < (xMinMax[i][1]*Globals.TILE_WIDTH))
+                this.kupas[i].speedY = fallingSpeed;
+            }
+    }
+
+    update(time,delta){
+        super.update(time,delta);
+        for(let i = 0; i < this.kupas.length; i++){
+            this.kupas[i].y += this.kupas[i].speedY;
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.kupas[i].x, this.kupas[i].y);
+            if (distance < 3*Globals.TILE_WIDTH/4) {
+                this.scene.restart();
+            }
+        }
+
+    }
+
+    movePlayer(time){
+        super.movePlayer(time);
+
+        const playerTile = this.calculateSpriteSquare(this.player);
+        const playerTileY = playerTile[1];
+        if (playerTileY >= 2 && this.getTextureAt(playerTile[0], playerTileY + 1) != 'brick'){
+            this.player.y += 5;
+            if (this.player.y > 550){
+                this.player.setTexture('smoke-cloud');
+                    this.player.y -= 6;
+                    this.player.x -= 1;
+                    this.time.delayedCall(1256, () => {
+                        this.scene.start('SceneKamikaze');
+                    });
+                }
+        }
+
+    }
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12, 8);
+                }
+                else if (d === 'right'){
                     this.setGlobalInitialPos(1, 9);                }
             }
         });
@@ -1409,6 +1590,8 @@ class Scene27 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const sprite = this.add.sprite(2.2*Globals.TILE_WIDTH, 2.2*Globals.TILE_WIDTH, 'aztec-calendar');
+        sprite.setDepth(10);
     }
 
     update(time, delta){
@@ -1451,7 +1634,7 @@ class SceneMontezuma extends MainScene{
                     {x: 300, y: 9*Globals.TILE_WIDTH, speedX: 7},
                     {x: 1600, y: 8*Globals.TILE_WIDTH, speedX: 12},
                     ];
-        this.nextScene['left'] = 'Scene25';
+        this.nextScene['left'] = 'SceneKamikaze';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
 
@@ -1495,16 +1678,10 @@ class SceneMontezuma extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12,8);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1,9);
                 }
             }
         });
