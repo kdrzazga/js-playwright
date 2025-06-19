@@ -1380,6 +1380,107 @@ class Scene26 extends MainScene{
                     this.setGlobalInitialPos(12, 8);
                 }
                 else if (d === 'right'){
+                    this.setGlobalInitialPos(1, 9);
+                }
+            }
+        });
+    }
+}
+
+class SceneKamikaze extends MainScene{
+
+    constructor(){
+        super('SceneKamikaze');
+        this.backgroundColor = 'black';
+
+        this.nonBrickRows = [0, 1,2,3, 4,5,6,7, 8,9,10];
+
+        this.nextScene['left'] = 'Scene27';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene24';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6.5*Globals.TILE_WIDTH + 13, 9.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.setScale(1.3);
+        fireAnimation.play('fire');
+        const xs = [0,1, 12, 13];
+        for(let y = 9; y < 11; y++){
+            xs.forEach(x =>
+                {
+                    const brick = this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick');
+                    this.spriteGroup.add(brick);
+                });
+        }
+
+        const fireEdgeHiding = this.add.sprite(7*Globals.TILE_WIDTH - 20, 4.25*Globals.TILE_WIDTH, 'black-strip');
+        fireEdgeHiding.setScale(1.5);
+
+        const pipe1 = this.add.sprite(Globals.TILE_WIDTH, 3.86 * Globals.TILE_WIDTH, 'pipe-short');
+        pipe1.setDepth(10);
+        pipe1.scaleY = 0.75;
+
+        const pipeLocationsX = [2.5, 5.5, 8.5, 11.3];
+
+        pipeLocationsX.forEach(x => {
+            const pipe = this.add.sprite(x * Globals.TILE_WIDTH, 3.27 * Globals.TILE_WIDTH, 'pipe-short');
+            pipe.setDepth(10);
+            const kupa = this.add.sprite(x * Globals.TILE_WIDTH, 0.5*Globals.TILE_WIDTH, 'kupa1');
+        });
+
+        const brickBridgeX = [3.5 ,4, 6.5,7, 9.7, 10];
+        brickBridgeX.forEach(x =>{
+            const brick = this.add.sprite(x*Globals.TILE_WIDTH, 9*Globals.TILE_WIDTH, 'brick');
+            this.spriteGroup.add(brick);
+        });
+    }
+
+    movePlayer(time){
+        super.movePlayer(time);
+
+        const playerTile = this.calculateSpriteSquare(this.player);
+        const playerTileY = playerTile[1];
+        if (playerTileY >= 2 && this.getTextureAt(playerTile[0], playerTileY + 1) != 'brick'){
+            this.player.y += 5;
+            if (this.player.y > 550){
+                this.player.setTexture('smoke-cloud');
+                    this.player.y -= 6;
+                    this.player.x -= 1;
+                    this.time.delayedCall(1256, () => {
+                        this.scene.start('SceneKamikaze');
+                    });
+                }
+        }
+
+    }
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12, 8);
+                }
+                else if (d === 'right'){
                     this.setGlobalInitialPos(1, 9);                }
             }
         });

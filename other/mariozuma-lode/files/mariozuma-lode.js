@@ -165,6 +165,7 @@ class MainScene extends ExtendedScene {
         this.load.image('brick1', 'files/background/brick/dissolve1.png');
         this.load.image('brick2', 'files/background/brick/dissolve2.png');
         this.load.image('pipe-down', 'files/background/pipeD.png');
+        this.load.image('pipe-short', 'files/background/pipe-short.png');
 
         this.load.image('fire1', 'files/background/fire/fire (1).gif');
         this.load.image('fire2', 'files/background/fire/fire (2).gif');
@@ -473,6 +474,17 @@ class MainScene extends ExtendedScene {
         }
     }
 
+    walkPlayer(left) {
+        this.player.setFlipX(left);
+        const condition = left ? this.player.x > MainScene.PLAYER_SPEED : this.player.x < this.sys.canvas.width
+        if (condition){
+            const movement = left ? -MainScene.PLAYER_SPEED : MainScene.PLAYER_SPEED;
+            this.player.x += movement;
+            Globals.PLAYER_X = this.player.x;
+            this.moveHighlight();
+        }
+    }
+
     movePlayer(time){
         let newAnimKey = 'player';
 
@@ -482,21 +494,16 @@ class MainScene extends ExtendedScene {
         const tileAbove = this.getTextureAt(playerTileX, playerTileY - 1);
 
         if (this.cursors.right.isDown && playerTile !== 'ladder') {
-            this.player.setFlipX(false);
-            if (this.player.x < this.sys.canvas.width) {
-                this.player.x += MainScene.PLAYER_SPEED;
-                Globals.PLAYER_X = this.player.x;
-                this.moveHighlight();
-                newAnimKey = 'player-walk';
-            }
-        } else if (this.cursors.left.isDown && playerTile !== 'ladder') {
-            this.player.setFlipX(true);
-            if (this.player.x > MainScene.PLAYER_SPEED)
-                this.player.x -= MainScene.PLAYER_SPEED;
-                Globals.PLAYER_X = this.player.x;
-                this.moveHighlight();
-                newAnimKey = 'player-walk';
-        } else {
+            this.walkPlayer(false);
+            newAnimKey = 'player-walk';
+        }
+
+        else if (this.cursors.left.isDown && playerTile !== 'ladder') {
+            this.walkPlayer(true);
+            newAnimKey = 'player-walk';
+        }
+
+        else {
             const underlyingSquareCoords = this.calculateHighlightSquare(this.player);
             const underlyingTile =  this.getTextureAt(underlyingSquareCoords[0], underlyingSquareCoords[1]);
 
