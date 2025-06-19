@@ -1312,7 +1312,7 @@ class Scene25 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    this.setGlobalInitialPos(12, 8);
+                    this.setGlobalInitialPos(12, 9);
                 }
                 else if (d === 'right'){
                     this.setGlobalInitialPos(1, 2);
@@ -1421,7 +1421,7 @@ class SceneKamikaze extends MainScene{
 
         this.nextScene['right'] = 'SceneMontezuma';
         this.exits['right']['x'] = '13';
-        this.exits['right']['y'] = '9';
+        this.exits['right']['y'] = '8';
     }
 
     create(){
@@ -1517,7 +1517,7 @@ class SceneKamikaze extends MainScene{
     checkExit(){
         const coords = this.calculateSpriteSquare(this.player);
 
-        const directions = ['left', 'right'];
+        const directions = ['right'];
 
         directions.forEach( d => {
             const exitX = this.exits[d]['x'];
@@ -1601,7 +1601,7 @@ class SceneMontezuma extends MainScene{
                     {x: 300, y: 9*Globals.TILE_WIDTH, speedX: 7},
                     {x: 1600, y: 8*Globals.TILE_WIDTH, speedX: 12},
                     ];
-        this.nextScene['left'] = 'Scene25';
+        this.nextScene['left'] = 'SceneKamikaze';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9 ';
 
@@ -1647,7 +1647,7 @@ class SceneMontezuma extends MainScene{
                 if (d === 'left'){
                     Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
                     Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
+                    Globals.PLAYER_Y = 8 * Globals.TILE_WIDTH;
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
                 else if (d === 'right'){
