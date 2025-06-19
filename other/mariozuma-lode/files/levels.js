@@ -1265,7 +1265,7 @@ class Scene25 extends MainScene{
                     ];
 
         this.nextScene['left'] = 'Scene24';
-        this.nextScene['right'] = 'SceneMontezuma';
+        this.nextScene['right'] = 'SceneKamikaze';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '9';
         this.exits['right']['x'] = '13';
@@ -1295,6 +1295,29 @@ class Scene25 extends MainScene{
             iter += 111;
 
             bullet.x +=400;
+        });
+    }
+
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12, 8);
+                }
+                else if (d === 'right'){
+                    this.setGlobalInitialPos(1, 2);
+                }
+            }
         });
     }
 }
@@ -1395,13 +1418,10 @@ class SceneKamikaze extends MainScene{
 
         this.nonBrickRows = [0, 1,2,3, 4,5,6,7, 8,9,10];
 
-        this.nextScene['left'] = 'Scene27';
-        this.exits['left']['x'] = '0';
-        this.exits['left']['y'] = '2';
 
-        this.nextScene['right'] = 'Scene24';
+        this.nextScene['right'] = 'SceneMontezuma';
         this.exits['right']['x'] = '13';
-        this.exits['right']['y'] = '2';
+        this.exits['right']['y'] = '9';
     }
 
     create(){
