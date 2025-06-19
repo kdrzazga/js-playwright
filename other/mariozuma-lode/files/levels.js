@@ -1452,12 +1452,15 @@ class SceneKamikaze extends MainScene{
 
     walkPlayer(left){
         super.walkPlayer(left);
-        const fallingSpeed = 5;
-        if (this.player.x > 1.4*Globals.TILE_WIDTH && this.player.x < (5*Globals.TILE_WIDTH))
-            this.kupas[0].speedY = fallingSpeed;
-        if (this.player.x > 4.5*Globals.TILE_WIDTH && this.player.x < (7*Globals.TILE_WIDTH))
-            this.kupas[1].speedY = fallingSpeed;
+        const fallingSpeed = 7;
 
+        const xMinMax = {0: [1.4, 5], 1: [4.5, 7], 2: [10,11], 3:[11,12]}
+
+        for (let i = 0; i < Object.keys(xMinMax).length; i++){
+            console.log(xMinMax[i][0], xMinMax[i][1]);
+            if (this.player.x > xMinMax[i][0]*Globals.TILE_WIDTH && this.player.x < (xMinMax[i][1]*Globals.TILE_WIDTH))
+                this.kupas[i].speedY = fallingSpeed;
+            }
     }
 
     update(time,delta){
