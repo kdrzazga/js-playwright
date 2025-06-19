@@ -1254,6 +1254,8 @@ class Scene25 extends MainScene{
         this.nonBrickRows = [1,2, 4,6, 8,9];
         this.keyRows = [ {'row': 6, 'color': 'key-blue'}];
 
+        this.doorTiles = [ {'tileX' : 13, 'tileY': 9, 'color': 'door-blue' }];
+
         this.kupaRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'left'}
             , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
             , {'row': 6, 'side': 'left'}, {'row': 9, 'side': 'left'}

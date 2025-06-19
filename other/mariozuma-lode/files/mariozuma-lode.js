@@ -8,9 +8,12 @@ class Globals {
             'door-blue': true
         },
         'Scene13' : {
-            'door-red': true
+            'door-blue': true
         },
         'Scene20' : {
+            'door-blue': true
+        },
+        'Scene25' : {
             'door-blue': true
         }
     }
