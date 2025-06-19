@@ -17,6 +17,8 @@ class Scene1 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const pictograph = this.add.sprite(12*Globals.TILE_WIDTH, 4*Globals.TILE_WIDTH, 'aztec-snake');
+        pictograph.setDepth(10);
     }
 
 }
@@ -49,6 +51,12 @@ class Scene2 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const pictograph = this.add.sprite(12*Globals.TILE_WIDTH, 9.2*Globals.TILE_WIDTH, 'aztec-eagle');
+        const pictograph2 = this.add.sprite(1*Globals.TILE_WIDTH, 9.2*Globals.TILE_WIDTH, 'aztec-eagle');
+        pictograph.setDepth(10);
+        pictograph2.setDepth(10);
+        pictograph2.flipX = true;
+
         let increase = 2;
         this.spriteGroup.children.iterate((child)=> {
             if (this._isEnemy(child)){
@@ -498,6 +506,22 @@ class Scene12 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+
+        const spriteData = [
+            { x: 3 * Globals.TILE_WIDTH, y: 6.2 * Globals.TILE_WIDTH, texture: 'aztec-eagle', flipX: true },
+            { x: 9 * Globals.TILE_WIDTH, y: 6.2 * Globals.TILE_WIDTH, texture: 'aztec-eagle', flipX: false },
+            { x: 3 * Globals.TILE_WIDTH, y: 2 * Globals.TILE_WIDTH, texture: 'aztec-snake', flipX: true },
+            { x: 9 * Globals.TILE_WIDTH, y: 2 * Globals.TILE_WIDTH, texture: 'aztec-snake', flipX: false },
+            { x: 6 * Globals.TILE_WIDTH, y: 4.1 * Globals.TILE_WIDTH, texture: 'aztec-calendar', flipX: false }
+        ];
+
+        spriteData.forEach(data => {
+            const sprite = this.add.sprite(data.x, data.y, data.texture);
+            sprite.setDepth(10);
+            if (data.flipX) {
+                sprite.setFlipX(true);
+            }
+        });
     }
 
     update(time, delta){
@@ -1561,6 +1585,8 @@ class Scene27 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const sprite = this.add.sprite(2.2*Globals.TILE_WIDTH, 2.2*Globals.TILE_WIDTH, 'aztec-calendar');
+        sprite.setDepth(10);
     }
 
     update(time, delta){

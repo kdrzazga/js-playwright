@@ -235,6 +235,10 @@ class MainScene extends ExtendedScene {
         this.load.image('conveyor8', 'files/background/conveyor/conveyor (8).png');
         this.load.image('conveyor9', 'files/background/conveyor/conveyor (9).png');
 
+        this.load.image('aztec-calendar', 'files/background/aztec/calendar.png');
+        this.load.image('aztec-snake', 'files/background/aztec/coatl-snake.png');
+        this.load.image('aztec-eagle', 'files/background/aztec/cuauhtli-eagle.png');
+
         this.load.image('black-strip', 'files/background/black-strip.png');
         this.load.image('montezuma', 'files/background/montezuma.png');
         this.load.image('skull-pile', 'files/background/skulls.png');
