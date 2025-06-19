@@ -26,6 +26,7 @@ class Globals {
         'Scene7' : true,
         'Scene8' : true,
         'Scene9' : true,
+        'Scene15' : true,
         'Scene21' : true,
         'Scene23' : true,
         'Scene24' : true,

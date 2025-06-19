@@ -694,6 +694,7 @@ class Scene15 extends MainScene{
         this.skullRows= [ {'row': 9, 'side': 'right'} ];
         this.snakeRows= [ {'row': 9, 'side': 'right'} ];
         this.ladderColumns = [ {'column' : 13, 'start' : 0, 'end' : 9}];
+        this.keyRows = [ {'row': 9, 'color': 'key-blue'}];
 
         this.nextScene['left'] = 'Scene14';
         this.exits['left']['x'] = '0';
