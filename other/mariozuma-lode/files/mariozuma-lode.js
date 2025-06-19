@@ -15,6 +15,9 @@ class Globals {
         },
         'Scene25' : {
             'door-blue': true
+        },
+        'SceneKamikaze' : {
+            'door-green': true
         }
     }
 

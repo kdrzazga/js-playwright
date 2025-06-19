@@ -1443,7 +1443,7 @@ class SceneKamikaze extends MainScene{
         this.backgroundColor = 'black';
 
         this.nonBrickRows = [0, 1,2,3, 4,5,6,7, 8,9,10];
-
+        this.doorTiles = [ {'tileX' : 12.69, 'tileY': 7.5, 'color': 'door-green' }];
 
         this.nextScene['right'] = 'SceneMontezuma';
         this.exits['right']['x'] = '13';
@@ -1494,6 +1494,10 @@ class SceneKamikaze extends MainScene{
             const brick = this.add.sprite(x*Globals.TILE_WIDTH, 9*Globals.TILE_WIDTH, 'brick');
             this.spriteGroup.add(brick);
         });
+
+        const doorList = this.getSprites('door');
+        if (doorList.length > 0)
+            doorList[0].setDepth(11);
     }
 
     walkPlayer(left){
