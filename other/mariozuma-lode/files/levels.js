@@ -1411,6 +1411,7 @@ class SceneKamikaze extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        this.kupas = [];
 
         const fireAnimation = this.add.sprite(6.5*Globals.TILE_WIDTH + 13, 9.5*Globals.TILE_WIDTH, 'fire1');
         fireAnimation.setScale(1.3);
@@ -1437,6 +1438,9 @@ class SceneKamikaze extends MainScene{
             const pipe = this.add.sprite(x * Globals.TILE_WIDTH, 3.27 * Globals.TILE_WIDTH, 'pipe-short');
             pipe.setDepth(10);
             const kupa = this.add.sprite(x * Globals.TILE_WIDTH, 0.5*Globals.TILE_WIDTH, 'kupa1');
+            kupa.speedY = 0;
+            kupa.scaleX = 0.8;
+            this.kupas.push(kupa);
         });
 
         const brickBridgeX = [3.5 ,4, 6.5,7, 9.7, 10];
@@ -1444,6 +1448,28 @@ class SceneKamikaze extends MainScene{
             const brick = this.add.sprite(x*Globals.TILE_WIDTH, 9*Globals.TILE_WIDTH, 'brick');
             this.spriteGroup.add(brick);
         });
+    }
+
+    walkPlayer(left){
+        super.walkPlayer(left);
+        const fallingSpeed = 5;
+        if (this.player.x > 1.4*Globals.TILE_WIDTH && this.player.x < (5*Globals.TILE_WIDTH))
+            this.kupas[0].speedY = fallingSpeed;
+        if (this.player.x > 4.5*Globals.TILE_WIDTH && this.player.x < (7*Globals.TILE_WIDTH))
+            this.kupas[1].speedY = fallingSpeed;
+
+    }
+
+    update(time,delta){
+        super.update(time,delta);
+        for(let i = 0; i < this.kupas.length; i++){
+            this.kupas[i].y += this.kupas[i].speedY;
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.kupas[i].x, this.kupas[i].y);
+            if (distance < 3*Globals.TILE_WIDTH/4) {
+                this.scene.restart();
+            }
+        }
+
     }
 
     movePlayer(time){
