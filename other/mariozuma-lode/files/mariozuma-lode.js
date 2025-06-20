@@ -18,6 +18,10 @@ class Globals {
         },
         'SceneKamikaze' : {
             'door-green': true
+        },
+        'SceneCages' : {
+            'door-red': true,
+            'door-blue': true
         }
     }
 

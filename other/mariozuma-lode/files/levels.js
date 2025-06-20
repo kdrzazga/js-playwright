@@ -389,7 +389,7 @@ class Scene10 extends MainScene{
         ];
         this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 5}];
 
-        this.doorTiles = [ {'tileX' : 6, 'tileY': 2, 'color': 'door-red' },{'tileX' : 9, 'tileY': 2, 'color': 'door-blue' }, ];
+        this.doorTiles = [ {'tileX' : 6, 'tileY': 1.7, 'color': 'door-red' },{'tileX' : 9, 'tileY': 1.7, 'color': 'door-blue' }, ];
 
         this.nextScene['left'] = 'Scene9';
         this.exits['left']['x'] = '0';
@@ -560,7 +560,7 @@ class Scene13 extends MainScene{
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9];
         this.skullRows= Globals.skullSwarm;
 
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'door-blue' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 8.6, 'color': 'door-blue' }];
 
         this.nextScene['left'] = 'Scene12';
         this.exits['left']['x'] = '0';
@@ -933,7 +933,7 @@ class Scene20 extends MainScene{
         this.nonBrickRows = [ 1,2,  4,5,6, 7,8,9,10];
         this.skullRows= Globals.skullSwarm;
 
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 2, 'color': 'door-blue' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 1.55, 'color': 'door-blue' }];
 
         this.nextScene['left'] = 'Scene21';
         this.exits['left']['x'] = '0';
@@ -1279,7 +1279,7 @@ class Scene25 extends MainScene{
         this.nonBrickRows = [1,2, 4,6, 8,9];
         this.keyRows = [ {'row': 6, 'color': 'key-blue'}];
 
-        this.doorTiles = [ {'tileX' : 13, 'tileY': 9, 'color': 'door-blue' }];
+        this.doorTiles = [ {'tileX' : 13, 'tileY': 8.7, 'color': 'door-blue' }];
 
         this.kupaRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'left'}
             , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
@@ -1715,6 +1715,9 @@ class SceneCages extends MainScene{
 
         this.nonBrickRows = [5,6,8,9];
 
+        this.doorTiles = [ {'tileX' : 4.8, 'tileY': 5.6, 'color': 'door-red' }
+            , {'tileX' : 7.2, 'tileY': 5.6, 'color': 'door-blue' }];
+
         const skullRow = {'row': 9, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
             , skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
@@ -1858,7 +1861,8 @@ class SceneTreasure extends MainScene{
 
 
         const princessSavedCell = document.getElementById('princess');
-        if (princessSavedCell.innerHTML == '')
+        const panamaJoeSavedCell = document.getElementById('joe-panama');
+        if (princessSavedCell.innerHTML == '' && panamaJoeSavedCell.innerHTML == '')
             this.proposeRescueMission();
         else
             this.finalTriumph();
@@ -1868,10 +1872,8 @@ class SceneTreasure extends MainScene{
         this.time.delayedCall(3456, () => {
             alert("CONGRATULATIONS! You found Montezuma's gold!");
             if (confirm("Do you want to return to previous room and save Panama Joe and the Princess?")){
-                Globals.PLAYER_X = Globals.TILE_WIDTH * 6;
-                Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                Globals.PLAYER_Y = Globals.TILE_WIDTH * 6;
-                Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+
+                this.setGlobalInitialPos(6,6);
                 this.scene.start('SceneCages');
             }
             else {
@@ -1889,7 +1891,7 @@ class SceneTreasure extends MainScene{
         princess.setDepth(12);
         panamaJoe.setDepth(12);
         this.time.delayedCall(3456, () => {
-            alert("Now you need to divide the treasure to three! Silly!");
+            alert("Now you need to divide the treasure ! Silly!");
             alert("GAME OVER! Let's assume you win :/");
             location.reload();
         });
