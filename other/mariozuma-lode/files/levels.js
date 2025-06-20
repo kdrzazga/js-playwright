@@ -1445,6 +1445,7 @@ class SceneKamikaze extends MainScene{
 
         this.nonBrickRows = [0, 1,2,3, 4,5,6,7, 8,9,10];
         this.doorTiles = [ {'tileX' : 12.69, 'tileY': 7.5, 'color': 'door-green' }];
+        this.keyRows = [ {'row': 1, 'color': 'key-blue'}];
 
         this.nextScene['right'] = 'SceneMontezuma';
         this.exits['right']['x'] = '13';
@@ -1479,7 +1480,7 @@ class SceneKamikaze extends MainScene{
         pipe1.setDepth(10);
         pipe1.scaleY = 0.75;
 
-        const pipeLocationsX = [2.5, 5.5, 8.5, 11.3];
+        const pipeLocationsX = [2.5, 5, 8.5, 11.3];
 
         pipeLocationsX.forEach(x => {
             const pipe = this.add.sprite(x * Globals.TILE_WIDTH, 3.27 * Globals.TILE_WIDTH, 'pipe-short');
@@ -1507,11 +1508,26 @@ class SceneKamikaze extends MainScene{
 
         const xMinMax = {0: [1.4, 5], 1: [4.5, 7], 2: [10,11], 3:[11,12]}
 
-        for (let i = 0; i < Object.keys(xMinMax).length; i++){
-            console.log(xMinMax[i][0], xMinMax[i][1]);
-            if (this.player.x > xMinMax[i][0]*Globals.TILE_WIDTH && this.player.x < (xMinMax[i][1]*Globals.TILE_WIDTH))
-                this.kupas[i].speedY = fallingSpeed;
+        const key = this.getSprites('key-')[0];
+
+        for (const [index, [min, max]] of Object.entries(xMinMax)) {
+            const minX = min * Globals.TILE_WIDTH;
+            const maxX = max * Globals.TILE_WIDTH;
+
+            if (this.player.x > minX && this.player.x < maxX) {
+                if (this.kupas && this.kupas[index]) {
+                    this.kupas[index].speedY = fallingSpeed;
+                }
+
+                if (key) {
+                    if (parseInt(index) === 1 && key.y <= 8 * Globals.TILE_WIDTH) {
+                        key.speedY = fallingSpeed;
+                    } else if (key.y > 8 * Globals.TILE_WIDTH) {
+                        key.speedY = 0;
+                    }
+                }
             }
+        }
     }
 
     update(time,delta){
@@ -1523,6 +1539,9 @@ class SceneKamikaze extends MainScene{
                 this.scene.restart();
             }
         }
+
+        const key = this.getSprites('key-')[0];
+        if (key !=null) key.y += this.kupas[1].speedY;
 
     }
 

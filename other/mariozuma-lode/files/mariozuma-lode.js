@@ -31,7 +31,8 @@ class Globals {
         'Scene23' : true,
         'Scene24' : true,
         'Scene25' : true,
-        'Scene27' : true
+        'Scene27' : true,
+        'SceneKamikaze' : true
     }
 
     static ENEMIES_COUNT = 0;
@@ -618,6 +619,7 @@ class MainScene extends ExtendedScene {
             const x = 6 * Globals.TILE_WIDTH;
             let k = this.add.sprite(x, y, this.keyRows[i].color);
             k.setScale(0.3);
+            k.setDepth(6);
             this.spriteGroup.add(k);
         }
 
