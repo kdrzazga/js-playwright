@@ -265,7 +265,7 @@ class Scene7 extends MainScene{
 
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 2, 'color': 'door-green' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 1.6, 'color': 'door-green' }];
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
@@ -389,7 +389,7 @@ class Scene10 extends MainScene{
         ];
         this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 5}];
 
-        this.doorTiles = [ {'tileX' : 6, 'tileY': 1.7, 'color': 'door-red' },{'tileX' : 9, 'tileY': 1.7, 'color': 'door-blue' }, ];
+        this.doorTiles = [ {'tileX' : 6, 'tileY': 1.6, 'color': 'door-red' },{'tileX' : 9, 'tileY': 1.6, 'color': 'door-blue' }, ];
 
         this.nextScene['left'] = 'Scene9';
         this.exits['left']['x'] = '0';
@@ -1444,7 +1444,7 @@ class SceneKamikaze extends MainScene{
         this.backgroundColor = 'black';
 
         this.nonBrickRows = [0, 1,2,3, 4,5,6,7, 8,9,10];
-        this.doorTiles = [ {'tileX' : 12.69, 'tileY': 7.5, 'color': 'door-green' }];
+        this.doorTiles = [ {'tileX' : 12.69, 'tileY': 7.6, 'color': 'door-green' }];
         this.keyRows = [ {'row': 1, 'color': 'key-blue'}];
 
         this.nextScene['right'] = 'SceneMontezuma';
