@@ -265,7 +265,7 @@ class Scene7 extends MainScene{
 
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 2, 'color': 'door-green' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 1.6, 'color': 'door-green' }];
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
@@ -389,7 +389,7 @@ class Scene10 extends MainScene{
         ];
         this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 5}];
 
-        this.doorTiles = [ {'tileX' : 6, 'tileY': 2, 'color': 'door-red' },{'tileX' : 9, 'tileY': 2, 'color': 'door-blue' }, ];
+        this.doorTiles = [ {'tileX' : 6, 'tileY': 1.6, 'color': 'door-red' },{'tileX' : 9, 'tileY': 1.6, 'color': 'door-blue' }, ];
 
         this.nextScene['left'] = 'Scene9';
         this.exits['left']['x'] = '0';
@@ -560,7 +560,7 @@ class Scene13 extends MainScene{
         this.nonBrickRows = [0, 1,2, 3, 4,5,6, 8,9];
         this.skullRows= Globals.skullSwarm;
 
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 9, 'color': 'door-blue' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 8.6, 'color': 'door-blue' }];
 
         this.nextScene['left'] = 'Scene12';
         this.exits['left']['x'] = '0';
@@ -933,7 +933,7 @@ class Scene20 extends MainScene{
         this.nonBrickRows = [ 1,2,  4,5,6, 7,8,9,10];
         this.skullRows= Globals.skullSwarm;
 
-        this.doorTiles = [ {'tileX' : 4, 'tileY': 2, 'color': 'door-blue' }];
+        this.doorTiles = [ {'tileX' : 4, 'tileY': 1.55, 'color': 'door-blue' }];
 
         this.nextScene['left'] = 'Scene21';
         this.exits['left']['x'] = '0';
@@ -1279,7 +1279,7 @@ class Scene25 extends MainScene{
         this.nonBrickRows = [1,2, 4,6, 8,9];
         this.keyRows = [ {'row': 6, 'color': 'key-blue'}];
 
-        this.doorTiles = [ {'tileX' : 13, 'tileY': 9, 'color': 'door-blue' }];
+        this.doorTiles = [ {'tileX' : 13, 'tileY': 8.7, 'color': 'door-blue' }];
 
         this.kupaRows= [ {'row': 2, 'side': 'right'}, {'row': 4, 'side': 'left'}
             , {'row': 2, 'side': 'right'}, {'row': 6, 'side': 'left'}
@@ -1444,7 +1444,8 @@ class SceneKamikaze extends MainScene{
         this.backgroundColor = 'black';
 
         this.nonBrickRows = [0, 1,2,3, 4,5,6,7, 8,9,10];
-        this.doorTiles = [ {'tileX' : 12.69, 'tileY': 7.5, 'color': 'door-green' }];
+        this.doorTiles = [ {'tileX' : 12.69, 'tileY': 7.6, 'color': 'door-green' }];
+        this.keyRows = [ {'row': 1, 'color': 'key-blue'}];
 
         this.nextScene['right'] = 'SceneMontezuma';
         this.exits['right']['x'] = '13';
@@ -1479,7 +1480,7 @@ class SceneKamikaze extends MainScene{
         pipe1.setDepth(10);
         pipe1.scaleY = 0.75;
 
-        const pipeLocationsX = [2.5, 5.5, 8.5, 11.3];
+        const pipeLocationsX = [2.5, 5, 8.5, 11.3];
 
         pipeLocationsX.forEach(x => {
             const pipe = this.add.sprite(x * Globals.TILE_WIDTH, 3.27 * Globals.TILE_WIDTH, 'pipe-short');
@@ -1507,11 +1508,26 @@ class SceneKamikaze extends MainScene{
 
         const xMinMax = {0: [1.4, 5], 1: [4.5, 7], 2: [10,11], 3:[11,12]}
 
-        for (let i = 0; i < Object.keys(xMinMax).length; i++){
-            console.log(xMinMax[i][0], xMinMax[i][1]);
-            if (this.player.x > xMinMax[i][0]*Globals.TILE_WIDTH && this.player.x < (xMinMax[i][1]*Globals.TILE_WIDTH))
-                this.kupas[i].speedY = fallingSpeed;
+        const key = this.getSprites('key-')[0];
+
+        for (const [index, [min, max]] of Object.entries(xMinMax)) {
+            const minX = min * Globals.TILE_WIDTH;
+            const maxX = max * Globals.TILE_WIDTH;
+
+            if (this.player.x > minX && this.player.x < maxX) {
+                if (this.kupas && this.kupas[index]) {
+                    this.kupas[index].speedY = fallingSpeed;
+                }
+
+                if (key) {
+                    if (parseInt(index) === 1 && key.y <= 8 * Globals.TILE_WIDTH) {
+                        key.speedY = fallingSpeed;
+                    } else if (key.y > 8 * Globals.TILE_WIDTH) {
+                        key.speedY = 0;
+                    }
+                }
             }
+        }
     }
 
     update(time,delta){
@@ -1523,6 +1539,9 @@ class SceneKamikaze extends MainScene{
                 this.scene.restart();
             }
         }
+
+        const key = this.getSprites('key-')[0];
+        if (key !=null) key.y += this.kupas[1].speedY;
 
     }
 
@@ -1696,6 +1715,9 @@ class SceneCages extends MainScene{
 
         this.nonBrickRows = [5,6,8,9];
 
+        this.doorTiles = [ {'tileX' : 4.8, 'tileY': 5.6, 'color': 'door-red' }
+            , {'tileX' : 7.2, 'tileY': 5.6, 'color': 'door-blue' }];
+
         const skullRow = {'row': 9, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
             , skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
@@ -1839,7 +1861,8 @@ class SceneTreasure extends MainScene{
 
 
         const princessSavedCell = document.getElementById('princess');
-        if (princessSavedCell.innerHTML == '')
+        const panamaJoeSavedCell = document.getElementById('joe-panama');
+        if (princessSavedCell.innerHTML == '' && panamaJoeSavedCell.innerHTML == '')
             this.proposeRescueMission();
         else
             this.finalTriumph();
@@ -1849,10 +1872,8 @@ class SceneTreasure extends MainScene{
         this.time.delayedCall(3456, () => {
             alert("CONGRATULATIONS! You found Montezuma's gold!");
             if (confirm("Do you want to return to previous room and save Panama Joe and the Princess?")){
-                Globals.PLAYER_X = Globals.TILE_WIDTH * 6;
-                Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                Globals.PLAYER_Y = Globals.TILE_WIDTH * 6;
-                Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+
+                this.setGlobalInitialPos(6,6);
                 this.scene.start('SceneCages');
             }
             else {
@@ -1870,7 +1891,7 @@ class SceneTreasure extends MainScene{
         princess.setDepth(12);
         panamaJoe.setDepth(12);
         this.time.delayedCall(3456, () => {
-            alert("Now you need to divide the treasure to three! Silly!");
+            alert("Now you need to divide the treasure ! Silly!");
             alert("GAME OVER! Let's assume you win :/");
             location.reload();
         });
