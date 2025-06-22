@@ -54,6 +54,7 @@ class MainScene extends ExtendedScene {
             'rightY': ''
         };
 
+        MainScene.PLAYER_SPEED = Globals.debug ? 5 : 2;
     }
 
     preload(){

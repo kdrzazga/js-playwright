@@ -158,7 +158,8 @@ class Scene5 extends MainScene{
         this.nonBrickRows = [1,2];
         this.nonBrickColumns = [5];
 
-        const skullRow = {'row': 1, 'side': 'right'};
+        const rowNumber = Globals.debug ? 1 : 2;
+        const skullRow = {'row': rowNumber, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow,skullRow];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
@@ -1735,7 +1736,8 @@ class SceneCages extends MainScene{
         this.doorTiles = [ {'tileX' : 4.8, 'tileY': 5.6, 'color': 'door-red' }
             , {'tileX' : 7.2, 'tileY': 5.6, 'color': 'door-blue' }];
 
-        const skullRow = {'row': 9, 'side': 'right'};
+        const rowNumber = Globals.debug ? 8 : 9;
+        const skullRow = {'row': rowNumber, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
             , skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
             , skullRow, skullRow, skullRow, skullRow];
