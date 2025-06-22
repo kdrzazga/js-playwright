@@ -671,16 +671,10 @@ class Scene14 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 9);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1, 9);
                 }
             }
         });
@@ -747,10 +741,7 @@ class Scene15 extends MainScene{
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
                 else if (d === 'bottom'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 1);
                 }
             }
         });
@@ -812,10 +803,7 @@ class Scene16 extends MainScene{ //g.scene.scenes[14].scene.key
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
             }
         });
@@ -1031,16 +1019,10 @@ class Scene20 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1,2);
                 }
             }
         });
@@ -1098,16 +1080,10 @@ class Scene21 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1,2);
                 }
             }
         });
@@ -1165,16 +1141,10 @@ class Scene22 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 0.5;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(0.5, 9);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1,2);
                 }
             }
         });
@@ -1235,16 +1205,10 @@ class Scene23 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 9);
                 }
             }
         });
@@ -1882,12 +1846,10 @@ class SceneCages extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 6;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    this.setGlobalInitialPos(6, 9);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    this.setGlobalInitialPos(1, 9);
                 }
             }
         });
