@@ -90,6 +90,8 @@ class Scene3 extends MainScene{
     create(){
         super.create();
         this.createSpriteGroup();
+        const lightpoint = this.add.sprite(Globals.TILE_WIDTH * 6, Globals.TILE_WIDTH*8.5, 'lightpoint1');
+        lightpoint.play('flickering-light');
     }
 
     createSpriteGroup() {
@@ -864,8 +866,8 @@ class Scene18 extends MainScene{
 
         this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
 
-        this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'} , {'row': 6, 'side': 'left'}
-            , {'row': 7, 'side': 'left'} , {'row': 2, 'side': 'left'}];
+        this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'} , {'row': 8, 'side': 'right'}
+            , {'row': 8, 'side': 'left'} , {'row': 2, 'side': 'left'}];
 
         this.nextScene['left'] = 'Scene19';
         this.nextScene['right'] = 'Scene17';
@@ -884,11 +886,16 @@ class Scene18 extends MainScene{
         super.createSpriteGroup();
 
         const topSnake = this.getSprites('snake').filter(s => Math.round(s.y/Globals.TILE_WIDTH) == 2)[0];
-        this.time.delayedCall(6155, () => topSnake.speedY = 0.2);
-        this.time.delayedCall(7155, () => topSnake.speedY = -0.5);
-        this.time.delayedCall(8155, () => topSnake.speedY = 0.5);
-        this.time.delayedCall(9155, () => topSnake.speedY = -0.5);
-        this.time.delayedCall(10000, () => topSnake.speedY = 0.6);
+        this.time.delayedCall(6155, () => topSnake.speedX = 0.2);
+        this.time.delayedCall(7155, () => topSnake.speedX = -0.5);
+        this.time.delayedCall(8155, () => topSnake.speedX = 0.5);
+        this.time.delayedCall(9155, () => topSnake.speedX = -0.5);
+        this.time.delayedCall(10000, () => topSnake.speedX = 0.6);
+
+        const lightpoint1 = this.add.sprite(Globals.TILE_WIDTH * 1, Globals.TILE_WIDTH*8.5, 'lightpoint1');
+        lightpoint1.play('flickering-light');
+        const lightpoint2 = this.add.sprite(Globals.TILE_WIDTH * 12, Globals.TILE_WIDTH*8.5, 'lightpoint1');
+        lightpoint2.play('flickering-light');
     }
 }
 
