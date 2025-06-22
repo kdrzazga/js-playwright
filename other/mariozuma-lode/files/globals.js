@@ -1,4 +1,5 @@
 class Globals {
+    static debug = false;
     static doors = {
         'Scene7' : {
             'door-green': true

@@ -158,7 +158,8 @@ class Scene5 extends MainScene{
         this.nonBrickRows = [1,2];
         this.nonBrickColumns = [5];
 
-        const skullRow = {'row': 1, 'side': 'right'};
+        const rowNumber = Globals.debug ? 1 : 2;
+        const skullRow = {'row': rowNumber, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow,skullRow];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
@@ -671,16 +672,10 @@ class Scene14 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 9);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1, 9);
                 }
             }
         });
@@ -747,10 +742,7 @@ class Scene15 extends MainScene{
                     Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
                 }
                 else if (d === 'bottom'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 1);
                 }
             }
         });
@@ -812,10 +804,7 @@ class Scene16 extends MainScene{ //g.scene.scenes[14].scene.key
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
             }
         });
@@ -845,17 +834,6 @@ class Scene17 extends MainScene{
         super.create();
         this.createSpriteGroup();
     }
-
-    createSpriteGroup() {
-        super.createSpriteGroup();
-        const topSnake = this.getSprites('snake').filter(s => Math.round(s.y/Globals.TILE_WIDTH) == 2)[0];
-
-        this.time.delayedCall(5155, () => topSnake.speedY = 0.2);
-        this.time.delayedCall(6155, () => topSnake.speedY = -0.5);
-        this.time.delayedCall(7155, () => topSnake.speedY = 0.5);
-        this.time.delayedCall(9155, () => topSnake.speedY = -0.5);
-        this.time.delayedCall(11155, () => topSnake.speedY = 0.6);
-    }
 }
 
 class Scene18 extends MainScene{
@@ -864,9 +842,9 @@ class Scene18 extends MainScene{
         super('Scene18');
         this.backgroundColor = 'black';
 
-        this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
+        this.nonBrickRows = [1,2,4,5,6,7,8,9,10];
 
-        this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'} , {'row': 8, 'side': 'right'}
+        this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 4, 'side': 'right'} , {'row': 8, 'side': 'right'}
             , {'row': 8, 'side': 'left'} , {'row': 2, 'side': 'left'}];
 
         this.nextScene['left'] = 'Scene19';
@@ -884,18 +862,76 @@ class Scene18 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
+        const graphics = this.add.graphics();
+        graphics.fillStyle(0x880015, 1);
+        graphics.fillRect(0, 0, 800, 3*Globals.TILE_WIDTH);
 
-        const topSnake = this.getSprites('snake').filter(s => Math.round(s.y/Globals.TILE_WIDTH) == 2)[0];
-        this.time.delayedCall(6155, () => topSnake.speedX = 0.2);
-        this.time.delayedCall(7155, () => topSnake.speedX = -0.5);
-        this.time.delayedCall(8155, () => topSnake.speedX = 0.5);
-        this.time.delayedCall(9155, () => topSnake.speedX = -0.5);
-        this.time.delayedCall(10000, () => topSnake.speedX = 0.6);
+        const createLightPoint = (x, y, texture='lightpoint1') => {
+            const sprite = this.add.sprite(x, y, texture);
+            sprite.play('flickering-light');
+            return sprite;
+        };
 
-        const lightpoint1 = this.add.sprite(Globals.TILE_WIDTH * 1, Globals.TILE_WIDTH*8.5, 'lightpoint1');
-        lightpoint1.play('flickering-light');
-        const lightpoint2 = this.add.sprite(Globals.TILE_WIDTH * 12, Globals.TILE_WIDTH*8.5, 'lightpoint1');
-        lightpoint2.play('flickering-light');
+        const lightPointsPositions = [
+            { x: Globals.TILE_WIDTH * 2, y: Globals.TILE_WIDTH * 8.5 },
+            { x: Globals.TILE_WIDTH * 12, y: Globals.TILE_WIDTH * 8.5 },
+            { x: Globals.TILE_WIDTH * 5.6, y: Globals.TILE_WIDTH * 6.5 },
+            { x: Globals.TILE_WIDTH * 6.5, y: Globals.TILE_WIDTH * 4.5 },
+        ];
+
+        const lightPoints = lightPointsPositions.map(pos => createLightPoint.call(this, pos.x, pos.y));
+
+        const getSnakesAtRow = (row) => {
+            return this.getSprites('snake').filter(s => Math.round(s.y / Globals.TILE_WIDTH) === row);
+        };
+
+        const bottomSnakes = getSnakesAtRow(8);
+        const bottomConfigs = [
+            {
+                index: 0,
+                x: 2 * Globals.TILE_WIDTH,
+                speedX: 0.1,
+                minX: Globals.TILE_WIDTH,
+                maxX: 4 * Globals.TILE_WIDTH,
+            },
+            {
+                index: 1,
+                x: 10 * Globals.TILE_WIDTH,
+                speedX: 0.2,
+                minX: 9 * Globals.TILE_WIDTH,
+                maxX: 12 * Globals.TILE_WIDTH,
+            },
+        ];
+
+        bottomConfigs.forEach(config => {
+            const snake = bottomSnakes[config.index];
+            snake.x = config.x;
+            snake.speedX = config.speedX;
+            snake.minX = config.minX;
+            snake.maxX = config.maxX;
+        });
+
+        const midSnakes = getSnakesAtRow(4);
+        const midConfigs = [
+            {
+                index: 0,
+                minX: 4 * Globals.TILE_WIDTH,
+                maxX: 9 * Globals.TILE_WIDTH,
+            },
+            {
+                index: 1,
+                x: 6 * Globals.TILE_WIDTH,
+                minX: 4 * Globals.TILE_WIDTH,
+                maxX: 9 * Globals.TILE_WIDTH,
+            },
+        ];
+
+        midConfigs.forEach(config => {
+            const snake = midSnakes[config.index];
+            if (config.x !== undefined) snake.x = config.x;
+            snake.minX = config.minX;
+            snake.maxX = config.maxX;
+        });
     }
 }
 
@@ -984,16 +1020,10 @@ class Scene20 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1,2);
                 }
             }
         });
@@ -1051,16 +1081,10 @@ class Scene21 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1,2);
                 }
             }
         });
@@ -1118,16 +1142,10 @@ class Scene22 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 0.5;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 9 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(0.5, 9);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 2;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(1,2);
                 }
             }
         });
@@ -1188,16 +1206,10 @@ class Scene23 extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = 2 * Globals.TILE_WIDTH;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 2);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 12;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
-                    Globals.PLAYER_Y = Globals.TILE_WIDTH * 9;
-                    Globals.INITIAL_PLAYER_Y = Globals.PLAYER_Y;
+                    this.setGlobalInitialPos(12, 9);
                 }
             }
         });
@@ -1363,9 +1375,6 @@ class Scene26 extends MainScene{
         this.backgroundColor = 'black';
 
         this.nonBrickRows = [1,2,3, 4,5,6,7, 8,9,10];
-
-        this.ladderColumns = [ {'column' : 1, 'start' : 4, 'end' : 11}, {'column' : 12, 'start' : 4, 'end' : 11}
-            ];
 
         this.nextScene['left'] = 'Scene27';
         this.exits['left']['x'] = '0';
@@ -1727,7 +1736,8 @@ class SceneCages extends MainScene{
         this.doorTiles = [ {'tileX' : 4.8, 'tileY': 5.6, 'color': 'door-red' }
             , {'tileX' : 7.2, 'tileY': 5.6, 'color': 'door-blue' }];
 
-        const skullRow = {'row': 9, 'side': 'right'};
+        const rowNumber = Globals.debug ? 8 : 9;
+        const skullRow = {'row': rowNumber, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
             , skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow
             , skullRow, skullRow, skullRow, skullRow];
@@ -1838,12 +1848,10 @@ class SceneCages extends MainScene{
                 this.scene.start(this.nextScene[d]);
 
                 if (d === 'left'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 6;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    this.setGlobalInitialPos(6, 9);
                 }
                 else if (d === 'right'){
-                    Globals.PLAYER_X = Globals.TILE_WIDTH * 1;
-                    Globals.INITIAL_PLAYER_X = Globals.PLAYER_X;
+                    this.setGlobalInitialPos(1, 9);
                 }
             }
         });
