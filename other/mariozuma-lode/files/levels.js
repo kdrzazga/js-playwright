@@ -156,7 +156,7 @@ class Scene5 extends MainScene{
         this.nonBrickRows = [1,2];
         this.nonBrickColumns = [5];
 
-        const skullRow = {'row': 2, 'side': 'right'};
+        const skullRow = {'row': 1, 'side': 'right'};
         this.skullRows= [ skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow, skullRow,skullRow];
 
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
@@ -1349,7 +1349,6 @@ class Scene25 extends MainScene{
     }
 }
 
-
 class Scene26 extends MainScene{
 
     constructor(){
@@ -1357,6 +1356,9 @@ class Scene26 extends MainScene{
         this.backgroundColor = 'black';
 
         this.nonBrickRows = [1,2,3, 4,5,6,7, 8,9,10];
+
+        this.ladderColumns = [ {'column' : 1, 'start' : 4, 'end' : 11}, {'column' : 12, 'start' : 4, 'end' : 11}
+            ];
 
         this.nextScene['left'] = 'Scene27';
         this.exits['left']['x'] = '0';
@@ -1896,5 +1898,98 @@ class SceneTreasure extends MainScene{
             location.reload();
         });
     }
-
 }
+
+class SceneClassic extends MainScene{
+
+    constructor(){
+        super('SceneClassic');
+        this.backgroundColor = 'black';
+
+        this.nonBrickRows = [1,2,3, 4,5,6,7, 8,9,10];
+        this.ladderColumns = [ {'column' : 6.75, 'start' : 1, 'end' : 5}, {'column' : 1, 'start' : 4, 'end' : 11}
+            , {'column' : 2, 'start' : 5, 'end' : 11}
+            ];
+        this.nextScene['left'] = 'Scene27';
+        this.exits['left']['x'] = '0';
+        this.exits['left']['y'] = '2';
+
+        this.nextScene['right'] = 'Scene24';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+
+        const fireAnimation = this.add.sprite(6*Globals.TILE_WIDTH + 13, 9.5*Globals.TILE_WIDTH, 'fire1');
+        fireAnimation.scaleX = 1.5;
+        fireAnimation.play('fire');
+        const xs = [0,1];
+        for(let y = 3; y < 11; y++){
+            xs.forEach(x =>
+                {
+                    const brick = this.add.sprite(x*Globals.TILE_WIDTH, y*Globals.TILE_WIDTH, 'brick');
+                    this.spriteGroup.add(brick);
+                });
+        }
+
+        const fireEdgeHiding = this.add.sprite(7*Globals.TILE_WIDTH - 20, 5.5*Globals.TILE_WIDTH, 'black-strip');
+        fireEdgeHiding.scaleX = 1.4;
+
+        const brickBridgeX = [ 6.5,7];
+        brickBridgeX.forEach(x =>{
+            const brick = this.add.sprite(x*Globals.TILE_WIDTH, 5*Globals.TILE_WIDTH, 'brick');
+            this.spriteGroup.add(brick);
+        });
+    }
+
+    movePlayer(time){
+        super.movePlayer(time);
+
+        const playerTile = this.calculateSpriteSquare(this.player);
+        const playerTileY = playerTile[1];
+        if (playerTileY >= 2 && this.getTextureAt(playerTile[0], playerTileY + 1) != 'brick'){
+            this.player.y += 5;
+            if (this.player.y > 550){
+                this.player.setTexture('smoke-cloud');
+                    this.player.y -= 6;
+                    this.player.x -= 1;
+                    this.time.delayedCall(1256, () => {
+                        this.scene.start('SceneClassic');
+                    });
+                }
+        }
+
+    }
+    //@Overrride
+    checkExit(){
+        const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['left', 'right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+
+                if (d === 'left'){
+                    this.setGlobalInitialPos(12, 8);
+                }
+                else if (d === 'right'){
+                    this.setGlobalInitialPos(1, 9);
+                }
+            }
+        });
+    }
+}
+
+
+
