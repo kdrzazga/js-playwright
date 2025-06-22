@@ -1,72 +1,3 @@
-class Globals {
-    static doors = {
-        'Scene7' : {
-            'door-green': true
-        },
-        'Scene10' : {
-            'door-red': true,
-            'door-blue': true
-        },
-        'Scene13' : {
-            'door-blue': true
-        },
-        'Scene20' : {
-            'door-blue': true
-        },
-        'Scene25' : {
-            'door-blue': true
-        },
-        'SceneKamikaze' : {
-            'door-green': true
-        }
-    }
-
-    static doorKeys = {
-        'Scene4' : true,
-        'Scene7' : true,
-        'Scene8' : true,
-        'Scene9' : true,
-        'Scene15' : true,
-        'Scene21' : true,
-        'Scene23' : true,
-        'Scene24' : true,
-        'Scene25' : true,
-        'Scene27' : true
-    }
-
-    static ENEMIES_COUNT = 0;
-    static TILE_WIDTH = 60;
-    static PLAYER_X = Globals.TILE_WIDTH;
-    static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
-    static PLAYER_Y = Globals.TILE_WIDTH * 2;
-    static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
-    static skullSwarm = [ {'row': 3, 'side': 'left'}, {'row': 5, 'side': 'left'}
-        , {'row': 9, 'side': 'right'}, {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 6, 'side': 'right'}, {'row': 5, 'side': 'right'}
-        , {'row': 6, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 5, 'side': 'left'}, {'row': 5, 'side': 'left'}
-        , {'row': 3, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 1, 'side': 'right'}, {'row': 5, 'side': 'right'}
-        , {'row': 3, 'side': 'right'}, {'row': 7, 'side': 'right'}
-        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'},
-        {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 4, 'side': 'left'}, {'row': 4, 'side': 'left'}
-        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
-        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 4, 'side': 'left'}, {'row': 5, 'side': 'left'}
-        , {'row': 6, 'side': 'left'}, {'row': 4, 'side': 'left'}
-        , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
-        , {'row': 4, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        , {'row': 3, 'side': 'right'}, {'row': 4, 'side': 'right'}
-        , {'row': 5, 'side': 'right'}, {'row': 6, 'side': 'right'}
-        ];
-}
-
 class MainScene extends ExtendedScene {
 
     static PLAYER_SPEED = 2;
@@ -174,6 +105,10 @@ class MainScene extends ExtendedScene {
         this.load.image('pipe-down', 'files/background/pipeD.png');
         this.load.image('pipe-short', 'files/background/pipe-short.png');
 
+        this.load.image('lightpoint1', 'files/background/brick/lightpoint165.png');
+        this.load.image('lightpoint2', 'files/background/brick/lightpoint220.png');
+        this.load.image('lightpoint3', 'files/background/brick/lightpoint305.png');
+
         this.load.image('fire1', 'files/background/fire/fire (1).gif');
         this.load.image('fire2', 'files/background/fire/fire (2).gif');
         this.load.image('fire3', 'files/background/fire/fire (3).gif');
@@ -265,6 +200,18 @@ class MainScene extends ExtendedScene {
         levelDiv.innerText = 'ROOM' + name.replace('Scene', ' ');
 
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.anims.create({
+            key: 'flickering-light',
+            frames: [
+                {key: 'lightpoint1'},
+                {key: 'lightpoint2'},
+                {key: 'lightpoint3'},
+                {key: 'lightpoint2'}
+            ],
+            frameRate: 5,
+            repeat: -1
+        });
 
         this.anims.create({
             key: 'speech-bubble',
@@ -618,6 +565,7 @@ class MainScene extends ExtendedScene {
             const x = 6 * Globals.TILE_WIDTH;
             let k = this.add.sprite(x, y, this.keyRows[i].color);
             k.setScale(0.3);
+            k.setDepth(6);
             this.spriteGroup.add(k);
         }
 
