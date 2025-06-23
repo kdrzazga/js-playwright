@@ -549,29 +549,23 @@ class MainScene extends ExtendedScene {
                 }
         }
 
-        this.aztecSnakesRows.forEach(y => {
-            for (let x = 0; x <= 12; x++){
-                const pictograph = this.add.sprite(1.5*x*Globals.TILE_WIDTH, (y + 0.25)*Globals.TILE_WIDTH, 'aztec-snake');
-                pictograph.setDepth(10);
-                pictograph.setScale(0.5);
+        const createSpritesForRows = (rows, symbolKey) => {
+          rows.forEach(y => {
+            for (let x = 0; x <= 12; x++) {
+              this.add.sprite(
+                1.5 * x * Globals.TILE_WIDTH,
+                (y + 0.25) * Globals.TILE_WIDTH,
+                symbolKey
+              )
+              .setDepth(10)
+              .setScale(0.5);
             }
-        });
+          });
+        };
 
-        this.aztecEagleRows.forEach(y => {
-            for (let x = 0; x <= 12; x++){
-                const pictograph = this.add.sprite(1.5*x*Globals.TILE_WIDTH, (y + 0.25)*Globals.TILE_WIDTH, 'aztec-eagle');
-                pictograph.setDepth(10);
-                pictograph.setScale(0.5);
-            }
-        });
-
-        this.aztecMonkeyRows.forEach(y => {
-            for (let x = 0; x <= 12; x++){
-                const pictograph = this.add.sprite(1.5*x*Globals.TILE_WIDTH, (y + 0.25)*Globals.TILE_WIDTH, 'aztec-monkey');
-                pictograph.setDepth(10);
-                pictograph.setScale(0.5);
-            }
-        });
+        createSpritesForRows(this.aztecSnakesRows, 'aztec-snake');
+        createSpritesForRows(this.aztecEagleRows, 'aztec-eagle');
+        createSpritesForRows(this.aztecMonkeyRows, 'aztec-monkey');
 
         console.log(`${this.constructor.name} skulls count = ${this.skullRows.length}`);
         for (let i = 0; i < this.skullRows.length; i++) {
