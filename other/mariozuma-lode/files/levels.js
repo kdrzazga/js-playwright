@@ -1886,6 +1886,11 @@ class SceneCages extends MainScene{
             this.time.delayedCall(3456, () => {
                 this.scene.start('SceneTreasure');
             });
+
+        else if (this.player.y < Globals.TILE_WIDTH * 7)
+            this.time.delayedCall(15456, () => {
+                this.scene.start('SceneTreasure');
+            });
     }
 
     //@Override
@@ -1948,7 +1953,6 @@ class SceneTreasure extends MainScene{
         super.createSpriteGroup();
         this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'treasure');
 
-
         const princessSavedCell = document.getElementById('princess');
         const panamaJoeSavedCell = document.getElementById('joe-panama');
         if (princessSavedCell.innerHTML == '' && panamaJoeSavedCell.innerHTML == '')
@@ -1975,10 +1979,18 @@ class SceneTreasure extends MainScene{
     }
 
     finalTriumph(){
-        let princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
-        let panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
-        princess.setDepth(12);
-        panamaJoe.setDepth(12);
+        const princessSavedCell = document.getElementById('princess');
+        const panamaJoeSavedCell = document.getElementById('joe-panama');
+        if (princessSavedCell.innerHTML != ''){
+            let princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
+            princess.setDepth(12);
+        }
+
+        if (panamaJoeSavedCell.innerHTML != ''){
+            let panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
+            panamaJoe.setDepth(12);
+        }
+
         this.time.delayedCall(3456, () => {
             alert("Now you need to divide the treasure ! Silly!");
             alert("GAME OVER! Let's assume you win :/");
