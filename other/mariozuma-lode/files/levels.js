@@ -52,6 +52,7 @@ class Scene1 extends MainScene{
 
         this.nonBrickRows = [1,2];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.aztecSnakesRows = [0, 4, 9];
         this.nextScene['right'] = 'Scene2';
         this.exits['right']['x'] = '13';
         this.exits['right']['y'] = '2';
@@ -60,12 +61,6 @@ class Scene1 extends MainScene{
     create(){
         super.create();
         this.createSpriteGroup();
-    }
-
-    createSpriteGroup() {
-        super.createSpriteGroup();
-        const pictograph = this.add.sprite(12*Globals.TILE_WIDTH, 4*Globals.TILE_WIDTH, 'aztec-snake');
-        pictograph.setDepth(10);
     }
 
 }
@@ -82,6 +77,8 @@ class Scene2 extends MainScene{
             , {'row': 6, 'side': 'left'}, {'row': 8, 'side': 'right'}
             , {'row': 8, 'side': 'right'}, {'row': 8, 'side': 'left'}
             ];
+
+        this.aztecSnakesRows = [0, 9];
 
         this.nextScene['left'] = 'Scene1';
         this.nextScene['right'] = 'Scene3';
@@ -268,6 +265,7 @@ class Scene6 extends MainScene{
             , {'row': 6, 'side': 'left'}, {'row': 8, 'side': 'left'}
             , {'row': 8, 'side': 'left'}, {'row': 8, 'side': 'left'}
             ];
+        this.aztecSnakesRows = [0, 9];
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
                     {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 12},
                     {x: 1200, y: 3*Globals.TILE_WIDTH, speedX: 25},
@@ -317,6 +315,7 @@ class Scene7 extends MainScene{
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.doorTiles = [ {'tileX' : 4, 'tileY': 1.6, 'color': 'door-green' }];
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
+        this.aztecSnakesRows = [0];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
         this.exits['left']['x'] = '0';
@@ -362,6 +361,7 @@ class Scene8 extends MainScene{
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.keyRows = [ {'row': 2, 'color': 'key-blue'}
         ];
+        this.aztecSnakesRows = [0];
         this.nextScene['left'] = 'Scene7';
         //no passage to 'Scene9';
         this.exits['left']['x'] = '0';
@@ -435,6 +435,7 @@ class Scene10 extends MainScene{
             , {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'}
             ];
 
+        this.aztecEagleRows = [0, 6.5];
         this.snakeRows= [ {'row': 4, 'side': 'right'}
         ];
         this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 5}];
@@ -483,6 +484,7 @@ class Scene11 extends MainScene{
 
         this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
 
+        this.aztecEagleRows = [0];
         this.nextScene['left'] = 'Scene10';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
@@ -537,6 +539,7 @@ class Scene12 extends MainScene{
         super('Scene12'); //g.scene.scenes[0].sys.settings.key
 
         this.nonBrickRows = [8];
+        this.aztecEagleRows = [0];
         this.nextScene['left'] = 'Scene11';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '8';
@@ -804,6 +807,7 @@ class Scene16 extends MainScene{ //g.scene.scenes[14].scene.key
         this.nonBrickRows = [1,2,4,5,6,7,8,9,10];
         this.ladderColumns = [ {'column' : 13, 'start' : 3, 'end' : 9}];
         this.skullRows= [ {'row': 2, 'side': 'right'},{'row': 2, 'side': 'right'},{'row': 2, 'side': 'right'} ];
+        this.aztecMonkeyRows = [0];
 
         this.nextScene['left'] = 'Scene17';
         this.exits['left']['x'] = '0';
@@ -894,6 +898,7 @@ class Scene18 extends MainScene{
         this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 4, 'side': 'right'} , {'row': 8, 'side': 'right'}
             , {'row': 8, 'side': 'left'} , {'row': 2, 'side': 'left'}];
 
+        this.aztecMonkeyRows = [0];
         this.nextScene['left'] = 'Scene19';
         this.nextScene['right'] = 'Scene17';
         this.exits['left']['x'] = '0';
@@ -989,6 +994,7 @@ class Scene19 extends MainScene{
 
         this.nonBrickRows = [1,2,5,6,7,8,9,10];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.aztecMonkeyRows = [0];
         this.nextScene['right'] = 'Scene18';
         this.nextScene['left'] = 'Scene20';
         this.exits['right']['x'] = '13';
@@ -1024,6 +1030,7 @@ class Scene20 extends MainScene{
         this.skullRows= Globals.skullSwarm;
 
         this.doorTiles = [ {'tileX' : 4, 'tileY': 1.55, 'color': 'door-blue' }];
+        this.aztecMonkeyRows = [0];
 
         this.nextScene['left'] = 'Scene21';
         this.exits['left']['x'] = '0';
@@ -1085,6 +1092,7 @@ class Scene21 extends MainScene{
         this.nonBrickRows = [ 1,2,  4,5,6, 7,8,9,10];
         this.skullRows= Globals.skullSwarm;
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
+        this.aztecMonkeyRows = [0];
 
         this.nextScene['left'] = 'Scene22';
         this.exits['left']['x'] = '0';
@@ -1146,6 +1154,7 @@ class Scene22 extends MainScene{
         this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
 
         this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
+        this.aztecMonkeyRows = [0];
 
         this.nextScene['left'] = 'Scene23';
         this.exits['left']['x'] = '0';

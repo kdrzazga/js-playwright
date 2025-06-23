@@ -13,6 +13,9 @@ class MainScene extends ExtendedScene {
         this.skullRows= [];
         this.kupaRows= [];
         this.snakeRows= [];
+        this.aztecSnakesRows = [];
+        this.aztecEagleRows = [];
+        this.aztecMonkeyRows = [];
         this.bullets = [];
         this.conveyors = [];
         this.keyRows = [];
@@ -181,6 +184,7 @@ class MainScene extends ExtendedScene {
         this.load.image('aztec-calendar', 'files/background/aztec/calendar.png');
         this.load.image('aztec-snake', 'files/background/aztec/coatl-snake.png');
         this.load.image('aztec-eagle', 'files/background/aztec/cuauhtli-eagle.png');
+        this.load.image('aztec-monkey', 'files/background/aztec/ozomahtli-monkey.png');
 
         this.load.image('black-strip', 'files/background/black-strip.png');
         this.load.image('montezuma', 'files/background/montezuma.png');
@@ -544,6 +548,30 @@ class MainScene extends ExtendedScene {
                     }
                 }
         }
+
+        this.aztecSnakesRows.forEach(y => {
+            for (let x = 0; x <= 12; x++){
+                const pictograph = this.add.sprite(1.5*x*Globals.TILE_WIDTH, (y + 0.25)*Globals.TILE_WIDTH, 'aztec-snake');
+                pictograph.setDepth(10);
+                pictograph.setScale(0.5);
+            }
+        });
+
+        this.aztecEagleRows.forEach(y => {
+            for (let x = 0; x <= 12; x++){
+                const pictograph = this.add.sprite(1.5*x*Globals.TILE_WIDTH, (y + 0.25)*Globals.TILE_WIDTH, 'aztec-eagle');
+                pictograph.setDepth(10);
+                pictograph.setScale(0.5);
+            }
+        });
+
+        this.aztecMonkeyRows.forEach(y => {
+            for (let x = 0; x <= 12; x++){
+                const pictograph = this.add.sprite(1.5*x*Globals.TILE_WIDTH, (y + 0.25)*Globals.TILE_WIDTH, 'aztec-monkey');
+                pictograph.setDepth(10);
+                pictograph.setScale(0.5);
+            }
+        });
 
         console.log(`${this.constructor.name} skulls count = ${this.skullRows.length}`);
         for (let i = 0; i < this.skullRows.length; i++) {
