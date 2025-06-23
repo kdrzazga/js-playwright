@@ -62,6 +62,7 @@ class MainScene extends ExtendedScene {
 
     preload(){
         this.load.image('montezuma-castle', 'files/background/montezuma-castle.png');
+        this.load.image('flag', 'files/background/flag.png');
         this.load.image('sign', 'files/background/sign.png');
 
         this.load.image('player',  'files/character/stand.png');
@@ -668,7 +669,7 @@ class MainScene extends ExtendedScene {
     //@Override
     moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
-            if (this._isEnemy(child)) {
+            if (this._isEnemy(child) || child.texture.key ==='flag') {
                 child.x -= child.speedX;
                 child.y += child.speedY;
                 this.conditionallyStopEnemy(child);

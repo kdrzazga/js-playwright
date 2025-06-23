@@ -9,6 +9,7 @@ class SceneIntro extends MainScene{
         this.nextScene['right'] = 'Scene1';
         this.exits['right']['x'] = '8';
         this.exits['right']['y'] = '9';
+        this.initialFlagY = 90;
     }
 
     create(){
@@ -22,7 +23,23 @@ class SceneIntro extends MainScene{
         castle.setDepth(0);
         this.getSprites('skull').forEach(skull => skull.setDepth(-1));
         const sign = this.add.sprite(3*Globals.TILE_WIDTH,  8.8*Globals.TILE_WIDTH, 'sign');
-        //sign.setScale(0.5);
+
+        const flag = this.add.sprite(320 + 18, this.initialFlagY, 'flag');
+        flag.speedX = 0;
+        flag.speedY = 0;
+        this.spriteGroup.add(flag);
+    }
+
+    movePlayer(time){
+        super.movePlayer(time);
+        const flag = this.getSprites('flag')[0];
+
+        if (this.player.x > flag.x && flag.y == this.initialFlagY){
+            this.time.delayedCall(10200, () => {
+                flag.speedY = 0;
+            }, [], this);
+            flag.speedY=0.6;
+        }
     }
 
     //@Overrride
@@ -38,7 +55,7 @@ class SceneIntro extends MainScene{
             if (coords[0] == exitX && coords[1] == exitY){
                 this.scene.start(this.nextScene[d]);
                 if (d === 'right'){
-                    this.setGlobalInitialPos(2, 2);
+                    this.setGlobalInitialPos(1, 2);
                 }
             }
         });
@@ -435,7 +452,6 @@ class Scene10 extends MainScene{
             , {'row': 4, 'side': 'left'}, {'row': 6, 'side': 'right'}
             ];
 
-        this.aztecEagleRows = [0, 6.5];
         this.snakeRows= [ {'row': 4, 'side': 'right'}
         ];
         this.conveyors= [ {'coveredCells' : [1,9], 'rowX' : 5, 'rowY' : 5}];
