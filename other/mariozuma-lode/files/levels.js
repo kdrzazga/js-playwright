@@ -21,6 +21,8 @@ class SceneIntro extends MainScene{
         const castle = this.add.sprite(6.67*Globals.TILE_WIDTH, 5*Globals.TILE_WIDTH, 'montezuma-castle');
         castle.setDepth(0);
         this.getSprites('skull').forEach(skull => skull.setDepth(-1));
+        const sign = this.add.sprite(3*Globals.TILE_WIDTH,  8.8*Globals.TILE_WIDTH, 'sign');
+        //sign.setScale(0.5);
     }
 
     //@Overrride
