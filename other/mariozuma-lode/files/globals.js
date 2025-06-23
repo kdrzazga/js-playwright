@@ -43,9 +43,9 @@ class Globals {
     static ENEMIES_COUNT = 0;
     static TILE_WIDTH = 60;
     static PLAYER_X = Globals.TILE_WIDTH;
-    static INITIAL_PLAYER_X = Globals.TILE_WIDTH;
-    static PLAYER_Y = Globals.TILE_WIDTH * 2;
-    static INITIAL_PLAYER_Y = 2 * Globals.TILE_WIDTH;
+    static INITIAL_PLAYER_X = Globals.PLAYER_X;
+    static PLAYER_Y = Globals.TILE_WIDTH * 9;
+    static INITIAL_PLAYER_Y = Globals.PLAYER_Y;
     static skullSwarm = [ {'row': 3, 'side': 'left'}, {'row': 5, 'side': 'left'}
         , {'row': 9, 'side': 'right'}, {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}
         , {'row': 5, 'side': 'left'}, {'row': 6, 'side': 'left'}

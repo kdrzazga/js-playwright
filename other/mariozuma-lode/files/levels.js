@@ -1,3 +1,48 @@
+class SceneIntro extends MainScene{
+
+    constructor(){
+        super('SceneIntro');
+        this.backgroundColor = 'black';
+
+        this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
+        this.skullRows= [ {'row': 3.65, 'side': 'right'}, {'row': 6.15, 'side': 'right'} ];
+        this.nextScene['right'] = 'Scene1';
+        this.exits['right']['x'] = '8';
+        this.exits['right']['y'] = '9';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
+    }
+
+    createSpriteGroup() {
+        super.createSpriteGroup();
+        const castle = this.add.sprite(6.67*Globals.TILE_WIDTH, 5*Globals.TILE_WIDTH, 'montezuma-castle');
+        castle.setDepth(0);
+        this.getSprites('skull').forEach(skull => skull.setDepth(-1));
+    }
+
+    //@Overrride
+    checkExit(){
+         const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+                if (d === 'right'){
+                    this.setGlobalInitialPos(2, 2);
+                }
+            }
+        });
+    }
+}
+
 class Scene1 extends MainScene{
 
     constructor(){
