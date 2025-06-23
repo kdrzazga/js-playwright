@@ -13,6 +13,9 @@ class MainScene extends ExtendedScene {
         this.skullRows= [];
         this.kupaRows= [];
         this.snakeRows= [];
+        this.aztecSnakesRows = [];
+        this.aztecEagleRows = [];
+        this.aztecMonkeyRows = [];
         this.bullets = [];
         this.conveyors = [];
         this.keyRows = [];
@@ -58,6 +61,10 @@ class MainScene extends ExtendedScene {
     }
 
     preload(){
+        this.load.image('montezuma-castle', 'files/background/montezuma-castle.png');
+        this.load.image('flag', 'files/background/flag.png');
+        this.load.image('sign', 'files/background/sign.png');
+
         this.load.image('player',  'files/character/stand.png');
         this.load.image('player1', 'files/character/m1.png');
         this.load.image('player2', 'files/character/m2.png');
@@ -178,6 +185,7 @@ class MainScene extends ExtendedScene {
         this.load.image('aztec-calendar', 'files/background/aztec/calendar.png');
         this.load.image('aztec-snake', 'files/background/aztec/coatl-snake.png');
         this.load.image('aztec-eagle', 'files/background/aztec/cuauhtli-eagle.png');
+        this.load.image('aztec-monkey', 'files/background/aztec/ozomahtli-monkey.png');
 
         this.load.image('black-strip', 'files/background/black-strip.png');
         this.load.image('montezuma', 'files/background/montezuma.png');
@@ -542,6 +550,24 @@ class MainScene extends ExtendedScene {
                 }
         }
 
+        const createSpritesForRows = (rows, symbolKey) => {
+          rows.forEach(y => {
+            for (let x = 0; x <= 12; x++) {
+              this.add.sprite(
+                1.5 * x * Globals.TILE_WIDTH,
+                (y + 0.25) * Globals.TILE_WIDTH,
+                symbolKey
+              )
+              .setDepth(10)
+              .setScale(0.5);
+            }
+          });
+        };
+
+        createSpritesForRows(this.aztecSnakesRows, 'aztec-snake');
+        createSpritesForRows(this.aztecEagleRows, 'aztec-eagle');
+        createSpritesForRows(this.aztecMonkeyRows, 'aztec-monkey');
+
         console.log(`${this.constructor.name} skulls count = ${this.skullRows.length}`);
         for (let i = 0; i < this.skullRows.length; i++) {
             let s = this.createEnemy(this.skullRows[i], 'skull1', 1, 1);
@@ -643,7 +669,7 @@ class MainScene extends ExtendedScene {
     //@Override
     moveEnemies(time){
         this.spriteGroup.children.iterate((child)=> {
-            if (this._isEnemy(child)) {
+            if (this._isEnemy(child) || child.texture.key ==='flag') {
                 child.x -= child.speedX;
                 child.y += child.speedY;
                 this.conditionallyStopEnemy(child);

@@ -1,13 +1,15 @@
-class Scene1 extends MainScene{
+class SceneIntro extends MainScene{
 
     constructor(){
-        super('Scene1'); //g.scene.scenes[0].sys.settings.key
+        super('SceneIntro');
+        this.backgroundColor = 'black';
 
-        this.nonBrickRows = [1,2];
-        this.skullRows= [ {'row': 2, 'side': 'right'} ];
-        this.nextScene['right'] = 'Scene2';
-        this.exits['right']['x'] = '13';
-        this.exits['right']['y'] = '2';
+        this.nonBrickRows = [0,1,2,3,4,5,6,7,8,9,10];
+        this.skullRows= [ {'row': 3.65, 'side': 'right'}, {'row': 6.15, 'side': 'right'} ];
+        this.nextScene['right'] = 'Scene1';
+        this.exits['right']['x'] = '8';
+        this.exits['right']['y'] = '9';
+        this.initialFlagY = 90;
     }
 
     create(){
@@ -17,8 +19,65 @@ class Scene1 extends MainScene{
 
     createSpriteGroup() {
         super.createSpriteGroup();
-        const pictograph = this.add.sprite(12*Globals.TILE_WIDTH, 4*Globals.TILE_WIDTH, 'aztec-snake');
-        pictograph.setDepth(10);
+        const castle = this.add.sprite(6.67*Globals.TILE_WIDTH, 5*Globals.TILE_WIDTH, 'montezuma-castle');
+        castle.setDepth(0);
+        this.getSprites('skull').forEach(skull => skull.setDepth(-1));
+        const sign = this.add.sprite(3*Globals.TILE_WIDTH,  8.8*Globals.TILE_WIDTH, 'sign');
+
+        const flag = this.add.sprite(320 + 18, this.initialFlagY, 'flag');
+        flag.speedX = 0;
+        flag.speedY = 0;
+        this.spriteGroup.add(flag);
+    }
+
+    movePlayer(time){
+        super.movePlayer(time);
+        const flag = this.getSprites('flag')[0];
+
+        if (this.player.x > flag.x && flag.y == this.initialFlagY){
+            this.time.delayedCall(10200, () => {
+                flag.speedY = 0;
+            }, [], this);
+            flag.speedY=0.6;
+        }
+    }
+
+    //@Overrride
+    checkExit(){
+         const coords = this.calculateSpriteSquare(this.player);
+
+        const directions = ['right'];
+
+        directions.forEach( d => {
+            const exitX = this.exits[d]['x'];
+            const exitY = this.exits[d]['y'];
+
+            if (coords[0] == exitX && coords[1] == exitY){
+                this.scene.start(this.nextScene[d]);
+                if (d === 'right'){
+                    this.setGlobalInitialPos(1, 2);
+                }
+            }
+        });
+    }
+}
+
+class Scene1 extends MainScene{
+
+    constructor(){
+        super('Scene1'); //g.scene.scenes[0].sys.settings.key
+
+        this.nonBrickRows = [1,2];
+        this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.aztecSnakesRows = [0, 4, 9];
+        this.nextScene['right'] = 'Scene2';
+        this.exits['right']['x'] = '13';
+        this.exits['right']['y'] = '2';
+    }
+
+    create(){
+        super.create();
+        this.createSpriteGroup();
     }
 
 }
@@ -35,6 +94,8 @@ class Scene2 extends MainScene{
             , {'row': 6, 'side': 'left'}, {'row': 8, 'side': 'right'}
             , {'row': 8, 'side': 'right'}, {'row': 8, 'side': 'left'}
             ];
+
+        this.aztecSnakesRows = [0, 9];
 
         this.nextScene['left'] = 'Scene1';
         this.nextScene['right'] = 'Scene3';
@@ -221,6 +282,7 @@ class Scene6 extends MainScene{
             , {'row': 6, 'side': 'left'}, {'row': 8, 'side': 'left'}
             , {'row': 8, 'side': 'left'}, {'row': 8, 'side': 'left'}
             ];
+        this.aztecSnakesRows = [0, 9];
         this.bullets = [ //g.scene.scenes[4].getSprites('bullet')
                     {x: 900, y: 1*Globals.TILE_WIDTH, speedX: 12},
                     {x: 1200, y: 3*Globals.TILE_WIDTH, speedX: 25},
@@ -270,6 +332,7 @@ class Scene7 extends MainScene{
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.doorTiles = [ {'tileX' : 4, 'tileY': 1.6, 'color': 'door-green' }];
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
+        this.aztecSnakesRows = [0];
         this.nextScene['left'] = 'Scene6';
         this.nextScene['right'] = 'Scene8';
         this.exits['left']['x'] = '0';
@@ -315,6 +378,7 @@ class Scene8 extends MainScene{
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
         this.keyRows = [ {'row': 2, 'color': 'key-blue'}
         ];
+        this.aztecSnakesRows = [0];
         this.nextScene['left'] = 'Scene7';
         //no passage to 'Scene9';
         this.exits['left']['x'] = '0';
@@ -436,6 +500,7 @@ class Scene11 extends MainScene{
 
         this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
 
+        this.aztecEagleRows = [0];
         this.nextScene['left'] = 'Scene10';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '2';
@@ -490,6 +555,7 @@ class Scene12 extends MainScene{
         super('Scene12'); //g.scene.scenes[0].sys.settings.key
 
         this.nonBrickRows = [8];
+        this.aztecEagleRows = [0];
         this.nextScene['left'] = 'Scene11';
         this.exits['left']['x'] = '0';
         this.exits['left']['y'] = '8';
@@ -757,6 +823,7 @@ class Scene16 extends MainScene{ //g.scene.scenes[14].scene.key
         this.nonBrickRows = [1,2,4,5,6,7,8,9,10];
         this.ladderColumns = [ {'column' : 13, 'start' : 3, 'end' : 9}];
         this.skullRows= [ {'row': 2, 'side': 'right'},{'row': 2, 'side': 'right'},{'row': 2, 'side': 'right'} ];
+        this.aztecMonkeyRows = [0];
 
         this.nextScene['left'] = 'Scene17';
         this.exits['left']['x'] = '0';
@@ -847,6 +914,7 @@ class Scene18 extends MainScene{
         this.snakeRows= [ {'row': 4, 'side': 'left'}, {'row': 4, 'side': 'right'} , {'row': 8, 'side': 'right'}
             , {'row': 8, 'side': 'left'} , {'row': 2, 'side': 'left'}];
 
+        this.aztecMonkeyRows = [0];
         this.nextScene['left'] = 'Scene19';
         this.nextScene['right'] = 'Scene17';
         this.exits['left']['x'] = '0';
@@ -942,6 +1010,7 @@ class Scene19 extends MainScene{
 
         this.nonBrickRows = [1,2,5,6,7,8,9,10];
         this.skullRows= [ {'row': 2, 'side': 'right'} ];
+        this.aztecMonkeyRows = [0];
         this.nextScene['right'] = 'Scene18';
         this.nextScene['left'] = 'Scene20';
         this.exits['right']['x'] = '13';
@@ -977,6 +1046,7 @@ class Scene20 extends MainScene{
         this.skullRows= Globals.skullSwarm;
 
         this.doorTiles = [ {'tileX' : 4, 'tileY': 1.55, 'color': 'door-blue' }];
+        this.aztecMonkeyRows = [0];
 
         this.nextScene['left'] = 'Scene21';
         this.exits['left']['x'] = '0';
@@ -1038,6 +1108,7 @@ class Scene21 extends MainScene{
         this.nonBrickRows = [ 1,2,  4,5,6, 7,8,9,10];
         this.skullRows= Globals.skullSwarm;
         this.keyRows = [ {'row': 2, 'color': 'key-red'}];
+        this.aztecMonkeyRows = [0];
 
         this.nextScene['left'] = 'Scene22';
         this.exits['left']['x'] = '0';
@@ -1099,6 +1170,7 @@ class Scene22 extends MainScene{
         this.nonBrickRows = [1,2, 4,5,6,7, 8,9,10];
 
         this.kupaRows= [ {'row': 2, 'side': 'left'}, {'row': 2, 'side': 'right'} ];
+        this.aztecMonkeyRows = [0];
 
         this.nextScene['left'] = 'Scene23';
         this.exits['left']['x'] = '0';
@@ -1814,6 +1886,11 @@ class SceneCages extends MainScene{
             this.time.delayedCall(3456, () => {
                 this.scene.start('SceneTreasure');
             });
+
+        else if (this.player.y < Globals.TILE_WIDTH * 7)
+            this.time.delayedCall(15456, () => {
+                this.scene.start('SceneTreasure');
+            });
     }
 
     //@Override
@@ -1876,7 +1953,6 @@ class SceneTreasure extends MainScene{
         super.createSpriteGroup();
         this.add.sprite(6.75*Globals.TILE_WIDTH, 7*Globals.TILE_WIDTH, 'treasure');
 
-
         const princessSavedCell = document.getElementById('princess');
         const panamaJoeSavedCell = document.getElementById('joe-panama');
         if (princessSavedCell.innerHTML == '' && panamaJoeSavedCell.innerHTML == '')
@@ -1903,10 +1979,18 @@ class SceneTreasure extends MainScene{
     }
 
     finalTriumph(){
-        let princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
-        let panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
-        princess.setDepth(12);
-        panamaJoe.setDepth(12);
+        const princessSavedCell = document.getElementById('princess');
+        const panamaJoeSavedCell = document.getElementById('joe-panama');
+        if (princessSavedCell.innerHTML != ''){
+            let princess = this.add.sprite(3*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'princess');
+            princess.setDepth(12);
+        }
+
+        if (panamaJoeSavedCell.innerHTML != ''){
+            let panamaJoe = this.add.sprite(9*Globals.TILE_WIDTH, 5.5 * Globals.TILE_WIDTH +12, 'panama-joe');
+            panamaJoe.setDepth(12);
+        }
+
         this.time.delayedCall(3456, () => {
             alert("Now you need to divide the treasure ! Silly!");
             alert("GAME OVER! Let's assume you win :/");
