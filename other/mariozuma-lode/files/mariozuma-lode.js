@@ -61,6 +61,7 @@ class MainScene extends ExtendedScene {
     }
 
     preload(){
+        this.load.image('intro-text', 'files/intro.png');
         this.load.image('montezuma-castle', 'files/background/montezuma-castle.png');
         this.load.image('flag', 'files/background/flag.png');
         this.load.image('sign', 'files/background/sign.png');

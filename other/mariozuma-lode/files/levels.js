@@ -40,13 +40,15 @@ class SceneIntro extends MainScene{
             child.setScale(0.2);
             child.setDepth(10);
         });
+
+        const introText = this.add.sprite(160, 330, 'intro-text');
     }
 
     createDemoCaption(){
         if (this.demoCaption != undefined)
             return;
 
-        this.demoCaption = this.alphabet.createCaption('marrouuma', 40, 100,0.3);
+        this.demoCaption = this.alphabet.createCaption('mariozuma', 40, 100,0.3);
         this.alphabet.waveSinusoidally(this.demoCaption, 15);
     }
 

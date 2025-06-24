@@ -12,12 +12,16 @@ class Alphabet {
         this.scene.load.image('d', '../common/pics/alphabet/d.png');
         this.scene.load.image('e', '../common/pics/alphabet/e.png');
 
+        this.scene.load.image('i', '../common/pics/alphabet/i.png');
+
         this.scene.load.image('m', '../common/pics/alphabet/m.png');
 
         this.scene.load.image('o', '../common/pics/alphabet/o.png');
         this.scene.load.image('p', '../common/pics/alphabet/p.png');
         this.scene.load.image('r', '../common/pics/alphabet/r.png');
         this.scene.load.image('u', '../common/pics/alphabet/u.png');
+
+        this.scene.load.image('z', '../common/pics/alphabet/z.png');
     }
 
     createCaption(text, xStart, yStart, distanceFactor=1){
