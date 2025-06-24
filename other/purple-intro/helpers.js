@@ -6,18 +6,18 @@ class Alphabet {
     }
 
     loadAlphabet(){
-        this.scene.load.image('a', 'pics/alphabet/a.png');
-        this.scene.load.image('b', 'pics/alphabet/b.png');
-        this.scene.load.image('c', 'pics/alphabet/c.png');
-        this.scene.load.image('d', 'pics/alphabet/d.png');
-        this.scene.load.image('e', 'pics/alphabet/e.png');
+        this.scene.load.image('a', '../common/pics/alphabet/a.png');
+        this.scene.load.image('b', '../common/pics/alphabet/b.png');
+        this.scene.load.image('c', '../common/pics/alphabet/c.png');
+        this.scene.load.image('d', '../common/pics/alphabet/d.png');
+        this.scene.load.image('e', '../common/pics/alphabet/e.png');
 
-        this.scene.load.image('m', 'pics/alphabet/m.png');
+        this.scene.load.image('m', '../common/pics/alphabet/m.png');
 
-        this.scene.load.image('o', 'pics/alphabet/o.png');
-        this.scene.load.image('p', 'pics/alphabet/p.png');
-        this.scene.load.image('r', 'pics/alphabet/r.png');
-        this.scene.load.image('u', 'pics/alphabet/u.png');
+        this.scene.load.image('o', '../common/pics/alphabet/o.png');
+        this.scene.load.image('p', '../common/pics/alphabet/p.png');
+        this.scene.load.image('r', '../common/pics/alphabet/r.png');
+        this.scene.load.image('u', '../common/pics/alphabet/u.png');
     }
 
     createCaption(text, xStart, yStart, distanceFactor=1){
