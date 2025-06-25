@@ -17,6 +17,11 @@ class SceneIntro extends MainScene{
         this.createSpriteGroup();
     }
 
+    preload(){
+        super.preload();
+        this.alphabet = new Alphabet(this);
+    }
+
     createSpriteGroup() {
         super.createSpriteGroup();
         const castle = this.add.sprite(6.67*Globals.TILE_WIDTH, 5*Globals.TILE_WIDTH, 'montezuma-castle');
@@ -28,6 +33,23 @@ class SceneIntro extends MainScene{
         flag.speedX = 0;
         flag.speedY = 0;
         this.spriteGroup.add(flag);
+
+        this.createDemoCaption();
+
+        this.demoCaption.children.iterate(function (child) {
+            child.setScale(0.2);
+            child.setDepth(10);
+        });
+
+        const introText = this.add.sprite(160, 330, 'intro-text');
+    }
+
+    createDemoCaption(){
+        if (this.demoCaption != undefined)
+            return;
+
+        this.demoCaption = this.alphabet.createCaption('mariozuma', 40, 100,0.3);
+        this.alphabet.waveSinusoidally(this.demoCaption, 15);
     }
 
     movePlayer(time){
