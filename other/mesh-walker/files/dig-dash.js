@@ -12,8 +12,8 @@ class MyScene extends Phaser.Scene {
 
     create() {
         this.playerSize = MyScene.TILE_SIZE;
-        this.player = this.physics.add.sprite(100, 100, 'player');
-        this.playerSpeed = 100; // pixels/sec
+        this.player = this.physics.add.sprite(150, 150, 'player');
+        this.playerSpeed = 100;
 
         this.currentDirection = 'right'; // 'left', 'right', 'up', 'down'
         this.targetPosition = new Phaser.Math.Vector2(this.player.x, this.player.y);
@@ -41,7 +41,6 @@ class MyScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        const deltaSeconds = delta / 1000;
 
         const alignedX = this.player.x % this.playerSize === 0;
         const alignedY = this.player.y % this.playerSize === 0;
@@ -56,8 +55,6 @@ class MyScene extends Phaser.Scene {
         } else if (this.cursors.down.isDown) {
             if (alignedX) this.currentDirection = 'down';
         }
-        //else this.currentDirection = '';
-
 
         if (this.currentDirection) {
             switch(this.currentDirection){
@@ -67,6 +64,8 @@ class MyScene extends Phaser.Scene {
                 case 'down': this.player.y++; break;
             }
         }
+
+        //this.currentDirection = '';
     }
 
 }
