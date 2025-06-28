@@ -11,7 +11,6 @@ class MyScene extends Phaser.Scene {
     }
 
     create() {
-        this.playerSize = MyScene.TILE_SIZE;
         this.player = this.physics.add.sprite(150, 150, 'player');
         this.playerSpeed = 100;
 
@@ -29,11 +28,11 @@ class MyScene extends Phaser.Scene {
         const width = this.sys.game.config.width;
         const height = this.sys.game.config.height;
 
-        for (let x = 0; x <= width; x += this.playerSize) {
+        for (let x = 0; x <= width; x += MyScene.TILE_SIZE) {
             graphics.moveTo(x, 0);
             graphics.lineTo(x, height);
         }
-        for (let y = 0; y <= height; y += this.playerSize) {
+        for (let y = 0; y <= height; y += MyScene.TILE_SIZE) {
             graphics.moveTo(0, y);
             graphics.lineTo(width, y);
         }
@@ -63,15 +62,15 @@ class MyScene extends Phaser.Scene {
             }
         }
 
-        //this.currentDirection = '';
+        //if (this.isAlignedX() || this.isAlignedY()) this.currentDirection = '';
     }
 
     isAlignedX(){
-        return this.player.x % this.playerSize === 0;
+        return this.player.x % MyScene.TILE_SIZE === 0;
     }
 
     isAlignedY(){
-        return this.player.y % this.playerSize === 0;
+        return this.player.y % MyScene.TILE_SIZE === 0;
     }
 
 }
