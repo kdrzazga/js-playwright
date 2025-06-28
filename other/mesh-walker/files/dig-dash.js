@@ -41,31 +41,37 @@ class MyScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-
-        const alignedX = this.player.x % this.playerSize === 0;
-        const alignedY = this.player.y % this.playerSize === 0;
-
+        const maxX = Math.floor(this.sys.game.config.width / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
+        const maxY = Math.floor(this.sys.game.config.height / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
 
         if (this.cursors.left.isDown) {
-            if (alignedY) this.currentDirection = 'left';
+            if (this.isAlignedY()) this.currentDirection = 'left';
         } else if (this.cursors.right.isDown) {
-            if (alignedY) this.currentDirection = 'right';
+            if (this.isAlignedY()) this.currentDirection = 'right';
         } else if (this.cursors.up.isDown) {
-            if (alignedX) this.currentDirection = 'up';
+            if (this.isAlignedX()) this.currentDirection = 'up';
         } else if (this.cursors.down.isDown) {
-            if (alignedX) this.currentDirection = 'down';
+            if (this.isAlignedX()) this.currentDirection = 'down';
         }
 
         if (this.currentDirection) {
             switch(this.currentDirection){
-                case 'left': this.player.x--; break;
-                case 'right': this.player.x++; break;
-                case 'up': this.player.y--; break;
-                case 'down': this.player.y++; break;
+                case 'left': if(this.player.x > MyScene.TILE_SIZE) this.player.x--; break;
+                case 'right': if(this.player.x < maxX)  this.player.x++; break;
+                case 'up': if(this.player.y > MyScene.TILE_SIZE)  this.player.y--; break;
+                case 'down': if(this.player.y < maxY)  this.player.y++; break;
             }
         }
 
         //this.currentDirection = '';
+    }
+
+    isAlignedX(){
+        return this.player.x % this.playerSize === 0;
+    }
+
+    isAlignedY(){
+        return this.player.y % this.playerSize === 0;
     }
 
 }
