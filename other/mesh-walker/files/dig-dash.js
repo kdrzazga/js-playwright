@@ -66,7 +66,7 @@ class MyScene extends Phaser.Scene {
     }
 
     isAlignedX(){
-        if (this.player.x % MyScene.TILE_SIZE < MyScene.TILE_SIZE /5){
+        if (this.player.x % MyScene.TILE_SIZE < MyScene.TILE_SIZE /3){
             const newX = Math.floor(this.player.x / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
             this.player.x = newX;
             return true;
@@ -75,7 +75,7 @@ class MyScene extends Phaser.Scene {
     }
 
     isAlignedY(){
-        if (this.player.y % MyScene.TILE_SIZE < MyScene.TILE_SIZE /15){
+        if (this.player.y % MyScene.TILE_SIZE < MyScene.TILE_SIZE /3){
             const newY = Math.floor(this.player.y / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
             this.player.y = newY;
             return true;
