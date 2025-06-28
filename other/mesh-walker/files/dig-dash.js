@@ -62,15 +62,25 @@ class MyScene extends Phaser.Scene {
             }
         }
 
-        //if (this.isAlignedX() || this.isAlignedY()) this.currentDirection = '';
+    this.currentDirection = '';
     }
 
     isAlignedX(){
-        return this.player.x % MyScene.TILE_SIZE === 0;
+        if (this.player.x % MyScene.TILE_SIZE < MyScene.TILE_SIZE /5){
+            const newX = Math.floor(this.player.x / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
+            this.player.x = newX;
+            return true;
+        }
+        return false;
     }
 
     isAlignedY(){
-        return this.player.y % MyScene.TILE_SIZE === 0;
+        if (this.player.y % MyScene.TILE_SIZE < MyScene.TILE_SIZE /15){
+            const newY = Math.floor(this.player.y / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
+            this.player.y = newY;
+            return true;
+        }
+        return false;
     }
 
 }
