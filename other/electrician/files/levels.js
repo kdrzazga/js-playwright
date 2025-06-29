@@ -420,8 +420,8 @@ class LevelOutroScene extends LevelScene{
         this.player.y = 30;
         this.audioBing = new Audio(this.musicFile);
         this.input.keyboard.on('keydown', (event) => {
-                    this.playAudio();
-                });
+            this.playAudio();
+        });
      }
 
      playAudio() {
