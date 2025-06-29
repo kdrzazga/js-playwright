@@ -8,10 +8,13 @@ class MyScene extends Phaser.Scene {
 
     preload() {
         this.load.image('player', 'files/dd.bmp');
+        this.load.image('dirt-tile', '../common/pics/dirt.png');
     }
 
     create() {
-        this.player = this.physics.add.sprite(150, 150, 'player');
+        this.spriteGroup = this.add.group();
+        this.player = this.physics.add.sprite(2*MyScene.TILE_SIZE, 2*MyScene.TILE_SIZE, 'player');
+        this.tile = this.physics.add.sprite(4*MyScene.TILE_SIZE, 3*MyScene.TILE_SIZE, 'dirt-tile');
         this.playerSpeed = 100;
 
         this.currentDirection = 'right'; // 'left', 'right', 'up', 'down'
@@ -23,10 +26,11 @@ class MyScene extends Phaser.Scene {
     }
 
     drawMesh(){
+        const container = this.add.container(0, 0);
         const graphics = this.add.graphics();
         graphics.lineStyle(1, 0x00cc00);
-        const width = this.sys.game.config.width;
-        const height = this.sys.game.config.height;
+        const width = 4*this.sys.game.config.width;
+        const height = 3*this.sys.game.config.height;
 
         for (let x = 0; x <= width; x += MyScene.TILE_SIZE) {
             graphics.moveTo(x, 0);
