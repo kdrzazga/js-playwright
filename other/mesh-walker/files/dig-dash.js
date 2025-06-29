@@ -13,9 +13,11 @@ class MyScene extends Phaser.Scene {
 
     create() {
         this.spriteGroup = this.add.group();
+        this.container = this.add.container(0, 0);
         this.player = this.physics.add.sprite(2*MyScene.TILE_SIZE, 2*MyScene.TILE_SIZE, 'player');
-        this.tile = this.physics.add.sprite(4*MyScene.TILE_SIZE, 3*MyScene.TILE_SIZE, 'dirt-tile');
-        this.playerSpeed = 100;
+        const tile = this.physics.add.sprite(4*MyScene.TILE_SIZE, 3*MyScene.TILE_SIZE, 'dirt-tile');
+        tile.setDepth(-5);
+        this.spriteGroup.add(tile);
 
         this.currentDirection = 'right'; // 'left', 'right', 'up', 'down'
         this.targetPosition = new Phaser.Math.Vector2(this.player.x, this.player.y);
@@ -26,7 +28,7 @@ class MyScene extends Phaser.Scene {
     }
 
     drawMesh(){
-        const container = this.add.container(0, 0);
+        this.container = this.add.container(0, 0);
         const graphics = this.add.graphics();
         graphics.lineStyle(1, 0x00cc00);
         const width = 4*this.sys.game.config.width;
@@ -41,11 +43,12 @@ class MyScene extends Phaser.Scene {
             graphics.lineTo(width, y);
         }
         graphics.strokePath();
+
+        this.spriteGroup.add(this.container);
+        this.container.add(graphics);
     }
 
     update(time, delta) {
-        const maxX = Math.floor(this.sys.game.config.width / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
-        const maxY = Math.floor(this.sys.game.config.height / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
 
         if (this.cursors.left.isDown) {
             if (this.isAlignedY()) this.currentDirection = 'left';
@@ -59,14 +62,41 @@ class MyScene extends Phaser.Scene {
 
         if (this.currentDirection) {
             switch(this.currentDirection){
-                case 'left': if(this.player.x > MyScene.TILE_SIZE) this.player.x--; break;
-                case 'right': if(this.player.x < maxX)  this.player.x++; break;
-                case 'up': if(this.player.y > MyScene.TILE_SIZE)  this.player.y--; break;
-                case 'down': if(this.player.y < maxY)  this.player.y++; break;
+                case 'left': this.moveLeft(); break;
+                case 'right': this.moveRight(); break;
+                case 'up': this.moveUp(); break;
+                case 'down': this.moveDown(); break;
             }
         }
 
     this.currentDirection = '';
+    }
+
+    moveLeft(){
+        if(this.player.x > MyScene.TILE_SIZE) this.player.x--;
+    }
+
+    moveRight(){
+        const maxX = Math.floor(this.sys.game.config.width / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
+        if (this.player.x < 3/4*maxX)  this.player.x++;
+        else {
+            this.spriteGroup.children.iterate( s => s.x -=1);
+        }
+    }
+
+    moveUp(){
+        if(this.player.y > MyScene.TILE_SIZE)  this.player.y--;
+        else {
+            this.spriteGroup.children.iterate( s => s.y++);
+        }
+    }
+
+    moveDown(){
+        const maxY = Math.floor(this.sys.game.config.height / MyScene.TILE_SIZE) * MyScene.TILE_SIZE;
+        if(this.player.y < maxY)  this.player.y++;
+        else {
+            this.spriteGroup.children.iterate( s => s.y--);
+        }
     }
 
     isAlignedX(){
