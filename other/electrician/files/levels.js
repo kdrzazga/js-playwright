@@ -388,7 +388,7 @@ class Level5Scene extends LevelScene{
 
     loadFloorImages(){
          this.load.image('floor0', 'files/room-wide-web.png');
-         this.load.image('floor1', 'files/room-wide-web2.png');
+         this.load.image('floor1', 'files/room-wide-web.png');
          this.load.image('floor2', 'files/room-wide-web.png');
     }
 

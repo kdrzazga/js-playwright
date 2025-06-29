@@ -307,6 +307,8 @@ class Creator {
         };
 
        let building = Creator.createLevel(buildingData, physics);
+       building.floors[0].sprite.flipY = true;
+       building.floors[1].sprite.flipX = true;
        return building;
     }
 
