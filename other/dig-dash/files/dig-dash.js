@@ -12,7 +12,9 @@ class BaseLevel extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('player', 'files/dd.bmp');
+        this.load.image('player', '../common/pics/dig-dug/dig-dug1.png');
+        this.load.image('player2', '../common/pics/dig-dug/dig-dug2.png');
+        this.load.image('player3', '../common/pics/dig-dug/dig-dug3.png');
         this.load.image('dirt-tile', '../common/pics/dirt.png');
     }
 
@@ -20,6 +22,7 @@ class BaseLevel extends Phaser.Scene {
         this.spriteGroup = this.add.group();
         this.container = this.add.container(0, 0);
         this.player = this.physics.add.sprite(7*BaseLevel.TILE_SIZE, 2*BaseLevel.TILE_SIZE, 'player');
+        this.player.setScale(0.75);
         const tile = this.physics.add.sprite(4*BaseLevel.TILE_SIZE, 3*BaseLevel.TILE_SIZE, 'dirt-tile');
         tile.setDepth(-5);
         this.spriteGroup.add(tile);
@@ -81,18 +84,25 @@ class BaseLevel extends Phaser.Scene {
         const movement = -1;
         const limit = BaseLevel.TILE_SIZE;
         const maxX = Math.floor(this.sys.game.config.width / BaseLevel.TILE_SIZE) * BaseLevel.TILE_SIZE;
-        if(this.player.x > limit) this.player.x += movement;
+        if(this.player.x > limit) {
+            this.player.x += movement;
+            this.player.flipX = true;
+        }
         else {
             this.spriteGroup.children.iterate( s => s.x++);
             //this.meshShiftX = (this.meshShiftX - movement) % BaseLevel.TILE_SIZE;
         }
-        if(this.player.x > limit) this.player.x += movement;
+        //if(this.player.x > limit) this.player.x += movement;
     }
 
     moveRight(){
+        const movement = 1;
         const maxX = Math.floor(this.sys.game.config.width / BaseLevel.TILE_SIZE) * BaseLevel.TILE_SIZE;
         const limit = 3/4*maxX;
-        if (this.player.x < limit)  this.player.x++;
+        if (this.player.x < limit)  {
+            this.player.x += movement;
+            this.player.flipX = false;
+        }
         else {
             this.spriteGroup.children.iterate( s => s.x--);
             //this.meshShiftX = (this.meshShiftX - 1) % BaseLevel.TILE_SIZE;
