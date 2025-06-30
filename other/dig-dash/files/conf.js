@@ -1,6 +1,6 @@
 const config = {
     type: Phaser.AUTO,
-    parent: 'game-container',
+    parent: 'board',
     width: 800,
     height: 600,
     scene: [Level1],

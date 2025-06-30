@@ -2,11 +2,11 @@ class BaseLevel extends Phaser.Scene {
 
     static TILE_SIZE = 75;
 
-    constructor() {
-        super({ key: 'BaseLevel' });
+    constructor(levelKey) {
+        super({ key: levelKey });
 
-        this.emptyColumns = [ {'column' : 13, 'start' : 3, 'end' : 9}];
-        this.emptyRows = [ {'row' : 13, 'start' : 3, 'end' : 9}];
+        this.emptyColumns = [];
+        this.emptyRows = [];
         this.meshShiftX = 0;
         this.meshShiftY = 0;
     }
