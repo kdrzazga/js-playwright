@@ -392,7 +392,7 @@ class MainScene extends ExtendedScene {
         rectangle.strokeRect(0, 0, Globals.TILE_WIDTH, Globals.TILE_WIDTH);
         rectangle.generateTexture('highlight', Globals.TILE_WIDTH, Globals.TILE_WIDTH);
         rectangle.destroy();
-        this.rectSprite = this.add.sprite(2*Globals.TILE_WIDTH, 3*Globals.TILE_WIDTH, 'highlight');
+        this.rectSprite = this.add.sprite(Globals.PLAYER_X, Globals.PLAYER_Y + Globals.TILE_WIDTH, 'highlight');
         this.rectSprite.setDepth(4);
     }
 
