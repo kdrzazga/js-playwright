@@ -1,6 +1,8 @@
 class BaseLevel extends Phaser.Scene {
 
     static TILE_SIZE = 75;
+    static BOARD_WIDTH = 120;
+    static BOARD_HEIGHT = 80;
 
     constructor(levelKey) {
         super({ key: levelKey });
@@ -23,9 +25,25 @@ class BaseLevel extends Phaser.Scene {
         this.container = this.add.container(0, 0);
         this.player = this.physics.add.sprite(7*BaseLevel.TILE_SIZE, 2*BaseLevel.TILE_SIZE, 'player');
         this.player.setScale(0.75);
-        const tile = this.physics.add.sprite(4*BaseLevel.TILE_SIZE, 3*BaseLevel.TILE_SIZE, 'dirt-tile');
-        tile.setDepth(-5);
-        this.spriteGroup.add(tile);
+
+        for (let x = 0; x < BaseLevel.BOARD_WIDTH; x++)
+            for (let y = 0; y < BaseLevel.BOARD_HEIGHT; y++){
+
+                let isWithinEmptyRow = this.emptyRows.some(entry => {
+                  return y === entry.row && x >= entry.start && x <= entry.end;
+                });
+
+                let isWithinEmptyColumn = this.emptyColumns.some(entry => {
+                  return x === entry.column && y >= entry.start && y <= entry.end;
+                });
+
+                if (isWithinEmptyRow || isWithinEmptyColumn) continue;
+
+                const tile = this.physics.add.sprite(x*BaseLevel.TILE_SIZE, y*BaseLevel.TILE_SIZE, 'dirt-tile');
+                tile.setDepth(-5);
+                tile.setScale(1.49);
+                this.spriteGroup.add(tile);
+            }
 
         this.currentDirection = 'right'; // 'left', 'right', 'up', 'down'
         this.targetPosition = new Phaser.Math.Vector2(this.player.x, this.player.y);
@@ -98,7 +116,7 @@ class BaseLevel extends Phaser.Scene {
     moveRight(){
         const movement = 1;
         const maxX = Math.floor(this.sys.game.config.width / BaseLevel.TILE_SIZE) * BaseLevel.TILE_SIZE;
-        const limit = 3/4*maxX;
+        const limit = 8 * BaseLevel.TILE_SIZE;
         if (this.player.x < limit)  {
             this.player.x += movement;
             this.player.flipX = false;
@@ -119,7 +137,8 @@ class BaseLevel extends Phaser.Scene {
 
     moveDown(){
         const maxY = Math.floor(this.sys.game.config.height / BaseLevel.TILE_SIZE) * BaseLevel.TILE_SIZE;
-        if(this.player.y < maxY)  this.player.y++;
+        const limit = 6 * BaseLevel.TILE_SIZE;
+        if(this.player.y < limit)  this.player.y++;
         else {
             this.spriteGroup.children.iterate( s => s.y--);
             //this.meshShiftY = (this.meshShiftY - 1) % BaseLevel.TILE_SIZE;
