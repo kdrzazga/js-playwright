@@ -23,7 +23,11 @@ class BaseLevel extends Phaser.Scene {
     create() {
         this.spriteGroup = this.add.group();
         this.container = this.add.container(0, 0);
-        this.player = this.physics.add.sprite(7*BaseLevel.TILE_SIZE, 2*BaseLevel.TILE_SIZE, 'player');
+        const startX = 5*BaseLevel.TILE_SIZE;
+        const startY = 1*BaseLevel.TILE_SIZE
+        this.player = this.physics.add.sprite(startX, startY, 'player');
+        this.player.absoluteX = startX;
+        this.player.absoluteY = startY;
         this.player.setScale(0.75);
 
         for (let x = 0; x < BaseLevel.BOARD_WIDTH; x++)
@@ -104,13 +108,14 @@ class BaseLevel extends Phaser.Scene {
         const maxX = Math.floor(this.sys.game.config.width / BaseLevel.TILE_SIZE) * BaseLevel.TILE_SIZE;
         if(this.player.x > limit) {
             this.player.x += movement;
+            this.player.absoluteX += movement;
             this.player.flipX = true;
         }
         else {
             this.spriteGroup.children.iterate( s => s.x++);
-            //this.meshShiftX = (this.meshShiftX - movement) % BaseLevel.TILE_SIZE;
+            this.player.absoluteX += movement;
         }
-        //if(this.player.x > limit) this.player.x += movement;
+        this.digConditionally();
     }
 
     moveRight(){
@@ -119,30 +124,49 @@ class BaseLevel extends Phaser.Scene {
         const limit = 8 * BaseLevel.TILE_SIZE;
         if (this.player.x < limit)  {
             this.player.x += movement;
+            this.player.absoluteX += movement;
             this.player.flipX = false;
         }
         else {
             this.spriteGroup.children.iterate( s => s.x--);
-            //this.meshShiftX = (this.meshShiftX - 1) % BaseLevel.TILE_SIZE;
+            this.player.absoluteX += movement;
         }
+        this.digConditionally();
     }
 
     moveUp(){
-        if(this.player.y > BaseLevel.TILE_SIZE)  this.player.y--;
+        if(this.player.y > BaseLevel.TILE_SIZE) {
+            this.player.y--;
+            this.player.absoluteY--;
+        }
         else {
             this.spriteGroup.children.iterate( s => s.y++);
-            //this.meshShiftY = (this.meshShiftY + 1) % BaseLevel.TILE_SIZE;
+            this.player.absoluteY--;
         }
+        this.digConditionally();
     }
 
     moveDown(){
         const maxY = Math.floor(this.sys.game.config.height / BaseLevel.TILE_SIZE) * BaseLevel.TILE_SIZE;
         const limit = 6 * BaseLevel.TILE_SIZE;
-        if(this.player.y < limit)  this.player.y++;
+        if(this.player.y < limit)  {
+            this.player.y++;
+            this.player.absoluteY++;
+            this.digConditionally();
+        }
         else {
             this.spriteGroup.children.iterate( s => s.y--);
-            //this.meshShiftY = (this.meshShiftY - 1) % BaseLevel.TILE_SIZE;
+            this.player.absoluteY++;
         }
+        this.digConditionally();
+    }
+
+    digConditionally(){
+        //TODO
+    }
+
+    getTileTexture(sprite){
+        //TODO
     }
 
     isAlignedX(){
@@ -162,5 +186,4 @@ class BaseLevel extends Phaser.Scene {
         }
         return false;
     }
-
 }
