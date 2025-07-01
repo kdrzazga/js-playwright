@@ -97,6 +97,7 @@ class BaseLevel extends Phaser.Scene {
                 case 'up': this.moveUp(); break;
                 case 'down': this.moveDown(); break;
             }
+            this.updatePositionInfo();
         }
 
     this.currentDirection = '';
@@ -162,11 +163,29 @@ class BaseLevel extends Phaser.Scene {
     }
 
     digConditionally(){
-        //TODO
+        const texture = this.getTileTexture(this.player);
+        console.log(`texture = ${texture}, absolutePlayer = ${this.player.absoluteX},  ${this.player.absoluteY},`
+        + ` Player = ${this.player.x},  ${this.player.x}`);
     }
 
     getTileTexture(sprite){
-        //TODO
+        const tileX2 = Math.floor(sprite.x / BaseLevel.TILE_SIZE);
+        const tileY2 = Math.floor(sprite.y / BaseLevel.TILE_SIZE);
+
+        let texture = '';
+        this.spriteGroup.children.iterate(child => {
+            if(child !== this.container && child.x == tileX2*BaseLevel.TILE_SIZE && child.y == tileY2*BaseLevel.TILE_SIZE)
+                texture = child.texture.key;
+        });
+        return texture;
+    }
+
+    updatePositionInfo(){
+        const tileX = Math.floor(this.player.absoluteX / BaseLevel.TILE_SIZE);
+        const tileY = Math.floor(this.player.absoluteY / BaseLevel.TILE_SIZE);
+
+        const coordsDiv = document.getElementById('coordinates');
+        coordsDiv.innerText = tileX + ' ,' + tileY;
     }
 
     isAlignedX(){
