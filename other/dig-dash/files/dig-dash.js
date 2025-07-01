@@ -11,6 +11,7 @@ class BaseLevel extends Phaser.Scene {
         this.emptyRows = [];
         this.meshShiftX = 0;
         this.meshShiftY = 0;
+        this.boulders = [];
     }
 
     preload() {
@@ -18,6 +19,7 @@ class BaseLevel extends Phaser.Scene {
         this.load.image('player2', '../common/pics/dig-dug/dig-dug2.png');
         this.load.image('player3', '../common/pics/dig-dug/dig-dug3.png');
         this.load.image('dirt-tile', '../common/pics/dirt.png');
+        this.load.image('boulder', 'files/stone.bmp');
     }
 
     create() {
@@ -42,6 +44,15 @@ class BaseLevel extends Phaser.Scene {
                 });
 
                 if (isWithinEmptyRow || isWithinEmptyColumn) continue;
+
+                if (this.boulders.some(b => {return b.x == x && b.y ==y})){
+                    const boulder = this.physics.add.sprite(x*BaseLevel.TILE_SIZE, y*BaseLevel.TILE_SIZE, 'boulder');
+                    boulder.setDepth(-5);
+                    boulder.setScale(1.8);
+                    this.spriteGroup.add(boulder);
+
+                    continue;
+                }
 
                 const tile = this.physics.add.sprite(x*BaseLevel.TILE_SIZE, y*BaseLevel.TILE_SIZE, 'dirt-tile');
                 tile.setDepth(-5);
