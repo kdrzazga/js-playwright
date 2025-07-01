@@ -98,6 +98,7 @@ class BaseLevel extends Phaser.Scene {
                 case 'down': this.moveDown(); break;
             }
             this.updatePositionInfo();
+            this.digConditionally();
         }
 
     this.currentDirection = '';
@@ -114,9 +115,8 @@ class BaseLevel extends Phaser.Scene {
         }
         else {
             this.spriteGroup.children.iterate( s => s.x++);
-            this.player.absoluteX += movement;
+            //this.player.absoluteX += movement;
         }
-        this.digConditionally();
     }
 
     moveRight(){
@@ -130,9 +130,8 @@ class BaseLevel extends Phaser.Scene {
         }
         else {
             this.spriteGroup.children.iterate( s => s.x--);
-            this.player.absoluteX += movement;
+            //this.player.absoluteX += movement;
         }
-        this.digConditionally();
     }
 
     moveUp(){
@@ -142,9 +141,8 @@ class BaseLevel extends Phaser.Scene {
         }
         else {
             this.spriteGroup.children.iterate( s => s.y++);
-            this.player.absoluteY--;
+            //this.player.absoluteY--;
         }
-        this.digConditionally();
     }
 
     moveDown(){
@@ -153,19 +151,19 @@ class BaseLevel extends Phaser.Scene {
         if(this.player.y < limit)  {
             this.player.y++;
             this.player.absoluteY++;
-            this.digConditionally();
         }
         else {
             this.spriteGroup.children.iterate( s => s.y--);
-            this.player.absoluteY++;
+            //this.player.absoluteY++;
         }
-        this.digConditionally();
     }
 
     digConditionally(){
         const texture = this.getTileTexture(this.player);
-        console.log(`texture = ${texture}, absolutePlayer = ${this.player.absoluteX},  ${this.player.absoluteY},`
-        + ` Player = ${this.player.x},  ${this.player.x}`);
+        const infoDiv = document.getElementById('extraInfoFrame');
+        infoDiv.innerText = texture;
+
+        this.conditionallyRemoveTileTexture(this.player);
     }
 
     getTileTexture(sprite){
@@ -174,10 +172,40 @@ class BaseLevel extends Phaser.Scene {
 
         let texture = '';
         this.spriteGroup.children.iterate(child => {
-            if(child !== this.container && child.x == tileX2*BaseLevel.TILE_SIZE && child.y == tileY2*BaseLevel.TILE_SIZE)
-                texture = child.texture.key;
+            const x1 = child.x;
+            const y1 = child.y;
+            const x2 = x1 + BaseLevel.TILE_SIZE;
+            const y2 = y1 + BaseLevel.TILE_SIZE;
+
+            if (child.texture != null
+                && x1 < sprite.absoluteX && sprite.absoluteX < x2
+                && y1 < sprite.absoluteY && sprite.absoluteY < y2){
+                    console.log(`${x1},${y1} --  ${x2},${y2}`);
+                    texture = child.texture.key;
+                }
         });
+
         return texture;
+    }
+
+    conditionallyRemoveTileTexture(sprite){
+        const tileX2 = Math.floor(sprite.x / BaseLevel.TILE_SIZE);
+        const tileY2 = Math.floor(sprite.y / BaseLevel.TILE_SIZE);
+
+        this.spriteGroup.children.iterate(child => {
+            const x1 = child.x;
+            const y1 = child.y;
+            const x2 = x1 + BaseLevel.TILE_SIZE;
+            const y2 = y1 + BaseLevel.TILE_SIZE;
+
+            if (child.texture != null
+                && x1 < sprite.absoluteX && sprite.absoluteX < x2
+                && y1 < sprite.absoluteY && sprite.absoluteY < y2){
+                    this.spriteGroup.remove(child);
+                    child.destroy();
+                    return false;
+                }
+        });
     }
 
     updatePositionInfo(){
