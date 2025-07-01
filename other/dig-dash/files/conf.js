@@ -1,9 +1,9 @@
 const config = {
     type: Phaser.AUTO,
-    parent: 'game-container',
+    parent: 'board',
     width: 800,
     height: 600,
-    scene: [MyScene],
+    scene: [Level1],
     physics: {
         default: 'arcade',
         arcade: {
