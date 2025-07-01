@@ -19,7 +19,7 @@ class BaseLevel extends Phaser.Scene {
         this.load.image('player2', '../common/pics/dig-dug/dig-dug2.png');
         this.load.image('player3', '../common/pics/dig-dug/dig-dug3.png');
         this.load.image('dirt-tile', '../common/pics/dirt.png');
-        this.load.image('boulder', 'files/stone.bmp');
+        this.load.image('boulder', 'files/stone.png');
     }
 
     create() {
