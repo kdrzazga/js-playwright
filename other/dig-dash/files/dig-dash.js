@@ -11,6 +11,7 @@ class BaseLevel extends Phaser.Scene {
         this.emptyRows = [];
         this.meshShiftX = 0;
         this.meshShiftY = 0;
+        this.boulders = [];
     }
 
     preload() {
@@ -18,6 +19,7 @@ class BaseLevel extends Phaser.Scene {
         this.load.image('player2', '../common/pics/dig-dug/dig-dug2.png');
         this.load.image('player3', '../common/pics/dig-dug/dig-dug3.png');
         this.load.image('dirt-tile', '../common/pics/dirt.png');
+        this.load.image('boulder', 'files/stone.png');
     }
 
     create() {
@@ -42,6 +44,15 @@ class BaseLevel extends Phaser.Scene {
                 });
 
                 if (isWithinEmptyRow || isWithinEmptyColumn) continue;
+
+                if (this.boulders.some(b => {return b.x == x && b.y ==y})){
+                    const boulder = this.physics.add.sprite(x*BaseLevel.TILE_SIZE, y*BaseLevel.TILE_SIZE, 'boulder');
+                    boulder.setDepth(-5);
+                    boulder.setScale(1.8);
+                    this.spriteGroup.add(boulder);
+
+                    continue;
+                }
 
                 const tile = this.physics.add.sprite(x*BaseLevel.TILE_SIZE, y*BaseLevel.TILE_SIZE, 'dirt-tile');
                 tile.setDepth(-5);
@@ -97,6 +108,8 @@ class BaseLevel extends Phaser.Scene {
                 case 'up': this.moveUp(); break;
                 case 'down': this.moveDown(); break;
             }
+            this.updatePositionInfo();
+            this.digConditionally();
         }
 
     this.currentDirection = '';
@@ -113,9 +126,8 @@ class BaseLevel extends Phaser.Scene {
         }
         else {
             this.spriteGroup.children.iterate( s => s.x++);
-            this.player.absoluteX += movement;
+            //this.player.absoluteX += movement;
         }
-        this.digConditionally();
     }
 
     moveRight(){
@@ -129,9 +141,8 @@ class BaseLevel extends Phaser.Scene {
         }
         else {
             this.spriteGroup.children.iterate( s => s.x--);
-            this.player.absoluteX += movement;
+            //this.player.absoluteX += movement;
         }
-        this.digConditionally();
     }
 
     moveUp(){
@@ -141,9 +152,8 @@ class BaseLevel extends Phaser.Scene {
         }
         else {
             this.spriteGroup.children.iterate( s => s.y++);
-            this.player.absoluteY--;
+            //this.player.absoluteY--;
         }
-        this.digConditionally();
     }
 
     moveDown(){
@@ -152,21 +162,69 @@ class BaseLevel extends Phaser.Scene {
         if(this.player.y < limit)  {
             this.player.y++;
             this.player.absoluteY++;
-            this.digConditionally();
         }
         else {
             this.spriteGroup.children.iterate( s => s.y--);
-            this.player.absoluteY++;
+            //this.player.absoluteY++;
         }
-        this.digConditionally();
     }
 
     digConditionally(){
-        //TODO
+        const texture = this.getTileTexture(this.player);
+        const infoDiv = document.getElementById('extraInfoFrame');
+        infoDiv.innerText = texture;
+
+        this.conditionallyRemoveTileTexture(this.player);
     }
 
     getTileTexture(sprite){
-        //TODO
+        const tileX2 = Math.floor(sprite.x / BaseLevel.TILE_SIZE);
+        const tileY2 = Math.floor(sprite.y / BaseLevel.TILE_SIZE);
+
+        let texture = '';
+        this.spriteGroup.children.iterate(child => {
+            const x1 = child.x;
+            const y1 = child.y;
+            const x2 = x1 + BaseLevel.TILE_SIZE;
+            const y2 = y1 + BaseLevel.TILE_SIZE;
+
+            if (child.texture != null
+                && x1 < sprite.absoluteX && sprite.absoluteX < x2
+                && y1 < sprite.absoluteY && sprite.absoluteY < y2){
+                    console.log(`${x1},${y1} --  ${x2},${y2}`);
+                    texture = child.texture.key;
+                }
+        });
+
+        return texture;
+    }
+
+    conditionallyRemoveTileTexture(sprite){
+        const tileX2 = Math.floor(sprite.x / BaseLevel.TILE_SIZE);
+        const tileY2 = Math.floor(sprite.y / BaseLevel.TILE_SIZE);
+
+        this.spriteGroup.children.iterate(child => {
+            const x1 = child.x;
+            const y1 = child.y;
+            const x2 = x1 + BaseLevel.TILE_SIZE;
+            const y2 = y1 + BaseLevel.TILE_SIZE;
+
+            if (child.texture != null
+                && x1 < sprite.absoluteX && sprite.absoluteX < x2
+                && y1 < sprite.absoluteY && sprite.absoluteY < y2){
+                    this.spriteGroup.remove(child);
+                    child.destroy();
+                    return false;
+                }
+        });
+    }
+
+    updatePositionInfo(){
+        const tileX = Math.floor(this.player.absoluteX / BaseLevel.TILE_SIZE);
+        const tileY = Math.floor(this.player.absoluteY / BaseLevel.TILE_SIZE);
+
+        const coordsDiv = document.getElementById('coordinates');
+        coordsDiv.innerText = tileX + ' ,' + tileY;
     }
 
     isAlignedX(){
