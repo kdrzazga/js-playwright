@@ -1,0 +1,46 @@
+<html>
+<head>
+
+</head>
+<body>
+<script>
+    function encodeUTF8toBase64(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    function decodeBase64toUTF8(str) {
+      return decodeURIComponent(escape(atob(str)));
+    }
+
+    const encodedApiKey = "c2stcHJvai14eDhXTHZSazBCLVBvckIwMG9HYWZJR2dBVjh6TklKSGpSeVQzRlN4SDlDbnMtUHNqZU5BZDAyVXBaTHk0MWNZRzFUS0VpUFZvYVQzQmxia0ZKSHVtWFFpWFpPcVVwbVJJaWxGU21NNGVLU2VNN19WZkVobXZlSVhub3EyVUp6ckpQV1UteC1HeVJDYzlnT05WOWJDNGtxeVBERUE=";
+
+    async function askGPT(question) {
+      const apiKey = decodeBase64toUTF8(encodedApiKey);
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + apiKey
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            { role: 'system', content: 'You are a helpful assistant.' },
+            { role: 'user', content: question }
+          ]
+        })
+      });
+
+      const data = await response.json();
+      console.log(data);
+    }
+
+    // Example: askGPT("Hello!");
+</script>
+
+</body>
+<script>
+    askGPT("When was WW2 started?");
+</script>
+</html>
