@@ -440,7 +440,7 @@ class LevelIntroScene extends LevelOutroScene{
         this.nextLevel = 'lvl1';
         this.extraInfoFrameVisible = "left: 85%; visibility: show";
         this.audioBing = null;
-        this.musicFile = 'files/celeb.midi.mp3';
+        this.musicFile = 'files/kicha.mp3';
     }
 
     loadFloorImages(){
