@@ -48,7 +48,7 @@ class BaseLevel extends Phaser.Scene {
                 if (this.boulders.some(b => {return b.x == x && b.y ==y})){
                     const boulder = this.physics.add.sprite(x*BaseLevel.TILE_SIZE, y*BaseLevel.TILE_SIZE, 'boulder');
                     boulder.setDepth(-5);
-                    boulder.setScale(1.8);
+                    boulder.setScale(0.3);
                     this.spriteGroup.add(boulder);
 
                     continue;
