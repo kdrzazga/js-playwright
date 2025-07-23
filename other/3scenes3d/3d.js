@@ -1,6 +1,3 @@
-// Assuming you have included THREE.js in your HTML
-// <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
-
 class MyScene {
     constructor() {
         this.scene = new THREE.Scene();
@@ -24,6 +21,7 @@ class MyScene {
 
         this.planes = [];
         this.animationFrameId = null;
+        this.texture = null;
     }
 
     init() {
@@ -46,7 +44,7 @@ class MyScene {
         if (typeof C64Blackbox === 'undefined') {
             window.C64Blackbox = {};
         }
-        C64Blackbox.texture = new THREE.CanvasTexture(canvas);
+        this.texture = new THREE.CanvasTexture(canvas);
 
         this.setupPlanes();
 
@@ -82,7 +80,7 @@ class MyScene {
     }
 
     setupPlanes() {
-        const planeMaterial = new THREE.MeshBasicMaterial({ map: C64Blackbox.texture });
+        const planeMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
         const spacing = 6; // Distance between planes
 
         for (let i = 0; i < 3; i++) {
