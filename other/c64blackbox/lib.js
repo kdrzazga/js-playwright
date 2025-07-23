@@ -5,67 +5,93 @@ const Direction = Object.freeze({
 	DOWN: 'down'
 });
 
-class Sprite{
-    constructor(canvas, x, y){
-    	this.speed = 3;
-    	this.hp = 4;
-    	this.x = x;
-    	this.y = y;
-    	this.name = "sprite";
-    	this.canvas = canvas;
-    	this.picPath = "";
-    	this.picLeftPath = "";
-    	this.picRightPath = "";
-    	this.direction = Direction.RIGHT;
+class Sprite {
+    constructor(canvas, x, y) {
+        this.speed = 3;
+        this.hp = 4;
+        this.x = x;
+        this.y = y;
+        this.name = "sprite";
+        this.canvas = canvas;
+        this.picLeftPath = "";
+        this.picLeftStepPath = "";
+        this.picRightPath = "";
+        this.picRightStepPath = "";
+        this.picPath = "";
+        this.direction = Direction.RIGHT;
+        this.animationIntervalId = null;
+        this.animationFrames = [];
+        this.currentFrameIndex = 0;
+        this.isAnimating = false;
+        this.animationDelay = 500;
     }
 
-	moveRight(){
-		if (this.hp > 0){
-			this.x += this.speed;
-			this.picPath = this.picRightPath;
-			this.direction = Direction.RIGHT;
-		}
-	}
+    moveRight() {
+        if (this.hp > 0) {
+            this.x += this.speed;
+            this.picPath = this.picRightPath;
+            this.direction = Direction.RIGHT;
+        }
+    }
 
-	moveLeft(){
-		if (this.hp > 0){
-			this.x -= this.speed;
-			this.picPath = this.picLeftPath;
-			this.direction = Direction.LEFT;
-		}
-	}
+    moveLeft() {
+        if (this.hp > 0) {
+            this.x -= this.speed;
+            this.picPath = this.picLeftPath;
+            this.direction = Direction.LEFT;
+        }
+    }
 
-	draw(){
-		let context = this.canvas.getContext('2d');
-		let pictureLoader = new PictureLoader(context);
-		pictureLoader.load(this.picPath, this.x, this.y);
-		//don't forget to update the texture in derived class
-	}
+    draw() {
+        let context = this.canvas.getContext('2d');
+        let pictureLoader = new PictureLoader(context);
+        pictureLoader.load(this.picPath, this.x, this.y);
+    }
 
-	collide(anotherSprite){
-	    if (anotherSprite.hp <= 0){
-	        console.warn('No collision with dead enemy');
-	        return;
-	    }
+    collide(anotherSprite) {
+        if (anotherSprite.hp <= 0) {
+            console.warn('No collision with dead enemy');
+            return false;
+        }
+        const collisionDistanceVert = 35;
+        const collisionDistanceHoriz = 14;
+        return Math.abs(this.x - anotherSprite.x) < collisionDistanceHoriz &&
+               Math.abs(this.y - anotherSprite.y) < collisionDistanceVert;
+    }
 
-	    const collisionDistanceVert = 35;
-	    const collisionDistanceHoriz = 14;
-	    return Math.abs(this.x - anotherSprite.x) < collisionDistanceHoriz && Math.abs(this.y - anotherSprite.y) < collisionDistanceVert;
-	}
+    revive(timeout) {
+        if (this.hp > 0) {
+            console.warn(`Sprite ${this.name} is alive. No need to revive.`);
+            return;
+        }
+        this.x = 300;
+        this.y = 200;
+        setTimeout(() => {
+            this.hp = 4;
+        }, timeout);
+    }
 
-	revive(timeout){
-	    if (this.hp > 0){
-	        console.warn(`Sprite ${this.name} is alive. No need to revive.`);
-	        return;
-	    }
+    startAnimation(picPathsArray) {
+        if (this.isAnimating) {
+            this.stopAnimation();
+        }
+        this.animationFrames = picPathsArray;
+        this.currentFrameIndex = 0;
+        this.isAnimating = true;
+        this.animationIntervalId = setInterval(() => {
+            if (this.animationFrames.length === 0) return;
+            this.picPath = this.animationFrames[this.currentFrameIndex];
+            this.currentFrameIndex = (this.currentFrameIndex + 1) % this.animationFrames.length;
+        }, this.animationDelay);
+    }
 
-	    this.x = 300;
-	    this.y = 200;
-
-	    setTimeout(() => {
-	        this.hp = 4;
-	    }, timeout);
-	}
+    stopAnimation() {
+        if (this.animationIntervalId) {
+            clearInterval(this.animationIntervalId);
+            this.animationIntervalId = null;
+            this.isAnimating = false;
+        }
+    }
 }
 
 class Player extends Sprite{
