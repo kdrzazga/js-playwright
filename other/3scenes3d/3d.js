@@ -2,7 +2,7 @@ class MyScene {
     constructor() {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
-            75,
+            40,
             window.innerWidth / window.innerHeight,
             0.1,
             1000
@@ -15,51 +15,30 @@ class MyScene {
         this.headerLines = [];
         this.context = null;
         this.cursor = null;
-        this.clearColor = 0x000000; // Example color
+        this.clearColor = 0xaaaaaa; // Example color
         this.backgroundColor = 0xcccccc; // Example color
         this.defaultColor = 'black';
 
         this.planes = [];
+        this.textures = []; // Array to hold individual textures
         this.animationFrameId = null;
-        this.texture = null;
+        this.rotationCoeff = 0.01;
     }
 
     init() {
         this.setupRenderer();
         this.setupHeaderContent();
 
-        // Setup 2D Canvas for textures
-        const canvas = document.createElement('canvas');
-        this.context = canvas.getContext('2d');
-        canvas.width = 256; // Example size
-        canvas.height = 256; // Example size
-
-        // Placeholder for DizzolGame
-        // this.dizzolGame = new DizzolGame(canvas, this);
-
-        // For demonstration, fill canvas with some text
-        this.drawInitialText(this.context);
-
-        // Create a texture from the canvas
-        if (typeof C64Blackbox === 'undefined') {
-            window.C64Blackbox = {};
-        }
-        this.texture = new THREE.CanvasTexture(canvas);
-
-        this.setupPlanes();
-
-        window.addEventListener('keydown', this.handleKeyDown.bind(this));
-        this.animate();
+        const imagePaths = ['a800xl.png', 'c64.jpg', 'zxs.png'];
+        this.loadTextures(imagePaths, () => {
+            this.setupPlanes();
+            this.animate();
+        });
 
         // Position camera to see all three planes
         this.camera.position.z = 15;
         this.camera.position.x = 0;
-    }
 
-    setupRenderer() {
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setClearColor(this.clearColor, 1);
-        document.body.appendChild(this.renderer.domElement);
         window.addEventListener('resize', () => {
             this.renderer.setSize(window.innerWidth, window.innerHeight);
             this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -67,25 +46,45 @@ class MyScene {
         });
     }
 
+    setupRenderer() {
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setClearColor(this.clearColor, 1);
+        document.body.appendChild(this.renderer.domElement);
+    }
+
     setupHeaderContent() {
         // Placeholder for header setup if needed
     }
 
-    drawInitialText(ctx) {
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        ctx.fillStyle = 'white';
-        ctx.font = '20px Arial';
-        ctx.fillText('Initial Text', 50, 50);
+    loadTextures(imagePaths, callback) {
+        const loader = new THREE.TextureLoader();
+        let loadedCount = 0;
+        this.textures = [];
+
+        imagePaths.forEach((path, index) => {
+            loader.load(
+                path,
+                (texture) => {
+                    this.textures[index] = texture;
+                    loadedCount++;
+                    if (loadedCount === imagePaths.length) {
+                        callback();
+                    }
+                },
+                undefined,
+                (err) => {
+                    console.error('Error loading texture:', path);
+                }
+            );
+        });
     }
 
     setupPlanes() {
-        const planeMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
         const spacing = 6; // Distance between planes
 
         for (let i = 0; i < 3; i++) {
-            const plane = new THREE.Mesh(this.planeGeometry, planeMaterial);
-            // Position planes side by side along the x-axis
+            const material = new THREE.MeshBasicMaterial({ map: this.textures[i] });
+            const plane = new THREE.Mesh(this.planeGeometry, material);
             plane.position.x = (i - 1) * spacing; // -spacing, 0, +spacing
             plane.rotation.x = -Math.PI / 12; // Tilt as original
             this.scene.add(plane);
@@ -103,13 +102,15 @@ class MyScene {
 
         // Rotate each plane for some animation
         this.planes.forEach((plane, index) => {
-            plane.rotation.y += 0.01 + index * 0.005;
+            plane.rotation.y += this.rotationCoeff + index * 0.005;
         });
 
         this.renderer.render(this.scene, this.camera);
+        console.log(this.planes[0].rotation.y);
+        if (plane.rotation.y < Math.PI/2 || plane.rotation.y > Math.PI)
+            this.rotationCoeff *= -1;
     }
 }
 
-// Instantiate and initialize the scene
 const myScene = new MyScene();
 myScene.init();
