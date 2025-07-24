@@ -40,13 +40,17 @@ class MyScene {
         this.camera.position.x = 0;
 
         window.addEventListener('resize', () => {
-            this.renderer.setSize(window.innerWidth, window.innerHeight);
+            this.renderer.setSize(0.8*window.innerWidth, 0.8*window.innerHeight);
             this.camera.aspect = window.innerWidth / window.innerHeight;
             this.camera.updateProjectionMatrix();
         });
     }
 
     setupRenderer() {
+      const container = document.getElementById('scene-container');
+      this.renderer.setSize(container.clientWidth, container.clientHeight);
+
+      container.appendChild(this.renderer.domElement);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setClearColor(this.clearColor, 1);
         document.body.appendChild(this.renderer.domElement);
@@ -93,7 +97,6 @@ class MyScene {
     }
 
     handleKeyDown(event) {
-        // Implement key handling if needed
         console.log('Key pressed:', event.key);
     }
 
@@ -106,9 +109,6 @@ class MyScene {
         });
 
         this.renderer.render(this.scene, this.camera);
-        console.log(this.planes[0].rotation.y);
-        if (plane.rotation.y < Math.PI/2 || plane.rotation.y > Math.PI)
-            this.rotationCoeff *= -1;
     }
 }
 
