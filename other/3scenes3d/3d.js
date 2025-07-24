@@ -85,7 +85,7 @@ class MyScene {
     }
 
     setupPlanes() {
-        const spacing = 6; // Distance between planes
+        const spacing = 5;
 
         for (let i = 0; i < 3; i++) {
             const material = new THREE.MeshBasicMaterial({ map: this.textures[i] });
@@ -106,7 +106,8 @@ class MyScene {
 
         // Rotate each plane for some animation
         this.planes.forEach((plane, index) => {
-            plane.rotation.y += this.rotationCoeff*Math.sin(this.counter/(20*Math.PI));
+            const shift = this.rotationCoeff*Math.sin(this.counter/(20*Math.PI));
+            plane.rotation.y += index % 2 == 0 ? shift : -shift;
         });
 
         this.counter++;
