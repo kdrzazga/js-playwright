@@ -111,7 +111,7 @@ class MyScene {
 
         this.planes.forEach((plane, index) => {
             const shift = this.rotationCoeff*Math.sin(this.counter/(20*Math.PI));
-            if (globalCounter % 20 < 10) plane.rotation.y += index % 2 == 0 ? shift : -shift;
+            if (globalCounter % 17 < 8) plane.rotation.y += index % 2 == 0 ? shift : -shift;
             else plane.rotation.x += index % 2 == 0 ? shift : -shift;
         });
 
@@ -127,8 +127,30 @@ myScene.init();
 function tick1Second(){
     globalCounter++;
 
-    if (globalCounter % 20 == 0)
-        myScene.reset();
+    if (globalCounter % 25 == 0){
+        myScene.planes[0].rotation.x = 0;
+        myScene.planes[1].rotation.y = 0;
+    }
+    if (globalCounter % 30 == 0){
+        myScene.planes[2].rotation.x = 0;
+        myScene.planes[2].rotation.y = 0;
+    }
+    if (globalCounter % 30 == 0){
+        myScene.planes[3].rotation.x = 0;
+        myScene.planes[1].rotation.y = 0;
+    }
+    if (globalCounter % 30 == 0){
+        myScene.planes[0].rotation.x = 0;
+        myScene.planes[0].rotation.y = 0;
+    }
+    if (globalCounter % 30 == 0){
+        myScene.planes[2].rotation.x = 0;
+        myScene.planes[1].rotation.y = 0;
+    }
+    if (globalCounter % 40 == 0){
+        myScene.planes[1].rotation.x = 0;
+        myScene.planes[1].rotation.y = 0;
+    }
 }
 
 setInterval(tick1Second, 1000);
