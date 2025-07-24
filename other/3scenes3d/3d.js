@@ -23,6 +23,7 @@ class MyScene {
         this.textures = []; // Array to hold individual textures
         this.animationFrameId = null;
         this.rotationCoeff = 0.01;
+        this.counter = 0;
     }
 
     init() {
@@ -105,9 +106,10 @@ class MyScene {
 
         // Rotate each plane for some animation
         this.planes.forEach((plane, index) => {
-            plane.rotation.y += this.rotationCoeff + index * 0.005;
+            plane.rotation.y += this.rotationCoeff*Math.sin(this.counter/(20*Math.PI));
         });
 
+        this.counter++;
         this.renderer.render(this.scene, this.camera);
     }
 }
