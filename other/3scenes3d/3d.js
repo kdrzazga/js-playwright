@@ -1,3 +1,5 @@
+let globalCounter = 0;
+
 class MyScene {
     constructor() {
         this.scene = new THREE.Scene();
@@ -28,7 +30,6 @@ class MyScene {
 
     init() {
         this.setupRenderer();
-        this.setupHeaderContent();
 
         const imagePaths = ['a800xl.png', 'c64.jpg', 'zxs.png'];
         this.loadTextures(imagePaths, () => {
@@ -47,6 +48,14 @@ class MyScene {
         });
     }
 
+    reset(){
+        console.log('reset');
+        this.planes.forEach((plane, index) => {
+            plane.rotation.x = 0;
+            plane.rotation.y = 0;
+        });
+    }
+
     setupRenderer() {
       const container = document.getElementById('scene-container');
       this.renderer.setSize(container.clientWidth, container.clientHeight);
@@ -55,10 +64,6 @@ class MyScene {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setClearColor(this.clearColor, 1);
         document.body.appendChild(this.renderer.domElement);
-    }
-
-    setupHeaderContent() {
-        // Placeholder for header setup if needed
     }
 
     loadTextures(imagePaths, callback) {
@@ -104,10 +109,10 @@ class MyScene {
     animate() {
         this.animationFrameId = requestAnimationFrame(() => this.animate());
 
-        // Rotate each plane for some animation
         this.planes.forEach((plane, index) => {
             const shift = this.rotationCoeff*Math.sin(this.counter/(20*Math.PI));
-            plane.rotation.y += index % 2 == 0 ? shift : -shift;
+            if (globalCounter % 20 < 10) plane.rotation.y += index % 2 == 0 ? shift : -shift;
+            else plane.rotation.x += index % 2 == 0 ? shift : -shift;
         });
 
         this.counter++;
@@ -117,3 +122,14 @@ class MyScene {
 
 const myScene = new MyScene();
 myScene.init();
+
+
+function tick1Second(){
+    globalCounter++;
+
+    if (globalCounter % 20 == 0)
+        myScene.reset();
+}
+
+setInterval(tick1Second, 1000);
+
