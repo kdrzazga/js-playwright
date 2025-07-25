@@ -31,7 +31,7 @@ class MyScene {
     init() {
         this.setupRenderer();
 
-        const imagePaths = ['a800xl.png', 'c64.jpg', 'zxs.png'];
+        const imagePaths = ['a800xl.png', 'c64.png', 'zxs.png'];
         this.loadTextures(imagePaths, () => {
             this.setupPlanes();
             this.animate();
@@ -130,27 +130,41 @@ function tick1Second(){
     if (globalCounter % 25 == 0){
         myScene.planes[0].rotation.x = 0;
         myScene.planes[1].rotation.y = 0;
+        console.log('1')
     }
-    if (globalCounter % 30 == 0){
+    else if (globalCounter % 30 == 0){
         myScene.planes[2].rotation.x = 0;
         myScene.planes[2].rotation.y = 0;
+        console.log('2')
     }
-    if (globalCounter % 30 == 0){
-        myScene.planes[3].rotation.x = 0;
+    else if (globalCounter % 32 == 0){
+        myScene.planes[0].rotation.x = 0;
         myScene.planes[1].rotation.y = 0;
+        console.log('3')
     }
-    if (globalCounter % 30 == 0){
+    else if (globalCounter % 35 == 0){
         myScene.planes[0].rotation.x = 0;
         myScene.planes[0].rotation.y = 0;
+        console.log('4')
     }
-    if (globalCounter % 30 == 0){
+    else if (globalCounter % 38 == 0){
         myScene.planes[2].rotation.x = 0;
         myScene.planes[1].rotation.y = 0;
+        console.log('5')
     }
-    if (globalCounter % 40 == 0){
+    else if (globalCounter % 40 == 0){
         myScene.planes[1].rotation.x = 0;
         myScene.planes[1].rotation.y = 0;
+        console.log('6')
     }
+	
+	if (globalCounter % 200 === 50) {
+		myScene.scene.background = new THREE.Color('white');
+	} else if (globalCounter % 200 === 100) {
+		myScene.scene.background = new THREE.Color(0x9aa4ff);
+	} else if (globalCounter % 200 === 150) {
+		myScene.scene.background = new THREE.Color('black');
+	}
 }
 
 setInterval(tick1Second, 1000);
