@@ -37,7 +37,6 @@ class MyScene {
             this.animate();
         });
 
-        // Position camera to see all three planes
         this.camera.position.z = 15;
         this.camera.position.x = 0;
 
