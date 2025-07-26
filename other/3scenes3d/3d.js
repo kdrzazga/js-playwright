@@ -1,8 +1,10 @@
+let globalCounter = 0;
+
 class MyScene {
     constructor() {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
-            75,
+            40,
             window.innerWidth / window.innerHeight,
             0.1,
             1000
@@ -15,77 +17,83 @@ class MyScene {
         this.headerLines = [];
         this.context = null;
         this.cursor = null;
-        this.clearColor = 0x000000; // Example color
+        this.clearColor = 0xaaaaaa; // Example color
         this.backgroundColor = 0xcccccc; // Example color
         this.defaultColor = 'black';
 
         this.planes = [];
+        this.textures = []; // Array to hold individual textures
         this.animationFrameId = null;
-        this.texture = null;
+        this.rotationCoeff = 0.01;
+        this.counter = 0;
     }
 
     init() {
         this.setupRenderer();
-        this.setupHeaderContent();
 
-        // Setup 2D Canvas for textures
-        const canvas = document.createElement('canvas');
-        this.context = canvas.getContext('2d');
-        canvas.width = 256; // Example size
-        canvas.height = 256; // Example size
+        const imagePaths = ['a800xl.png', 'c64.png', 'zxs.png'];
+        this.loadTextures(imagePaths, () => {
+            this.setupPlanes();
+            this.animate();
+        });
 
-        // Placeholder for DizzolGame
-        // this.dizzolGame = new DizzolGame(canvas, this);
-
-        // For demonstration, fill canvas with some text
-        this.drawInitialText(this.context);
-
-        // Create a texture from the canvas
-        if (typeof C64Blackbox === 'undefined') {
-            window.C64Blackbox = {};
-        }
-        this.texture = new THREE.CanvasTexture(canvas);
-
-        this.setupPlanes();
-
-        window.addEventListener('keydown', this.handleKeyDown.bind(this));
-        this.animate();
-
-        // Position camera to see all three planes
         this.camera.position.z = 15;
         this.camera.position.x = 0;
-    }
 
-    setupRenderer() {
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setClearColor(this.clearColor, 1);
-        document.body.appendChild(this.renderer.domElement);
         window.addEventListener('resize', () => {
-            this.renderer.setSize(window.innerWidth, window.innerHeight);
+            this.renderer.setSize(0.8*window.innerWidth, 0.8*window.innerHeight);
             this.camera.aspect = window.innerWidth / window.innerHeight;
             this.camera.updateProjectionMatrix();
         });
     }
 
-    setupHeaderContent() {
-        // Placeholder for header setup if needed
+    reset(){
+        console.log('reset');
+        this.planes.forEach((plane, index) => {
+            plane.rotation.x = 0;
+            plane.rotation.y = 0;
+        });
     }
 
-    drawInitialText(ctx) {
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        ctx.fillStyle = 'white';
-        ctx.font = '20px Arial';
-        ctx.fillText('Initial Text', 50, 50);
+    setupRenderer() {
+      const container = document.getElementById('scene-container');
+      this.renderer.setSize(container.clientWidth, container.clientHeight);
+
+      container.appendChild(this.renderer.domElement);
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setClearColor(this.clearColor, 1);
+        document.body.appendChild(this.renderer.domElement);
+    }
+
+    loadTextures(imagePaths, callback) {
+        const loader = new THREE.TextureLoader();
+        let loadedCount = 0;
+        this.textures = [];
+
+        imagePaths.forEach((path, index) => {
+            loader.load(
+                path,
+                (texture) => {
+                    this.textures[index] = texture;
+                    loadedCount++;
+                    if (loadedCount === imagePaths.length) {
+                        callback();
+                    }
+                },
+                undefined,
+                (err) => {
+                    console.error('Error loading texture:', path);
+                }
+            );
+        });
     }
 
     setupPlanes() {
-        const planeMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
-        const spacing = 6; // Distance between planes
+        const spacing = 5;
 
         for (let i = 0; i < 3; i++) {
-            const plane = new THREE.Mesh(this.planeGeometry, planeMaterial);
-            // Position planes side by side along the x-axis
+            const material = new THREE.MeshBasicMaterial({ map: this.textures[i] });
+            const plane = new THREE.Mesh(this.planeGeometry, material);
             plane.position.x = (i - 1) * spacing; // -spacing, 0, +spacing
             plane.rotation.x = -Math.PI / 12; // Tilt as original
             this.scene.add(plane);
@@ -94,22 +102,69 @@ class MyScene {
     }
 
     handleKeyDown(event) {
-        // Implement key handling if needed
         console.log('Key pressed:', event.key);
     }
 
     animate() {
         this.animationFrameId = requestAnimationFrame(() => this.animate());
 
-        // Rotate each plane for some animation
         this.planes.forEach((plane, index) => {
-            plane.rotation.y += 0.01 + index * 0.005;
+            const shift = this.rotationCoeff*Math.sin(this.counter/(20*Math.PI));
+            if (globalCounter % 17 < 8) plane.rotation.y += index % 2 == 0 ? shift : -shift;
+            else plane.rotation.x += index % 2 == 0 ? shift : -shift;
         });
 
+        this.counter++;
         this.renderer.render(this.scene, this.camera);
     }
 }
 
-// Instantiate and initialize the scene
 const myScene = new MyScene();
 myScene.init();
+
+
+function tick1Second(){
+    globalCounter++;
+
+    if (globalCounter % 25 == 0){
+        myScene.planes[0].rotation.x = 0;
+        myScene.planes[1].rotation.y = 0;
+        console.log('1')
+    }
+    else if (globalCounter % 30 == 0){
+        myScene.planes[2].rotation.x = 0;
+        myScene.planes[2].rotation.y = 0;
+        console.log('2')
+    }
+    else if (globalCounter % 32 == 0){
+        myScene.planes[0].rotation.x = 0;
+        myScene.planes[1].rotation.y = 0;
+        console.log('3')
+    }
+    else if (globalCounter % 35 == 0){
+        myScene.planes[0].rotation.x = 0;
+        myScene.planes[0].rotation.y = 0;
+        console.log('4')
+    }
+    else if (globalCounter % 38 == 0){
+        myScene.planes[2].rotation.x = 0;
+        myScene.planes[1].rotation.y = 0;
+        console.log('5')
+    }
+    else if (globalCounter % 40 == 0){
+        myScene.planes[1].rotation.x = 0;
+        myScene.planes[1].rotation.y = 0;
+        console.log('6')
+    }
+	
+	if (globalCounter % 200 === 50) {
+		myScene.scene.background = new THREE.Color('white');
+	} else if (globalCounter % 200 === 100) {
+		myScene.scene.background = new THREE.Color(0x9aa4ff);
+	} else if (globalCounter % 200 === 150) {
+		myScene.scene.background = new THREE.Color('black');
+	}
+}
+
+setInterval(tick1Second, 1000);
+
