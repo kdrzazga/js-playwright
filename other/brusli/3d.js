@@ -31,7 +31,7 @@ class BruceLeeScene {
     init() {
         this.setupRenderer();
 
-        const imagePaths1 = ['11.bmp', '21.bmp', '31.bmp'];
+        const imagePaths1 = ['11.bmp', '21.bmp', '31.bmp', '41.bmp'];
         this.loadTextures(imagePaths1, () => {
             this.setupPlanes();
             this.animate();
@@ -93,10 +93,10 @@ class BruceLeeScene {
     setupPlanes() {
         const spacing = 5;
 
-        for (let i = 0; i < 3; i++) {
-            const material = new THREE.MeshBasicMaterial({ map: this.textures[i] });
+        for (let x = 0; x < 4; x++) {
+            const material = new THREE.MeshBasicMaterial({ map: this.textures[x] });
             const plane = new THREE.Mesh(this.planeGeometry, material);
-            plane.position.x = (i - 1) * spacing; // -spacing, 0, +spacing
+            plane.position.x = (x - 1) * spacing; // -spacing, 0, +spacing
             plane.rotation.x = -Math.PI / 12;
             this.scene.add(plane);
             this.planes.push(plane);
