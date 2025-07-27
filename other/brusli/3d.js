@@ -1,6 +1,6 @@
 let globalCounter = 0;
 
-class MyScene {
+class BruceLeeScene {
     constructor() {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
@@ -45,6 +45,8 @@ class MyScene {
             this.camera.aspect = window.innerWidth / window.innerHeight;
             this.camera.updateProjectionMatrix();
         });
+
+        window.addEventListener('keydown', this.handleKeyDown.bind(this));
     }
 
     reset(){
@@ -103,6 +105,18 @@ class MyScene {
 
     handleKeyDown(event) {
         console.log('Key pressed:', event.key);
+        if (event.key === '+' && this.camera.position.z > 1)
+            this.camera.position.z--;
+        else if (event.key === '-')
+            this.camera.position.z++;
+        else if (event.key === '4')
+            this.camera.position.x+=0.4;
+        else if (event.key === '6')
+            this.camera.position.x-=0.4;
+        else if (event.key === '8')
+            this.camera.position.y-=0.2;
+        else if (event.key === '2')
+            this.camera.position.y+=0.2;
     }
 
     animate() {
@@ -113,7 +127,7 @@ class MyScene {
     }
 }
 
-const myScene = new MyScene();
+const myScene = new BruceLeeScene();
 myScene.init();
 
 
