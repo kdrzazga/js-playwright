@@ -56,10 +56,10 @@ class MyScene {
     }
 
     setupRenderer() {
-      const container = document.getElementById('scene-container');
-      this.renderer.setSize(container.clientWidth, container.clientHeight);
+        const container = document.getElementById('scene-container');
+        this.renderer.setSize(container.clientWidth, container.clientHeight);
 
-      container.appendChild(this.renderer.domElement);
+        container.appendChild(this.renderer.domElement);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setClearColor(this.clearColor, 1);
         document.body.appendChild(this.renderer.domElement);
@@ -95,7 +95,7 @@ class MyScene {
             const material = new THREE.MeshBasicMaterial({ map: this.textures[i] });
             const plane = new THREE.Mesh(this.planeGeometry, material);
             plane.position.x = (i - 1) * spacing; // -spacing, 0, +spacing
-            plane.rotation.x = -Math.PI / 12; // Tilt as original
+            plane.rotation.x = -Math.PI / 12;
             this.scene.add(plane);
             this.planes.push(plane);
         }

@@ -65,11 +65,11 @@ class Enemy extends Fighter{
 		super(canvas);		
 		this.x = 10;		
 		this.name = "enemy";
-		this.picPath = "bruce/blee.png";
-		this.picRightPath = "bruce/blee.png";
-		this.picLeftPath = "bruce/bleeL.png";
+		this.picPath = "../common/pics/blee.png";
+		this.picRightPath = "../common/pics/blee.png";
+		this.picLeftPath = "../common/pics/bleeL.png";
 		this.punchPicPath = "bruce/bleePunch.png";
-		this.punchLeftPicPath = "bruce/bleeL.png";
+		this.punchLeftPicPath = "../common/pics/bleeL.png";
 		this.direction = Direction.RIGHT;
 	}
 	
