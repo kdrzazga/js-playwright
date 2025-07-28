@@ -1,6 +1,9 @@
 let globalCounter = 0;
 
 class BruceLeeScene {
+
+    static IMAGE_PATHS = ['11.bmp', '21.bmp', '31.bmp', '41.bmp', '12.bmp', '22.bmp', '32.bmp', '33.bmp', '13.bmp', '23.bmp'];
+
     constructor() {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
@@ -31,8 +34,7 @@ class BruceLeeScene {
     init() {
         this.setupRenderer();
 
-        const imagePaths1 = ['11.bmp', '21.bmp', '31.bmp', '41.bmp', '12.bmp'];
-        this.loadTextures(imagePaths1, () => {
+        this.loadTextures(BruceLeeScene.IMAGE_PATHS, () => {
             this.setupPlanes();
             this.animate();
         });
@@ -95,7 +97,7 @@ class BruceLeeScene {
         const spacingY = 5;
 
         for (let x = 0; x < this.textures.length; x++) {
-            const filename = ['11.bmp', '21.bmp', '31.bmp', '41.bmp', '12.bmp'][x];
+            const filename = BruceLeeScene.IMAGE_PATHS[x];
             const match = filename.match(/(\d+)\.bmp/);
             if (match) {
                 const coords = match[1];
