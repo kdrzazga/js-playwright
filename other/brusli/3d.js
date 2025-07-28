@@ -31,7 +31,7 @@ class BruceLeeScene {
     init() {
         this.setupRenderer();
 
-        const imagePaths1 = ['11.bmp', '21.bmp', '31.bmp', '41.bmp'];
+        const imagePaths1 = ['11.bmp', '21.bmp', '31.bmp', '41.bmp', '12.bmp'];
         this.loadTextures(imagePaths1, () => {
             this.setupPlanes();
             this.animate();
@@ -91,15 +91,25 @@ class BruceLeeScene {
     }
 
     setupPlanes() {
-        const spacing = 5;
+        const spacingX = 5;
+        const spacingY = 5;
 
-        for (let x = 0; x < 4; x++) {
-            const material = new THREE.MeshBasicMaterial({ map: this.textures[x] });
-            const plane = new THREE.Mesh(this.planeGeometry, material);
-            plane.position.x = (x - 1) * spacing; // -spacing, 0, +spacing
-            plane.rotation.x = -Math.PI / 12;
-            this.scene.add(plane);
-            this.planes.push(plane);
+        for (let x = 0; x < this.textures.length; x++) {
+            const filename = ['11.bmp', '21.bmp', '31.bmp', '41.bmp', '12.bmp'][x];
+            const match = filename.match(/(\d+)\.bmp/);
+            if (match) {
+                const coords = match[1];
+                const col = parseInt(coords[0], 10);
+                const row = parseInt(coords[1], 10);
+                const material = new THREE.MeshBasicMaterial({ map: this.textures[x] });
+                const plane = new THREE.Mesh(this.planeGeometry, material);
+                plane.position.x = (col - 1) * spacingX;
+                plane.position.y = -(row - 1) * spacingY;
+                plane.position.z = 0;
+                plane.rotation.x = -Math.PI / 12;
+                this.scene.add(plane);
+                this.planes.push(plane);
+            }
         }
     }
 
