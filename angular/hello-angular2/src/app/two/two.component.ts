@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './two.component.css'
 })
 export class TwoComponent {
+  name = '2';
 
+  constructor(){
+    window.alert('constructor ' + this.name);
+  }
 }
