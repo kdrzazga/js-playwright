@@ -22,10 +22,10 @@ class BaseLevel extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('player', '../common/pics/dig-dug/dig-dug1.png');
-        this.load.image('player2', '../common/pics/dig-dug/dig-dug2.png');
-        this.load.image('player3', '../common/pics/dig-dug/dig-dug3.png');
-        this.load.image('dirt-tile', '../common/pics/dirt.png');
+        this.load.image('player', '../../other/common/pics/dig-dug/dig-dug1.png');
+        this.load.image('player2', '../../other/common/pics/dig-dug/dig-dug2.png');
+        this.load.image('player3', '../../other/common/pics/dig-dug/dig-dug3.png');
+        this.load.image('dirt-tile', '../../other/common/pics/dirt.png');
         this.load.image(Boulder.KEY, Boulder.PICTURE);
         this.load.image(Diamond.KEY, Diamond.PICTURE);
         this.load.image(Monster.KEY, Monster.PICTURE);
