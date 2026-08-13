@@ -1,1 +1,12 @@
 <p>two works!</p>
+<div>
+  <label>Hobbies:</label>
+  <label *ngFor="let h of hobbies">
+    <input
+      type="checkbox"
+      [value]="h"
+      (change)="toggleHobby(h, $event)"
+      [checked]="hobbiesSelected.includes(h)"
+    /> {{ h }}
+  </label>
+</div>
