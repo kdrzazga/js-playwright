@@ -1,4 +1,7 @@
+import { bootstrapApplication } from '@angular/platform-browser';
 import { Component } from '@angular/core';
+
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-two',
@@ -8,9 +11,33 @@ import { Component } from '@angular/core';
   styleUrl: './two.component.css'
 })
 export class TwoComponent {
-  name = '2';
+  name = '';
+  color = '';
+  gender = '';
+  hobbiesSelected: string[] = [];
+  age = 25;
 
-  constructor(){
-    window.alert('constructor ' + this.name);
+  colors = ['Red', 'Green', 'Blue'];
+  genders = ['Male', 'Female'];
+  hobbies = ['Reading', 'Gaming'];
+
+  get data() {
+    return {
+      name: this.name,
+      color: this.color,
+      gender: this.gender,
+      hobbies: this.hobbiesSelected,
+      age: this.age
+    };
+  }
+
+  toggleHobby(hobby: string, event: any) {
+    if (event.target.checked) {
+      this.hobbiesSelected.push(hobby);
+    } else {
+      this.hobbiesSelected = this.hobbiesSelected.filter(h => h !== hobby);
+    }
   }
 }
+
+bootstrapApplication(TwoComponent);
