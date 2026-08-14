@@ -32,15 +32,34 @@ class Plant extends MovableObject{
     }
 
     createMesh(x, z, filename, height){
-        const depth = 0.03;
-
-        const geometry = new THREE.BoxGeometry(this.width, height, depth);
-
         const textureLoader = new THREE.TextureLoader();
         const texture = textureLoader.load(filename);
-        const material = new THREE.MeshBasicMaterial({ map: texture });
+        // Keep the artwork crisp and let mipmaps ease the alpha edge.
+        texture.magFilter = THREE.NearestFilter;
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
 
-        this.mesh = new THREE.Mesh(geometry, material);
+        const material = new THREE.MeshBasicMaterial({
+            map: texture,
+            side: THREE.DoubleSide,
+            transparent: true,
+            // Discard transparent texels so only the sprite's outline is drawn
+            // (no more opaque black rectangle behind the artwork).
+            alphaTest: 0.5,
+            depthWrite: true
+        });
+
+        const geometry = new THREE.PlaneGeometry(this.width, height);
+
+        // Two quads crossed at 90 degrees give the flat cut-out real volume,
+        // so it reads as a 3D object from any viewing angle.
+        const group = new THREE.Group();
+        const front = new THREE.Mesh(geometry, material);
+        const side = new THREE.Mesh(geometry, material);
+        side.rotation.y = Math.PI / 2;
+        group.add(front);
+        group.add(side);
+
+        this.mesh = group;
         this.mesh.position.set(x, height / 2, z);
     }
 }
@@ -52,14 +71,32 @@ class Animal extends Plant{
         this.dx = this.speed - Math.random()/10;
         this.dz = this.speed + Math.random()/15;
 
+        // Centre of the circular walk. Tracks the board so the fox orbits the
+        // board's centre, not the (stationary) player at the world origin.
+        this.center = { x: 0, z: 0 };
+
         const objectGenerator = new ObjectGenerator();
         this.path = objectGenerator.createAnimalPath(walkRadius);
     }
 
+    //@Override
+    move(deltaX, deltaZ) {
+        // Shift the orbit centre with the board instead of the mesh directly;
+        // update() rebuilds the mesh position from this centre every frame.
+        if (deltaX == 0 && deltaZ == 0)
+            return;
+        let movementSpeed = MovableObject.SPEED;
+        if (deltaX !== 0 && deltaZ !== 0)
+            movementSpeed *= Math.SQRT1_2;
+
+        this.center.x += deltaX * movementSpeed;
+        this.center.z += deltaZ * movementSpeed;
+    }
+
     update(){
         const point = this.path.next();
-        this.mesh.position.x = point[0];
-        this.mesh.position.z = point[1];
+        this.mesh.position.x = this.center.x + point[0];
+        this.mesh.position.z = this.center.z + point[1];
     }
 }
 
@@ -225,10 +262,42 @@ class Board extends MovableObject{
 
     //@Override
     move(deltaX, deltaZ) {
+        // The whole world scrolls under a fixed player at the origin, so keep the
+        // board centre within the plane's half-extents. That stops the player from
+        // scrolling off the edge; foxes stay on-board automatically since they are
+        // anchored to this same moving centre.
+        const clamped = this.clampToBounds(deltaX, deltaZ);
+        deltaX = clamped.deltaX;
+        deltaZ = clamped.deltaZ;
+
         super.move(deltaX, deltaZ);
         this.trees.forEach(t => t.move(deltaX, deltaZ));
         this.mushrooms.forEach(m => m.move(deltaX, deltaZ));
         this.animals.forEach(a => a.move(deltaX, deltaZ));
+    }
+
+    clampToBounds(deltaX, deltaZ) {
+        const halfX = WORLD_WIDTH / 2;
+        const halfZ = WORLD_DEPTH / 2;
+
+        // Zeroing one axis removes the diagonal speed scaling on the other, so
+        // re-check after each change to catch the full-speed step as well.
+        for (let pass = 0; pass < 2; pass++) {
+            let speed = MovableObject.SPEED;
+            if (deltaX !== 0 && deltaZ !== 0)
+                speed *= Math.SQRT1_2;
+
+            const nextX = this.mesh.position.x + deltaX * speed;
+            const nextZ = this.mesh.position.z + deltaZ * speed;
+
+            let blocked = false;
+            if (deltaX !== 0 && (nextX > halfX || nextX < -halfX)) { deltaX = 0; blocked = true; }
+            if (deltaZ !== 0 && (nextZ > halfZ || nextZ < -halfZ)) { deltaZ = 0; blocked = true; }
+            if (!blocked)
+                break;
+        }
+
+        return { deltaX, deltaZ };
     }
 
     getAnimalIdPositions(){
