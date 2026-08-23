@@ -7,4 +7,11 @@ const config = {
     scene: [MainScene]
 };
 
-const game = new Phaser.Game(config);
+function startGame() {
+    document.getElementById('intro').remove();
+    new Phaser.Game(config);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('intro').addEventListener('click', startGame, { once: true });
+});

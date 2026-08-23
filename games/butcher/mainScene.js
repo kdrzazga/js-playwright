@@ -10,6 +10,8 @@ class MainScene extends Phaser.Scene {
         Bat.preload(this);
         Cave.preload(this);
         Obelisk.preload(this);
+        Minotaur.preload(this);
+        Magog.preload(this);
         this.load.audio('music', 'files/diab.mp3');
     }
 
@@ -22,15 +24,22 @@ class MainScene extends Phaser.Scene {
         Cave.slice(this);
         Obelisk.slice(this);
         Obelisk.createAnimations(this);
+        Minotaur.slice(this);
+        Minotaur.createAnimations(this);
+        Magog.slice(this);
+        Magog.createAnimations(this);
         this.floor = new Floor(this);
         this.cameraX = this.floor.worldWidth / 2;
         this.cameraY = this.floor.worldHeight / 2;
         this.caves = this.createCaves(1234);
         this.obelisks = this.createObelisks(250);
+        this.minotaurs = this.createBelt(30, 7, 20, (x, y) => new Minotaur(this, x, y));
+        this.magogs = this.createBelt(50, 21, 25, (x, y) => new Magog(this, x, y));
         this.butcher = new Butcher(this, this.scale.width / 2, this.scale.height / 2, Direction.DOWN);
         this.swarms = this.createSwarms(1000);
         this.createControls();
         this.playMusic();
+        this.sound.play(TauntSound);
         this.floor.render(this.cameraX, this.cameraY);
     }
 
@@ -61,6 +70,40 @@ class MainScene extends Phaser.Scene {
             obelisks.push(new Obelisk(this, worldX, worldY));
         }
         return obelisks;
+    }
+
+    killFacingEnemies() {
+        const facing = DirectionVectors[this.butcher.direction];
+        const facingLength = Math.hypot(facing.x, facing.y);
+        const reach = 0.3 * TileWidth;
+        const enemies = this.minotaurs.concat(this.magogs);
+        for (const enemy of enemies) {
+            if (!enemy.active || enemy.dying) {
+                continue;
+            }
+            const dx = enemy.worldX - this.cameraX;
+            const dy = enemy.worldY - this.cameraY;
+            const distance = Math.hypot(dx, dy);
+            if (distance === 0 || distance > reach) {
+                continue;
+            }
+            const alignment = (facing.x * dx + facing.y * dy) / (facingLength * distance);
+            if (alignment > 0.5) {
+                enemy.die();
+            }
+        }
+    }
+
+    createBelt(count, minTiles, maxTiles, spawn) {
+        const belt = [];
+        for (let index = 0; index < count; index++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = (minTiles + Math.random() * (maxTiles - minTiles)) * TileWidth;
+            const worldX = this.cameraX + Math.cos(angle) * radius;
+            const worldY = this.cameraY + Math.sin(angle) * radius;
+            belt.push(spawn(worldX, worldY));
+        }
+        return belt;
     }
 
     createSwarms(count) {
@@ -111,6 +154,7 @@ class MainScene extends Phaser.Scene {
         }
         if (this.pressedAttacks.size > 0) {
             this.butcher.attack1();
+            this.killFacingEnemies();
         } else if (movement) {
             this.butcher.walk();
         } else {
@@ -122,6 +166,12 @@ class MainScene extends Phaser.Scene {
         }
         for (const obelisk of this.obelisks) {
             obelisk.sync(this.cameraX, this.cameraY);
+        }
+        for (const minotaur of this.minotaurs) {
+            minotaur.sync(this.cameraX, this.cameraY);
+        }
+        for (const magog of this.magogs) {
+            magog.sync(this.cameraX, this.cameraY);
         }
         for (const swarm of this.swarms) {
             swarm.update(seconds, time, this.cameraX, this.cameraY);

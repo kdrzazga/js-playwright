@@ -19,3 +19,14 @@ const DirectionByVector = Object.freeze({
     '1,0': Direction.RIGHT,
     '1,1': Direction.DOWN_RIGHT
 });
+
+const DirectionVectors = Object.freeze([
+    { x: 0, y: 1 },
+    { x: -1, y: 1 },
+    { x: -1, y: 0 },
+    { x: -1, y: -1 },
+    { x: 0, y: -1 },
+    { x: 1, y: -1 },
+    { x: 1, y: 0 },
+    { x: 1, y: 1 }
+]);

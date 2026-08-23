@@ -9,13 +9,55 @@
     <script src="bat.js"></script>
     <script src="cave.js"></script>
     <script src="obelisk.js"></script>
+    <script src="classes.js"></script>
+    <script src="magog.js"></script>
+    <script src="minotaur.js"></script>
     <script src="butcher.js"></script>
     <script src="mainScene.js"></script>
     <script src="game.js"></script>
     <style>
+        @font-face {
+            font-family: 'Diabolica';
+            src: url('files/Diabolica-VRBB.ttf') format('truetype');
+        }
+
         body {
             margin: 0;
-            background-color: #1a1015;
+            background-color: #000000;
+        }
+
+        #intro {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            background-color: #000000;
+            cursor: pointer;
+            z-index: 3000;
+            text-align: center;
+        }
+
+        #intro .title {
+            font-family: 'Diabolica', serif;
+            color: #ffffff;
+            font-size: 96px;
+            line-height: 1;
+            letter-spacing: 2px;
+        }
+
+        #intro img {
+            max-width: 640px;
+            max-height: 50vh;
+            height: auto;
+        }
+
+        #intro .start-hint {
+            font-family: 'Diabolica', serif;
+            font-size: 28px;
+            color: #d8c7b0;
         }
 
         #game {
@@ -42,6 +84,11 @@
     </style>
 </head>
 <body>
+    <div id="intro">
+        <div class="title">Butcher's Dream</div>
+        <img src="files/logo.gif" alt="logo">
+        <div class="start-hint">click to enter</div>
+    </div>
     <div id="game"></div>
     <div id="controls-panel" class="panel">
         BUTCHER &mdash; CONTROLS
