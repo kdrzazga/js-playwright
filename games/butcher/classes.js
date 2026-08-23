@@ -5,7 +5,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.worldX = worldX;
         this.worldY = worldY;
         this.inFront = false;
-        this.active = true;
+        this.alive = true;
         this.dying = false;
         this.setOrigin(0.5, 0.5);
         this.setDepth(-5);
@@ -22,7 +22,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     }
 
     advance(animation) {
-        if (!this.active) {
+        if (!this.alive) {
             return;
         }
         const next = animation.key === this.firstKey ? this.secondKey : this.firstKey;
@@ -37,8 +37,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.off(Phaser.Animations.Events.ANIMATION_COMPLETE, this.advance, this);
         this.play({ key: this.deathKey(), repeat: 0 });
         this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-            this.active = false;
-            this.setVisible(false);
+            this.alive = false;
         });
         return this;
     }
@@ -48,22 +47,18 @@ class Enemy extends Phaser.GameObjects.Sprite {
     }
 
     sync(cameraX, cameraY) {
-        if (!this.active) {
-            this.setVisible(false);
-            return;
-        }
         const screenX = this.worldX + this.scene.scale.width / 2 - cameraX;
         const screenY = this.worldY + this.scene.scale.height / 2 - cameraY;
         const onScreen = screenX > -this.displayWidth && screenX < this.scene.scale.width + this.displayWidth
             && screenY > -this.displayHeight && screenY < this.scene.scale.height + this.displayHeight;
         this.setVisible(onScreen);
         if (!onScreen) {
-            if (this.anims.isPlaying) {
+            if (this.alive && this.anims.isPlaying) {
                 this.anims.pause();
             }
             return;
         }
-        if (this.anims.isPaused) {
+        if (this.alive && this.anims.isPaused) {
             this.anims.resume();
         }
         this.setPosition(screenX, screenY);

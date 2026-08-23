@@ -86,7 +86,7 @@ class MainScene extends Phaser.Scene {
         const reach = 0.3 * TileWidth;
         const enemies = this.minotaurs.concat(this.magogs, this.hellbarons, this.cacodemons);
         for (const enemy of enemies) {
-            if (!enemy.active || enemy.dying) {
+            if (!enemy.alive || enemy.dying) {
                 continue;
             }
             const dx = enemy.worldX - this.cameraX;
