@@ -12,6 +12,8 @@ class MainScene extends Phaser.Scene {
         Obelisk.preload(this);
         Minotaur.preload(this);
         Magog.preload(this);
+        Cacodemon.preload(this);
+        HellBaron.preload(this);
         this.load.audio('music', 'files/diab.mp3');
     }
 
@@ -28,6 +30,10 @@ class MainScene extends Phaser.Scene {
         Minotaur.createAnimations(this);
         Magog.slice(this);
         Magog.createAnimations(this);
+        Cacodemon.slice(this);
+        Cacodemon.createAnimations(this);
+        HellBaron.slice(this);
+        HellBaron.createAnimations(this);
         this.floor = new Floor(this);
         this.cameraX = this.floor.worldWidth / 2;
         this.cameraY = this.floor.worldHeight / 2;
@@ -35,6 +41,8 @@ class MainScene extends Phaser.Scene {
         this.obelisks = this.createObelisks(250);
         this.minotaurs = this.createBelt(30, 7, 20, (x, y) => new Minotaur(this, x, y));
         this.magogs = this.createBelt(50, 21, 25, (x, y) => new Magog(this, x, y));
+        this.hellbarons = this.createBelt(45, 25, 30, (x, y) => new HellBaron(this, x, y));
+        this.cacodemons = this.createBelt(50, 25, 30, (x, y) => new Cacodemon(this, x, y));
         this.butcher = new Butcher(this, this.scale.width / 2, this.scale.height / 2, Direction.DOWN);
         this.swarms = this.createSwarms(1000);
         this.createControls();
@@ -76,7 +84,7 @@ class MainScene extends Phaser.Scene {
         const facing = DirectionVectors[this.butcher.direction];
         const facingLength = Math.hypot(facing.x, facing.y);
         const reach = 0.3 * TileWidth;
-        const enemies = this.minotaurs.concat(this.magogs);
+        const enemies = this.minotaurs.concat(this.magogs, this.hellbarons, this.cacodemons);
         for (const enemy of enemies) {
             if (!enemy.active || enemy.dying) {
                 continue;
@@ -88,7 +96,7 @@ class MainScene extends Phaser.Scene {
                 continue;
             }
             const alignment = (facing.x * dx + facing.y * dy) / (facingLength * distance);
-            if (alignment > 0.5) {
+            if (alignment > 0.7) {
                 enemy.die();
             }
         }
@@ -172,6 +180,12 @@ class MainScene extends Phaser.Scene {
         }
         for (const magog of this.magogs) {
             magog.sync(this.cameraX, this.cameraY);
+        }
+        for (const hellbaron of this.hellbarons) {
+            hellbaron.sync(this.cameraX, this.cameraY);
+        }
+        for (const cacodemon of this.cacodemons) {
+            cacodemon.sync(this.cameraX, this.cameraY);
         }
         for (const swarm of this.swarms) {
             swarm.update(seconds, time, this.cameraX, this.cameraY);
