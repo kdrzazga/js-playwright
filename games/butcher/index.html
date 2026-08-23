@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Butcher</title>
+    <script src="../../common/phaser.min.js"></script>
+    <script src="direction.js"></script>
+    <script src="floor.js"></script>
+    <script src="bat.js"></script>
+    <script src="cave.js"></script>
+    <script src="obelisk.js"></script>
+    <script src="butcher.js"></script>
+    <script src="mainScene.js"></script>
+    <script src="game.js"></script>
+    <style>
+        body {
+            margin: 0;
+            background-color: #1a1015;
+        }
+
+        #game {
+            display: flex;
+            justify-content: center;
+        }
+
+        .panel {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            background-color: #5e0b0b;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: white;
+            z-index: 1000;
+        }
+
+        .small {
+            font-size: 0.75em;
+        }
+    </style>
+</head>
+<body>
+    <div id="game"></div>
+    <div id="controls-panel" class="panel">
+        BUTCHER &mdash; CONTROLS
+        <hr>
+        <div class="small">
+            Move: arrow keys / WASD<br><br>
+            Attack: space / right alt / right ctrl / right shift<br><br>
+            Taunt "Fresh meat!": enter / backspace / \
+        </div>
+    </div>
+</body>
+</html>
