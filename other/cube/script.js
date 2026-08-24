@@ -3,6 +3,10 @@ const speedHorizontalSlider = document.getElementById('speed-horizontal');
 const changeColorButton = document.getElementById('change-color');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
+const tunnelToggle = document.getElementById('tunnel-toggle');
+const tunnelInverse = document.getElementById('tunnel-inverse');
+const tunnelCurved = document.getElementById('tunnel-curved');
+const tunnelSuboptions = document.getElementById('tunnel-suboptions');
 
 const scene = new THREE.Scene();
 
@@ -25,6 +29,12 @@ let speedX = 0.01
 let speedY = 0.01
 scene.add(wireframe);
 
+// Tunnel starfield, drawn behind the cube in the same scene. Hidden until toggled.
+const clock = new THREE.Clock();
+const tunnel = new Tunnel3D(scene);
+tunnel.draw();
+tunnel.setVisible(false);
+
 const predefinedColors = [
     0xff0000, // Red
     0x00ff00, // Green
@@ -38,7 +48,9 @@ const predefinedColors = [
 
 function animate() {
     requestAnimationFrame(animate);
-	
+
+    const delta = clock.getDelta();
+
 	speedX = speedVerticalSlider.value / 100;
 	speedY = speedHorizontalSlider.value / 100;
 
@@ -46,6 +58,10 @@ function animate() {
     cube.rotation.y += speedY;
     wireframe.rotation.x += speedX;
     wireframe.rotation.y += speedY;
+
+    if (tunnelToggle.checked) {
+        tunnel.update(delta);
+    }
 
     renderer.render(scene, camera);
 }
@@ -63,6 +79,19 @@ zoomInButton.addEventListener('click', () => {
 
 zoomOutButton.addEventListener('click', () => {
     camera.position.z += 0.5;
+});
+
+tunnelToggle.addEventListener('change', () => {
+    tunnel.setVisible(tunnelToggle.checked);
+    tunnelSuboptions.style.display = tunnelToggle.checked ? 'inline' : 'none';
+});
+
+tunnelInverse.addEventListener('change', () => {
+    tunnel.direction = tunnelInverse.checked ? 'out' : 'in';
+});
+
+tunnelCurved.addEventListener('change', () => {
+    tunnel.curved = tunnelCurved.checked ? 1 : 0;
 });
 
 window.addEventListener('resize', () => {

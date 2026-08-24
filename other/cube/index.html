@@ -29,9 +29,20 @@
 		<button id="zoom-in">+</button>
 		&nbsp
 		<button id="zoom-out">&nbsp-</button>
-		&nbsp
+		&nbsp&nbsp|&nbsp
+		<input type="checkbox" id="tunnel-toggle" />
+		<label for="tunnel-toggle">Tunnel effect</label>
+		<span id="tunnel-suboptions" style="display:none">
+			&nbsp
+			<input type="checkbox" id="tunnel-inverse" />
+			<label for="tunnel-inverse">Inverse</label>
+			&nbsp
+			<input type="checkbox" id="tunnel-curved" />
+			<label for="tunnel-curved">Curved</label>
+		</span>
     </div>
     <script src="three.min.js"></script>
+    <script src="../common/tunnel3d.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
