@@ -29,6 +29,28 @@ class ScreenCodeConverter {
         return baseCode + 64;
     }
 
+    fromPetscii(petsciiCode) {
+        if (petsciiCode >= 32 && petsciiCode <= 63) {
+            return petsciiCode;
+        }
+        if (petsciiCode >= 64 && petsciiCode <= 95) {
+            return petsciiCode - 64;
+        }
+        if (petsciiCode >= 96 && petsciiCode <= 127) {
+            return petsciiCode - 32;
+        }
+        if (petsciiCode >= 160 && petsciiCode <= 191) {
+            return petsciiCode - 64;
+        }
+        if (petsciiCode >= 192 && petsciiCode <= 254) {
+            return petsciiCode - 128;
+        }
+        if (petsciiCode === 255) {
+            return 94;
+        }
+        return 32;
+    }
+
     fromText(character) {
         const upperCaseCode = character.toUpperCase().charCodeAt(0);
         if (upperCaseCode >= 64 && upperCaseCode <= 95) {

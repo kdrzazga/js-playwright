@@ -38,11 +38,44 @@ class ScreenEditor {
 
     printLine(text) {
         this.hideCursor();
+        this.moveToLineStart();
         [...text.slice(0, this.geometry.columns)].forEach((character, column) => {
             this.bus.write(this.screenAddressOf(this.cursorRow, column), this.screenCodeConverter.fromText(character));
             this.bus.write(this.colorAddressOf(this.cursorRow, column), this.textColor);
         });
         this.moveToNextLine();
+    }
+
+    printScreenCodeAtCursor(screenCode) {
+        this.hideCursor();
+        this.bus.write(this.screenAddressOf(this.cursorRow, this.cursorColumn), screenCode);
+        this.bus.write(this.colorAddressOf(this.cursorRow, this.cursorColumn), this.textColor);
+        this.cursorColumn++;
+        if (this.cursorColumn >= this.geometry.columns) {
+            this.moveToNextLine();
+        }
+    }
+
+    moveToLineStart() {
+        if (this.cursorColumn > 0) {
+            this.moveToNextLine();
+        }
+    }
+
+    homeCursor() {
+        this.hideCursor();
+        this.cursorRow = 0;
+        this.cursorColumn = 0;
+    }
+
+    newLine() {
+        this.hideCursor();
+        this.moveToNextLine();
+    }
+
+    clearScreenKeepingColor() {
+        this.hideCursor();
+        this.clearScreen(this.textColor);
     }
 
     moveToNextLine() {
@@ -99,7 +132,22 @@ class MinimalRom {
         readyPrompt = 'READY.',
         vicRegisterBase = 0xD000,
         initialVicRegisterValues = [[0x11, 0x1B], [0x16, 0xC8], [0x18, 0x15]],
+        chroutAddress = 0xFFD2,
+        returnFromSubroutineOpcode = 0x60,
+        screenCodeConverter = new ScreenCodeConverter(),
     } = {}) {
+        this.chroutAddress = chroutAddress;
+        this.returnFromSubroutineOpcode = returnFromSubroutineOpcode;
+        this.screenCodeConverter = screenCodeConverter;
+        this.routinesByAddress = new Map([
+            [chroutAddress, cpu => this.printPetscii(cpu.a)],
+        ]);
+        this.controlCodeActions = new Map([
+            [13, () => screenEditor.newLine()],
+            [141, () => screenEditor.newLine()],
+            [19, () => screenEditor.homeCursor()],
+            [147, () => screenEditor.clearScreenKeepingColor()],
+        ]);
         this.bus = bus;
         this.screenEditor = screenEditor;
         this.borderColor = borderColor;
@@ -113,7 +161,29 @@ class MinimalRom {
         this.idleFrameCounter = 0;
     }
 
+    routineAt(address) {
+        return this.routinesByAddress.get(address) ?? null;
+    }
+
+    installRoutineEntryPoints() {
+        this.routinesByAddress.forEach((routine, address) => this.bus.write(address, this.returnFromSubroutineOpcode));
+    }
+
+    printPetscii(petsciiCode) {
+        const controlCodeAction = this.controlCodeActions.get(petsciiCode);
+        if (controlCodeAction) {
+            controlCodeAction();
+        } else if (this.isPrintablePetscii(petsciiCode)) {
+            this.screenEditor.printScreenCodeAtCursor(this.screenCodeConverter.fromPetscii(petsciiCode));
+        }
+    }
+
+    isPrintablePetscii(petsciiCode) {
+        return (petsciiCode >= 32 && petsciiCode <= 127) || petsciiCode >= 160;
+    }
+
     start() {
+        this.installRoutineEntryPoints();
         this.initializeVic();
         this.screenEditor.clearScreen(this.textColor);
         this.welcomeLines.forEach(line => this.screenEditor.printLine(line));

@@ -173,7 +173,7 @@ class Cpu6510 {
 
             ['JMP', () => { this.programCounter = this.operandAddress; }],
             ['JSR', () => this.jumpToSubroutine()],
-            ['RTS', () => { this.programCounter = (this.pullWord() + 1) & 0xFFFF; }],
+            ['RTS', () => this.returnFromSubroutine()],
 
             ['BCC', () => this.branchIf(!this.flags.carry)],
             ['BCS', () => this.branchIf(this.flags.carry)],
@@ -280,6 +280,14 @@ class Cpu6510 {
     jumpToSubroutine() {
         this.pushWord((this.programCounter - 1) & 0xFFFF);
         this.programCounter = this.operandAddress;
+    }
+
+    returnFromSubroutine() {
+        this.programCounter = (this.pullWord() + 1) & 0xFFFF;
+    }
+
+    addCycles(cycles) {
+        this.totalCycles += cycles;
     }
 
     branchIf(condition) {

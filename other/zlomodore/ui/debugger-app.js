@@ -13,10 +13,12 @@ class DebuggerApp {
             stopButton: elementById('stop-button'),
             continueButton: elementById('continue-button'),
             stepButton: elementById('step-button'),
+            multiStepButton: elementById('multi-step-button'),
             softResetButton: elementById('soft-reset-button'),
             hardResetButton: elementById('hard-reset-button'),
             programSelect: elementById('program-select'),
             loadProgramButton: elementById('load-program-button'),
+            speedSelect: elementById('speed-select'),
         }, machine, this.assemblerConsole, programLibrary, () => this.vicRegistersView.forgetChangeHighlights());
         this.vicRegistersView = new VicRegistersView(elementById('vic-panel'), machine.vic);
         this.refreshableViews = [
