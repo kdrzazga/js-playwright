@@ -1,0 +1,156 @@
+body {
+    background-color: #1b1b1b;
+    color: #d0d0d0;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    margin: 16px;
+}
+
+h2 {
+    font-size: 13px;
+    margin: 0 0 6px 0;
+    color: #8f84d8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#screen canvas {
+    display: block;
+    image-rendering: pixelated;
+}
+
+#startup-error {
+    color: tomato;
+}
+
+.panel {
+    background-color: #242424;
+    border: 1px solid #3a3a3a;
+    padding: 8px;
+    margin-top: 10px;
+}
+
+.panels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.panels .panel {
+    margin-top: 10px;
+}
+
+button, select, input {
+    background-color: #111;
+    color: #d0d0d0;
+    border: 1px solid #555;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 4px 10px;
+}
+
+button:hover:not(:disabled) {
+    border-color: #8f84d8;
+    cursor: pointer;
+}
+
+button:disabled, select:disabled {
+    opacity: 0.4;
+}
+
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.separator {
+    width: 16px;
+}
+
+.assembler-input-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+#assembler-prompt {
+    color: #8f84d8;
+}
+
+#assembler-input {
+    flex: 1;
+    max-width: 480px;
+    text-transform: uppercase;
+}
+
+#assembler-error {
+    color: tomato;
+    min-height: 1.3em;
+    margin-top: 4px;
+}
+
+#assembler-log {
+    white-space: pre;
+    max-height: 140px;
+    overflow-y: auto;
+    color: #a8a8a8;
+}
+
+.debug-table {
+    border-collapse: collapse;
+    margin-bottom: 8px;
+}
+
+.debug-table th, .debug-table td {
+    border: 1px solid #3a3a3a;
+    padding: 1px 6px;
+    text-align: left;
+}
+
+.debug-table th {
+    color: #8f84d8;
+    font-weight: normal;
+}
+
+.debug-table td.flag {
+    text-align: center;
+    min-width: 1.5em;
+}
+
+.debug-table td.flag-set {
+    background-color: #6c5eb5;
+    color: #ffffff;
+}
+
+.debug-table td.description {
+    color: #808080;
+}
+
+.status-table td {
+    min-width: 220px;
+}
+
+tr.changed td {
+    background-color: #3d3560;
+}
+
+tr.current-instruction td {
+    background-color: #6c5eb5;
+    color: #ffffff;
+}
+
+tr.sprite-disabled td {
+    color: #707070;
+}
+
+.swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+    border: 1px solid #777;
+    vertical-align: middle;
+}

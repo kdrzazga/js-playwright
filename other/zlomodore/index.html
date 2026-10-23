@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zlomodore 64</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="screen"></div>
+    <div id="startup-error"></div>
+
+    <section id="controls" class="panel">
+        <button id="sys-button">SYS 49152</button>
+        <button id="stop-button">Stop</button>
+        <button id="continue-button">Continue</button>
+        <button id="step-button">Step</button>
+        <button id="soft-reset-button">Soft reset</button>
+        <button id="hard-reset-button">Reset</button>
+        <span class="separator"></span>
+        <select id="program-select"></select>
+        <button id="load-program-button">Load program</button>
+    </section>
+
+    <section id="assembler" class="panel">
+        <h2>Assembler</h2>
+        <div class="assembler-input-row">
+            <span id="assembler-prompt"></span>
+            <input id="assembler-input" type="text" spellcheck="false" autocomplete="off"
+                   placeholder="LDA #$01 : STA $D020 : RTS">
+            <button id="assemble-button">Enter</button>
+        </div>
+        <div id="assembler-error"></div>
+        <div id="assembler-log"></div>
+    </section>
+
+    <div class="panels">
+        <section id="cpu-panel" class="panel"></section>
+        <section id="disassembly-panel" class="panel"></section>
+        <section id="sprites-panel" class="panel"></section>
+        <section id="vic-panel" class="panel"></section>
+    </div>
+
+    <script src="../../common/phaser.min.js"></script>
+    <script src="core/number-format.js"></script>
+    <script src="core/memory.js"></script>
+    <script src="core/status-flags.js"></script>
+    <script src="core/addressing-modes.js"></script>
+    <script src="core/opcode-table.js"></script>
+    <script src="core/cpu.js"></script>
+    <script src="assembler/operand-parser.js"></script>
+    <script src="assembler/assembler.js"></script>
+    <script src="assembler/disassembler.js"></script>
+    <script src="assembler/code-installer.js"></script>
+    <script src="vic/palette.js"></script>
+    <script src="vic/frame-buffer.js"></script>
+    <script src="vic/character-rom.js"></script>
+    <script src="vic/vic.js"></script>
+    <script src="vic/vic-line-renderer.js"></script>
+    <script src="rom/minimal-rom.js"></script>
+    <script src="machine/c64-machine.js"></script>
+    <script src="render/c64-screen-scene.js"></script>
+    <script src="programs/program-library.js"></script>
+    <script src="ui/dom.js"></script>
+    <script src="ui/cpu-registers-view.js"></script>
+    <script src="ui/vic-registers-view.js"></script>
+    <script src="ui/sprites-view.js"></script>
+    <script src="ui/disassembly-view.js"></script>
+    <script src="ui/assembler-console.js"></script>
+    <script src="ui/control-panel.js"></script>
+    <script src="ui/debugger-app.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
