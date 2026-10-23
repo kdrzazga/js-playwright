@@ -2,45 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Brainfuck</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Brainfuck Debugger</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p>Predefined program: <select id = "predefined-programs" onchange="loadPredefinedProgram();">
-    </select>
-    </p>
-    <br>
-    <hr>
-    <p>
-        <p>CODE:</p>
-        <textarea id = "program">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
-            >+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
-            >++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
-            >++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
-            >+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.</textarea>
-    </p>
-    <button id = "go" onclick="bfDebugger = readProgram(); bfDebugger.validateCode(); updateLabels();">GO !</button>
-    <button id = "step" onclick="bfDebugger.step(); updateLabels(); updateMemoryTable();">Step</button><br>
-    <label id = "instruction-pointer">Instruction Pointer:</label><br>
-    <label id = "command">Command:</label><br>
-    <hr>
-    <p>
-        <p>OUTPUT:</p>
-        <textarea id = "output"></textarea>
-    </p>
-    <hr>
-    <div>
-        MEMORY (0-50):<br>
-        <table id = "memory">
-            <tr id = 'cell-number'>
-            </tr>
-            <tr id = 'cell-value'>
-            </tr>
-        </table>
-    </div>
+    <h1>Brainfuck Debugger</h1>
 
-    <script src="lib.js"></script>
-    <script src="programs.js"></script>
-    <script src="debugger.js"></script>
+    <section>
+        <label for="example-select">Example:</label>
+        <select id="example-select"></select>
+    </section>
+
+    <section>
+        <label for="source-editor">CODE:</label>
+        <textarea id="source-editor" spellcheck="false"></textarea>
+    </section>
+
+    <section>
+        <label for="input-field">INPUT (read by ","; end of input reads as 0):</label>
+        <input id="input-field" type="text" spellcheck="false">
+    </section>
+
+    <section class="controls">
+        <button id="reset-button">Reset</button>
+        <button id="step-button">Step</button>
+        <button id="animate-button">Animate</button>
+        <button id="run-button">Run</button>
+        <button id="pause-button">Pause</button>
+    </section>
+
+    <section class="state">
+        <div>Status: <span id="status"></span></div>
+        <div>Instruction pointer: <span id="instruction-pointer">-</span></div>
+        <div>Command: <span id="current-command">-</span></div>
+        <div>Steps executed: <span id="step-count">0</span></div>
+    </section>
+
+    <section>
+        <div>EXECUTION:</div>
+        <pre id="code-view"></pre>
+    </section>
+
+    <section>
+        <label for="output-field">OUTPUT:</label>
+        <textarea id="output-field" readonly></textarea>
+    </section>
+
+    <section>
+        <div>TAPE (window around the head):</div>
+        <div class="tape-scroll">
+            <table id="tape-table"></table>
+        </div>
+    </section>
+
+    <script src="errors.js"></script>
+    <script src="tape.js"></script>
+    <script src="program.js"></script>
+    <script src="streams.js"></script>
+    <script src="interpreter.js"></script>
+    <script src="examples.js"></script>
+    <script src="views.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+select, button, body{
+    background-color: black;
+    color: lightgray;
+}
+textarea {
+    background-color: black;
+    color: lightgray;
+    width: 80%;
+    height: 25%;
+}
+

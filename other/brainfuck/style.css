@@ -1,11 +1,77 @@
-select, button, body{
+body {
     background-color: black;
     color: lightgray;
-}
-textarea {
-    background-color: black;
-    color: lightgray;
-    width: 80%;
-    height: 25%;
+    font-family: monospace;
+    margin: 16px;
 }
 
+select, button, input, textarea {
+    background-color: black;
+    color: lightgray;
+    border: 1px solid gray;
+    font-family: monospace;
+}
+
+section {
+    margin-bottom: 12px;
+}
+
+label {
+    display: block;
+}
+
+select {
+    display: inline-block;
+}
+
+textarea, input[type="text"] {
+    width: 80%;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 8em;
+}
+
+button {
+    padding: 4px 12px;
+    cursor: pointer;
+}
+
+#code-view {
+    width: 80%;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border: 1px solid #333;
+    padding: 4px;
+    margin: 0;
+}
+
+.current-instruction {
+    background-color: yellow;
+    color: black;
+}
+
+#status.error {
+    color: tomato;
+}
+
+.tape-scroll {
+    overflow-x: auto;
+}
+
+#tape-table {
+    border-collapse: collapse;
+}
+
+#tape-table th, #tape-table td {
+    border: 1px solid #333;
+    padding: 2px 6px;
+    text-align: center;
+    min-width: 2.5em;
+}
+
+#tape-table .tape-head {
+    background-color: #224;
+    color: yellow;
+}
